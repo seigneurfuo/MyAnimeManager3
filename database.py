@@ -1,0 +1,1 @@
+/home/seigneurfuo/Projets/MyAnimeManager/MyAnimeManager 3/db/database.py

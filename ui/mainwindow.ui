@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>525</width>
-    <height>412</height>
+    <width>571</width>
+    <height>449</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,9 +34,9 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="tools_tab">
        <attribute name="title">
-        <string>Page</string>
+        <string>Outils</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0">
@@ -53,8 +53,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>525</width>
-     <height>23</height>
+     <width>571</width>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="about_menu">

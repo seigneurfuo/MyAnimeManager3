@@ -41,5 +41,4 @@ class MainWindow(QMainWindow):
         self.label.clear()
 
     def closeEvent(self, a0):
-        self.parent_qapplication.profile.save()
         super().close()

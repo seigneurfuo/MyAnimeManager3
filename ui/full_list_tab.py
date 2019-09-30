@@ -17,7 +17,6 @@ class FullListTab(QWidget):
 
         self._fill_series_combobox()
 
-
     def _init_ui(self):
         loadUi(os.path.join(QDir.currentPath(), 'ui/full_list_tab.ui'), self)
 
@@ -27,18 +26,27 @@ class FullListTab(QWidget):
         # self.pushButton.clicked.connect(self._on_serie_edit)
         pass
 
+    # region ----- Remplissage de la liste des saisons -----
     def _fill_season_list(self, serie):
-        #self.listWidget.clear()
-        seasons = Seasons.select().where(Seasons.serie == serie.id)
+        self.tableWidget.setRowCount(0)
+
+        seasons = Seasons.select().where(Seasons.serie == serie.id_).order_by(Seasons.sort_id)
+        self.label_2.setText(str(len(seasons)))
+
+        self.tableWidget.setRowCount(len(seasons))
+
         for row_id, season in enumerate(seasons):
-            self.listWidget.addItem(QTableWidgetItem(season.name), row_id, 0)
-            self.listWidget.addItem(QTableWidgetItem(season.name), row_id, 1)
+            self.tableWidget.setItem(row_id, 0, QTableWidgetItem(season.name))
+            self.tableWidget.setItem(row_id, 1, QTableWidgetItem(season.name))
+    # endregion
 
-    # region ----- Remplissage des informations sur la série -----
+    # region ----- Remplissage de la liste des informations sur la série -----
     def _fill_serie_data(self, serie):
-        print(serie.name)
+        fields = [(self.label_3, serie.name)]
+        for field, value in fields:
+            field.setText(value)
 
-        self._fill_season_list(serie)
+        self.plainTextEdit.setPlainText(serie.description)
     # endregion
 
     # region ----- Serie combobox -----
@@ -50,4 +58,5 @@ class FullListTab(QWidget):
     def _on_series_list_current_index_changed(self, index):
         serie = Series.select().where(Series.name == self.comboBox.currentText()).get()
         self._fill_serie_data(serie)
+        self._fill_season_list(serie)
     # endregion

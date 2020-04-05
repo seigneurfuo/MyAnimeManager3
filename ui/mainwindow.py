@@ -11,10 +11,10 @@ class MainWindow(QMainWindow):
     def __init__(self, parent):
         super().__init__(parent=None)
         self.parent = parent
-        self._init_ui()
-        self._init_events()
+        self.init_ui()
+        self.init_events()
 
-    def _init_ui(self):
+    def init_ui(self):
         loadUi(os.path.join(QDir.currentPath(), 'ui/mainwindow.ui'), self)
 
         # Onglet 2
@@ -26,18 +26,18 @@ class MainWindow(QMainWindow):
         self.tools_tab_layout.addWidget(self.tools_tab)
 
 
-    def _init_events(self):
+    def init_events(self):
         pass
 
     #print(self.parent_qapplication.profile.get_series())
 
-    def _on_current_serie_changed(self, index):
+    def on_current_serie_changed(self, index):
         pass
 
-    def _fill_serie_details(self, index):
+    def fill_serie_details(self, index):
         pass
 
-    def _clear_serie_details(self):
+    def clear_serie_details(self):
         self.label.clear()
 
     def closeEvent(self, a0):

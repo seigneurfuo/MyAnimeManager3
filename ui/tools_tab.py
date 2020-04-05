@@ -12,20 +12,20 @@ class ToolsTab(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
         self._parent_mainwindow = parent
-        self._init_ui()
-        self._init_events()
+        self.init_ui()
+        self.init_events()
 
 
-    def _init_ui(self):
+    def init_ui(self):
         loadUi(os.path.join(QDir.currentPath(), 'ui/tools_tab_content.ui'), self)
 
 
-    def _init_events(self):
+    def init_events(self):
         self.go_button.clicked.connect(self.on_duration_calculation_button_click)
         self.get_current_time_button.clicked.connect(self.on_get_current_time_button_click)
 
 
-    def _on_go_button_clicked(self):
+    def on_go_button_clicked(self):
         self._duration_calculation()
 
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>772</width>
-    <height>458</height>
+    <width>964</width>
+    <height>648</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <widget class="QComboBox" name="comboBox">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>130</x>
      <y>50</y>
      <width>581</width>
      <height>31</height>
@@ -26,10 +26,10 @@
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>400</y>
-     <width>331</width>
-     <height>331</height>
+     <x>10</x>
+     <y>90</y>
+     <width>811</width>
+     <height>261</height>
     </rect>
    </property>
    <property name="title">
@@ -38,21 +38,21 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>20</y>
-      <width>57</width>
+      <width>291</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Titre: </string>
+     <string>&lt;Titre de la série&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>40</y>
+      <x>150</x>
+      <y>20</y>
       <width>57</width>
       <height>16</height>
      </rect>
@@ -64,8 +64,8 @@
    <widget class="QPlainTextEdit" name="plainTextEdit">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>70</y>
+      <x>10</x>
+      <y>60</y>
       <width>301</width>
       <height>191</height>
      </rect>
@@ -77,53 +77,79 @@
      <string/>
     </property>
    </widget>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>150</x>
-     <y>330</y>
-     <width>57</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>TextLabel</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>330</y>
-     <width>131</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Nombre de saisons:</string>
-   </property>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>57</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Notes:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>60</y>
+      <width>131</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Nombre de saisons:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>60</y>
+      <width>57</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>220</y>
+      <width>161</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Ouvrir le dossier de la série</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>60</y>
+     <y>50</y>
      <width>111</width>
-     <height>21</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>Liste des séries</string>
+    <string>Liste des séries: </string>
    </property>
   </widget>
   <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>90</y>
-     <width>301</width>
-     <height>291</height>
+     <x>10</x>
+     <y>360</y>
+     <width>811</width>
+     <height>251</height>
     </rect>
    </property>
    <property name="title">
@@ -132,10 +158,10 @@
    <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>10</x>
       <y>20</y>
-      <width>251</width>
-      <height>251</height>
+      <width>301</width>
+      <height>231</height>
      </rect>
     </property>
     <property name="selectionMode">
@@ -167,58 +193,84 @@
      </property>
     </column>
    </widget>
-  </widget>
-  <widget class="QPushButton" name="add_serie_button">
-   <property name="geometry">
-    <rect>
-     <x>690</x>
-     <y>10</y>
-     <width>31</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>PushButton</string>
-   </property>
-  </widget>
-  <widget class="Line" name="line">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>300</y>
-     <width>771</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="delete_serie_button">
-   <property name="geometry">
-    <rect>
-     <x>730</x>
-     <y>10</y>
-     <width>31</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>PushButton</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="edit_serie_button">
-   <property name="geometry">
-    <rect>
-     <x>650</x>
-     <y>10</y>
-     <width>31</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>PushButton</string>
-   </property>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>210</y>
+      <width>241</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>30</y>
+      <width>57</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Titre</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>30</y>
+      <width>291</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;Titre de la saison&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>60</y>
+      <width>57</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Date</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>60</y>
+      <width>181</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;Date de la saison&gt;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>210</y>
+      <width>181</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Ouvrir le dossier de la saison</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QLineEdit" name="lineEdit">
    <property name="geometry">
@@ -226,12 +278,78 @@
      <x>10</x>
      <y>10</y>
      <width>191</width>
-     <height>28</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="placeholderText">
     <string>Filtrer les éléments de la liste</string>
    </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>860</x>
+     <y>130</y>
+     <width>90</width>
+     <height>98</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QPushButton" name="edit_serie_button">
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="add_serie_button">
+      <property name="text">
+       <string>[0]</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="delete_serie_button">
+      <property name="text">
+       <string>-</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>860</x>
+     <y>430</y>
+     <width>90</width>
+     <height>98</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QPushButton" name="edit_season_button">
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="add_season_button">
+      <property name="text">
+       <string>[0]</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="delete_season_button">
+      <property name="text">
+       <string>-</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

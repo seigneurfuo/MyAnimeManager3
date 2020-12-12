@@ -25,10 +25,6 @@ class ToolsTab(QWidget):
         self.get_current_time_button.clicked.connect(self.on_get_current_time_button_click)
 
 
-    def on_go_button_clicked(self):
-        self._duration_calculation()
-
-
     def on_duration_calculation_button_click(self):
         self.listWidget.clear()
 

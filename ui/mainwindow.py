@@ -31,14 +31,6 @@ class MainWindow(QMainWindow):
 
     #print(self.parent_qapplication.profile.get_series())
 
-    def on_current_serie_changed(self, index):
-        pass
-
-    def fill_serie_details(self, index):
-        pass
-
-    def clear_serie_details(self):
-        self.label.clear()
 
     def closeEvent(self, a0):
         super().close()

@@ -10,22 +10,58 @@ class BaseModel(Model):
         database = database
 
 class Series(BaseModel):
-    id_ = AutoField(null=True)
+    id_ = AutoField()
     sort_id = IntegerField()
-    name = CharField(null=True)
-    description = CharField(null=True)
+    name = TextField(null=True)
+    description = TextField(null=True)
 
     class Meta:
         table_name = 'Series'
 
+class Studios(BaseModel):
+    id_ = AutoField()
+    name = TextField(null=True)
+
+    class Meta:
+        table_name = 'Studios'
+
+class SeasonsTypes(BaseModel):
+    id_ = AutoField()
+    name = TextField()
+    description = TextField(null=True)
+
+    class Meta:
+        table_name = 'SeasonsTypes'
+
 class Seasons(BaseModel):
-    id_ = AutoField(null=True)
+    id_ = AutoField()
     sort_id = IntegerField()
-    name = CharField(null=True)
+    name = TextField(null=True)
+    date = TextField(null=True)
     serie = ForeignKeyField(column_name='serie', field='id_', model=Series)
+    seasons_type = ForeignKeyField(column_name='seasons_type', field='id_', model=SeasonsTypes, null=True)
+    studio = ForeignKeyField(column_name='studio', field='id_', model=Studios, null=True)
 
     class Meta:
         table_name = 'Seasons'
+
+class TagsGroups(BaseModel):
+    id_ = IntegerField(null=True)
+    name = TextField(null=True)
+    color = TextField(null=True)
+
+    class Meta:
+        table_name = 'TagsGroups'
+        primary_key = False
+
+class Tags(BaseModel):
+    id_ = IntegerField(null=True)
+    name = TextField(null=True)
+    tags_group = ForeignKeyField(column_name='tags_group', field='id_', model=TagsGroups, null=True)
+
+    class Meta:
+        table_name = 'Tags'
+        primary_key = False
 
 class SqliteSequence(BaseModel):
     name = BareField(null=True)

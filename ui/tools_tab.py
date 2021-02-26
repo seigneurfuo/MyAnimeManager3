@@ -28,11 +28,15 @@ class ToolsTab(QWidget):
     def on_duration_calculation_button_click(self):
         self.listWidget.clear()
 
-        episodes_number = self.spinBox.value()
-        episodes_lenght = self.spinBox_2.value()
+        episodes_count = self.spinBox.value()
+        episodes_duration = self.spinBox_2.value()
+
+        pause_every = self.spinBox_4.value()
+        pause_duration = self.spinBox_3.value()
+
         start_time_string = str(self.timeEdit.dateTime().toString("hh:mm"))
 
-        rows = duration_calculation(episodes_number, episodes_lenght, start_time_string)
+        rows = duration_calculation(episodes_count, episodes_duration, pause_every, pause_duration, start_time_string)
 
         for row in rows:
             self.listWidget.addItem(QListWidgetItem(row))

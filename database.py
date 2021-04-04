@@ -14,6 +14,7 @@ class Series(BaseModel):
     sort_id = IntegerField()
     name = TextField(null=True)
     description = TextField(null=True)
+    is_deleted = BareField(constraints=[SQL("DEFAULT 0")])
 
     class Meta:
         table_name = 'Series'
@@ -41,6 +42,7 @@ class Seasons(BaseModel):
     serie = ForeignKeyField(column_name='serie', field='id_', model=Series)
     seasons_type = ForeignKeyField(column_name='seasons_type', field='id_', model=SeasonsTypes, null=True)
     studio = ForeignKeyField(column_name='studio', field='id_', model=Studios, null=True)
+    is_deleted = BareField(constraints=[SQL("DEFAULT 0")])
 
     class Meta:
         table_name = 'Seasons'

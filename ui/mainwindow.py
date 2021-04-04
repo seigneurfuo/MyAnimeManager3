@@ -11,6 +11,7 @@ class MainWindow(QMainWindow):
     def __init__(self, parent):
         super().__init__(parent=None)
         self.parent = parent
+
         self.init_ui()
         self.init_events()
 

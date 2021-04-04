@@ -1,5 +1,12 @@
 from application import Application
-from sys import argv
+import sys
 
-application = Application(argv)
-application.exec_()
+# POur debug des erreurs
+def except_hook(cls, exception, traceback):
+    sys.__excepthook__(cls, exception, traceback)
+
+if __name__ == "__main__":
+    sys.excepthook = except_hook
+
+    application = Application(sys.argv)
+    application.exec_()

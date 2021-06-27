@@ -34,9 +34,9 @@ class FullListTab(QWidget):
         self.tableWidget.currentItemChanged.connect(self.on_seasons_list_current_index_changed)
 
         # region ----- Boutons -----
-        self.add_serie_button.clicked.connect(self.on_add_serie_button_clicked)
+        self.add_serie_button.clicked.connect(self.on_add_serie_button_clicked_function)
 
-        self.delete_serie_button.clicked.connect(self.on_delete_serie_button_clicked)
+        self.delete_serie_button.clicked.connect(self.on_delete_serie_button_clicked_function)
         # endregion
 
         # on force l'affichage de l'informaton pour la première série au lancement
@@ -80,17 +80,16 @@ class FullListTab(QWidget):
     # endregion
 
 
-    def on_add_serie_button_clicked(self):
+    def on_add_serie_button_clicked_function(self):
         new_serie = Series()
         series_dialog = SeriesDialog(serie=new_serie)
 
         if series_dialog.exec_():
-            print(series_dialog.serie)
             series_dialog.serie.save()
+            self.fill_series_combobox()
 
 
-
-    def on_delete_serie_button_clicked(self):
+    def on_delete_serie_button_clicked_function(self):
         # FIXME: Cascade SQL Delete
 
         # ----- Supression des saisons -----

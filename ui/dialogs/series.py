@@ -21,21 +21,16 @@ class SeriesDialog(QDialog):
         #if self.serie:
             #self.seriemodal.setWindowTitle(self.serie.name)
 
-        # Rends la fenetre principale inacessible tant que celle-ci est ouverte
-        self.setWindowModality(Qt.ApplicationModal)
-
 
     def init_events(self):
-        self.buttonBox.button(QDialogButtonBox.Ok).clicked.connect(self.save)
-        self.buttonBox.button(QDialogButtonBox.Cancel).clicked.connect(self.cancel)
+        pass
 
 
-    def save(self):
+    def accept(self):
         self.serie.name = self.lineEdit_2.text()
         self.serie.sort_id = self.spinBox.value()
 
-        print(self.serie)
+        super(SeriesDialog, self).accept()
 
-    def cancel(self):
-        print("bite")
-        self.hide()
+    def reject(self):
+        super(SeriesDialog, self).reject()

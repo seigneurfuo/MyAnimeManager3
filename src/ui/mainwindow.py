@@ -26,7 +26,6 @@ class MainWindow(QMainWindow):
         self.tools_tab = ToolsTab(self)
         self.tools_tab_layout.addWidget(self.tools_tab)
 
-
     def init_events(self):
         pass
 

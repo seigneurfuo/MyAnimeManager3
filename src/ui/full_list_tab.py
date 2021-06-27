@@ -98,7 +98,7 @@ class FullListTab(QWidget):
         # for season in seasons:
         #     season.is_deleted = 1
         #     season.save()
-        # 
+        #
         # print(self.current_serie_id)
         #
         # # ----- Supression de la série -----

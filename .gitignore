@@ -1,3 +1,5 @@
 src/**/*.pyc
+src/**/*.sqlite3
+src/**/*.sqlite
 .idea/
 src/**/__pycache__/

@@ -90,26 +90,14 @@ class FullListTab(QWidget):
 
 
     def on_delete_serie_button_clicked_function(self):
-        # FIXME: Cascade SQL Delete
-
         # ----- Supression des saisons -----
-        seasons = Seasons.select().where(Seasons.serie == self.current_serie_id).order_by(Seasons.sort_id)
-        # print([season.name for season in seasons])
-        # for season in seasons:
-        #     season.is_deleted = 1
-        #     season.save()
-        #
-        # print(self.current_serie_id)
-        #
-        # # ----- Supression de la série -----
-        # #Series.delete_by_id(self.current_serie_id)
-        # serie = Series.select().where(Series.id_ == self.current_serie_id).get()
-        # serie.is_deleted = 1
-        # serie.save()
-        #
-        # # FIXME
-        # self.fill_series_combobox()
-        # self.fill_serie_data()
+        serie = Series.get(Series.id_ == self.current_serie_id)
+        serie.is_deleted = 1
+        serie.save()
+
+        #self.on_series_list_current_index_changed()
+        self.fill_series_combobox()
+
 
 
     # region ----- Remplissage de la liste des saisons -----

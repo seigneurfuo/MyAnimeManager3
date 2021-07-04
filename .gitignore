@@ -1,8 +1,8 @@
 src/**/*.pyc
-src/**/*.sqlite3
-src/**/*.sqlite
+src/database2.sqlite3
 .idea/
 src/**/__pycache__/
+dist/PKGBUILD/dist/*.pkg.*
 dist/PKGBUILD/MyAnimeManager 3/
 dist/PKGBUILD/pkg/
 dist/PKGBUILD/src/

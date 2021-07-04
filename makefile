@@ -1,10 +1,18 @@
-dist-archlinux:
+archlinux-build:
 	cd "dist/PKGBUILD"; \
-	makepkg  --syncdeps --force --rmdeps --cleanbuild --clean; \
+	rm -rf dist/*.pkg.*; \
+	makepkg --syncdeps --force --rmdeps --cleanbuild --clean; \
 	rm -rf "MyAnimeManager 3"
 
-dist-manjaro:
-	dist-archlinux
+archlinux-install:
+	cd "dist/PKGBUILD/dist"; \
+	sudo pacman -U *.pkg.*;
+
+manjaro-build:
+	archlinux-build
+
+manjaro-install:
+	archlinux-install
 
 dist:
-	dist-archlinux;
+	archlinux-build

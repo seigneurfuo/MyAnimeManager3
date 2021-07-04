@@ -4,20 +4,24 @@ from PyQt5.uic import loadUi
 from PyQt5.QtCore import QDir, Qt
 
 import os
+from pathlib import Path
 
 from ui.dialogs.series import SeriesDialog
 from ui.dialogs.deleted_elements_dialog import DeletedElementsDialog
-from database import Series, Seasons
+from database import Series, Seasons, database
 
 
 class FullListTab(QWidget):
-    def __init__(self, parent):
+    def __init__(self, parent, app_dir):
         super().__init__(parent)
         self._parent = parent
-        self.init_ui()
+        self.app_dir = app_dir
 
         self.current_serie_id = None
         self.current_season_id = None
+
+        self.init_ui()
+        self.load_profile()
 
         self.fill_series_combobox()
 
@@ -25,7 +29,24 @@ class FullListTab(QWidget):
 
 
     def init_ui(self):
-        loadUi(os.path.join(QDir.currentPath(), 'ui/full_list_tab.ui'), self)
+        loadUi(os.path.join(self.app_dir, 'ui/full_list_tab.ui'), self)
+
+
+    def load_profile(self):
+        database_path = "database.sqlite3"
+
+        # Creation du profil
+        self.appDataFolder = os.path.join(Path.home(), ".myanimemanager3")
+
+        if not os.path.exists(self.appDataFolder):
+            # Création du dossier ./profile/covers qui créer en meme temps le dossier parent ./profile
+            os.makedirs(self.appDataFolder)
+
+        database_exists = os.path.exists(os.path.join(self.appDataFolder, database_path))
+
+        # Génération des tables
+        if not database_exists:
+            database.create_tables([Series, Seasons])
 
 
     def init_events(self):
@@ -83,7 +104,7 @@ class FullListTab(QWidget):
 
     def on_add_serie_button_clicked_function(self):
         new_serie = Series()
-        series_dialog = SeriesDialog(serie=new_serie)
+        series_dialog = SeriesDialog(serie=new_serie, app_dir=self.app_dir)
 
         if series_dialog.exec_():
             series_dialog.serie.save()
@@ -102,12 +123,11 @@ class FullListTab(QWidget):
 
     def on_view_deleted_elements_button_clicked_function(self):
         deleted_seasons = Seasons.select().where(Seasons.is_deleted == 1).order_by(Seasons.sort_id)
-        dialog = DeletedElementsDialog(deleted_seasons)
+        dialog = DeletedElementsDialog(deleted_seasons=deleted_seasons, app_dir=self.app_dir)
 
         # TODO:
         if dialog.exec_():
             pass
-
 
 
     # region ----- Remplissage de la liste des saisons -----
@@ -130,6 +150,7 @@ class FullListTab(QWidget):
                 item.setData(Qt.UserRole, season.id_)
                 self.tableWidget.setItem(row_index, col_index, item)
     # endregion
+
 
     def fill_season_data(self, season):
         fields = [(self.label_8, season.name),

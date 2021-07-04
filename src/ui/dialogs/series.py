@@ -6,18 +6,18 @@ from PyQt5.uic import loadUi
 
 
 class SeriesDialog(QDialog):
-    def __init__(self, serie):
+    def __init__(self, serie, app_dir):
         super(SeriesDialog, self).__init__()
 
-        #self.parent = parent
         self.serie = serie
+        self.app_dir = app_dir
 
         self.init_ui()
         self.init_events()
 
 
     def init_ui(self):
-        loadUi(os.path.join(QDir.currentPath(), 'ui/dialogs/series.ui'), self)
+        loadUi(os.path.join(self.app_dir, 'ui/dialogs/series.ui'), self)
 
         #if self.serie:
             #self.seriemodal.setWindowTitle(self.serie.name)

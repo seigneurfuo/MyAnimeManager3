@@ -5,8 +5,9 @@ from ui.mainwindow import MainWindow
 
 
 class Application(QApplication):
-    def __init__(self, args):
+    def __init__(self, args, app_dir):
         super().__init__(args)
+        self.app_dir = app_dir
         self.name = "MyAnimeManager 3"
         self.version = "0.0.1"
         self.description = self.tr("Un gestionnaire de séries multiplateforme écrit en Python3 et Qt5")
@@ -21,5 +22,5 @@ class Application(QApplication):
 
 
     def launch_mainwindow(self):
-        self.mainwindow = MainWindow(self)
+        self.mainwindow = MainWindow(self, self.app_dir)
         self.mainwindow.show()

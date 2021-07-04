@@ -9,15 +9,18 @@ from utils import duration_calculation
 
 
 class ToolsTab(QWidget):
-    def __init__(self, parent):
+    def __init__(self, parent, app_dir):
         super().__init__(parent)
+
         self.parent_mainwindow = parent
+        self.app_dir = app_dir
+
         self.init_ui()
         self.init_events()
 
 
     def init_ui(self):
-        loadUi(os.path.join(QDir.currentPath(), 'ui/tools_tab.ui'), self)
+        loadUi(os.path.join(self.app_dir, 'ui/tools_tab.ui'), self)
 
 
     def init_events(self):

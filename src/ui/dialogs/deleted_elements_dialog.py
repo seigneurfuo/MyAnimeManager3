@@ -6,18 +6,18 @@ from PyQt5.uic import loadUi
 
 
 class DeletedElementsDialog(QDialog):
-    def __init__(self, deleted_seasons):
+    def __init__(self, deleted_seasons, app_dir):
         super(DeletedElementsDialog, self).__init__()
 
-        #self.parent = parent
         self.deleted_seasons = deleted_seasons
+        self.app_dir = app_dir
 
         self.init_ui()
         self.init_events()
 
 
     def init_ui(self):
-        loadUi(os.path.join(QDir.currentPath(), 'ui/dialogs/deleted_elements_dialog.ui'), self)
+        loadUi(os.path.join(self.app_dir, 'ui/dialogs/deleted_elements_dialog.ui'), self)
 
         self.fill_table()
 

@@ -3,3 +3,6 @@ src/**/*.sqlite3
 src/**/*.sqlite
 .idea/
 src/**/__pycache__/
+dist/PKGBUILD/MyAnimeManager 3/
+dist/PKGBUILD/pkg/
+dist/PKGBUILD/src/

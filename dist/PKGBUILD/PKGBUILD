@@ -1,0 +1,33 @@
+pkgname="myanimemanager3"
+pkgver=$(date '+%Y.%m.%d')
+pkgrel=1
+pkgdesc="Un logiciel de gestion de séries et d'animés."
+url="https://seigneurfuo.com"
+arch=('any')
+license=('')
+groups=("★ seigneurfuo: Paquets persos")
+depends=("python" "python-pyqt5")
+source=("${pkgname}.desktop" "git+file:///home/seigneurfuo/Projets/MyAnimeManager/MyAnimeManager 3#branch=master")
+md5sums=('SKIP'
+         'SKIP')
+
+PKGDEST="$(pwd)/dist"
+
+pkgver() {
+    date +%Y.%m.%d
+}
+
+package() {
+	mkdir -p "${pkgdir}/opt/"
+	cp -R "${srcdir}/MyAnimeManager 3/src" "${pkgdir}/opt/"
+
+	# Comme le dossier copié s'apelle src, on le renomme (oui c'est pas forcément propre mais bon)
+	mv "${pkgdir}/opt/src" "${pkgdir}/opt/${pkgname}"
+
+    # Supression des fichiers inutiles (ou bien qui on étés mis sur SVN par mégarde !)
+	rm -f "${pkgdir}/opt/${pkgname}/generate_database.sh"
+	rm -f "${pkgdir}/opt/${pkgname}/database2.sqlite3"
+	rm -f "${pkgdir}/opt/${pkgname}/project_infos.txt"
+	
+	install -Dm644 "${pkgname}.desktop" "${pkgdir}/usr/share/applications/${pkgname}.desktop"
+}

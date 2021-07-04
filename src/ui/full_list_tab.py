@@ -1,12 +1,12 @@
 #!/bin/env python3
-from PyQt5.QtWidgets import QWidget, QListWidgetItem, QTableWidgetItem
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QDir, Qt
 
-from ui.dialogs.series import SeriesDialog
-
 import os
 
+from ui.dialogs.series import SeriesDialog
+from ui.dialogs.deleted_elements_dialog import DeletedElementsDialog
 from database import Series, Seasons
 
 
@@ -35,8 +35,9 @@ class FullListTab(QWidget):
 
         # region ----- Boutons -----
         self.add_serie_button.clicked.connect(self.on_add_serie_button_clicked_function)
-
         self.delete_serie_button.clicked.connect(self.on_delete_serie_button_clicked_function)
+
+        self.view_deleted_elements_button.clicked.connect(self.on_view_deleted_elements_button_clicked_function)
         # endregion
 
         # on force l'affichage de l'informaton pour la première série au lancement
@@ -97,6 +98,15 @@ class FullListTab(QWidget):
 
         #self.on_series_list_current_index_changed()
         self.fill_series_combobox()
+
+
+    def on_view_deleted_elements_button_clicked_function(self):
+        deleted_seasons = Seasons.select().where(Seasons.is_deleted == 1).order_by(Seasons.sort_id)
+        dialog = DeletedElementsDialog(deleted_seasons)
+
+        # TODO:
+        if dialog.exec_():
+            pass
 
 
 

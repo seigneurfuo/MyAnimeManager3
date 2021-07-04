@@ -28,7 +28,7 @@
     <rect>
      <x>10</x>
      <y>90</y>
-     <width>811</width>
+     <width>791</width>
      <height>261</height>
     </rect>
    </property>
@@ -119,7 +119,7 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>640</x>
+      <x>620</x>
       <y>220</y>
       <width>161</width>
       <height>28</height>
@@ -148,7 +148,7 @@
     <rect>
      <x>10</x>
      <y>360</y>
-     <width>811</width>
+     <width>791</width>
      <height>251</height>
     </rect>
    </property>
@@ -261,7 +261,7 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>620</x>
+      <x>600</x>
       <y>210</y>
       <width>181</width>
       <height>28</height>
@@ -288,10 +288,10 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>860</x>
+     <x>810</x>
      <y>130</y>
-     <width>90</width>
-     <height>98</height>
+     <width>144</width>
+     <height>132</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -316,15 +316,22 @@
       </property>
      </widget>
     </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_4">
+      <property name="text">
+       <string>Détail des Visionnages</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QWidget" name="layoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>860</x>
-     <y>430</y>
-     <width>90</width>
-     <height>98</height>
+     <x>810</x>
+     <y>380</y>
+     <width>144</width>
+     <height>132</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -349,7 +356,27 @@
       </property>
      </widget>
     </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="text">
+       <string>Détail des Visionnages</string>
+      </property>
+     </widget>
+    </item>
    </layout>
+  </widget>
+  <widget class="QPushButton" name="view_deleted_elements_button">
+   <property name="geometry">
+    <rect>
+     <x>710</x>
+     <y>50</y>
+     <width>251</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Afficher les séries / saisons supprimées</string>
+   </property>
   </widget>
  </widget>
  <resources/>

@@ -15,6 +15,7 @@ class SeriesDialog(QDialog):
         self.init_ui()
         self.init_events()
 
+
     def init_ui(self):
         loadUi(os.path.join(QDir.currentPath(), 'ui/dialogs/series.ui'), self)
 
@@ -31,6 +32,7 @@ class SeriesDialog(QDialog):
         self.serie.sort_id = self.spinBox.value()
 
         super(SeriesDialog, self).accept()
+
 
     def reject(self):
         super(SeriesDialog, self).reject()

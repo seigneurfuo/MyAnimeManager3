@@ -18,9 +18,5 @@ class Application(QApplication):
 
         self._DEFAULT_SETTINGS = default_settings.DEFAULT_SETTINGS
 
-        self.launch_mainwindow()
-
-
-    def launch_mainwindow(self):
-        self.mainwindow = MainWindow(self, self.app_dir)
+        self.mainwindow = MainWindow(self)
         self.mainwindow.show()

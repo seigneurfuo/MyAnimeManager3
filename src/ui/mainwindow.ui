@@ -26,13 +26,18 @@
       </property>
       <widget class="QWidget" name="planning_tab">
        <attribute name="title">
-        <string>Liste</string>
+        <string>Animés</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0">
          <layout class="QGridLayout" name="full_list_tab_layout"/>
         </item>
        </layout>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Liste</string>
+       </attribute>
       </widget>
       <widget class="QWidget" name="tools_tab">
        <attribute name="title">
@@ -68,7 +73,7 @@
     <property name="title">
      <string>Fichier</string>
     </property>
-    <addaction name="load_profile_action"/>
+    <addaction name="open_profile_action"/>
     <addaction name="save_profile_action"/>
     <addaction name="close_profile_action"/>
     <addaction name="separator"/>
@@ -114,6 +119,11 @@
   <action name="about_action">
    <property name="text">
     <string>A propos ...</string>
+   </property>
+  </action>
+  <action name="open_profile_action">
+   <property name="text">
+    <string>Ouvrir le dossier du profil</string>
    </property>
   </action>
  </widget>

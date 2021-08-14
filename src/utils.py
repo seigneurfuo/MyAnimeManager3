@@ -34,3 +34,24 @@ def duration_calculation(episodesnumber, episodeslenght, pause_every, pause_dura
 
 
     return ret_list
+
+def open_folder(path):
+    """Ouvre un explorateur de fichiers à l'adresse indiquée en argument"""
+
+    import platform
+
+    try:
+        if platform.system() == "Windows":
+            from os import startfile
+            startfile(path)
+
+        elif platform.system() == "Darwin":
+            from subprocess import Popen
+            Popen(["open", path])
+
+        else:
+            from subprocess import Popen
+            Popen(["xdg-open", path])
+
+    except:
+        return None

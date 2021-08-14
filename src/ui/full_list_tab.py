@@ -42,11 +42,15 @@ class FullListTab(QWidget):
             # Création du dossier ./profile/covers qui créer en meme temps le dossier parent ./profile
             os.makedirs(self.appDataFolder)
 
-        database_exists = os.path.exists(os.path.join(self.appDataFolder, database_path))
-
+        database_path = os.path.join(self.appDataFolder, database_path)
+        print("Database path:", database_path)
         # Génération des tables
-        if not database_exists:
+        if not os.path.exists(database_path):
+            database.init(database_path)
             database.create_tables([Series, Seasons])
+
+        else:
+            database.init(database_path)
 
 
     def init_events(self):
@@ -112,13 +116,14 @@ class FullListTab(QWidget):
 
 
     def on_delete_serie_button_clicked_function(self):
-        # ----- Supression des saisons -----
-        serie = Series.get(Series.id_ == self.current_serie_id)
-        serie.is_deleted = 1
-        serie.save()
+        if self.current_serie_id:
+            # ----- Supression des saisons -----
+            serie = Series.get(Series.id_ == self.current_serie_id)
+            serie.is_deleted = 1
+            serie.save()
 
-        #self.on_series_list_current_index_changed()
-        self.fill_series_combobox()
+            #self.on_series_list_current_index_changed()
+            self.fill_series_combobox()
 
 
     def on_view_deleted_elements_button_clicked_function(self):

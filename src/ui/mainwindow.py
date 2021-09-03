@@ -18,6 +18,7 @@ class MainWindow(QMainWindow):
         self.init_ui()
         self.init_events()
 
+
     def init_ui(self):
         loadUi(os.path.join(self.app_dir, 'ui/mainwindow.ui'), self)
 
@@ -36,6 +37,9 @@ class MainWindow(QMainWindow):
     def init_events(self):
         # FIXME: Ouvrir plutot le dossier utilisateur !
         self.open_profile_action.triggered.connect(self.on_menu_action_open_profile_clicked_function)
+
+        # Affichage de l'emplacement des données de l'utilisateur
+        #self.statusbar.showMessage(self.tr("Données utilisateur: {}".format(self.app_dir)))
 
     # TODO: evenement lors du click sur un onglet
 

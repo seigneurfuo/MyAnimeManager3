@@ -21,7 +21,6 @@ class FullListTab(QWidget):
         self.current_season_id = None
 
         self.init_ui()
-        self.load_profile()
 
         self.fill_series_combobox()
 
@@ -30,27 +29,6 @@ class FullListTab(QWidget):
 
     def init_ui(self):
         loadUi(os.path.join(self.app_dir, 'ui/full_list_tab.ui'), self)
-
-
-    def load_profile(self):
-        database_path = "database.sqlite3"
-
-        # Creation du profil
-        self.appDataFolder = os.path.join(Path.home(), ".myanimemanager3")
-
-        if not os.path.exists(self.appDataFolder):
-            # Création du dossier ./profile/covers qui créer en meme temps le dossier parent ./profile
-            os.makedirs(self.appDataFolder)
-
-        database_path = os.path.join(self.appDataFolder, database_path)
-        print("Database path:", database_path)
-        # Génération des tables
-        if not os.path.exists(database_path):
-            database.init(database_path)
-            database.create_tables([Series, Seasons])
-
-        else:
-            database.init(database_path)
 
 
     def init_events(self):

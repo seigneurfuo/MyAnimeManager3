@@ -24,7 +24,17 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="planning_tab">
+      <widget class="QWidget" name="tab1">
+       <attribute name="title">
+        <string>Planning</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="planning_tab_layout"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab2">
        <attribute name="title">
         <string>Animés</string>
        </attribute>
@@ -39,7 +49,7 @@
         <string>Liste</string>
        </attribute>
       </widget>
-      <widget class="QWidget" name="tools_tab">
+      <widget class="QWidget" name="tab4">
        <attribute name="title">
         <string>Outils</string>
        </attribute>

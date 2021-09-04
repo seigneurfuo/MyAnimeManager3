@@ -33,7 +33,7 @@ def migration_series():
         new_serie.save()
 
         # On récupère l'identifiant qui vien d'etre crée afin de garder une trace des anciens / nouveaux ID
-        id_series[serie.serie_id] = new_serie.id_
+        id_series[serie.serie_id] = new_serie.id
 
 
 def migration_seasons():
@@ -62,7 +62,7 @@ def migration_seasons():
             print(is_ok)
 
         # On récupère l'identifiant qui vien d'etre crée afin de garder une trace des anciens / nouveaux ID
-        id_series[season.season_id] = new_season.id_
+        id_series[season.season_id] = new_season.id
 
 
 def migration_planning():

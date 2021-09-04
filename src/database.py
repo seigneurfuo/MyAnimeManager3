@@ -9,8 +9,14 @@ class BaseModel(Model):
     class Meta:
         database = database
 
+class SeasonsTypes(BaseModel):
+    name = TextField()
+    description = TextField(null=True)
+
+    class Meta:
+        table_name = 'SeasonsTypes'
+
 class Series(BaseModel):
-    id_ = AutoField()
     sort_id = IntegerField()
     name = TextField(null=True)
     description = TextField(null=True)
@@ -19,51 +25,55 @@ class Series(BaseModel):
     class Meta:
         table_name = 'Series'
 
-class Studios(BaseModel):
-    id_ = AutoField()
-    name = TextField(null=True)
-
-    class Meta:
-        table_name = 'Studios'
-
-class SeasonsTypes(BaseModel):
-    id_ = AutoField()
-    name = TextField()
-    description = TextField(null=True)
-
-    class Meta:
-        table_name = 'SeasonsTypes'
-
 class Seasons(BaseModel):
-    id_ = AutoField()
     sort_id = IntegerField()
     name = TextField(null=True)
     date = TextField(null=True)
-    serie = ForeignKeyField(column_name='serie', field='id_', model=Series)
-    seasons_type = ForeignKeyField(column_name='seasons_type', field='id_', model=SeasonsTypes, null=True)
-    studio = ForeignKeyField(column_name='studio', field='id_', model=Studios, null=True)
+    serie = ForeignKeyField(column_name='serie', field='id', model=Series)
+    seasons_type = ForeignKeyField(column_name='seasons_type', field='id', model=SeasonsTypes, null=True)
+    studio = IntegerField(index=True, null=True)
     is_deleted = BareField(constraints=[SQL("DEFAULT 0")])
 
     class Meta:
         table_name = 'Seasons'
 
+class CharactersBoard(BaseModel):
+    name = TextField(null=True)
+    firstname = TextField(null=True)
+    description = TextField(null=True)
+    serie = ForeignKeyField(column_name='serie', field='id', model=Series, null=True)
+    season = ForeignKeyField(column_name='season', field='id', model=Seasons, null=True)
+
+    class Meta:
+        table_name = 'CharactersBoard'
+
+class Planning(BaseModel):
+    season = ForeignKeyField(column_name='season', field='id', model=Seasons)
+    date = DateField()
+    episode = IntegerField()
+
+    class Meta:
+        table_name = 'Planning'
+
+class Studios(BaseModel):
+    name = TextField(null=True)
+
+    class Meta:
+        table_name = 'Studios'
+
 class TagsGroups(BaseModel):
-    id_ = IntegerField(null=True)
     name = TextField(null=True)
     color = TextField(null=True)
 
     class Meta:
         table_name = 'TagsGroups'
-        primary_key = False
 
 class Tags(BaseModel):
-    id_ = IntegerField(null=True)
     name = TextField(null=True)
-    tags_group = ForeignKeyField(column_name='tags_group', field='id_', model=TagsGroups, null=True)
+    tags_group = ForeignKeyField(column_name='tags_group', field='id', model=TagsGroups, null=True)
 
     class Meta:
         table_name = 'Tags'
-        primary_key = False
 
 class SqliteSequence(BaseModel):
     name = BareField(null=True)

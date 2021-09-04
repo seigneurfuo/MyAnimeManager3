@@ -53,8 +53,8 @@ class FullListTab(QWidget):
 
         series = Series.select().where(Series.is_deleted == 0).order_by(Series.sort_id)
         for serie in series:
-            print(serie.name, "id: ", serie.id_)
-            self.comboBox.addItem(serie.name, userData=serie.id_)
+            text = "{0} - {1}".format(serie.sort_id, serie.name)
+            self.comboBox.addItem(text, userData=serie.id)
 
         self.current_serie_id = self.comboBox.currentData()
     # endregion
@@ -66,7 +66,7 @@ class FullListTab(QWidget):
         self.current_serie_id = self.comboBox.currentData()
 
         if self.current_serie_id:
-            serie = Series.select().where(Series.id_ == self.current_serie_id).get()
+            serie = Series.select().where(Series.id == self.current_serie_id).get()
 
             self.fill_serie_data(serie)
             self.fill_season_list(serie)
@@ -96,7 +96,7 @@ class FullListTab(QWidget):
     def on_delete_serie_button_clicked_function(self):
         if self.current_serie_id:
             # ----- Supression des saisons -----
-            serie = Series.get(Series.id_ == self.current_serie_id)
+            serie = Series.get(Series.id == self.current_serie_id)
             serie.is_deleted = 1
             serie.save()
 
@@ -117,22 +117,25 @@ class FullListTab(QWidget):
     def fill_season_list(self, serie):
         self.tableWidget.setRowCount(0)
 
-        seasons = Seasons.select().where(Seasons.serie == serie.id_).order_by(Seasons.sort_id)
+        seasons = Seasons.select().where(Seasons.serie == serie.id).order_by(Seasons.sort_id)
         seasons_count = len(seasons)
 
         self.label_2.setText(str(seasons_count))
 
         self.tableWidget.setRowCount(seasons_count)
         for row_index, season in enumerate(seasons):
-            columns = [season.seasons_type.name, season.name]
+            try:
+                columns = [season.seasons_type.name, season.name]
 
-            print(columns)
+                print(columns)
 
-            for col_index, value in enumerate(columns):
-                item = QTableWidgetItem(value)
-                item.setData(Qt.UserRole, season.id_)
-                self.tableWidget.setItem(row_index, col_index, item)
-    # endregion
+                for col_index, value in enumerate(columns):
+                    item = QTableWidgetItem(value)
+                    item.setData(Qt.UserRole, season.id)
+                    self.tableWidget.setItem(row_index, col_index, item)
+            except:
+                print("\t\tErreur !!! -> Serie id: ", serie.id, "Season id:", season.id)
+        # endregion
 
 
     def fill_season_data(self, season):
@@ -146,7 +149,7 @@ class FullListTab(QWidget):
     def on_seasons_list_current_index_changed(self):
         self.current_season_id = self.tableWidget.currentItem().data(Qt.UserRole)
 
-        season = Seasons.select().where(Seasons.id_ == self.current_season_id).get()
+        season = Seasons.select().where(Seasons.id == self.current_season_id).get()
         self.fill_season_data(season)
 
     # endregion

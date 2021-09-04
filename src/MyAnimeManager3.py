@@ -1,8 +1,6 @@
 import sys
 import os
 
-
-import os
 from pathlib import Path
 from PyQt5.QtWidgets import QApplication
 
@@ -26,11 +24,11 @@ class Application(QApplication):
 
         self._DEFAULT_SETTINGS = default_settings.DEFAULT_SETTINGS
 
-        database = self.load_profile()
+        self.appDataFolder = None
+        self.load_profile()
 
         self.mainwindow = MainWindow(self)
         self.mainwindow.show()
-
 
     def load_profile(self):
         database_path = "database.sqlite3"

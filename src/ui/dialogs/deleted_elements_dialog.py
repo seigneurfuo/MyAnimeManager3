@@ -42,7 +42,7 @@ class DeletedElementsDialog(QDialog):
 
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
-                item.setData(Qt.UserRole, season.id_)
+                item.setData(Qt.UserRole, season.id)
                 self.tableWidget.setItem(row_index, col_index, item)
 
 

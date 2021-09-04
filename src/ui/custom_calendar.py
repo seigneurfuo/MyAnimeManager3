@@ -12,7 +12,7 @@ class CustomCalendar(QCalendarWidget):
         self.cell_background_color = None
         self.dates = []
 
-    def set_cells_background_color(self, color):
+    def setCellsBackgroundColor(self, color):
         """
         Une méthode qui permet de choisir la couleur de fond d'une cellule
 

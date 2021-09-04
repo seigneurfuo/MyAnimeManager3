@@ -1,4 +1,3 @@
-from application import Application
 import sys
 import os
 
@@ -10,7 +9,7 @@ from PyQt5.QtWidgets import QApplication
 import database
 import default_settings
 
-from ui.mainwindow import MainWindow
+from ui.main_window import MainWindow
 
 
 class Application(QApplication):

@@ -20,7 +20,7 @@ class MainWindow(QMainWindow):
 
 
     def init_ui(self):
-        loadUi(os.path.join(self.app_dir, 'ui/mainwindow.ui'), self)
+        loadUi(os.path.join(self.app_dir, 'ui/main_window.ui'), self)
 
         # Onglet 1 - Planning
         planning_tab = PlanningTab(self, self.app_dir)

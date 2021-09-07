@@ -30,22 +30,12 @@ class Seasons(BaseModel):
     name = TextField(null=True)
     date = TextField(null=True)
     serie = ForeignKeyField(column_name='serie', field='id', model=Series)
-    seasons_type = ForeignKeyField(column_name='seasons_type', field='id', model=SeasonsTypes, null=True)
+    type = ForeignKeyField(column_name='type', field='id', model=SeasonsTypes, null=True)
     studio = IntegerField(index=True, null=True)
     is_deleted = BareField(constraints=[SQL("DEFAULT 0")])
 
     class Meta:
         table_name = 'Seasons'
-
-class CharactersBoard(BaseModel):
-    name = TextField(null=True)
-    firstname = TextField(null=True)
-    description = TextField(null=True)
-    serie = ForeignKeyField(column_name='serie', field='id', model=Series, null=True)
-    season = ForeignKeyField(column_name='season', field='id', model=Seasons, null=True)
-
-    class Meta:
-        table_name = 'CharactersBoard'
 
 class Planning(BaseModel):
     season = ForeignKeyField(column_name='season', field='id', model=Seasons)

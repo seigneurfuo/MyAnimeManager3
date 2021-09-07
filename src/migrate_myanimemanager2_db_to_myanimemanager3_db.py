@@ -35,6 +35,15 @@ def migration_series():
         # On récupère l'identifiant qui vien d'etre crée afin de garder une trace des anciens / nouveaux ID
         id_series[serie.serie_id] = new_serie.id
 
+def populate_new_table_seasons_type():
+    seasons_types = [("Saison", ""), ("OAV / OVA", "")]
+    for index, seasons_type in enumerate(seasons_types):
+        msg = "Type de Saison: {0} / {1} -> {2}".format(index + 1, len(seasons_types), seasons_type[0])
+        print(msg)
+
+        new_season_type = mamdb3.SeasonsTypes()
+        new_season_type.name = seasons_type[0]
+        new_season_type.save()
 
 def migration_seasons():
     seasons = mamdb2.Season().select()
@@ -46,22 +55,20 @@ def migration_seasons():
         new_season = mamdb3.Seasons()
         new_season.sort_id = season.season_sort_id
         new_season.name = season.season_title
+        new_season.type = 1 # Saison
 
         # Migration de l'id de la série ratachée
         old_serie_id = season.season_fk_serie.serie_id
         new_serie_id = id_series[old_serie_id]
-        serie = mamdb3.Series.get_by_id(new_serie_id)
-        new_season.serie = serie # On récupère le nouvel ID de le série
+        new_season.serie = new_serie_id # On récupère le nouvel ID de le série
 
         # TODO:
         #Date + champ sur comment est enregistré la date
 
         new_season.is_deleted = 0
-        is_ok = new_season.save()
-        if not is_ok:
-            print(is_ok)
+        new_season.save()
 
-        # On récupère l'identifiant qui vien d'etre crée afin de garder une trace des anciens / nouveaux ID
+        # On récupère l'identifiant qui viens d'etre créer afin de garder une trace des anciens / nouveaux ID
         id_series[season.season_id] = new_season.id
 
 
@@ -82,13 +89,15 @@ def migration():
     mamdb3.database.init(MYANIMEMANAGER_3_DATABASE)
 
     # Création des tables sur la base de données mam3
-    tables = [mamdb3.Series, mamdb3.Seasons, mamdb3.SeasonsTypes, mamdb3.Studios, mamdb3.Tags, mamdb3.TagsGroups]
+    tables = [mamdb3.Series, mamdb3.Seasons, mamdb3.SeasonsTypes, mamdb3.Planning, mamdb3.Studios, mamdb3.Tags,
+              mamdb3.TagsGroups]
     mamdb3.database.create_tables(tables)
 
     # Migration de chaque table
     migration_series()
+    populate_new_table_seasons_type()
     migration_seasons()
-    #migration_planning()
+    migration_planning()
 
     mamdb3.database.commit()
     mamdb3.database.close()

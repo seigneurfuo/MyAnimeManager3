@@ -124,17 +124,15 @@ class FullListTab(QWidget):
 
         self.tableWidget.setRowCount(seasons_count)
         for row_index, season in enumerate(seasons):
-            try:
-                columns = [season.seasons_type.name, season.name]
+            columns = [season.type.name, season.name]
 
-                print(columns)
+            print(columns)
 
-                for col_index, value in enumerate(columns):
-                    item = QTableWidgetItem(value)
-                    item.setData(Qt.UserRole, season.id)
-                    self.tableWidget.setItem(row_index, col_index, item)
-            except:
-                print("\t\tErreur !!! -> Serie id: ", serie.id, "Season id:", season.id)
+            for col_index, value in enumerate(columns):
+                item = QTableWidgetItem(value)
+                item.setData(Qt.UserRole, season.id)
+                self.tableWidget.setItem(row_index, col_index, item)
+
         # endregion
 
 

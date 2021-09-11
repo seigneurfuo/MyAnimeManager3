@@ -12,8 +12,8 @@ MYANIMEMANAGER_2_DATABASE = os.path.join(Path.home(), ".myanimemanager2/database
 MYANIMEMANAGER_3_DATABASE = os.path.join(Path.home(), ".myanimemanager3/database.sqlite3")
 
 # Garde la correspondance entre les anciens ID et les nouveaux ID
-id_series = {}
-id_seasons = {}
+series_id_list = {}
+seasons_id_list = {}
 
 def migration_series():
     series = mamdb2.Serie().select()
@@ -33,7 +33,7 @@ def migration_series():
         new_serie.save()
 
         # On récupère l'identifiant qui vien d'etre crée afin de garder une trace des anciens / nouveaux ID
-        id_series[serie.serie_id] = new_serie.id
+        series_id_list[serie.serie_id] = new_serie.id
 
 def populate_new_table_seasons_type():
     seasons_types = [("Saison", ""), ("OAV / OVA", "")]
@@ -59,8 +59,8 @@ def migration_seasons():
 
         # Migration de l'id de la série ratachée
         old_serie_id = season.season_fk_serie.serie_id
-        new_serie_id = id_series[old_serie_id]
-        new_season.serie = new_serie_id # On récupère le nouvel ID de le série
+        new_season_id = series_id_list[old_serie_id]
+        new_season.serie = new_season_id # On récupère le nouvel ID de le série
 
         # TODO:
         #Date + champ sur comment est enregistré la date
@@ -69,11 +69,32 @@ def migration_seasons():
         new_season.save()
 
         # On récupère l'identifiant qui viens d'etre créer afin de garder une trace des anciens / nouveaux ID
-        id_series[season.season_id] = new_season.id
+        series_id_list[season.season_id] = new_season.id
 
 
 def migration_planning():
-    pass
+    planning = mamdb2.Planning().select()
+    for index, day in enumerate(planning):
+        msg = "Planning: {0} / {1} -> {2}".format(index + 1, len(planning), day.planning_date)
+        print(msg)
+
+        new_day = mamdb3.Planning()
+        new_day.date = day.planning_date
+        new_day.episode = day.planning_episode_id
+
+        # Migration de l'id de la série ratachée
+        old_serie_id = day.planning_fk_serie.serie_id
+        new_serie_id = series_id_list[old_serie_id]
+        new_day.serie =  new_serie_id# On récupère le nouvel ID de le série
+
+        # FIXME: Faire en sorte que cela fonctionne + enlever null=True sur le champ season de la table planning
+        # Migration de l'id de la saison ratachée
+        #old_season_id = day.planning_fk_season.season_id
+        #new_season_id = seasons_id_list[old_season_id]
+        #new_day.season = new_season_id # On récupère le nouvel ID de le série
+
+        new_day.save()
+
 
 
 def migration():

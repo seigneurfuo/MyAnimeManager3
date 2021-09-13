@@ -69,14 +69,12 @@ def migration_seasons():
         new_season.save()
 
         # On récupère l'identifiant qui viens d'etre créer afin de garder une trace des anciens / nouveaux ID
-        series_id_list[season.season_id] = new_season.id
-
+        seasons_id_list[season.season_id] = new_season.id
 
 def migration_planning():
     planning = mamdb2.Planning().select()
     for index, day in enumerate(planning):
-        msg = "Planning: {0} / {1} -> {2}".format(index + 1, len(planning), day.planning_date)
-        print(msg)
+        progress(index, len(planning))
 
         new_day = mamdb3.Planning()
         new_day.date = day.planning_date
@@ -85,16 +83,17 @@ def migration_planning():
         # Migration de l'id de la série ratachée
         old_serie_id = day.planning_fk_serie.serie_id
         new_serie_id = series_id_list[old_serie_id]
-        new_day.serie =  new_serie_id# On récupère le nouvel ID de le série
+        new_day.serie =  new_serie_id # On récupère le nouvel ID de le série
 
-        # FIXME: Faire en sorte que cela fonctionne + enlever null=True sur le champ season de la table planning
         # Migration de l'id de la saison ratachée
-        #old_season_id = day.planning_fk_season.season_id
-        #new_season_id = seasons_id_list[old_season_id]
-        #new_day.season = new_season_id # On récupère le nouvel ID de le série
+        try:
+            old_season_id = day.planning_fk_season.season_id
+            new_season_id = seasons_id_list[old_season_id]
+            new_day.season = new_season_id # On récupère le nouvel ID de le série
 
-        new_day.save()
-
+            new_day.save()
+        except:
+            print("Erreur -> avec l'ID {}".format(day.planning_id))
 
 
 def migration():

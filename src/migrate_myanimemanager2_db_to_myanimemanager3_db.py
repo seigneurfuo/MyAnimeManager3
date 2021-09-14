@@ -7,13 +7,13 @@ from pathlib import Path
 import database_myanimemanager_2 as mamdb2
 import database as mamdb3
 
-
 MYANIMEMANAGER_2_DATABASE = os.path.join(Path.home(), ".myanimemanager2/database.sqlite3")
 MYANIMEMANAGER_3_DATABASE = os.path.join(Path.home(), ".myanimemanager3/database.sqlite3")
 
 # Garde la correspondance entre les anciens ID et les nouveaux ID
 series_id_list = {}
 seasons_id_list = {}
+
 
 def migration_series():
     series = mamdb2.Serie().select()
@@ -27,13 +27,14 @@ def migration_series():
         new_serie.name = serie.serie_title
 
         # TODO:
-        #new_serie.path = serie.serie_path
-        #new_serie.liked = serie.serie_liked
+        # new_serie.path = serie.serie_path
+        # new_serie.liked = serie.serie_liked
         new_serie.is_deleted = 0
         new_serie.save()
 
         # On récupère l'identifiant qui vien d'etre crée afin de garder une trace des anciens / nouveaux ID
         series_id_list[serie.serie_id] = new_serie.id
+
 
 def populate_new_table_seasons_type():
     seasons_types = [("Saison", ""), ("OAV / OVA", "")]
@@ -45,6 +46,7 @@ def populate_new_table_seasons_type():
         new_season_type.name = seasons_type[0]
         new_season_type.save()
 
+
 def migration_seasons():
     seasons = mamdb2.Season().select()
     for index, season in enumerate(seasons):
@@ -55,15 +57,15 @@ def migration_seasons():
         new_season = mamdb3.Seasons()
         new_season.sort_id = season.season_sort_id
         new_season.name = season.season_title
-        new_season.type = 1 # Saison
+        new_season.type = 1  # Saison
 
         # Migration de l'id de la série ratachée
         old_serie_id = season.season_fk_serie.serie_id
         new_season_id = series_id_list[old_serie_id]
-        new_season.serie = new_season_id # On récupère le nouvel ID de le série
+        new_season.serie = new_season_id  # On récupère le nouvel ID de le série
 
         # TODO:
-        #Date + champ sur comment est enregistré la date
+        # Date + champ sur comment est enregistré la date
 
         new_season.is_deleted = 0
         new_season.save()
@@ -71,10 +73,12 @@ def migration_seasons():
         # On récupère l'identifiant qui viens d'etre créer afin de garder une trace des anciens / nouveaux ID
         seasons_id_list[season.season_id] = new_season.id
 
+
 def migration_planning():
     planning = mamdb2.Planning().select()
     for index, day in enumerate(planning):
-        progress(index, len(planning))
+        msg = "Planning: {0} / {1} -> {2}".format(index + 1, len(planning), day.planning_date)
+        print(msg)
 
         new_day = mamdb3.Planning()
         new_day.date = day.planning_date
@@ -83,13 +87,13 @@ def migration_planning():
         # Migration de l'id de la série ratachée
         old_serie_id = day.planning_fk_serie.serie_id
         new_serie_id = series_id_list[old_serie_id]
-        new_day.serie =  new_serie_id # On récupère le nouvel ID de le série
+        new_day.serie = new_serie_id  # On récupère le nouvel ID de le série
 
         # Migration de l'id de la saison ratachée
         try:
             old_season_id = day.planning_fk_season.season_id
             new_season_id = seasons_id_list[old_season_id]
-            new_day.season = new_season_id # On récupère le nouvel ID de le série
+            new_day.season = new_season_id  # On récupère le nouvel ID de le série
 
             new_day.save()
         except:

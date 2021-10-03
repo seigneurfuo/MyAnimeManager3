@@ -18,13 +18,15 @@ class Application(QApplication):
         self.version = "0.0.1"
         self.description = self.tr("Un gestionnaire de séries multiplateforme écrit en Python3 et Qt5")
 
+
         self.setApplicationName(self.name)
         self.setApplicationDisplayName(self.name)
         self.setApplicationVersion(self.version)
 
-        self._DEFAULT_SETTINGS = default_settings.DEFAULT_SETTINGS
-
+        self.default_settings = default_settings.DEFAULT_SETTINGS
         self.appDataFolder = None
+        self.season_states = ["Indéfinie", "A voir", "En cours", "Terminée", "Annulée"]
+
         self.load_profile()
 
         self.mainwindow = MainWindow(self)

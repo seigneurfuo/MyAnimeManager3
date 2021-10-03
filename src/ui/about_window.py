@@ -8,7 +8,8 @@ import os
 class AboutWindow(QDialog):
     def __init__(self, parent):
         super().__init__(parent)
-        self._parent_qmainwindow = parent
+
+        self.parent = parent
         self.init_ui()
 
     def init_ui(self):

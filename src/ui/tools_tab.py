@@ -12,7 +12,7 @@ class ToolsTab(QWidget):
     def __init__(self, parent, app_dir):
         super().__init__(parent)
 
-        self.parent_mainwindow = parent
+        self.parent = parent
         self.app_dir = app_dir
 
         self.init_ui()

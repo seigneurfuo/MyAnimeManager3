@@ -22,11 +22,12 @@ class ToolsTab(QWidget):
     def init_ui(self):
         loadUi(os.path.join(self.app_dir, 'ui/tools_tab.ui'), self)
 
-
     def init_events(self):
         self.go_button.clicked.connect(self.on_duration_calculation_button_click)
         self.get_current_time_button.clicked.connect(self.on_get_current_time_button_click)
 
+    def when_visible(self):
+        pass
 
     def on_duration_calculation_button_click(self):
         self.listWidget.clear()

@@ -19,9 +19,6 @@ class PlanningTab(QWidget):
         self.init_ui()
         self.init_events()
 
-        # On remplir les tableau lors du chargement
-        self.fill_watched_table()
-
     def init_ui(self):
         loadUi(os.path.join(self.app_dir, 'ui/planning_tab.ui'), self)
 
@@ -33,6 +30,12 @@ class PlanningTab(QWidget):
         self.today_button.clicked.connect(self.when_today_button_clicked)
         self.planning_calendar.clicked.connect(self.fill_watched_table)
 
+    def when_visible(self):
+        # Coloration des jours sur le calendrier
+        self.planning_calendar.dates = [record.date for record in Planning().select().order_by(Planning.date)]
+
+        self.fill_watched_table()
+
     def fill_watched_table(self):
         """
         Fonction qui rempli la liste des épisodes vus
@@ -43,12 +46,14 @@ class PlanningTab(QWidget):
         self.tableWidget_7.setRowCount(0)
 
         # Nettoyage du nombre d'épisodes vus pour cette date
-
+        self.label_82.setText("")
 
         calendar_date = self.planning_calendar.selectedDate().toPyDate()
 
         planning_data_list = Planning().select().where(Planning.date == calendar_date).order_by(Planning.id)
-        self.tableWidget_7.setRowCount(len(planning_data_list))
+        row_count = len(planning_data_list)
+        self.label_82.setText(str(row_count))
+        self.tableWidget_7.setRowCount(row_count)
 
         for col_index, planning_data in enumerate(planning_data_list):
             column0 = QTableWidgetItem(planning_data.season.serie.name)

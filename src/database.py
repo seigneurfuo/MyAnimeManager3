@@ -18,27 +18,33 @@ class SeasonsTypes(BaseModel):
 
 class Series(BaseModel):
     sort_id = IntegerField()
-    name = TextField(null=True)
+    name = TextField()
     description = TextField(null=True)
-    is_deleted = BareField(constraints=[SQL("DEFAULT 0")])
+    is_deleted = IntegerField(constraints=[SQL("DEFAULT 0")])
 
     class Meta:
         table_name = 'Series'
 
 class Seasons(BaseModel):
     sort_id = IntegerField()
-    name = TextField(null=True)
+    name = TextField()
     date = TextField(null=True)
     serie = ForeignKeyField(column_name='serie', field='id', model=Series)
     type = ForeignKeyField(column_name='type', field='id', model=SeasonsTypes, null=True)
     studio = IntegerField(index=True, null=True)
-    is_deleted = BareField(constraints=[SQL("DEFAULT 0")])
+    episodes = IntegerField(constraints=[SQL("DEFAULT 0")])
+    watched_episodes = IntegerField(constraints=[SQL("DEFAULT 0")], null=True)
+    view_count = IntegerField(constraints=[SQL("DEFAULT 0")])
+    state = IntegerField()
+    favorite = IntegerField(constraints=[SQL("DEFAULT 0")])
+    is_deleted = IntegerField(constraints=[SQL("DEFAULT 0")])
 
     class Meta:
         table_name = 'Seasons'
 
 class Planning(BaseModel):
-    season = ForeignKeyField(column_name='season', field='id', model=Seasons)
+    serie = ForeignKeyField(column_name='serie', field='id', model=Series)
+    season = ForeignKeyField(column_name='season', field='id', model=Seasons, null=True)
     date = DateField()
     episode = IntegerField()
 
@@ -64,12 +70,4 @@ class Tags(BaseModel):
 
     class Meta:
         table_name = 'Tags'
-
-class SqliteSequence(BaseModel):
-    name = BareField(null=True)
-    seq = BareField(null=True)
-
-    class Meta:
-        table_name = 'sqlite_sequence'
-        primary_key = False
 

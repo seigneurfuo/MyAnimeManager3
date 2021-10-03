@@ -34,6 +34,7 @@ class PlanningTab(QWidget):
     def init_events(self):
         self.today_button.clicked.connect(self.when_today_button_clicked)
         self.planning_calendar.clicked.connect(self.fill_watched_table)
+        self.checkBox_4.clicked.connect(self.when_checkBox_4_is_clicked)
 
     def when_visible(self):
         # Coloration des jours sur le calendrier
@@ -71,10 +72,6 @@ class PlanningTab(QWidget):
             column2 = QTableWidgetItem(str(planning_data.episode))
             self.tableWidget_7.setItem(col_index, 2, column2)
 
-    def get_episodes_to_watch(self, season_state=2):
-        return Seasons.select().where(Seasons.state == season_state, Seasons.watched_episodes < Seasons.episodes,
-                                      Seasons.is_deleted == 0).order_by(Seasons.id)
-
     def fill_to_watch_table(self):
         """
         Fonction qui rempli la liste des épisodes à voir
@@ -84,7 +81,14 @@ class PlanningTab(QWidget):
         # Nettoyage de la liste
         self.tableWidget_6.setRowCount(0)
 
-        episodes_to_watch = self.get_episodes_to_watch()
+        if self.checkBox_4.isChecked():
+            episodes_to_watch = Seasons.select().where(Seasons.state == 2, Seasons.watched_episodes < Seasons.episodes,
+                                                       Seasons.is_deleted == 0).order_by(Seasons.id)
+        else:
+            #                                                           1 or 2
+            episodes_to_watch = Seasons.select().where(Seasons.state << [1, 2], Seasons.watched_episodes < Seasons.episodes,
+                                                       Seasons.is_deleted == 0).order_by(Seasons.id)
+
         self.tableWidget_6.setRowCount(len(episodes_to_watch))
 
         for col_index, row_data in enumerate(episodes_to_watch):
@@ -121,6 +125,9 @@ class PlanningTab(QWidget):
 
         self.planning_calendar.setSelectedDate(QDate.currentDate())
         self.fill_watched_table()
+
+    def when_checkBox_4_is_clicked(self):
+        self.fill_to_watch_table()
 
 
 """

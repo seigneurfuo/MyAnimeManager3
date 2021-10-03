@@ -13,7 +13,7 @@ class PlanningTab(QWidget):
     def __init__(self, parent, app_dir):
         super().__init__(parent)
 
-        self.parent_mainwindow = parent
+        self.parent = parent
         self.app_dir = app_dir
 
         self.init_ui()
@@ -72,8 +72,28 @@ class PlanningTab(QWidget):
         """
 
         # Nettoyage de la liste
+        self.tableWidget_6.setRowCount(0)
 
-        pass
+        # Nettoyage du nombre d'épisodes vus pour cette date
+
+        calendar_date = self.planning_calendar.selectedDate().toPyDate()
+
+        planning_data_list = Planning().select().where(Planning.date == calendar_date).order_by(Planning.id)
+        row_count = len(planning_data_list)
+        self.label_82.setText(str(row_count))
+        self.tableWidget_7.setRowCount(row_count)
+
+        for col_index, planning_data in enumerate(planning_data_list):
+            column0 = QTableWidgetItem(planning_data.season.serie.name)
+            self.tableWidget_7.setItem(col_index, 0, column0)
+
+            column1 = QTableWidgetItem(planning_data.season.name)
+            self.tableWidget_7.setItem(col_index, 1, column1)
+
+            column2 = QTableWidgetItem(str(planning_data.episode))
+            self.tableWidget_7.setItem(col_index, 2, column2)
+
+
 
     def when_today_button_clicked(self):
         """Fonction qui ramène le calendrier à la date actuelle"""

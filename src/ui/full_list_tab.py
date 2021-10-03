@@ -14,7 +14,8 @@ from database import Series, Seasons, database
 class FullListTab(QWidget):
     def __init__(self, parent, app_dir):
         super().__init__(parent)
-        self._parent = parent
+
+        self.parent = parent
         self.app_dir = app_dir
 
         self.current_serie_id = None

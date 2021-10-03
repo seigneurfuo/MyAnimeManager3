@@ -85,8 +85,8 @@ class PlanningTab(QWidget):
             episodes_to_watch = Seasons.select().where(Seasons.state == 2, Seasons.watched_episodes < Seasons.episodes,
                                                        Seasons.is_deleted == 0).order_by(Seasons.id)
         else:
-            #                                                           1 or 2
-            episodes_to_watch = Seasons.select().where(Seasons.state << [1, 2], Seasons.watched_episodes < Seasons.episodes,
+            # https://docs.peewee-orm.com/en/latest/peewee/query_operators.html 1 or 2
+            episodes_to_watch = Seasons.select().where(Seasons.state.in_((1, 2)), Seasons.watched_episodes < Seasons.episodes,
                                                        Seasons.is_deleted == 0).order_by(Seasons.id)
 
         self.tableWidget_6.setRowCount(len(episodes_to_watch))

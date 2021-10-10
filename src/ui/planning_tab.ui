@@ -142,7 +142,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="planningAddButton_3">
+       <widget class="QPushButton" name="add_to_watched_list_button">
         <property name="minimumSize">
          <size>
           <width>191</width>

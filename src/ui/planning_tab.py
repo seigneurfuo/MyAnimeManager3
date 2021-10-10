@@ -35,6 +35,7 @@ class PlanningTab(QWidget):
         self.today_button.clicked.connect(self.when_today_button_clicked)
         self.planning_calendar.clicked.connect(self.fill_watched_table)
         self.checkBox_4.clicked.connect(self.when_checkBox_4_is_clicked)
+        self.add_to_watched_list_button.clicked.connect(self.when_add_to_watched_list_button_clicked)
 
     def when_visible(self):
         # Coloration des jours sur le calendrier
@@ -94,6 +95,7 @@ class PlanningTab(QWidget):
         for col_index, row_data in enumerate(episodes_to_watch):
             # Série
             column0 = QTableWidgetItem(row_data.serie.name)
+            column0.setData(Qt.UserRole, row_data.id)
             self.tableWidget_6.setItem(col_index, 0, column0)
 
             # Saison
@@ -125,6 +127,36 @@ class PlanningTab(QWidget):
 
         self.planning_calendar.setSelectedDate(QDate.currentDate())
         self.fill_watched_table()
+
+    def when_add_to_watched_list_button_clicked(self):
+        current_row = self.tableWidget_6.currentRow()
+        current_season_id = self.tableWidget_6.item(current_row, 0).data(Qt.UserRole)
+
+        self.add_episode_to_planning(current_season_id)
+        self.when_visible()
+
+    def add_episode_to_planning(self, season_id):
+        calendar_date = self.planning_calendar.selectedDate().toPyDate()
+        current_season = Seasons().get(Seasons.id == season_id)
+
+        new_watched_episodes_value = current_season.watched_episodes + 1
+
+        # Ajout dans le planning
+        planning_entry = Planning()
+        planning_entry.serie = current_season.serie.id
+        planning_entry.season = current_season.id
+        planning_entry.date = calendar_date
+        planning_entry.episode = new_watched_episodes_value
+        planning_entry.save()
+
+        # Changement d'état de la saison + RAZ
+        if(new_watched_episodes_value == current_season.episodes):
+            current_season.watched_episodes = 0
+            current_season.state = 3 # Terminé
+        else:
+            current_season.watched_episodes = new_watched_episodes_value
+
+        current_season.save()
 
     def when_checkBox_4_is_clicked(self):
         self.fill_to_watch_table()

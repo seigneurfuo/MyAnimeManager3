@@ -15,21 +15,25 @@ class SeriesDialog(QDialog):
         self.init_ui()
         self.init_events()
 
+        if self.serie.id:
+            self.fill_data()
 
     def init_ui(self):
         loadUi(os.path.join(self.app_dir, 'ui/dialogs/series.ui'), self)
 
-        #if self.serie:
-            #self.seriemodal.setWindowTitle(self.serie.name)
-
-
     def init_events(self):
         pass
 
+    def fill_data(self):
+        self.setWindowTitle(self.serie.name) # Titre
+        self.spinBox.setValue(self.serie.sort_id)
+        self.lineEdit_2.setText(self.serie.name) #
+        #self.lineEdit_3.setText(self.serie.) # Chemin
 
     def accept(self):
         self.serie.name = self.lineEdit_2.text()
         self.serie.sort_id = self.spinBox.value()
+        self.serie.save()
 
         super(SeriesDialog, self).accept()
 

@@ -303,7 +303,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="edit_erie_button_clicked">
+     <widget class="QPushButton" name="edit_serie_button">
       <property name="text">
        <string>[0]</string>
       </property>

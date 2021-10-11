@@ -24,7 +24,6 @@ class FullListTab(QWidget):
         self.init_ui()
         self.init_events()
 
-
     def init_ui(self):
         loadUi(os.path.join(self.app_dir, 'ui/full_list_tab.ui'), self)
 
@@ -35,6 +34,9 @@ class FullListTab(QWidget):
 
         # region ----- Boutons -----
         self.add_serie_button.clicked.connect(self.on_add_serie_button_clicked_function)
+        self.edit_serie_button.clicked.connect(self.on_edit_serie_button_clicked_function)
+
+        # FIXME:
         self.delete_serie_button.clicked.connect(self.on_delete_serie_button_clicked_function)
 
         self.view_deleted_elements_button.clicked.connect(self.on_view_deleted_elements_button_clicked_function)
@@ -84,17 +86,25 @@ class FullListTab(QWidget):
     # endregion
 
     def on_add_serie_button_clicked_function(self):
-        new_serie = Series()
-        series_dialog = SeriesDialog(serie=new_serie, app_dir=self.app_dir)
+        serie = Series()
+        series_dialog = SeriesDialog(serie=serie, app_dir=self.app_dir)
 
         if series_dialog.exec_():
             series_dialog.serie.save()
             self.fill_series_combobox()
 
+    def on_edit_serie_button_clicked_function(self):
+        if self.current_serie_id:
+            serie = Series().get(self.current_serie_id)
+
+            series_dialog = SeriesDialog(serie=serie, app_dir=self.app_dir)
+            if series_dialog.exec_():
+                self.when_visible()
+
     def on_delete_serie_button_clicked_function(self):
         if self.current_serie_id:
             # ----- Supression des saisons -----
-            serie = Series.get(Series.id == self.current_serie_id)
+            serie = Series.get(self.current_serie_id)
             serie.is_deleted = 1
             serie.save()
 
@@ -130,8 +140,8 @@ class FullListTab(QWidget):
                 self.tableWidget.setItem(row_index, col_index, item)
 
         # Si on à au moiins une série, alors on affiche la première de la liste
-        #if seasons:
-            #self.tableWidget.setCurrentCell(0, 0)
+        # if seasons:
+        # self.tableWidget.setCurrentCell(0, 0)
 
         # endregion
 

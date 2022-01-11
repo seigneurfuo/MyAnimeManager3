@@ -28,9 +28,9 @@ class FullListTab(QWidget):
         loadUi(os.path.join(self.app_dir, 'ui/full_list_tab.ui'), self)
 
     def init_events(self):
-        self.comboBox.currentIndexChanged.connect(self.on_series_list_current_index_changed)
+        self.comboBox.currentIndexChanged.connect(self.on_series_list_current_index_changed_function)
         # self.pushButton.clicked.connect(self._on_serie_edit)
-        self.tableWidget.currentItemChanged.connect(self.on_seasons_list_current_index_changed)
+        self.tableWidget.currentItemChanged.connect(self.on_seasons_list_current_index_changed_function)
 
         # region ----- Boutons -----
         self.add_serie_button.clicked.connect(self.on_add_serie_button_clicked_function)
@@ -38,6 +38,9 @@ class FullListTab(QWidget):
 
         # FIXME:
         self.delete_serie_button.clicked.connect(self.on_delete_serie_button_clicked_function)
+
+        self.delete_season_button.clicked.connect(self.on_delete_season_button_clicked_function)
+
 
         self.view_deleted_elements_button.clicked.connect(self.on_view_deleted_elements_button_clicked_function)
         # endregion
@@ -47,7 +50,7 @@ class FullListTab(QWidget):
 
         # TODO: à garder ou pas ?
         # On force l'affichage de l'informaton pour la première série au lancement
-        self.on_series_list_current_index_changed()
+        self.on_series_list_current_index_changed_function()
 
     # region ----- Serie combobox -----
     def fill_series_combobox(self):
@@ -62,7 +65,7 @@ class FullListTab(QWidget):
 
     # endregion
 
-    def on_series_list_current_index_changed(self):
+    def on_series_list_current_index_changed_function(self):
         # ----- -----
 
         self.current_serie_id = self.comboBox.currentData()
@@ -111,19 +114,30 @@ class FullListTab(QWidget):
             # self.on_series_list_current_index_changed()
             self.fill_series_combobox()
 
+    def on_delete_season_button_clicked_function(self):
+        if self.current_season_id:
+            print("ID sezason:", self.current_season_id)
+            season = Seasons.get(self.current_season_id)
+            print("DEBUG:", season.name)
+            season.is_deleted = 1
+            season.save()
+
+            #self.on_series_list_current_index_changed_function()
+
     def on_view_deleted_elements_button_clicked_function(self):
         deleted_seasons = Seasons.select().where(Seasons.is_deleted == 1).order_by(Seasons.sort_id)
-        dialog = DeletedElementsDialog(deleted_seasons=deleted_seasons, app_dir=self.app_dir)
+        print(deleted_seasons)
+        #dialog = DeletedElementsDialog(deleted_seasons=deleted_seasons, app_dir=self.app_dir)
 
         # TODO:
-        if dialog.exec_():
-            pass
+        # if dialog.exec_():
+        #     pass
 
     # region ----- Remplissage de la liste des saisons -----
     def fill_season_list(self, serie):
         self.tableWidget.setRowCount(0)
 
-        seasons = Seasons.select().where(Seasons.serie == serie.id).order_by(Seasons.sort_id)
+        seasons = Seasons.select().where(Seasons.serie == serie.id).where(Seasons.is_deleted == 0).order_by(Seasons.sort_id)
         seasons_count = len(seasons)
 
         self.label_2.setText(str(seasons_count))
@@ -152,11 +166,15 @@ class FullListTab(QWidget):
         for field, value in fields:
             field.setText(value)
 
-    def on_seasons_list_current_index_changed(self):
+    def on_seasons_list_current_index_changed_function(self):
         # self.tableWidget.currentItem()
         current_row = self.tableWidget.currentRow()
-        self.current_season_id = self.tableWidget.item(current_row, 0).data(Qt.UserRole)
-        print(self.current_season_id)
+        current_item = self.tableWidget.item(current_row, 0)
+
+        # TODO: Click automatique sur le premier élement lors du changement si une saison existe ?
+        if current_item:
+            self.current_season_id = current_item.data(Qt.UserRole)
+            print(self.current_season_id)
 
         season = Seasons.select().where(Seasons.id == self.current_season_id).get()
         self.fill_season_data(season)

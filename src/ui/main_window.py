@@ -8,6 +8,8 @@ from utils import open_folder
 from ui.planning_tab import PlanningTab
 from ui.full_list_tab import FullListTab
 from ui.tools_tab import ToolsTab
+from ui.dialogs.about import About
+
 
 class MainWindow(QMainWindow):
     def __init__(self, parent):
@@ -45,6 +47,10 @@ class MainWindow(QMainWindow):
         # FIXME: Ouvrir plutot le dossier utilisateur !
         self.open_profile_action.triggered.connect(self.on_menu_action_open_profile_clicked_function)
 
+        self.planning_export_action.triggered.connect(self.on_menu_action_planning_export_clicked_function)
+        self.about_action.triggered.connect(self.on_about_action_clicked_function)
+
+
         # Clic sur les onglets
         self.tabWidget.currentChanged.connect(self.on_current_tab_changed)
 
@@ -73,6 +79,14 @@ class MainWindow(QMainWindow):
 
     def on_menu_action_open_profile_clicked_function(self):
         open_folder(self.app_dir)
+
+
+    def on_menu_action_planning_export_clicked_function(self):
+        pass
+
+    def on_about_action_clicked_function(self):
+        dialog = About()
+        dialog.exec_()
 
 
     def closeEvent(self, a0):

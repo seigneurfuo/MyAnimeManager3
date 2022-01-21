@@ -71,7 +71,7 @@ class FullListTab(QWidget):
         self.current_serie_id = self.comboBox.currentData()
 
         if self.current_serie_id:
-            serie = Series.select().where(Series.id == self.current_serie_id).get()
+            serie = Series.get(Series.id == self.current_serie_id)
 
             self.fill_serie_data(serie)
             self.fill_season_list(serie)
@@ -176,7 +176,7 @@ class FullListTab(QWidget):
             self.current_season_id = current_item.data(Qt.UserRole)
             print(self.current_season_id)
 
-        season = Seasons.select().where(Seasons.id == self.current_season_id).get()
+        season = Seasons.get(Seasons.id == self.current_season_id)
         self.fill_season_data(season)
 
     # endregion

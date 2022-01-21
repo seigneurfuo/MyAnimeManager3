@@ -14,26 +14,25 @@ def duration_calculation(episodesnumber, episodeslenght, pause_every, pause_dura
 
     for episode_num in range(episodesnumber):
         end = start + timedelta(minutes=episodeslenght)
-        row = "{:02d} - {:02d}:{:02d} -> {:02d}:{:02d}".format(episode_num + 1, start.hour, start.minute, end.hour, end.minute)
+        row = "{:02d} - {:02d}:{:02d} -> {:02d}:{:02d}".format(episode_num + 1, start.hour, start.minute, end.hour,
+                                                               end.minute)
 
         ret_list.append(row)
 
         # Décale la plage
         start = end
 
-        # Gestion des pauses
-        if is_pause:
-                # Effectue une pause si episode_num est bien un multiple de pause_every
-            if (episode_num +1) % pause_every == 0:
-                end = start + timedelta(minutes=pause_duration)
-                row = "    Pause - {:02d}:{:02d} -> {:02d}:{:02d}".format(start.hour, start.minute, end.hour, end.minute)
-                ret_list.append(row)
+        # Gestion des pauses - Effectue une pause si episode_num est bien un multiple de pause_every
+        if is_pause and (episode_num + 1) % pause_every == 0:
+            end = start + timedelta(minutes=pause_duration)
+            row = "Pause - {:02d}:{:02d} -> {:02d}:{:02d}".format(start.hour, start.minute, end.hour, end.minute)
+            ret_list.append(row)
 
-                # Décale la plage
-                start = end
-
+            # Décale la plage
+            start = end
 
     return ret_list
+
 
 def open_folder(path):
     """Ouvre un explorateur de fichiers à l'adresse indiquée en argument"""

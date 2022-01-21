@@ -125,19 +125,20 @@ class FullListTab(QWidget):
             #self.on_series_list_current_index_changed_function()
 
     def on_view_deleted_elements_button_clicked_function(self):
+        deleted_series = Series.select().where(Series.is_deleted == 1).order_by(Series.sort_id)
         deleted_seasons = Seasons.select().where(Seasons.is_deleted == 1).order_by(Seasons.sort_id)
         print(deleted_seasons)
-        #dialog = DeletedElementsDialog(deleted_seasons=deleted_seasons, app_dir=self.app_dir)
+        dialog = DeletedElementsDialog(deleted_series, deleted_seasons, self.app_dir)
 
         # TODO:
-        # if dialog.exec_():
-        #     pass
+        if dialog.exec_():
+            pass
 
     # region ----- Remplissage de la liste des saisons -----
     def fill_season_list(self, serie):
         self.tableWidget.setRowCount(0)
 
-        seasons = Seasons.select().where(Seasons.serie == serie.id).where(Seasons.is_deleted == 0).order_by(Seasons.sort_id)
+        seasons = Seasons.select().where(Seasons.serie == serie.id, Seasons.is_deleted == 0).order_by(Seasons.sort_id)
         seasons_count = len(seasons)
 
         self.label_2.setText(str(seasons_count))
@@ -145,8 +146,6 @@ class FullListTab(QWidget):
         self.tableWidget.setRowCount(seasons_count)
         for row_index, season in enumerate(seasons):
             columns = [season.type.name, season.name]
-
-            print(columns)
 
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
@@ -165,6 +164,7 @@ class FullListTab(QWidget):
 
         for field, value in fields:
             field.setText(value)
+
 
     def on_seasons_list_current_index_changed_function(self):
         # self.tableWidget.currentItem()

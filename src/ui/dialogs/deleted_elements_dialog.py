@@ -6,9 +6,10 @@ from PyQt5.uic import loadUi
 
 
 class DeletedElementsDialog(QDialog):
-    def __init__(self, deleted_seasons, app_dir):
+    def __init__(self, deleted_series, deleted_seasons, app_dir):
         super(DeletedElementsDialog, self).__init__()
 
+        self.deleted_series = deleted_series
         self.deleted_seasons = deleted_seasons
         self.app_dir = app_dir
 
@@ -35,11 +36,9 @@ class DeletedElementsDialog(QDialog):
 
         self.tableWidget.setRowCount(deleted_seasons_count)
         for row_index, season in enumerate(self.deleted_seasons):
+
             # TODO: Ajouter les colonnes supplémentaires
-            columns = [season.serie.name, season.name, season.seasons_type.name]
-
-            print(columns)
-
+            columns = [season.serie.name, season.name, season.type.name, season.state]
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
                 item.setData(Qt.UserRole, season.id)

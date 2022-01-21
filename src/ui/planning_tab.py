@@ -25,17 +25,18 @@ class PlanningTab(QWidget):
         self.init_events()
 
     def init_ui(self):
-        loadUi(os.path.join(self.app_dir, 'ui/planning_tab.ui'), self)
+        loadUi(os.path.join(os.path.dirname(__file__), 'planning_tab.ui'), self)
 
         self.planning_calendar = CustomCalendar()
         self.planning_calendar.setCellsBackgroundColor(QColor(115, 210, 22, 50))
-        self.horizontalLayout_42.insertWidget(0, self.planning_calendar, )
+        self.horizontalLayout_42.insertWidget(0, self.planning_calendar)
 
     def init_events(self):
         self.today_button.clicked.connect(self.when_today_button_clicked)
         self.planning_calendar.clicked.connect(self.fill_watched_table)
         self.checkBox_4.clicked.connect(self.when_checkBox_4_is_clicked)
         self.add_to_watched_list_button.clicked.connect(self.when_add_to_watched_list_button_clicked)
+        self.open_folder_button.clicked.connect(self.when_open_folder_button_is_clicked)
 
     def when_visible(self):
         # Coloration des jours sur le calendrier
@@ -136,10 +137,13 @@ class PlanningTab(QWidget):
 
     def when_add_to_watched_list_button_clicked(self):
         current_row = self.tableWidget_6.currentRow()
-        current_season_id = self.tableWidget_6.item(current_row, 0).data(Qt.UserRole)
+        current_item = self.tableWidget_6.item(current_row, 0)
 
-        self.add_episode_to_planning(current_season_id)
-        self.when_visible()
+        if current_item:
+            current_season_id = self.tableWidget_6.item(current_row, 0).data(Qt.UserRole)
+
+            self.add_episode_to_planning(current_season_id)
+            self.when_visible()
 
     def add_episode_to_planning(self, season_id):
         calendar_date = self.planning_calendar.selectedDate().toPyDate()
@@ -166,6 +170,19 @@ class PlanningTab(QWidget):
 
     def when_checkBox_4_is_clicked(self):
         self.fill_to_watch_table()
+
+
+    def when_open_folder_button_is_clicked(self):
+        current_row = self.tableWidget_6.currentRow()
+        current_item = self.tableWidget_6.item(current_row, 0)
+
+        if current_item:
+            current_season_id = current_item.data(Qt.UserRole)
+
+            # TODO: Ajouter champ sur la série !
+            # season = Seasons.get(Seasons.id == current_season_id)
+            # open_folder(season.serie.path)
+
 
 
 """

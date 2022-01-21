@@ -118,7 +118,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_43">
       <item>
-       <widget class="QPushButton" name="pushButton_18">
+       <widget class="QPushButton" name="open_folder_button">
         <property name="enabled">
          <bool>true</bool>
         </property>

@@ -28,7 +28,7 @@ def migration_series():
         new_serie.name = serie.serie_title
 
         # TODO:
-        # new_serie.path = serie.serie_path
+        new_serie.path = serie.serie_path
         # new_serie.liked = serie.serie_liked
         new_serie.is_deleted = False
         new_serie.save()

@@ -1,3 +1,6 @@
+APPNAME=myanimemanager3
+APPVERSION=$(shell git show -s --format=%cs | tr - .)
+
 archlinux-build:
 	cd "packaging/PKGBUILD"; \
 	rm -rf packaging/*.pkg.*; \
@@ -6,7 +9,7 @@ archlinux-build:
 
 archlinux-install:
 	cd "packaging/PKGBUILD/dist"; \
-	sudo pacman -U *.pkg.*;
+	sudo pacman -U $(APPNAME)-$(APPVERSION)-*;
 
 manjaro-build:
 	archlinux-build

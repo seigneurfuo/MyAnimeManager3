@@ -20,6 +20,7 @@ class Series(BaseModel):
     sort_id = IntegerField()
     name = TextField()
     description = TextField(null=True)
+    path = TextField(null=True)
     is_deleted = IntegerField(constraints=[SQL("DEFAULT 0")])
 
     class Meta:

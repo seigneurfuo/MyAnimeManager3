@@ -37,6 +37,7 @@ class PlanningTab(QWidget):
         self.checkBox_4.clicked.connect(self.when_checkBox_4_is_clicked)
         self.add_to_watched_list_button.clicked.connect(self.when_add_to_watched_list_button_clicked)
         self.open_folder_button.clicked.connect(self.when_open_folder_button_is_clicked)
+        self.tableWidget_6.currentCellChanged.connect(self.set_open_folder_button_enable_or_not)
 
     def when_visible(self):
         # Coloration des jours sur le calendrier
@@ -172,6 +173,17 @@ class PlanningTab(QWidget):
         self.fill_to_watch_table()
 
 
+    def set_open_folder_button_enable_or_not(self):
+        current_row = self.tableWidget_6.currentRow()
+        current_item = self.tableWidget_6.item(current_row, 0)
+
+        if current_item:
+            current_season_id = current_item.data(Qt.UserRole)
+
+            season = Seasons.get(Seasons.id == current_season_id)
+            self.open_folder_button.setEnabled(os.path.exists(season.serie.path))
+
+
     def when_open_folder_button_is_clicked(self):
         current_row = self.tableWidget_6.currentRow()
         current_item = self.tableWidget_6.item(current_row, 0)
@@ -179,10 +191,10 @@ class PlanningTab(QWidget):
         if current_item:
             current_season_id = current_item.data(Qt.UserRole)
 
-            # TODO: Ajouter champ sur la série !
-            # season = Seasons.get(Seasons.id == current_season_id)
-            # open_folder(season.serie.path)
-
+            season = Seasons.get(Seasons.id == current_season_id)
+            path = season.serie.path
+            if os.path.exists(path):
+                open_folder(path)
 
 
 """

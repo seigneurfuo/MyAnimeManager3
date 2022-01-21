@@ -7,19 +7,21 @@ arch=('any')
 license=('')
 groups=("★ seigneurfuo: Paquets persos")
 depends=("python" "python-pyqt5")
-source=("${pkgname}.desktop" "git+file:///home/seigneurfuo/Projets/MyAnimeManager/MyAnimeManager 3#branch=master")
+source=("${pkgname}.desktop" "git+file:///home/seigneurfuo/Projets/MyAnimeManager/MyAnimeManager3#branch=master")
 md5sums=('SKIP'
          'SKIP')
 
 PKGDEST="$(pwd)/dist"
 
 pkgver() {
-    date +%Y.%m.%d
+    cd "${srcdir}/MyAnimeManager3"
+    # Date du dernier commit au format YYYY.mm.dd
+    echo "$(git show -s --format=%cs | tr - .)"
 }
 
 package() {
 	mkdir -p "${pkgdir}/opt/"
-	cp -R "${srcdir}/MyAnimeManager 3/src" "${pkgdir}/opt/"
+	cp -R "${srcdir}/MyAnimeManager3/src" "${pkgdir}/opt/"
 
 	# Comme le dossier copié s'apelle src, on le renomme (oui c'est pas forcément propre mais bon)
 	mv "${pkgdir}/opt/src" "${pkgdir}/opt/${pkgname}"

@@ -7,7 +7,7 @@ import os
 from pathlib import Path
 
 from ui.dialogs.series import SeriesDialog
-from ui.dialogs.deleted_elements_dialog import DeletedElementsDialog
+from ui.dialogs.deleted_elements_dialog import DeletedElements
 from database import Series, Seasons, database
 
 
@@ -90,7 +90,7 @@ class FullListTab(QWidget):
 
     def on_add_serie_button_clicked_function(self):
         serie = Series()
-        series_dialog = SeriesDialog(serie=serie, app_dir=self.app_dir)
+        series_dialog = SeriesDialog(serie)
 
         if series_dialog.exec_():
             series_dialog.serie.save()
@@ -100,7 +100,7 @@ class FullListTab(QWidget):
         if self.current_serie_id:
             serie = Series().get(self.current_serie_id)
 
-            series_dialog = SeriesDialog(serie=serie, app_dir=self.app_dir)
+            series_dialog = SeriesDialog(serie)
             if series_dialog.exec_():
                 self.when_visible()
 
@@ -128,7 +128,7 @@ class FullListTab(QWidget):
         deleted_series = Series.select().where(Series.is_deleted == 1).order_by(Series.sort_id)
         deleted_seasons = Seasons.select().where(Seasons.is_deleted == 1).order_by(Seasons.sort_id)
         print(deleted_seasons)
-        dialog = DeletedElementsDialog(deleted_series, deleted_seasons, self.app_dir)
+        dialog = DeletedElements(deleted_series, deleted_seasons)
 
         # TODO:
         if dialog.exec_():

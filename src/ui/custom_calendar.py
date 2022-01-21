@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QCalendarWidget
 class CustomCalendar(QCalendarWidget):
     """
     Une classe personalisée qui permet d'étendre les possibilités du calendrier
-    Found on: https://stackoverflow.com/questions/19083140/custom-calendar-cell-in-pyqt
+    Trouvée sur: https://stackoverflow.com/questions/19083140/custom-calendar-cell-in-pyqt
     """
 
     def __init__(self, parent=None):

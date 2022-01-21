@@ -59,7 +59,7 @@ class MainWindow(QMainWindow):
 
     # TODO: evenement lors du click sur un onglet
 
-    #print(self.parent_qapplication.profile.get_series())
+    # print(self.parent_qapplication.profile.get_series())
 
     def update_tab_content(self, tab_index):
         if tab_index != -1 and tab_index < len(self.tabs) and self.tabs[tab_index] is not None:

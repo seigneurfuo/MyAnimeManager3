@@ -5,29 +5,28 @@ from PyQt5.QtWidgets import QDialog, QTableWidgetItem
 from PyQt5.uic import loadUi
 
 
-class DeletedElementsDialog(QDialog):
-    def __init__(self, deleted_series, deleted_seasons, app_dir):
-        super(DeletedElementsDialog, self).__init__()
+class DeletedElements(QDialog):
+    def __init__(self, deleted_series, deleted_seasons):
+        super(DeletedElements, self).__init__()
 
         self.deleted_series = deleted_series
         self.deleted_seasons = deleted_seasons
-        self.app_dir = app_dir
 
         self.init_ui()
         self.init_events()
 
 
     def init_ui(self):
-        loadUi(os.path.join(self.app_dir, 'ui/dialogs/deleted_elements_dialog.ui'), self)
+        loadUi(os.path.join(os.path.dirname(__file__), 'deleted_elements.ui'), self)
 
-        self.fill_table()
+        self.fill_data()
 
 
     def init_events(self):
         pass
 
 
-    def fill_table(self):
+    def fill_data(self):
         self.tableWidget.setRowCount(0)
 
         deleted_seasons_count = len(self.deleted_seasons)
@@ -46,8 +45,8 @@ class DeletedElementsDialog(QDialog):
 
 
     def accept(self):
-        super(DeletedElementsDialog, self).accept()
+        super(DeletedElements, self).accept()
 
 
     def reject(self):
-        super(DeletedElementsDialog, self).reject()
+        super(DeletedElements, self).reject()

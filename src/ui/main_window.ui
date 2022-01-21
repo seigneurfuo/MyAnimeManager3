@@ -77,19 +77,23 @@
      <string>?</string>
     </property>
     <addaction name="about_action"/>
-    <addaction name="about_qt_action"/>
    </widget>
    <widget class="QMenu" name="file_menu">
     <property name="title">
      <string>Fichier</string>
     </property>
     <addaction name="open_profile_action"/>
-    <addaction name="save_profile_action"/>
-    <addaction name="close_profile_action"/>
     <addaction name="separator"/>
     <addaction name="quit_action"/>
    </widget>
+   <widget class="QMenu" name="menuExports">
+    <property name="title">
+     <string>Exports</string>
+    </property>
+    <addaction name="planning_export_action"/>
+   </widget>
    <addaction name="file_menu"/>
+   <addaction name="menuExports"/>
    <addaction name="about_menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -134,6 +138,11 @@
   <action name="open_profile_action">
    <property name="text">
     <string>Ouvrir le dossier du profil</string>
+   </property>
+  </action>
+  <action name="planning_export_action">
+   <property name="text">
+    <string>Export du planning</string>
    </property>
   </action>
  </widget>

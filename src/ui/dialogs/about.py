@@ -34,3 +34,8 @@ class About(QDialog):
 
         for field, value in fields:
             field.setText(value)
+
+        # TODO:
+        # self.name_label.setText(self._parent_qmainwindow.parent_qapplication.name)
+        # self.version_label.setText(self._parent_qmainwindow.parent_qapplication.version)
+        # self.description_label.setText(self._parent_qmainwindow.parent_qapplication.description)

@@ -1,15 +1,15 @@
 #!/bin/env python3
 import platform
+import os
 
 from PyQt5.QtCore import Qt, QDate
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QProgressBar
 from PyQt5.uic import loadUi
 
-import os
-
 from ui.custom_calendar import CustomCalendar
 from database import Planning, Seasons
+from utils import open_folder
 
 
 class PlanningTab(QWidget):

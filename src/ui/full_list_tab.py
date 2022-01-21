@@ -25,7 +25,7 @@ class FullListTab(QWidget):
         self.init_events()
 
     def init_ui(self):
-        loadUi(os.path.join(self.app_dir, 'ui/full_list_tab.ui'), self)
+        loadUi(os.path.join(os.path.dirname(__file__), 'full_list_tab.ui'), self)
 
     def init_events(self):
         self.comboBox.currentIndexChanged.connect(self.on_series_list_current_index_changed_function)

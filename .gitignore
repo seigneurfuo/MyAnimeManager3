@@ -6,3 +6,5 @@ packaging/PKGBUILD/dist/*.pkg.*
 packaging/PKGBUILD/MyAnimeManager 3/
 packaging/PKGBUILD/pkg/
 packaging/PKGBUILD/src/
+pwiz.py
+src/venv/

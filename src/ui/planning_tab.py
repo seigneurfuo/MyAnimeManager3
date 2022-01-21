@@ -90,23 +90,29 @@ class PlanningTab(QWidget):
             episodes_to_watch = Seasons.select().where(Seasons.state.in_((1, 2)), Seasons.watched_episodes < Seasons.episodes,
                                                        Seasons.is_deleted == 0).order_by(Seasons.id)
 
-        self.tableWidget_6.setRowCount(len(episodes_to_watch))
+        # TODO: ne pas laisser ça ici
+        season_states = ["Indéfinie", "A voir", "En cours", "Terminée", "Annulée"]
 
+        self.tableWidget_6.setRowCount(len(episodes_to_watch))
         for col_index, row_data in enumerate(episodes_to_watch):
             # Série
-            column0 = QTableWidgetItem(row_data.serie.name)
-            column0.setData(Qt.UserRole, row_data.id)
-            self.tableWidget_6.setItem(col_index, 0, column0)
+            col_data = QTableWidgetItem(row_data.serie.name)
+            col_data.setData(Qt.UserRole, row_data.id)
+            self.tableWidget_6.setItem(col_index, 0, col_data)
 
             # Saison
-            column1 = QTableWidgetItem(row_data.name)
-            self.tableWidget_6.setItem(col_index, 1, column1)
+            col_data = QTableWidgetItem(row_data.name)
+            self.tableWidget_6.setItem(col_index, 1, col_data)
+
+            # Etat
+            col_data = QTableWidgetItem(season_states[row_data.state])
+            self.tableWidget_6.setItem(col_index, 2, col_data)
 
             # Episode
             next_episode_index = int(row_data.watched_episodes) + 1
             next_episode_text = "{} / {}".format(next_episode_index, row_data.episodes)
-            column2 = QTableWidgetItem(next_episode_text)
-            self.tableWidget_6.setItem(col_index, 2, column2)
+            col_data = QTableWidgetItem(next_episode_text)
+            self.tableWidget_6.setItem(col_index, 3, col_data)
 
             # Progression
             progress_bar = QProgressBar(self)
@@ -120,7 +126,7 @@ class PlanningTab(QWidget):
                 progress_bar.setStyleSheet("QProgressBar::chunk ""{""background-color: #2B65EC;""}")
                 progress_bar.setAlignment(Qt.AlignCenter)
 
-            self.tableWidget_6.setCellWidget(col_index, 3, progress_bar)
+            self.tableWidget_6.setCellWidget(col_index, 4, progress_bar)
 
     def when_today_button_clicked(self):
         """Fonction qui ramène le calendrier à la date actuelle"""

@@ -14,11 +14,10 @@ from common import show_view_history_dialog
 
 
 class PlanningTab(QWidget):
-    def __init__(self, parent, app_dir):
+    def __init__(self, parent):
         super().__init__(parent)
 
         self.parent = parent
-        self.app_dir = app_dir
 
         self.current_season_id = None
 
@@ -98,9 +97,6 @@ class PlanningTab(QWidget):
                                                        Seasons.watched_episodes < Seasons.episodes,
                                                        Seasons.is_deleted == 0).order_by(Seasons.id)
 
-        # TODO: ne pas laisser ça ici
-        season_states = ["Indéfinie", "A voir", "En cours", "Terminée", "Annulée"]
-
         self.tableWidget_6.setRowCount(len(episodes_to_watch))
         for col_index, row_data in enumerate(episodes_to_watch):
             # Série
@@ -112,8 +108,8 @@ class PlanningTab(QWidget):
             col_data = QTableWidgetItem(row_data.name)
             self.tableWidget_6.setItem(col_index, 1, col_data)
 
-            # Etat
-            col_data = QTableWidgetItem(season_states[row_data.state])
+            # Etat FIXME: C'est pas très propre le self.parent.parent.season_states
+            col_data = QTableWidgetItem(self.parent.parent.season_states[row_data.state])
             self.tableWidget_6.setItem(col_index, 2, col_data)
 
             # Episode

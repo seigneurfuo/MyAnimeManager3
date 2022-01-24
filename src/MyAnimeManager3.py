@@ -15,7 +15,7 @@ class Application(QApplication):
         super().__init__(args)
         self.app_dir = os.path.abspath(os.path.dirname(__file__))
         self.name = "MyAnimeManager 3"
-        self.version = "0.0.1"
+        self.version = "2022.01.24"
         self.description = self.tr("Un gestionnaire de séries multiplateforme écrit en Python3 et Qt5")
 
 
@@ -25,7 +25,7 @@ class Application(QApplication):
 
         self.default_settings = default_settings.DEFAULT_SETTINGS
         self.profile_path = None
-        self.season_states = ["Indéfinie", "A voir", "En cours", "Terminée", "Annulée"]
+        self.season_states = [self.tr("Indéfinie"), self.tr("A voir"), self.tr("En cours"), self.tr("Terminée"), self.tr("Annulée")]
 
         self.load_profile()
 

@@ -13,11 +13,10 @@ from common import show_view_history_dialog
 
 
 class FullListTab(QWidget):
-    def __init__(self, parent, app_dir):
+    def __init__(self, parent):
         super().__init__(parent)
 
         self.parent = parent
-        self.app_dir = app_dir
 
         self.current_serie_id = None
         self.current_season_id = None
@@ -118,9 +117,7 @@ class FullListTab(QWidget):
 
     def on_delete_season_button_clicked_function(self):
         if self.current_season_id:
-            print("ID sezason:", self.current_season_id)
             season = Seasons.get(self.current_season_id)
-            print("DEBUG:", season.name)
             season.is_deleted = 1
             season.save()
 

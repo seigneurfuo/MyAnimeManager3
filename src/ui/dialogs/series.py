@@ -15,6 +15,7 @@ class SeriesDialog(QDialog):
 
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), 'series.ui'), self)
+        self.setWindowTitle(self.serie.name)
 
         if self.serie.id:
             self.fill_data()
@@ -23,7 +24,6 @@ class SeriesDialog(QDialog):
         self.choose_path_button.clicked.connect(self.choose_path)
 
     def fill_data(self):
-        self.setWindowTitle(self.serie.name)  # Titre
         self.spinBox.setValue(self.serie.sort_id)
         self.lineEdit_2.setText(self.serie.name)  #
         self.lineEdit_3.setText(self.serie.path) # Chemin
@@ -31,7 +31,7 @@ class SeriesDialog(QDialog):
     def choose_path(self):
         """Fonction qui permet à l'utilisateur de choisir le dossier de la série"""
 
-        folder_name = QFileDialog.getExistingDirectory(self, "Choisir le dossier de la série")
+        folder_name = QFileDialog.getExistingDirectory(self, self.tr("Choisir le dossier de la série"))
 
         # Si un dossier à été sélectionné
         if folder_name:

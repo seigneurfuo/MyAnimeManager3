@@ -9,11 +9,10 @@ from utils import duration_calculation
 
 
 class ToolsTab(QWidget):
-    def __init__(self, parent, app_dir):
+    def __init__(self, parent):
         super().__init__(parent)
 
         self.parent = parent
-        self.app_dir = app_dir
 
         self.init_ui()
         self.init_events()

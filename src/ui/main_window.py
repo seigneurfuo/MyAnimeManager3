@@ -29,19 +29,19 @@ class MainWindow(QMainWindow):
         loadUi(os.path.join(os.path.dirname(__file__), 'main_window.ui'), self)
 
         # Onglet 1 - Planning
-        self.planning_tab = PlanningTab(self, self.app_dir)
-        self.planning_tab_layout.addWidget(self.planning_tab)
+        planning_tab = PlanningTab(self, self.app_dir)
+        self.planning_tab_layout.addWidget(planning_tab)
 
         # Onglet 2 - Liste des animés
-        self.full_list_tab = FullListTab(self, self.app_dir)
-        self.full_list_tab_layout.addWidget(self.full_list_tab)
+        full_list_tab = FullListTab(self, self.app_dir)
+        self.full_list_tab_layout.addWidget(full_list_tab)
 
         # Onglet 4 - Outils
-        self.tools_tab = ToolsTab(self, self.app_dir)
-        self.tools_tab_layout.addWidget(self.tools_tab)
+        tools_tab = ToolsTab(self, self.app_dir)
+        self.tools_tab_layout.addWidget(tools_tab)
 
         # Remplissage de la liste des onglets
-        self.tabs = (self.planning_tab, self.full_list_tab, None, self.tools_tab)
+        self.tabs = (planning_tab, full_list_tab, None, tools_tab)
 
     def init_events(self):
         # FIXME: Ouvrir plutot le dossier utilisateur !
@@ -49,7 +49,6 @@ class MainWindow(QMainWindow):
 
         self.planning_export_action.triggered.connect(self.on_menu_action_planning_export_clicked_function)
         self.about_action.triggered.connect(self.on_about_action_clicked_function)
-
 
         # Clic sur les onglets
         self.tabWidget.currentChanged.connect(self.on_current_tab_changed)
@@ -79,7 +78,6 @@ class MainWindow(QMainWindow):
 
     def on_menu_action_open_profile_clicked_function(self):
         open_folder(self.app_dir)
-
 
     def on_menu_action_planning_export_clicked_function(self):
         pass

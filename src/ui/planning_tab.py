@@ -89,7 +89,8 @@ class PlanningTab(QWidget):
                                                        Seasons.is_deleted == 0).order_by(Seasons.id)
         else:
             # https://docs.peewee-orm.com/en/latest/peewee/query_operators.html 1 or 2
-            episodes_to_watch = Seasons.select().where(Seasons.state.in_((1, 2)), Seasons.watched_episodes < Seasons.episodes,
+            episodes_to_watch = Seasons.select().where(Seasons.state.in_((1, 2)),
+                                                       Seasons.watched_episodes < Seasons.episodes,
                                                        Seasons.is_deleted == 0).order_by(Seasons.id)
 
         # TODO: ne pas laisser ça ici
@@ -161,9 +162,9 @@ class PlanningTab(QWidget):
         planning_entry.save()
 
         # Changement d'état de la saison + RAZ
-        if(new_watched_episodes_value == current_season.episodes):
+        if new_watched_episodes_value == current_season.episodes:
             current_season.watched_episodes = 0
-            current_season.state = 3 # Terminé
+            current_season.state = 3  # Terminé
         else:
             current_season.watched_episodes = new_watched_episodes_value
 
@@ -171,7 +172,6 @@ class PlanningTab(QWidget):
 
     def when_checkBox_4_is_clicked(self):
         self.fill_to_watch_table()
-
 
     def set_open_folder_button_enable_or_not(self):
         current_row = self.tableWidget_6.currentRow()
@@ -182,7 +182,6 @@ class PlanningTab(QWidget):
 
             season = Seasons.get(Seasons.id == current_season_id)
             self.open_folder_button.setEnabled(os.path.exists(season.serie.path))
-
 
     def when_open_folder_button_is_clicked(self):
         current_row = self.tableWidget_6.currentRow()

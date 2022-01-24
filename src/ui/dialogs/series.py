@@ -26,7 +26,7 @@ class SeriesDialog(QDialog):
         self.setWindowTitle(self.serie.name)  # Titre
         self.spinBox.setValue(self.serie.sort_id)
         self.lineEdit_2.setText(self.serie.name)  #
-        self.lineEdit_3.setText(self.serie.path) # Chemin
+        self.lineEdit_3.setText(self.serie.path)  # Chemin
 
     def choose_path(self):
         """Fonction qui permet à l'utilisateur de choisir le dossier de la série"""
@@ -37,7 +37,6 @@ class SeriesDialog(QDialog):
         if folder_name:
             # Application du texte sur le widget line edit
             self.lineEdit_3.setText(folder_name)
-
 
     def accept(self):
         self.serie.name = self.lineEdit_2.text()

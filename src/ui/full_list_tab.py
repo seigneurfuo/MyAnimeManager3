@@ -7,7 +7,7 @@ import os
 from pathlib import Path
 
 from ui.dialogs.series import SeriesDialog
-from ui.dialogs.deleted_elements_dialog import DeletedElements
+from ui.dialogs.deleted_elements import DeletedElements
 from database import Series, Seasons, database
 
 

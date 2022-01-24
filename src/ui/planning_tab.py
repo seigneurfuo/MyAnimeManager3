@@ -20,6 +20,8 @@ class PlanningTab(QWidget):
         self.parent = parent
         self.app_dir = app_dir
 
+        self.current_season_id = None
+
         self.planning_calendar = QWidget()
 
         self.init_ui()
@@ -33,7 +35,7 @@ class PlanningTab(QWidget):
         self.horizontalLayout_42.insertWidget(0, self.planning_calendar)
 
     def init_events(self):
-        self.tableWidget_6.currentCellChanged.connect(self.set_open_folder_button_enable_or_not)
+        self.tableWidget_6.currentCellChanged.connect(self.when_current_cell_changed)
 
         self.today_button.clicked.connect(self.when_today_button_clicked)
         self.planning_calendar.clicked.connect(self.fill_watched_table)
@@ -141,13 +143,8 @@ class PlanningTab(QWidget):
         self.fill_watched_table()
 
     def when_add_to_watched_list_button_clicked(self):
-        current_row = self.tableWidget_6.currentRow()
-        current_item = self.tableWidget_6.item(current_row, 0)
-
-        if current_item:
-            current_season_id = self.tableWidget_6.item(current_row, 0).data(Qt.UserRole)
-
-            self.add_episode_to_planning(current_season_id)
+        if self.current_season_id:
+            self.add_episode_to_planning(self.current_season_id)
             self.when_visible()
 
     def add_episode_to_planning(self, season_id):
@@ -176,35 +173,32 @@ class PlanningTab(QWidget):
     def when_checkBox_4_is_clicked(self):
         self.fill_to_watch_table()
 
-    def set_open_folder_button_enable_or_not(self):
+    def when_current_cell_changed(self):
         current_row = self.tableWidget_6.currentRow()
         current_item = self.tableWidget_6.item(current_row, 0)
 
         if current_item:
-            current_season_id = current_item.data(Qt.UserRole)
+            self.current_season_id = current_item.data(Qt.UserRole)
+        else:
+            self.current_season_id = None
 
-            season = Seasons.get(Seasons.id == current_season_id)
+        self.set_open_folder_button_enable_or_not()
+
+    def set_open_folder_button_enable_or_not(self):
+        if self.current_season_id:
+            season = Seasons.get(Seasons.id == self.current_season_id)
             self.open_folder_button.setEnabled(os.path.exists(season.serie.path))
 
     def when_open_folder_button_is_clicked(self):
-        current_row = self.tableWidget_6.currentRow()
-        current_item = self.tableWidget_6.item(current_row, 0)
-
-        if current_item:
-            current_season_id = current_item.data(Qt.UserRole)
-
-            season = Seasons.get(Seasons.id == current_season_id)
+        if self.current_season_id:
+            season = Seasons.get(Seasons.id == self.current_season_id)
             path = season.serie.path
             if os.path.exists(path):
                 open_folder(path)
 
     def when_show_view_history_button_is_clicked(self):
-        current_row = self.tableWidget_6.currentRow()
-        current_item = self.tableWidget_6.item(current_row, 0)
-
-        if current_item:
-            current_season_id = current_item.data(Qt.UserRole)
-            show_view_history_dialog(current_season_id)
+        if self.current_season_id:
+            show_view_history_dialog(self.current_season_id)
 
 
 """

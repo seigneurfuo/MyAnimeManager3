@@ -1,9 +1,10 @@
+import os
+
 from PyQt5.QtCore import QDir
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.uic import loadUi
 
-import os
-
+import database
 from utils import open_folder
 from ui.planning_tab import PlanningTab
 from ui.full_list_tab import FullListTab
@@ -16,6 +17,7 @@ class MainWindow(QMainWindow):
         super().__init__(parent=None)
         self.parent = parent
         self.app_dir = parent.app_dir
+        self.profile_path = parent.profile_path
 
         self.tabs = tuple()
 
@@ -45,13 +47,13 @@ class MainWindow(QMainWindow):
 
     def init_events(self):
         # FIXME: Ouvrir plutot le dossier utilisateur !
-        self.open_profile_action.triggered.connect(self.on_menu_action_open_profile_clicked_function)
+        self.open_profile_action.triggered.connect(self.when_menu_action_open_profile_clicked)
 
-        self.planning_export_action.triggered.connect(self.on_menu_action_planning_export_clicked_function)
-        self.about_action.triggered.connect(self.on_about_action_clicked_function)
+        self.planning_export_action.triggered.connect(self.when_menu_action_planning_export_clicked)
+        self.about_action.triggered.connect(self.when_about_action_clicked)
 
         # Clic sur les onglets
-        self.tabWidget.currentChanged.connect(self.on_current_tab_changed)
+        self.tabWidget.currentChanged.connect(self.when_current_tab_changed)
 
         # Affichage de l'emplacement des données de l'utilisateur
         # self.statusbar.showMessage(self.tr("Données utilisateur: {}".format(self.app_dir)))
@@ -64,7 +66,7 @@ class MainWindow(QMainWindow):
         if tab_index != -1 and tab_index < len(self.tabs) and self.tabs[tab_index] is not None:
             self.tabs[tab_index].when_visible()
 
-    def on_current_tab_changed(self, tab_index):
+    def when_current_tab_changed(self, tab_index):
         """
         Fonction qui est appelée lorsqu'un onglet est cliqué
         Il permet de lancer la fonction when_visible qui déclanche divers actions (MAJ de l'affichage, ...)
@@ -76,16 +78,38 @@ class MainWindow(QMainWindow):
 
         self.update_tab_content(tab_index)
 
-    def on_menu_action_open_profile_clicked_function(self):
-        open_folder(self.app_dir)
+    def when_menu_action_open_profile_clicked(self):
+        open_folder(self.profile_path)
 
-    def on_menu_action_planning_export_clicked_function(self):
+    def when_menu_action_planning_export_clicked(self):
         pass
 
-    def on_about_action_clicked_function(self):
+    def when_about_action_clicked(self):
         dialog = About()
         dialog.exec_()
 
-
+    # TODO: Désactiver la sauvegarde automatique
     def closeEvent(self, a0):
         super().close()
+
+
+    #         # Si il y a eu des modifications
+    #         if True: #TODO: Si il y à des chnagements
+    #
+    #             # Affiche la fenetre de dialogue d'enregistrement
+    #             save_question = QMessageBox.question(self, 'Enregistrer les changements',
+    #                                                  "Enregistrer les modifications ?",
+    #                                                  QMessageBox.Yes, QMessageBox.No)
+    #
+    #             # Si on clique sur Oui (Sauvegarder)
+    #             if save_question == QMessageBox.Yes:
+    #                 # Enregistre les modifications dans la bdd
+    #                 database.database.commit()
+    #
+    #             # Si on clique sur Quitter sans sauvegarder
+    #             elif save_question == QMessageBox.No:
+    #
+    #                 # Annule tout les changements depuis le dernier enregistrement
+    #                 database.database.rollback()
+    #
+    #         super().close()

@@ -15,20 +15,16 @@ class DeletedElements(QDialog):
         self.init_ui()
         self.init_events()
 
-
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), 'deleted_elements.ui'), self)
 
         self.fill_data()
 
-
     def init_events(self):
         pass
 
-
     def fill_data(self):
         self.tableWidget.setRowCount(0)
-
         deleted_seasons_count = len(self.deleted_seasons)
 
         self.label.setText("Nombre d'éléments: " + str(deleted_seasons_count))
@@ -43,10 +39,8 @@ class DeletedElements(QDialog):
                 item.setData(Qt.UserRole, season.id)
                 self.tableWidget.setItem(row_index, col_index, item)
 
-
     def accept(self):
         super(DeletedElements, self).accept()
-
 
     def reject(self):
         super(DeletedElements, self).reject()

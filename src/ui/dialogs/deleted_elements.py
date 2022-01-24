@@ -17,6 +17,7 @@ class DeletedElements(QDialog):
 
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), 'deleted_elements.ui'), self)
+        self.setWindowTitle(self.serie.name)
 
         self.fill_data()
 

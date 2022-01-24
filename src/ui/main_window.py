@@ -31,15 +31,15 @@ class MainWindow(QMainWindow):
         loadUi(os.path.join(os.path.dirname(__file__), 'main_window.ui'), self)
 
         # Onglet 1 - Planning
-        planning_tab = PlanningTab(self, self.app_dir)
+        planning_tab = PlanningTab(self)
         self.planning_tab_layout.addWidget(planning_tab)
 
         # Onglet 2 - Liste des animés
-        full_list_tab = FullListTab(self, self.app_dir)
+        full_list_tab = FullListTab(self)
         self.full_list_tab_layout.addWidget(full_list_tab)
 
         # Onglet 4 - Outils
-        tools_tab = ToolsTab(self, self.app_dir)
+        tools_tab = ToolsTab(self)
         self.tools_tab_layout.addWidget(tools_tab)
 
         # Remplissage de la liste des onglets

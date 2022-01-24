@@ -29,7 +29,7 @@
     <rect>
      <x>0</x>
      <y>270</y>
-     <width>551</width>
+     <width>721</width>
      <height>255</height>
     </rect>
    </property>
@@ -143,6 +143,13 @@
         <property name="icon">
          <iconset>
           <normaloff>../../../MyAnimeManager 2/ressources/icons/folder-2.ico</normaloff>../../../MyAnimeManager 2/ressources/icons/folder-2.ico</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="show_view_history_button">
+        <property name="text">
+         <string>Historique de visionnage</string>
         </property>
        </widget>
       </item>

@@ -9,6 +9,7 @@ from pathlib import Path
 from ui.dialogs.series import SeriesDialog
 from ui.dialogs.deleted_elements import DeletedElements
 from database import Series, Seasons, database
+from common import show_view_history_dialog
 
 
 class FullListTab(QWidget):
@@ -41,8 +42,9 @@ class FullListTab(QWidget):
 
         self.delete_season_button.clicked.connect(self.on_delete_season_button_clicked_function)
 
-
         self.view_deleted_elements_button.clicked.connect(self.on_view_deleted_elements_button_clicked_function)
+        # TODO: pushButton_2
+        self.show_view_history_button.clicked.connect(self.when_show_view_history_button_is_clicked)
         # endregion
 
     def when_visible(self):
@@ -178,5 +180,9 @@ class FullListTab(QWidget):
 
         season = Seasons.get(Seasons.id == self.current_season_id)
         self.fill_season_data(season)
+
+    def when_show_view_history_button_is_clicked(self):
+        if self.current_season_id:
+            show_view_history_dialog(self.current_season_id)
 
     # endregion

@@ -18,12 +18,13 @@ class Application(QApplication):
         self.version = "0.0.1"
         self.description = self.tr("Un gestionnaire de séries multiplateforme écrit en Python3 et Qt5")
 
+
         self.setApplicationName(self.name)
         self.setApplicationDisplayName(self.name)
         self.setApplicationVersion(self.version)
 
         self.default_settings = default_settings.DEFAULT_SETTINGS
-        self.appDataFolder = None
+        self.profile_path = None
         self.season_states = ["Indéfinie", "A voir", "En cours", "Terminée", "Annulée"]
 
         self.load_profile()
@@ -35,13 +36,13 @@ class Application(QApplication):
         database_path = "database.sqlite3"
 
         # Creation du profil
-        self.appDataFolder = os.path.join(Path.home(), ".myanimemanager3")
+        self.profile_path = os.path.join(Path.home(), ".myanimemanager3")
 
-        if not os.path.exists(self.appDataFolder):
+        if not os.path.exists(self.profile_path):
             # Création du dossier ./profile/covers qui créer en meme temps le dossier parent ./profile
-            os.makedirs(self.appDataFolder)
+            os.makedirs(self.profile_path)
 
-        database_path = os.path.join(self.appDataFolder, database_path)
+        database_path = os.path.join(self.profile_path, database_path)
         print("Database path:", database_path)
         # Génération des tables
         if not os.path.exists(database_path):

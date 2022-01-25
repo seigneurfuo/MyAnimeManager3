@@ -104,14 +104,11 @@ class PlanningTab(QWidget):
         # Nettoyage de la liste
         self.tableWidget_6.setRowCount(0)
 
-        if self.checkBox_4.isChecked():
-            episodes_to_watch = Seasons.select().where(Seasons.state == 2, Seasons.watched_episodes < Seasons.episodes,
-                                                       Seasons.is_deleted == 0).order_by(Seasons.id)
-        else:
-            # https://docs.peewee-orm.com/en/latest/peewee/query_operators.html 1 or 2
-            episodes_to_watch = Seasons.select().where(Seasons.state.in_((1, 2)),
-                                                       Seasons.watched_episodes < Seasons.episodes,
-                                                       Seasons.is_deleted == 0).order_by(Seasons.id)
+        states = [2] if self.checkBox_4.isChecked() else [1, 2]
+        # https://docs.peewee-orm.com/en/latest/peewee/query_operators.html 1 or 2
+        episodes_to_watch = Seasons.select()\
+            .where(Seasons.state.in_(states), Seasons.watched_episodes < Seasons.episodes, Seasons.is_deleted == 0)\
+            .order_by(Seasons.id)
 
         self.tableWidget_6.setRowCount(len(episodes_to_watch))
         for col_index, row_data in enumerate(episodes_to_watch):

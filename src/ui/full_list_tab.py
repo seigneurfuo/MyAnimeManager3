@@ -28,20 +28,20 @@ class FullListTab(QWidget):
         loadUi(os.path.join(os.path.dirname(__file__), 'full_list_tab.ui'), self)
 
     def init_events(self):
-        self.comboBox.currentIndexChanged.connect(self.on_series_list_current_index_changed_function)
+        self.comboBox.currentIndexChanged.connect(self.when_series_list_current_index_changed)
         # self.pushButton.clicked.connect(self._on_serie_edit)
-        self.tableWidget.currentItemChanged.connect(self.on_seasons_list_current_index_changed_function)
+        self.tableWidget.currentItemChanged.connect(self.when_seasons_list_current_index_changed)
 
         # region ----- Boutons -----
-        self.add_serie_button.clicked.connect(self.on_add_serie_button_clicked_function)
-        self.edit_serie_button.clicked.connect(self.on_edit_serie_button_clicked_function)
+        self.add_serie_button.clicked.connect(self.when_add_serie_button_clicked)
+        self.edit_serie_button.clicked.connect(self.when_edit_serie_button_clicked)
 
         # FIXME:
-        self.delete_serie_button.clicked.connect(self.on_delete_serie_button_clicked_function)
+        self.delete_serie_button.clicked.connect(self.when_delete_serie_button_clicked)
 
-        self.delete_season_button.clicked.connect(self.on_delete_season_button_clicked_function)
+        self.delete_season_button.clicked.connect(self.when_delete_season_button_clicked)
 
-        self.view_deleted_elements_button.clicked.connect(self.on_view_deleted_elements_button_clicked_function)
+        self.view_deleted_elements_button.clicked.connect(self.when_view_deleted_elements_button_clicked)
         # TODO: pushButton_2
         self.show_view_history_button.clicked.connect(self.when_show_view_history_button_is_clicked)
         # endregion
@@ -51,7 +51,7 @@ class FullListTab(QWidget):
 
         # TODO: à garder ou pas ?
         # On force l'affichage de l'informaton pour la première série au lancement
-        self.on_series_list_current_index_changed_function()
+        self.when_series_list_current_index_changed()
 
     # region ----- Serie combobox -----
     def fill_series_combobox(self):
@@ -66,7 +66,7 @@ class FullListTab(QWidget):
 
     # endregion
 
-    def on_series_list_current_index_changed_function(self):
+    def when_series_list_current_index_changed(self):
         # ----- -----
 
         self.current_serie_id = self.comboBox.currentData()
@@ -89,7 +89,7 @@ class FullListTab(QWidget):
 
     # endregion
 
-    def on_add_serie_button_clicked_function(self):
+    def when_add_serie_button_clicked(self):
         serie = Series()
         series_dialog = SeriesDialog(serie)
 
@@ -97,7 +97,7 @@ class FullListTab(QWidget):
             series_dialog.serie.save()
             self.fill_series_combobox()
 
-    def on_edit_serie_button_clicked_function(self):
+    def when_edit_serie_button_clicked(self):
         if self.current_serie_id:
             serie = Series().get(self.current_serie_id)
 
@@ -105,7 +105,7 @@ class FullListTab(QWidget):
             if series_dialog.exec_():
                 self.when_visible()
 
-    def on_delete_serie_button_clicked_function(self):
+    def when_delete_serie_button_clicked(self):
         if self.current_serie_id:
             # ----- Supression des saisons -----
             serie = Series.get(self.current_serie_id)
@@ -115,15 +115,14 @@ class FullListTab(QWidget):
             # self.on_series_list_current_index_changed()
             self.fill_series_combobox()
 
-    def on_delete_season_button_clicked_function(self):
+    def when_delete_season_button_clicked(self):
         if self.current_season_id:
             season = Seasons.get(self.current_season_id)
             season.is_deleted = 1
             season.save()
+            # TODO: Refresh
 
-            #self.on_series_list_current_index_changed_function()
-
-    def on_view_deleted_elements_button_clicked_function(self):
+    def when_view_deleted_elements_button_clicked(self):
         deleted_series = Series.select().where(Series.is_deleted == 1).order_by(Series.sort_id)
         deleted_seasons = Seasons.select().where(Seasons.is_deleted == 1).order_by(Seasons.sort_id)
         print(deleted_seasons)
@@ -161,10 +160,9 @@ class FullListTab(QWidget):
             field.setText(value)
 
 
-    def on_seasons_list_current_index_changed_function(self):
+    def when_seasons_list_current_index_changed(self):
         # self.tableWidget.currentItem()
-        current_row = self.tableWidget.currentRow()
-        current_item = self.tableWidget.item(current_row, 0)
+        current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
 
         # TODO: Click automatique sur le premier élement lors du changement si une saison existe ?
         if current_item:

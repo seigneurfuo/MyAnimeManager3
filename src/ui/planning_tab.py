@@ -18,9 +18,7 @@ class PlanningTab(QWidget):
         super().__init__(parent)
 
         self.parent = parent
-
         self.current_season_id = None
-
         self.planning_calendar = QWidget()
 
         self.init_ui()
@@ -56,7 +54,6 @@ class PlanningTab(QWidget):
         self.fill_to_watch_table()
 
     def when_planning_calender_date_changed(self):
-        print("On change la date")
         # Change aussi la date sur le selecteur de date
         self.date_edit.setDate(self.planning_calendar.selectedDate())
 
@@ -98,8 +95,6 @@ class PlanningTab(QWidget):
         Fonction qui rempli la liste des épisodes à voir
         :return:
         """
-
-
 
         states = [2] if self.checkBox_4.isChecked() else [1, 2]
         # https://docs.peewee-orm.com/en/latest/peewee/query_operators.html 1 or 2
@@ -187,20 +182,28 @@ class PlanningTab(QWidget):
         self.fill_to_watch_table()
 
     def when_current_cell_changed(self):
-        current_row = self.tableWidget_6.currentRow()
-        current_item = self.tableWidget_6.item(current_row, 0)
+        self.update_current_season_id()
 
-        if current_item:
-            self.current_season_id = current_item.data(Qt.UserRole)
-        else:
-            self.current_season_id = None
+    def update_current_season_id(self):
+        current_item = self.tableWidget_6.item(self.tableWidget_6.currentRow(), 0)
+        self.current_season_id = current_item.data(Qt.UserRole) if current_item else None
 
-        self.set_open_folder_button_enable_or_not()
-
-    def set_open_folder_button_enable_or_not(self):
         if self.current_season_id:
+            # On active le bouton d'ajout aux épisodes vus
+            self.add_to_watched_list_button.setEnabled(True)
+
+            # On active le bouton d'historique
+            self.show_view_history_button.setEnabled(True)
+
+            # Active ou désactive le bouton d'ouverture du dossier de la série
             season = Seasons.get(Seasons.id == self.current_season_id)
             self.open_folder_button.setEnabled(os.path.exists(season.serie.path))
+
+        else:
+            # On désactive les boutons qui ont une action avec une série selectionnée
+            self.add_to_watched_list_button.setEnabled(False)
+            self.show_view_history_button.setEnabled(False)
+            self.open_folder_button.setEnabled(False)
 
     def when_open_folder_button_is_clicked(self):
         if self.current_season_id:
@@ -212,12 +215,3 @@ class PlanningTab(QWidget):
     def when_show_view_history_button_is_clicked(self):
         if self.current_season_id:
             show_view_history_dialog(self.current_season_id)
-
-
-"""
-id: entrée unique dans le planning
-date: 
-serie_id: 
-season_id: 
-episode_id: 
-"""

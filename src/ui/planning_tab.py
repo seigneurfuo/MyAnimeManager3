@@ -31,24 +31,40 @@ class PlanningTab(QWidget):
 
         self.planning_calendar = CustomCalendar()
         self.planning_calendar.setCellsBackgroundColor(QColor(115, 210, 22, 50))
-        self.horizontalLayout_42.insertWidget(0, self.planning_calendar)
+        self.verticalLayout.insertWidget(1, self.planning_calendar)
 
     def init_events(self):
         self.tableWidget_6.currentCellChanged.connect(self.when_current_cell_changed)
 
         self.today_button.clicked.connect(self.when_today_button_clicked)
-        self.planning_calendar.clicked.connect(self.fill_watched_table)
-        self.checkBox_4.clicked.connect(self.when_checkBox_4_is_clicked)
+        self.planning_calendar.clicked.connect(self.when_planning_calender_clicked)
+        self.checkBox_4.clicked.connect(self.when_checkBox_4_clicked)
         self.add_to_watched_list_button.clicked.connect(self.when_add_to_watched_list_button_clicked)
         self.open_folder_button.clicked.connect(self.when_open_folder_button_is_clicked)
         self.show_view_history_button.clicked.connect(self.when_show_view_history_button_is_clicked)
+        self.date_edit.dateChanged.connect(self.when_date_edit_date_changed)
 
     def when_visible(self):
+        self.update_date_on_widgets()
+        self.fill_data()
+
+    def fill_data(self):
         # Coloration des jours sur le calendrier
         self.planning_calendar.dates = [record.date for record in Planning().select().order_by(Planning.date)]
 
         self.fill_watched_table()
         self.fill_to_watch_table()
+
+    def when_planning_calender_clicked(self):
+        # Change aussi la date sur le selecteur de date
+        self.date_edit.setDate(self.planning_calendar.selectedDate())
+
+        # Rempli le tableau
+        self.fill_watched_table()
+
+    def when_date_edit_date_changed(self):
+        self.planning_calendar.setSelectedDate(self.date_edit.date())
+        self.fill_watched_table()
 
     def fill_watched_table(self):
         """
@@ -135,13 +151,18 @@ class PlanningTab(QWidget):
     def when_today_button_clicked(self):
         """Fonction qui ramène le calendrier à la date actuelle"""
 
-        self.planning_calendar.setSelectedDate(QDate.currentDate())
+        self.update_date_on_widgets()
         self.fill_watched_table()
+
+    def update_date_on_widgets(self):
+        current_date = QDate.currentDate()
+        self.planning_calendar.setSelectedDate(current_date)
+        self.date_edit.setDate(current_date)
 
     def when_add_to_watched_list_button_clicked(self):
         if self.current_season_id:
             self.add_episode_to_planning(self.current_season_id)
-            self.when_visible()
+            self.fill_data()
 
     def add_episode_to_planning(self, season_id):
         calendar_date = self.planning_calendar.selectedDate().toPyDate()
@@ -166,7 +187,7 @@ class PlanningTab(QWidget):
 
         current_season.save()
 
-    def when_checkBox_4_is_clicked(self):
+    def when_checkBox_4_clicked(self):
         self.fill_to_watch_table()
 
     def when_current_cell_changed(self):

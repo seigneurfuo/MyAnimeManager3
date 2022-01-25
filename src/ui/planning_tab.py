@@ -37,7 +37,7 @@ class PlanningTab(QWidget):
         self.tableWidget_6.currentCellChanged.connect(self.when_current_cell_changed)
 
         self.today_button.clicked.connect(self.when_today_button_clicked)
-        self.planning_calendar.clicked.connect(self.when_planning_calender_clicked)
+        self.planning_calendar.selectionChanged.connect(self.when_planning_calender_date_changed)
         self.checkBox_4.clicked.connect(self.when_checkBox_4_clicked)
         self.add_to_watched_list_button.clicked.connect(self.when_add_to_watched_list_button_clicked)
         self.open_folder_button.clicked.connect(self.when_open_folder_button_is_clicked)
@@ -55,7 +55,8 @@ class PlanningTab(QWidget):
         self.fill_watched_table()
         self.fill_to_watch_table()
 
-    def when_planning_calender_clicked(self):
+    def when_planning_calender_date_changed(self):
+        print("On change la date")
         # Change aussi la date sur le selecteur de date
         self.date_edit.setDate(self.planning_calendar.selectedDate())
 
@@ -72,19 +73,16 @@ class PlanningTab(QWidget):
         :return:
         """
 
-        # Nettoyage de la liste
-        self.tableWidget_7.setRowCount(0)
-
         # Nettoyage du nombre d'épisodes vus pour cette date
         self.label_82.setText("")
 
         calendar_date = self.planning_calendar.selectedDate().toPyDate()
 
         planning_data_list = Planning().select().where(Planning.date == calendar_date).order_by(Planning.id)
+
         row_count = len(planning_data_list)
         self.label_82.setText(str(row_count))
         self.tableWidget_7.setRowCount(row_count)
-
         for col_index, planning_data in enumerate(planning_data_list):
             column0 = QTableWidgetItem(planning_data.season.serie.name)
             self.tableWidget_7.setItem(col_index, 0, column0)
@@ -101,8 +99,7 @@ class PlanningTab(QWidget):
         :return:
         """
 
-        # Nettoyage de la liste
-        self.tableWidget_6.setRowCount(0)
+
 
         states = [2] if self.checkBox_4.isChecked() else [1, 2]
         # https://docs.peewee-orm.com/en/latest/peewee/query_operators.html 1 or 2
@@ -110,7 +107,9 @@ class PlanningTab(QWidget):
             .where(Seasons.state.in_(states), Seasons.watched_episodes < Seasons.episodes, Seasons.is_deleted == 0)\
             .order_by(Seasons.id)
 
-        self.tableWidget_6.setRowCount(len(episodes_to_watch))
+        # Nettoyage de la liste
+        row_count = len(episodes_to_watch)
+        self.tableWidget_6.setRowCount(row_count)
         for col_index, row_data in enumerate(episodes_to_watch):
             # Série
             col_data = QTableWidgetItem(row_data.serie.name)

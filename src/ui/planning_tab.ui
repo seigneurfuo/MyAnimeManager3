@@ -13,17 +13,6 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QWidget" name="horizontalLayoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>570</x>
-     <y>10</y>
-     <width>251</width>
-     <height>201</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_42"/>
-  </widget>
   <widget class="QWidget" name="layoutWidget_2">
    <property name="geometry">
     <rect>
@@ -190,29 +179,6 @@
     </item>
    </layout>
   </widget>
-  <widget class="QPushButton" name="today_button">
-   <property name="geometry">
-    <rect>
-     <x>570</x>
-     <y>220</y>
-     <width>101</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>101</width>
-     <height>27</height>
-    </size>
-   </property>
-   <property name="text">
-    <string>Aujourd'hui</string>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>../../../MyAnimeManager 2/ressources/icons/today.ico</normaloff>../../../MyAnimeManager 2/ressources/icons/today.ico</iconset>
-   </property>
-  </widget>
   <widget class="QWidget" name="layoutWidget_3">
    <property name="geometry">
     <rect>
@@ -362,6 +328,42 @@
         <property name="icon">
          <iconset>
           <normaloff>../../../MyAnimeManager 2/ressources/icons/edit-delete-5.ico</normaloff>../../../MyAnimeManager 2/ressources/icons/edit-delete-5.ico</iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>10</y>
+     <width>263</width>
+     <height>201</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QDateEdit" name="date_edit"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="today_button">
+        <property name="maximumSize">
+         <size>
+          <width>101</width>
+          <height>27</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Aujourd'hui</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../MyAnimeManager 2/ressources/icons/today.ico</normaloff>../../../MyAnimeManager 2/ressources/icons/today.ico</iconset>
         </property>
        </widget>
       </item>

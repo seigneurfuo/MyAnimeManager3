@@ -26,12 +26,9 @@ class ViewHistory(QDialog):
         pass
 
     def fill_data(self):
-        self.tableWidget.setRowCount(0)
-        rows_count = len(self.rows)
-
-        self.label.setText("Nombre d'éléments: " + str(rows_count))
-
-        self.tableWidget.setRowCount(rows_count)
+        row_count = len(self.rows)
+        self.label.setText("Nombre d'éléments: " + str(row_count))
+        self.tableWidget.setRowCount(row_count)
         for row_index, row in enumerate(self.rows):
 
             columns = [row.date.strftime("%d/%m/%Y"), row.season.name, str(row.episode)]

@@ -135,14 +135,10 @@ class FullListTab(QWidget):
 
     # region ----- Remplissage de la liste des saisons -----
     def fill_season_list(self, serie):
-        self.tableWidget.setRowCount(0)
-
         seasons = Seasons.select().where(Seasons.serie == serie.id, Seasons.is_deleted == 0).order_by(Seasons.sort_id)
-        seasons_count = len(seasons)
-
-        self.label_2.setText(str(seasons_count))
-
-        self.tableWidget.setRowCount(seasons_count)
+        row_count = len(seasons)
+        self.label_2.setText(str(row_count))
+        self.tableWidget.setRowCount(row_count)
         for row_index, season in enumerate(seasons):
             columns = [season.type.name, season.name]
 

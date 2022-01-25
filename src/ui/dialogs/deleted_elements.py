@@ -25,14 +25,10 @@ class DeletedElements(QDialog):
         pass
 
     def fill_data(self):
-        self.tableWidget.setRowCount(0)
-        deleted_seasons_count = len(self.deleted_seasons)
-
-        self.label.setText("Nombre d'éléments: " + str(deleted_seasons_count))
-
-        self.tableWidget.setRowCount(deleted_seasons_count)
+        row_count = len(self.deleted_seasons)
+        self.label.setText("Nombre d'éléments: " + str(row_count))
+        self.tableWidget.setRowCount(row_count)
         for row_index, season in enumerate(self.deleted_seasons):
-
             # TODO: Ajouter les colonnes supplémentaires
             columns = [season.serie.name, season.name, season.type.name, season.state]
             for col_index, value in enumerate(columns):

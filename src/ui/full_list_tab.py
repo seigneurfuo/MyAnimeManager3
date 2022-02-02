@@ -6,7 +6,7 @@ from PyQt5.QtCore import QDir, Qt
 import os
 from pathlib import Path
 
-from ui.dialogs.series import SeriesDialog
+from ui.dialogs.serie import SerieDialog
 from ui.dialogs.deleted_elements import DeletedElements
 from database import Series, Seasons, database
 from common import show_view_history_dialog
@@ -91,7 +91,7 @@ class FullListTab(QWidget):
 
     def when_add_serie_button_clicked(self):
         serie = Series()
-        series_dialog = SeriesDialog(serie)
+        series_dialog = SerieDialog(serie)
 
         if series_dialog.exec_():
             series_dialog.serie.save()
@@ -101,7 +101,7 @@ class FullListTab(QWidget):
         if self.current_serie_id:
             serie = Series().get(self.current_serie_id)
 
-            series_dialog = SeriesDialog(serie)
+            series_dialog = SerieDialog(serie)
             if series_dialog.exec_():
                 self.when_visible()
 

@@ -4,9 +4,9 @@ from PyQt5.QtWidgets import QDialog, QFileDialog
 from PyQt5.uic import loadUi
 
 
-class SeriesDialog(QDialog):
+class SerieDialog(QDialog):
     def __init__(self, serie):
-        super(SeriesDialog, self).__init__()
+        super(SerieDialog, self).__init__()
 
         self.serie = serie
 
@@ -46,7 +46,7 @@ class SeriesDialog(QDialog):
         self.serie.path = self.lineEdit_3.text()
         self.serie.save()
 
-        super(SeriesDialog, self).accept()
+        super(SerieDialog, self).accept()
 
     def reject(self):
-        super(SeriesDialog, self).reject()
+        super(SerieDialog, self).reject()

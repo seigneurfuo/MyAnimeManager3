@@ -25,7 +25,7 @@ class PlanningTab(QWidget):
         self.init_events()
 
     def init_ui(self):
-        loadUi(os.path.join(os.path.dirname(__file__), 'planning_tab.ui'), self)
+        loadUi(os.path.join(os.path.dirname(__file__), "planning_tab.ui"), self)
 
         self.planning_calendar = CustomCalendar()
         self.planning_calendar.setCellsBackgroundColor(QColor(115, 210, 22, 50))

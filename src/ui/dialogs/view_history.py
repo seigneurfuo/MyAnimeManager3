@@ -16,7 +16,7 @@ class ViewHistory(QDialog):
         self.init_events()
 
     def init_ui(self):
-        loadUi(os.path.join(os.path.dirname(__file__), 'view_history.ui'), self)
+        loadUi(os.path.join(os.path.dirname(__file__), "view_history.ui"), self)
         # TODO: Title
         self.setWindowTitle(self.tr("Historique de visionnage"))
 

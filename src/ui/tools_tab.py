@@ -19,7 +19,7 @@ class ToolsTab(QWidget):
 
 
     def init_ui(self):
-        loadUi(os.path.join(os.path.dirname(__file__), 'tools_tab.ui'), self)
+        loadUi(os.path.join(os.path.dirname(__file__), "tools_tab.ui"), self)
 
     def init_events(self):
         self.go_button.clicked.connect(self.on_duration_calculation_button_click)

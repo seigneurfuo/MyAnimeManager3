@@ -28,7 +28,7 @@ class MainWindow(QMainWindow):
         self.update_tab_content(self.tabWidget.currentIndex())
 
     def init_ui(self):
-        loadUi(os.path.join(os.path.dirname(__file__), 'main_window.ui'), self)
+        loadUi(os.path.join(os.path.dirname(__file__), "main_window.ui"), self)
 
         # Onglet 1 - Planning
         planning_tab = PlanningTab(self)

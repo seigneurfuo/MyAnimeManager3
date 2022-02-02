@@ -14,7 +14,7 @@ class SeriesDialog(QDialog):
         self.init_events()
 
     def init_ui(self):
-        loadUi(os.path.join(os.path.dirname(__file__), 'series.ui'), self)
+        loadUi(os.path.join(os.path.dirname(__file__), "serie.ui"), self)
         self.setWindowTitle(self.serie.name)
 
         if self.serie.id:

@@ -17,7 +17,7 @@ class About(QDialog):
 
 
     def init_ui(self):
-        loadUi(os.path.join(os.path.dirname(__file__), 'about.ui'), self)
+        loadUi(os.path.join(os.path.dirname(__file__), "about.ui"), self)
         self.setWindowTitle(self.tr("A propos"))
 
         self.fill_data()

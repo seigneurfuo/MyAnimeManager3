@@ -25,10 +25,17 @@ class ToolsTab(QWidget):
         self.go_button.clicked.connect(self.on_duration_calculation_button_click)
         self.get_current_time_button.clicked.connect(self.on_get_current_time_button_click)
 
-    def when_visible(self):
-        pass
+        # Si n'importe quelle valeur de la spinbox est changée, alors on met à jour en temps réel
+        self.timeEdit.timeChanged.connect(self.when_spinboxes_values_changed)
+        self.spinBox.valueChanged.connect(self.when_spinboxes_values_changed)
+        self.spinBox_2.valueChanged.connect(self.when_spinboxes_values_changed)
+        self.spinBox_3.valueChanged.connect(self.when_spinboxes_values_changed)
+        self.spinBox_4.valueChanged.connect(self.when_spinboxes_values_changed)
 
-    def on_duration_calculation_button_click(self):
+    def when_visible(self):
+        self.set_current_time()
+
+    def duration_calculation(self):
         self.listWidget.clear()
 
         episodes_count = self.spinBox.value()
@@ -41,9 +48,18 @@ class ToolsTab(QWidget):
 
         rows = duration_calculation(episodes_count, episodes_duration, pause_every, pause_duration, start_time_string)
 
+        # TODO: Tablewidget Type: Episode / Pause, Heure début, Heure fin
         for row in rows:
             self.listWidget.addItem(QListWidgetItem(row))
 
+    def when_spinboxes_values_changed(self):
+        self.duration_calculation()
+
+    def on_duration_calculation_button_click(self):
+        self.duration_calculation()
+
+    def set_current_time(self):
+        self.timeEdit.setTime(QTime.currentTime())
 
     def on_get_current_time_button_click(self):
-        self.timeEdit.setTime(QTime.currentTime())
+        self.set_current_time()

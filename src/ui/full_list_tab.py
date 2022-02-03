@@ -1,14 +1,14 @@
 #!/bin/env python3
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem
 from PyQt5.uic import loadUi
-from PyQt5.QtCore import QDir, Qt
+from PyQt5.QtCore import Qt
 
 import os
-from pathlib import Path
 
 from ui.dialogs.serie import SerieDialog
+from ui.dialogs.season import SeasonDialog
 from ui.dialogs.deleted_elements import DeletedElements
-from database import Series, Seasons, database
+from database import database, Series, Seasons, SeasonsTypes
 from common import show_view_history_dialog
 
 
@@ -35,10 +35,11 @@ class FullListTab(QWidget):
         # region ----- Boutons -----
         self.add_serie_button.clicked.connect(self.when_add_serie_button_clicked)
         self.edit_serie_button.clicked.connect(self.when_edit_serie_button_clicked)
-
         # FIXME:
         self.delete_serie_button.clicked.connect(self.when_delete_serie_button_clicked)
 
+        self.add_season_button.clicked.connect(self.when_add_season_button_clicked)
+        self.edit_season_button.clicked.connect(self.when_edit_season_button_clicked)
         self.delete_season_button.clicked.connect(self.when_delete_season_button_clicked)
 
         self.view_deleted_elements_button.clicked.connect(self.when_view_deleted_elements_button_clicked)
@@ -94,7 +95,6 @@ class FullListTab(QWidget):
         series_dialog = SerieDialog(serie)
 
         if series_dialog.exec_():
-            series_dialog.serie.save()
             self.fill_series_combobox()
 
     def when_edit_serie_button_clicked(self):
@@ -114,6 +114,25 @@ class FullListTab(QWidget):
 
             # self.on_series_list_current_index_changed()
             self.fill_series_combobox()
+
+    def when_add_season_button_clicked(self):
+        if self.current_serie_id:
+            # ----- Supression des saisons -----
+            season = Seasons()
+            serie = Series.get(self.current_serie_id)
+            seasons_types = SeasonsTypes.select(1) # FIXME
+            season_dialog = SeasonDialog(season, serie, seasons_types)
+
+            if season_dialog.exec_():
+                self.when_visible()
+
+    def when_edit_season_button_clicked(self):
+        if self.current_season_id:
+            season = Seasons().get(self.current_season_id)
+            seasons_types = SeasonsTypes.select(1) # FIXME
+            season_dialog = SeasonDialog(season, serie=None, seasons_types=seasons_types)
+            if season_dialog.exec_():
+                self.when_visible()
 
     def when_delete_season_button_clicked(self):
         if self.current_season_id:

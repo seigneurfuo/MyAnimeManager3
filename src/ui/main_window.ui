@@ -92,7 +92,14 @@
     </property>
     <addaction name="planning_export_action"/>
    </widget>
+   <widget class="QMenu" name="menuOutils">
+    <property name="title">
+     <string>Outils</string>
+    </property>
+    <addaction name="check_problems_action"/>
+   </widget>
    <addaction name="file_menu"/>
+   <addaction name="menuOutils"/>
    <addaction name="menuExports"/>
    <addaction name="about_menu"/>
   </widget>
@@ -143,6 +150,11 @@
   <action name="planning_export_action">
    <property name="text">
     <string>Export du planning</string>
+   </property>
+  </action>
+  <action name="check_problems_action">
+   <property name="text">
+    <string>Vérifier les données</string>
    </property>
   </action>
  </widget>

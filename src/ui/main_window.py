@@ -10,6 +10,7 @@ from ui.planning_tab import PlanningTab
 from ui.full_list_tab import FullListTab
 from ui.tools_tab import ToolsTab
 from ui.dialogs.about import About
+from ui.dialogs.collection_problems import CollectionProblems
 
 
 class MainWindow(QMainWindow):
@@ -47,12 +48,14 @@ class MainWindow(QMainWindow):
 
     def init_events(self):
         # FIXME: Ouvrir plutot le dossier utilisateur !
+        # Menus
         self.open_profile_action.triggered.connect(self.when_menu_action_open_profile_clicked)
 
         self.planning_export_action.triggered.connect(self.when_menu_action_planning_export_clicked)
-        self.about_action.triggered.connect(self.when_about_action_clicked)
+        self.about_action.triggered.connect(self.when_menu__action_about_clicked)
+        self.check_problems_action.triggered.connect(self.when_menu_action_check_collection_clicked)
 
-        # Clic sur les onglets
+        # ----- Clic sur les onglets -----
         self.tabWidget.currentChanged.connect(self.when_current_tab_changed)
 
         # Affichage de l'emplacement des données de l'utilisateur
@@ -84,7 +87,44 @@ class MainWindow(QMainWindow):
     def when_menu_action_planning_export_clicked(self):
         pass
 
-    def when_about_action_clicked(self):
+    def get_collection_problems(self):
+        seasons_passed = []
+        messages = []
+
+        seasons = database.Seasons.select().join(database.Series).where(database.Seasons.is_deleted == 0).order_by(
+            database.Seasons.sort_id)
+
+        for season in seasons:
+            if not season.serie.id in seasons_passed and season.state != 4:
+
+                if season.serie.sort_id == 0 and (season.view_count > 0 or season.watched_episodes > 0):
+                    seasons_passed.append(season.serie.id)
+                    msg = "Série: {}. L'identifiant est toujours \"{}\" alors que des épisodes on déja étés vus.".format(
+                        season.serie.name, season.serie.sort_id)
+                    messages.append(msg)
+                    #print(msg)
+
+                elif season.episodes == 0:
+                    msg = "Série: {}. La saison \"{}\" n'a aucun nombre d'épisodes définis.".format(season.sort_id,
+                                                                                                    season.name)
+                    messages.append(msg)
+                    #print(msg)
+
+                # On supprime tout les espaces. S'il ne reste rien, alors c'est que le tire de la saison est vide.
+                elif season.name.replace(" ", "") == "":
+                    msg = "Série: {}. La saison \"{}\" à un nom vide. ".format(season.serie.name, season.sort_id)
+                    messages.append(msg)
+                    #print(msg)
+
+        return messages
+
+    def when_menu_action_check_collection_clicked(self):
+        messages = self.get_collection_problems()
+        dialog = CollectionProblems(messages)
+        dialog.exec_()
+
+
+    def when_menu__action_about_clicked(self):
         dialog = About()
         dialog.exec_()
 

@@ -17,7 +17,7 @@ class DeletedElements(QDialog):
 
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "deleted_elements.ui"), self)
-        self.setWindowTitle(self.serie.name)
+        #self.setWindowTitle(self.serie.name)
 
         self.fill_data()
 
@@ -28,6 +28,7 @@ class DeletedElements(QDialog):
         row_count = len(self.deleted_seasons)
         self.label.setText("Nombre d'éléments: " + str(row_count))
         self.tableWidget.setRowCount(row_count)
+
         for row_index, season in enumerate(self.deleted_seasons):
             # TODO: Ajouter les colonnes supplémentaires
             columns = [season.serie.name, season.name, season.type.name, season.state]

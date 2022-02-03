@@ -15,9 +15,10 @@ class SerieDialog(QDialog):
 
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "serie.ui"), self)
-        self.setWindowTitle(self.serie.name)
 
+        # Si création
         if self.serie.id:
+            self.setWindowTitle(self.serie.name)
             self.fill_data()
 
     def init_events(self):
@@ -25,8 +26,8 @@ class SerieDialog(QDialog):
 
     def fill_data(self):
         self.spinBox.setValue(self.serie.sort_id)
-        self.lineEdit_2.setText(self.serie.name)  #
-        self.lineEdit_3.setText(self.serie.path) # Chemin
+        self.lineEdit_2.setText(self.serie.name)
+        self.lineEdit_3.setText(self.serie.path)
 
     def choose_path(self):
         """Fonction qui permet à l'utilisateur de choisir le dossier de la série"""
@@ -38,14 +39,15 @@ class SerieDialog(QDialog):
             # Application du texte sur le widget line edit
             self.lineEdit_3.setText(folder_name)
 
-
-    def accept(self):
-        self.serie.name = self.lineEdit_2.text()
+    def save_data(self):
         self.serie.sort_id = self.spinBox.value()
-        # TODO: Chemin de la série
+        self.serie.name = self.lineEdit_2.text()
         self.serie.path = self.lineEdit_3.text()
+
         self.serie.save()
 
+    def accept(self):
+        self.save_data()
         super(SerieDialog, self).accept()
 
     def reject(self):

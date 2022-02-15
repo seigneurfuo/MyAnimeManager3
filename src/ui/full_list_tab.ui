@@ -285,7 +285,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="search_box">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -303,8 +303,8 @@
     <rect>
      <x>810</x>
      <y>130</y>
-     <width>144</width>
-     <height>132</height>
+     <width>156</width>
+     <height>136</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -343,8 +343,8 @@
     <rect>
      <x>810</x>
      <y>380</y>
-     <width>144</width>
-     <height>132</height>
+     <width>156</width>
+     <height>136</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">

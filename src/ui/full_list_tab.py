@@ -45,6 +45,8 @@ class FullListTab(QWidget):
         self.view_deleted_elements_button.clicked.connect(self.when_view_deleted_elements_button_clicked)
         # TODO: pushButton_2
         self.show_view_history_button.clicked.connect(self.when_show_view_history_button_is_clicked)
+
+        self.search_box.textChanged.connect(self.when_search_box_content_changed)
         # endregion
 
     def when_visible(self):
@@ -55,10 +57,14 @@ class FullListTab(QWidget):
         self.when_series_list_current_index_changed()
 
     # region ----- Serie combobox -----
-    def fill_series_combobox(self):
+    def fill_series_combobox(self, search_query=None):
         self.comboBox.clear()
 
-        series = Series.select().where(Series.is_deleted == 0).order_by(Series.sort_id)
+        if search_query:
+            series = Series.select().where(Series.is_deleted == 0, Series.name.contains(search_query)).order_by(Series.sort_id)
+        else:
+            series = Series.select().where(Series.is_deleted == 0).order_by(Series.sort_id)
+
         for serie in series:
             text = "{0} - {1}".format(serie.sort_id, serie.name)
             self.comboBox.addItem(text, userData=serie.id)
@@ -195,4 +201,7 @@ class FullListTab(QWidget):
         if self.current_season_id:
             show_view_history_dialog(self.current_season_id)
 
-    # endregion
+
+    def when_search_box_content_changed(self):
+        search_query = self.search_box.text()
+        self.fill_series_combobox(search_query)

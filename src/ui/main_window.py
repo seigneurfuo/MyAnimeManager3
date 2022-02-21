@@ -33,19 +33,19 @@ class MainWindow(QMainWindow):
         loadUi(os.path.join(os.path.dirname(__file__), "main_window.ui"), self)
 
         # Onglet 1 - Planning
-        planning_tab = PlanningTab(self)
-        self.planning_tab_layout.addWidget(planning_tab)
+        self.planning_tab = PlanningTab(self)
+        self.planning_tab_layout.addWidget(self.planning_tab)
 
         # Onglet 2 - Liste des animés
-        full_list_tab = FullListTab(self)
-        self.full_list_tab_layout.addWidget(full_list_tab)
+        self.full_list_tab = FullListTab(self)
+        self.full_list_tab_layout.addWidget(self.full_list_tab)
 
         # Onglet 4 - Outils
-        tools_tab = ToolsTab(self)
-        self.tools_tab_layout.addWidget(tools_tab)
+        self.tools_tab = ToolsTab(self)
+        self.tools_tab_layout.addWidget(self.tools_tab)
 
         # Remplissage de la liste des onglets
-        self.tabs = (planning_tab, full_list_tab, None, tools_tab)
+        self.tabs = (self.planning_tab, self.full_list_tab, None, self.tools_tab)
 
     def init_events(self):
         # FIXME: Ouvrir plutot le dossier utilisateur !
@@ -128,6 +128,7 @@ class MainWindow(QMainWindow):
     def when_menu__action_about_clicked(self):
         dialog = About()
         dialog.exec_()
+        #tutorial(self)
 
     # TODO: Désactiver la sauvegarde automatique
     def closeEvent(self, a0):

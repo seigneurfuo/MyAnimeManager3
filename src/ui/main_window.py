@@ -1,8 +1,9 @@
 import os
 
-from PyQt5.QtCore import QDir
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.uic import loadUi
+from PyQt5.QtGui import QDesktopServices
+from PyQt5.QtCore import QUrl
 
 import database
 from utils import open_folder
@@ -82,7 +83,7 @@ class MainWindow(QMainWindow):
         self.update_tab_content(tab_index)
 
     def when_menu_action_open_profile_clicked(self):
-        open_folder(self.profile_path)
+        QDesktopServices.openUrl(QUrl.fromLocalFile(self.profile_path))
 
     def when_menu_action_planning_export_clicked(self):
         pass

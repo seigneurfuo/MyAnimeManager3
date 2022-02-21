@@ -2,9 +2,9 @@
 import platform
 import os
 
-from PyQt5.QtCore import Qt, QDate
-from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QProgressBar
+from PyQt5.QtCore import Qt, QDate, QUrl
+from PyQt5.QtGui import QColor, QDesktopServices
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QProgressBar, QMessageBox
 from PyQt5.uic import loadUi
 
 from ui.custom_calendar import CustomCalendar
@@ -217,7 +217,7 @@ class PlanningTab(QWidget):
             season = Seasons.get(Seasons.id == self.current_season_id)
             path = season.serie.path
             if os.path.exists(path):
-                open_folder(path)
+                QDesktopServices.openUrl(QUrl.fromLocalFile(path))
 
     def when_show_view_history_button_is_clicked(self):
         if self.current_season_id:

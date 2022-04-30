@@ -29,7 +29,7 @@ class Series(BaseModel):
 class Seasons(BaseModel):
     sort_id = IntegerField()
     name = TextField()
-    date = TextField(null=True)
+    year = IntegerField(null=True)
     serie = ForeignKeyField(column_name='serie', field='id', model=Series)
     type = ForeignKeyField(column_name='type', field='id', model=SeasonsTypes, null=True)
     studio = IntegerField(index=True, null=True)

@@ -22,7 +22,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab1">
        <attribute name="title">
@@ -44,10 +44,15 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="tab3">
        <attribute name="title">
         <string>Liste</string>
        </attribute>
+       <layout class="QGridLayout" name="gridLayout_6">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="list2_tab_layout"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab4">
        <attribute name="title">

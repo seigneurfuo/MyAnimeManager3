@@ -84,13 +84,16 @@ class PlanningTab(QWidget):
         self.tableWidget_7.setRowCount(row_count)
         for col_index, row_data in enumerate(planning_data_list):
             col_data = QTableWidgetItem(row_data.season.serie.name)
+            col_data.setToolTip(col_data.text())
             col_data.setData(Qt.UserRole, row_data.id)
             self.tableWidget_7.setItem(col_index, 0, col_data)
 
             col_data = QTableWidgetItem(row_data.season.name)
+            col_data.setToolTip(col_data.text())
             self.tableWidget_7.setItem(col_index, 1, col_data)
 
             col_data = QTableWidgetItem(str(row_data.episode))
+            col_data.setToolTip(col_data.text())
             self.tableWidget_7.setItem(col_index, 2, col_data)
 
     def fill_to_watch_table(self):
@@ -111,21 +114,25 @@ class PlanningTab(QWidget):
         for col_index, row_data in enumerate(episodes_to_watch):
             # Série
             col_data = QTableWidgetItem(row_data.serie.name)
+            col_data.setToolTip(col_data.text())
             col_data.setData(Qt.UserRole, row_data.id)
             self.tableWidget_6.setItem(col_index, 0, col_data)
 
             # Saison
             col_data = QTableWidgetItem(row_data.name)
+            col_data.setToolTip(col_data.text())
             self.tableWidget_6.setItem(col_index, 1, col_data)
 
             # Etat FIXME: C'est pas très propre le self.parent.parent.season_states
             col_data = QTableWidgetItem(self.parent.parent.season_states[row_data.state])
+            col_data.setToolTip(col_data.text())
             self.tableWidget_6.setItem(col_index, 2, col_data)
 
             # Episode
             next_episode_index = int(row_data.watched_episodes) + 1
             next_episode_text = "{} / {}".format(next_episode_index, row_data.episodes)
             col_data = QTableWidgetItem(next_episode_text)
+            col_data.setToolTip(col_data.text())
             self.tableWidget_6.setItem(col_index, 3, col_data)
 
             # Progression

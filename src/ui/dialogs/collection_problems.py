@@ -30,6 +30,7 @@ class CollectionProblems(QDialog):
 
         for row_index, message in enumerate(self.messages):
             item = QTableWidgetItem(message)
+            item.setToolTip(item.text())
             self.tableWidget.setItem(row_index, 0, item)
 
     def accept(self):

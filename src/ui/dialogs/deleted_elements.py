@@ -26,7 +26,7 @@ class DeletedElements(QDialog):
 
     def fill_data(self):
         row_count = len(self.deleted_seasons)
-        self.label.setText("Nombre d'éléments: " + str(row_count))
+        self.label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
         self.tableWidget.setRowCount(row_count)
 
         for row_index, season in enumerate(self.deleted_seasons):
@@ -34,6 +34,7 @@ class DeletedElements(QDialog):
             columns = [season.serie.name, season.name, season.type.name, season.state]
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
+                item.setToolTip(item.text())
                 item.setData(Qt.UserRole, season.id)
                 self.tableWidget.setItem(row_index, col_index, item)
 

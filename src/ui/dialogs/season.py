@@ -43,7 +43,7 @@ class SeasonDialog(QDialog):
         self.season.sort_id = self.spinBox.value()
         self.season.name = self.lineEdit_2.text()
         self.season.state = self.combobox_1.currentIndex()
-        self.season.type = self.seasons_types # TODO pour le meoment toujours saison
+        self.season.type = self.seasons_types  # TODO pour le meoment toujours saison
         self.season.episodes = self.spinBox_4.value()
         self.season.watched_episodes = self.spinBox_3.value()
         self.season.view_count = self.spinBox_2.value()

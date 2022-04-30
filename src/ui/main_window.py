@@ -103,19 +103,19 @@ class MainWindow(QMainWindow):
                     msg = "Série: {}. L'identifiant est toujours \"{}\" alors que des épisodes on déja étés vus.".format(
                         season.serie.name, season.serie.sort_id)
                     messages.append(msg)
-                    #print(msg)
+                    # print(msg)
 
                 elif season.episodes == 0:
                     msg = "Série: {}. La saison \"{}\" n'a aucun nombre d'épisodes définis.".format(season.sort_id,
                                                                                                     season.name)
                     messages.append(msg)
-                    #print(msg)
+                    # print(msg)
 
                 # On supprime tout les espaces. S'il ne reste rien, alors c'est que le tire de la saison est vide.
                 elif season.name.replace(" ", "") == "":
                     msg = "Série: {}. La saison \"{}\" à un nom vide. ".format(season.serie.name, season.sort_id)
                     messages.append(msg)
-                    #print(msg)
+                    # print(msg)
 
         return messages
 
@@ -124,16 +124,14 @@ class MainWindow(QMainWindow):
         dialog = CollectionProblems(messages)
         dialog.exec_()
 
-
     def when_menu__action_about_clicked(self):
         dialog = About()
         dialog.exec_()
-        #tutorial(self)
+        # tutorial(self)
 
     # TODO: Désactiver la sauvegarde automatique
     def closeEvent(self, a0):
         super().close()
-
 
     #         # Si il y a eu des modifications
     #         if True: #TODO: Si il y à des chnagements

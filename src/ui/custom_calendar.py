@@ -27,4 +27,4 @@ class CustomCalendar(QCalendarWidget):
 
         # Si une couleur à été choisi pour l'arrière plan des cellules, alors on l'applique
         if self.cell_background_color and date in self.dates:
-             painter.fillRect(rect, self.cell_background_color)
+            painter.fillRect(rect, self.cell_background_color)

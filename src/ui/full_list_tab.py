@@ -172,6 +172,7 @@ class FullListTab(QWidget):
 
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
+                item.setToolTip(item.text())
                 item.setData(Qt.UserRole, season.id)
                 self.tableWidget.setItem(row_index, col_index, item)
 
@@ -183,11 +184,10 @@ class FullListTab(QWidget):
 
     def fill_season_data(self, season):
         fields = [(self.label_8, season.name),
-                  (self.label_10, season.date)]
+                  (self.label_10, str(season.year))]
 
         for field, value in fields:
             field.setText(value)
-
 
     def when_seasons_list_current_index_changed(self):
         # self.tableWidget.currentItem()

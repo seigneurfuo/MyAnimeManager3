@@ -67,7 +67,12 @@ def migration_seasons():
         new_season = mamdb3.Seasons()
         new_season.sort_id = season.season_sort_id
         new_season.name = season.season_title
+
         # TODO: Date + champ sur comment est enregistré la date
+        if len(str(season.season_release_year)) == 4:
+            new_season.year = season.season_release_year
+        else:
+            new_season.year = None
 
         new_season.type = 1  # Saison
         # TODO: Studio ?

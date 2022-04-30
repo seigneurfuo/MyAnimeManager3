@@ -9,8 +9,7 @@ from PyQt5.uic import loadUi
 
 from ui.custom_calendar import CustomCalendar
 from database import Planning, Seasons
-from utils import open_folder
-from common import show_view_history_dialog
+from common import show_watch_history_dialog
 
 
 class PlanningTab(QWidget):
@@ -42,6 +41,7 @@ class PlanningTab(QWidget):
         self.open_folder_button.clicked.connect(self.when_open_folder_button_is_clicked)
         self.show_view_history_button.clicked.connect(self.when_show_view_history_button_is_clicked)
         self.date_edit.dateChanged.connect(self.when_date_edit_date_changed)
+        self.delete_button.clicked.connect(self.when_delete_button_clicked)
 
     def when_visible(self):
         self.update_date_on_widgets()
@@ -81,15 +81,16 @@ class PlanningTab(QWidget):
         row_count = len(planning_data_list)
         self.label_82.setText(str(row_count))
         self.tableWidget_7.setRowCount(row_count)
-        for col_index, planning_data in enumerate(planning_data_list):
-            column0 = QTableWidgetItem(planning_data.season.serie.name)
-            self.tableWidget_7.setItem(col_index, 0, column0)
+        for col_index, row_data in enumerate(planning_data_list):
+            col_data = QTableWidgetItem(row_data.season.serie.name)
+            col_data.setData(Qt.UserRole, row_data.id)
+            self.tableWidget_7.setItem(col_index, 0, col_data)
 
-            column1 = QTableWidgetItem(planning_data.season.name)
-            self.tableWidget_7.setItem(col_index, 1, column1)
+            col_data = QTableWidgetItem(row_data.season.name)
+            self.tableWidget_7.setItem(col_index, 1, col_data)
 
-            column2 = QTableWidgetItem(str(planning_data.episode))
-            self.tableWidget_7.setItem(col_index, 2, column2)
+            col_data = QTableWidgetItem(str(row_data.episode))
+            self.tableWidget_7.setItem(col_index, 2, col_data)
 
     def fill_to_watch_table(self):
         """
@@ -203,7 +204,7 @@ class PlanningTab(QWidget):
             self.show_view_history_button.setEnabled(True)
 
             # Active ou désactive le bouton d'ouverture du dossier de la série
-            season = Seasons.get(Seasons.id == self.current_season_id)
+            season = Seasons().get(Seasons.id == self.current_season_id)
             self.open_folder_button.setEnabled(os.path.exists(season.serie.path))
 
         else:
@@ -214,11 +215,34 @@ class PlanningTab(QWidget):
 
     def when_open_folder_button_is_clicked(self):
         if self.current_season_id:
-            season = Seasons.get(Seasons.id == self.current_season_id)
+            season = Seasons().get(Seasons.id == self.current_season_id)
             path = season.serie.path
             if os.path.exists(path):
                 QDesktopServices.openUrl(QUrl.fromLocalFile(path))
 
     def when_show_view_history_button_is_clicked(self):
         if self.current_season_id:
-            show_view_history_dialog(self.current_season_id)
+            show_watch_history_dialog(self.current_season_id)
+
+    def when_delete_button_clicked(self):
+        if self.current_season_id:
+            self.show_delete_watched_episode_window()
+
+    def show_delete_watched_episode_window(self):
+        msg_box = QMessageBox(self)
+        msg_box.setWindowTitle(self.tr("Supression d'un épisode vu"))
+
+        # TODO: Traduction
+        msg_box.setText(self.tr("Vous aller supprimer le visionnagede l'épisode {}"))
+        yes_button = msg_box.addButton(self.tr("Définir l'épisode comme prochain épisode à voir et le supprimer"), QMessageBox.YesRole)
+        no_button = msg_box.addButton(self.tr("Supprimer uniquement l'épisode sans modifier le prochain épisode à voir"), QMessageBox.NoRole)
+        msg_box.addButton(self.tr("Annuler"), QMessageBox.RejectRole)
+        msg_box.exec_()
+
+        if msg_box.clickedButton() == yes_button:
+            return 0
+
+        elif msg_box.clickedButton() == no_button:
+            return 1
+        else:
+            return -1

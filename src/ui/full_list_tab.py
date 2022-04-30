@@ -9,7 +9,7 @@ from ui.dialogs.serie import SerieDialog
 from ui.dialogs.season import SeasonDialog
 from ui.dialogs.deleted_elements import DeletedElements
 from database import database, Series, Seasons, SeasonsTypes
-from common import show_view_history_dialog
+from common import show_watch_history_dialog
 
 
 class FullListTab(QWidget):
@@ -61,9 +61,9 @@ class FullListTab(QWidget):
         self.comboBox.clear()
 
         if search_query:
-            series = Series.select().where(Series.is_deleted == 0, Series.name.contains(search_query)).order_by(Series.sort_id)
+            series = Series().select().where(Series.is_deleted == 0, Series.name.contains(search_query)).order_by(Series.sort_id)
         else:
-            series = Series.select().where(Series.is_deleted == 0).order_by(Series.sort_id)
+            series = Series().select().where(Series.is_deleted == 0).order_by(Series.sort_id)
 
         for serie in series:
             text = "{0} - {1}".format(serie.sort_id, serie.name)
@@ -79,7 +79,7 @@ class FullListTab(QWidget):
         self.current_serie_id = self.comboBox.currentData()
 
         if self.current_serie_id:
-            serie = Series.get(Series.id == self.current_serie_id)
+            serie = Series().get(Series.id == self.current_serie_id)
 
             self.fill_serie_data(serie)
             self.fill_season_list(serie)
@@ -114,7 +114,7 @@ class FullListTab(QWidget):
     def when_delete_serie_button_clicked(self):
         if self.current_serie_id:
             # ----- Supression des saisons -----
-            serie = Series.get(self.current_serie_id)
+            serie = Series().get(self.current_serie_id)
             serie.is_deleted = 1
             serie.save()
 
@@ -125,8 +125,8 @@ class FullListTab(QWidget):
         if self.current_serie_id:
             # ----- Supression des saisons -----
             season = Seasons()
-            serie = Series.get(self.current_serie_id)
-            seasons_types = SeasonsTypes.select(1) # FIXME
+            serie = Series().get(self.current_serie_id)
+            seasons_types = SeasonsTypes().select(1) # FIXME
             season_dialog = SeasonDialog(season, serie, seasons_types)
 
             if season_dialog.exec_():
@@ -135,15 +135,15 @@ class FullListTab(QWidget):
     def when_edit_season_button_clicked(self):
         if self.current_season_id:
             season = Seasons().get(self.current_season_id)
-            seasons_types = SeasonsTypes.select(1) # FIXME
+            seasons_types = SeasonsTypes().select(1) # FIXME
             season_dialog = SeasonDialog(season, serie=None, seasons_types=seasons_types)
             if season_dialog.exec_():
                 self.when_visible()
 
     def when_delete_season_button_clicked(self):
         if self.current_season_id:
-            season = Seasons.get(self.current_season_id)
-            serie = Series.get(Series.id == self.current_serie_id)
+            season = Seasons().get(self.current_season_id)
+            serie = Series().get(Series.id == self.current_serie_id)
 
             season.is_deleted = 1
             season.save()
@@ -152,8 +152,8 @@ class FullListTab(QWidget):
             self.fill_season_list(serie)
 
     def when_view_deleted_elements_button_clicked(self):
-        deleted_series = Series.select().where(Series.is_deleted == 1).order_by(Series.sort_id)
-        deleted_seasons = Seasons.select().where(Seasons.is_deleted == 1).order_by(Seasons.sort_id)
+        deleted_series = Series().select().where(Series.is_deleted == 1).order_by(Series.sort_id)
+        deleted_seasons = Seasons().select().where(Seasons.is_deleted == 1).order_by(Seasons.sort_id)
         print(deleted_seasons)
         dialog = DeletedElements(deleted_series, deleted_seasons)
 
@@ -163,7 +163,7 @@ class FullListTab(QWidget):
 
     # region ----- Remplissage de la liste des saisons -----
     def fill_season_list(self, serie):
-        seasons = Seasons.select().where(Seasons.serie == serie.id, Seasons.is_deleted == 0).order_by(Seasons.sort_id)
+        seasons = Seasons().select().where(Seasons.serie == serie.id, Seasons.is_deleted == 0).order_by(Seasons.sort_id)
         row_count = len(seasons)
         self.label_2.setText(str(row_count))
         self.tableWidget.setRowCount(row_count)
@@ -198,12 +198,12 @@ class FullListTab(QWidget):
             self.current_season_id = current_item.data(Qt.UserRole)
             print(self.current_season_id)
 
-        season = Seasons.get(Seasons.id == self.current_season_id)
+        season = Seasons().get(Seasons.id == self.current_season_id)
         self.fill_season_data(season)
 
     def when_show_view_history_button_is_clicked(self):
         if self.current_season_id:
-            show_view_history_dialog(self.current_season_id)
+            show_watch_history_dialog(self.current_season_id)
 
 
     def when_search_box_content_changed(self):

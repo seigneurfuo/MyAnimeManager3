@@ -92,7 +92,7 @@ class MainWindow(QMainWindow):
         seasons_passed = []
         messages = []
 
-        seasons = database.Seasons.select().join(database.Series).where(database.Seasons.is_deleted == 0).order_by(
+        seasons = database.Seasons().select().join(database.Series).where(database.Seasons.is_deleted == 0).order_by(
             database.Seasons.sort_id)
 
         for season in seasons:

@@ -22,6 +22,12 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTableWidget" name="tableWidget">
+     <property name="contextMenuPolicy">
+      <enum>Qt::ActionsContextMenu</enum>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
      <property name="selectionMode">
       <enum>QAbstractItemView::SingleSelection</enum>
      </property>
@@ -46,19 +52,12 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Cocher les élements à restaurer</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::Close</set>
      </property>
     </widget>
    </item>

@@ -9,7 +9,9 @@ import database
 from utils import open_folder
 from ui.planning_tab import PlanningTab
 from ui.full_list_tab import FullListTab
+from ui.list2_tab import List2
 from ui.tools_tab import ToolsTab
+
 from ui.dialogs.about import About
 from ui.dialogs.collection_problems import CollectionProblems
 
@@ -40,12 +42,19 @@ class MainWindow(QMainWindow):
         self.full_list_tab = FullListTab(self)
         self.full_list_tab_layout.addWidget(self.full_list_tab)
 
+        # Onglet 3 - Liste des animés 2
+        self.list2_tab = List2(self)
+        self.list2_tab_layout.addWidget(self.list2_tab)
+
         # Onglet 4 - Outils
         self.tools_tab = ToolsTab(self)
         self.tools_tab_layout.addWidget(self.tools_tab)
 
         # Remplissage de la liste des onglets
-        self.tabs = (self.planning_tab, self.full_list_tab, None, self.tools_tab)
+        self.tabs = (self.planning_tab, self.full_list_tab, self.list2_tab, self.tools_tab)
+
+        # Onglet par défaut
+        self.tabWidget.setCurrentIndex(0)  # TODO: Configuration
 
     def init_events(self):
         # FIXME: Ouvrir plutot le dossier utilisateur !

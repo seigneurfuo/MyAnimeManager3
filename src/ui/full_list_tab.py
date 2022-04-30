@@ -143,9 +143,13 @@ class FullListTab(QWidget):
     def when_delete_season_button_clicked(self):
         if self.current_season_id:
             season = Seasons.get(self.current_season_id)
+            serie = Series.get(Series.id == self.current_serie_id)
+
             season.is_deleted = 1
             season.save()
-            # TODO: Refresh
+
+            self.fill_serie_data(serie)
+            self.fill_season_list(serie)
 
     def when_view_deleted_elements_button_clicked(self):
         deleted_series = Series.select().where(Series.is_deleted == 1).order_by(Series.sort_id)

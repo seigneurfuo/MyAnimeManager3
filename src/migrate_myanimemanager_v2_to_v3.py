@@ -1,3 +1,5 @@
+#!/bin/env python3
+
 # python pwiz.py --preserve-order --engine sqlite "/home/seigneurfuo/.myanimemanager2/database.sqlite3" > database_myanimemanager_2.py
 import os
 import time
@@ -80,7 +82,6 @@ def migration_seasons():
         new_season_id = series_id_list[old_serie_id]
         new_season.serie = new_season_id  # On récupère le nouvel ID de le série
 
-
         new_season.is_deleted = False
         new_season.save()
 
@@ -120,8 +121,6 @@ def migration():
     print("Supression de {}...".format(MYANIMEMANAGER_3_DATABASE))
     if os.path.exists(MYANIMEMANAGER_3_DATABASE):
         os.remove(MYANIMEMANAGER_3_DATABASE)
-
-    time.sleep(1)
 
     # Chargemet des BDD
     mamdb2.database.init(MYANIMEMANAGER_2_DATABASE)

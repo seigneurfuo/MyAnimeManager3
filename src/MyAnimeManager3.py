@@ -1,3 +1,5 @@
+#!/bin/env python3
+
 import sys
 import os
 
@@ -18,14 +20,14 @@ class Application(QApplication):
         self.version = "2022.01.24"
         self.description = self.tr("Un gestionnaire de séries multiplateforme écrit en Python3 et Qt5")
 
-
         self.setApplicationName(self.name)
         self.setApplicationDisplayName(self.name)
         self.setApplicationVersion(self.version)
 
         self.default_settings = default_settings.DEFAULT_SETTINGS
         self.profile_path = None
-        self.season_states = [self.tr("Indéfinie"), self.tr("A voir"), self.tr("En cours"), self.tr("Terminée"), self.tr("Annulée")]
+        self.season_states = [self.tr("Indéfinie"), self.tr("A voir"), self.tr("En cours"), self.tr("Terminée"),
+                              self.tr("Annulée")]
 
         self.load_profile()
 

@@ -17,7 +17,6 @@ class ToolsTab(QWidget):
         self.init_ui()
         self.init_events()
 
-
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "tools_tab.ui"), self)
 

@@ -31,7 +31,7 @@ class ViewHistory(QDialog):
         self.tableWidget.setRowCount(row_count)
         for row_index, row in enumerate(self.rows):
 
-            columns = [row.date.strftime("%d/%m/%Y"), row.season.name, str(row.episode)]
+            columns = [row.date.strftime("%d/%m/%Y"), row.season.name, str(row.episodes)]
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
                 self.tableWidget.setItem(row_index, col_index, item)

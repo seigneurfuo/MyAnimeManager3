@@ -69,7 +69,7 @@ class MainWindow(QMainWindow):
         self.planning_export_action.triggered.connect(self.when_menu_action_planning_export_clicked)
         self.about_action.triggered.connect(self.when_menu__action_about_clicked)
         self.check_problems_action.triggered.connect(self.when_menu_action_check_collection_clicked)
-        self.open_database_history_action.triggered.connect(self.when_menu_action_open_database_history)
+        self.open_database_backups_action.triggered.connect(self.when_menu_action_open_database_history)
 
         # ----- Clic sur les onglets -----
         self.tabWidget.currentChanged.connect(self.when_current_tab_changed)

@@ -1,5 +1,5 @@
 pkgname="myanimemanager3"
-pkgver=$(date '+%Y.%m.%d')
+pkgver=2022.04.30
 pkgrel=1
 pkgdesc="Un logiciel de gestion de séries et d'animés."
 url="https://seigneurfuo.com"

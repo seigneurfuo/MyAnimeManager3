@@ -1,6 +1,8 @@
 import os
+import shutil
+from datetime import datetime
 
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtCore import QUrl
@@ -14,6 +16,9 @@ from ui.tools_tab import ToolsTab
 
 from ui.dialogs.about import About
 from ui.dialogs.collection_problems import CollectionProblems
+from ui.dialogs.database_backups import DatabaseHistory
+
+from db_backups_manager import DBBackupsManager
 
 
 class MainWindow(QMainWindow):
@@ -64,6 +69,7 @@ class MainWindow(QMainWindow):
         self.planning_export_action.triggered.connect(self.when_menu_action_planning_export_clicked)
         self.about_action.triggered.connect(self.when_menu__action_about_clicked)
         self.check_problems_action.triggered.connect(self.when_menu_action_check_collection_clicked)
+        self.open_database_history_action.triggered.connect(self.when_menu_action_open_database_history)
 
         # ----- Clic sur les onglets -----
         self.tabWidget.currentChanged.connect(self.when_current_tab_changed)
@@ -97,6 +103,7 @@ class MainWindow(QMainWindow):
     def when_menu_action_planning_export_clicked(self):
         pass
 
+    # TODO: Changer l'emplacement et metre ça ailleurs dans un autre fichier
     def get_collection_problems(self):
         seasons_passed = []
         messages = []
@@ -138,9 +145,31 @@ class MainWindow(QMainWindow):
         dialog.exec_()
         # tutorial(self)
 
+    def when_menu_action_open_database_history(self):
+        dialog = DatabaseHistory(self)
+        dialog.exec_()
+        selected_backup = dialog.selected_backup
+
+        if selected_backup:
+            db_backups_manager = DBBackupsManager(self)
+            db_backups_manager.restore_database_backup(selected_backup)
+
+            QMessageBox.information(None, "Base de données restaurée", \
+                                    "Le logiciel va se fermer. Veuillez le relancer pour que les modifications soient prises en compte", QMessageBox.Ok)
+            self.close()
+
+
+    def backup_database_before_quit(self):
+        db_backups_manager = DBBackupsManager(self)
+        db_backups_manager.backup_current_database()
+
     # TODO: Désactiver la sauvegarde automatique
     def closeEvent(self, a0):
+        database.database.commit()
+        self.backup_database_before_quit()
+
         super().close()
+
 
     #         # Si il y a eu des modifications
     #         if True: #TODO: Si il y à des chnagements

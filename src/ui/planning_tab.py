@@ -33,7 +33,7 @@ class PlanningTab(QWidget):
 
     def init_events(self):
         self.tableWidget_6.currentCellChanged.connect(self.when_current_cell_changed)
-        self.tableWidget_6.cellDoubleClicked.connect(self.xx)
+        self.tableWidget_6.cellDoubleClicked.connect(self.when_current_cell_double_clicked)
 
         self.today_button.clicked.connect(self.when_today_button_clicked)
         self.planning_calendar.selectionChanged.connect(self.when_planning_calender_date_changed)
@@ -168,7 +168,7 @@ class PlanningTab(QWidget):
     def when_add_to_watched_list_button_clicked(self):
         self.add_to_watched_list()
 
-    def xx(self):
+    def when_current_cell_double_clicked(self):
         self.add_to_watched_list()
 
     def add_episode_to_planning(self, season_id):

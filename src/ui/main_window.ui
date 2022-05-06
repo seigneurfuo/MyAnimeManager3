@@ -102,6 +102,7 @@
      <string>Outils</string>
     </property>
     <addaction name="check_problems_action"/>
+    <addaction name="open_database_backups_action"/>
    </widget>
    <addaction name="file_menu"/>
    <addaction name="menuOutils"/>
@@ -160,6 +161,11 @@
   <action name="check_problems_action">
    <property name="text">
     <string>Vérifier les données</string>
+   </property>
+  </action>
+  <action name="open_database_backups_action">
+   <property name="text">
+    <string>Revenir à une ancienne version</string>
    </property>
   </action>
  </widget>

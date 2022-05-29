@@ -33,6 +33,8 @@ class FullListTab(QWidget):
         self.tableWidget.currentItemChanged.connect(self.when_seasons_list_current_index_changed)
 
         # region ----- Boutons -----
+        self.pushButton_5.clicked.connect(self.when_search_box_clear_button_clicked)
+
         self.add_serie_button.clicked.connect(self.when_add_serie_button_clicked)
         self.edit_serie_button.clicked.connect(self.when_edit_serie_button_clicked)
         # FIXME:
@@ -205,7 +207,9 @@ class FullListTab(QWidget):
         if self.current_season_id:
             show_watch_history_dialog(self.current_season_id)
 
-
     def when_search_box_content_changed(self):
         search_query = self.search_box.text()
         self.fill_series_combobox(search_query)
+
+    def when_search_box_clear_button_clicked(self):
+        self.search_box.clear()

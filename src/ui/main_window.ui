@@ -22,9 +22,13 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="tab1">
+       <attribute name="icon">
+        <iconset>
+         <normaloff>../resources/icons/calendar-list.png</normaloff>../resources/icons/calendar-list.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>Planning</string>
        </attribute>
@@ -35,6 +39,10 @@
        </layout>
       </widget>
       <widget class="QWidget" name="tab2">
+       <attribute name="icon">
+        <iconset>
+         <normaloff>../resources/icons/films.png</normaloff>../resources/icons/films.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>Animés</string>
        </attribute>
@@ -45,6 +53,10 @@
        </layout>
       </widget>
       <widget class="QWidget" name="tab3">
+       <attribute name="icon">
+        <iconset>
+         <normaloff>../resources/icons/edit-list.png</normaloff>../resources/icons/edit-list.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>Liste</string>
        </attribute>
@@ -55,6 +67,10 @@
        </layout>
       </widget>
       <widget class="QWidget" name="tab4">
+       <attribute name="icon">
+        <iconset>
+         <normaloff>../resources/icons/wrench-screwdriver.png</normaloff>../resources/icons/wrench-screwdriver.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>Outils</string>
        </attribute>
@@ -149,21 +165,37 @@
    </property>
   </action>
   <action name="open_profile_action">
+   <property name="icon">
+    <iconset>
+     <normaloff>../resources/icons/folder-horizontal-open.png</normaloff>../resources/icons/folder-horizontal-open.png</iconset>
+   </property>
    <property name="text">
     <string>Ouvrir le dossier du profil</string>
    </property>
   </action>
   <action name="planning_export_action">
+   <property name="icon">
+    <iconset>
+     <normaloff>../resources/icons/document-export.png</normaloff>../resources/icons/document-export.png</iconset>
+   </property>
    <property name="text">
     <string>Export du planning</string>
    </property>
   </action>
   <action name="check_problems_action">
+   <property name="icon">
+    <iconset>
+     <normaloff>../resources/icons/magnifier--exclamation.png</normaloff>../resources/icons/magnifier--exclamation.png</iconset>
+   </property>
    <property name="text">
     <string>Vérifier les données</string>
    </property>
   </action>
   <action name="open_database_backups_action">
+   <property name="icon">
+    <iconset>
+     <normaloff>../resources/icons/clock-history.png</normaloff>../resources/icons/clock-history.png</iconset>
+   </property>
    <property name="text">
     <string>Revenir à une ancienne version</string>
    </property>

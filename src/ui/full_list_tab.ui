@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>964</width>
+    <width>970</width>
     <height>648</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
     <rect>
      <x>130</x>
      <y>50</y>
-     <width>581</width>
+     <width>561</width>
      <height>31</height>
     </rect>
    </property>
@@ -270,6 +270,10 @@
     <property name="text">
      <string>Ouvrir le dossier de la saison</string>
     </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../resources/icons/folder-horizontal-open.png</normaloff>../resources/icons/folder-horizontal-open.png</iconset>
+    </property>
    </widget>
    <widget class="QPushButton" name="show_view_history_button">
     <property name="geometry">
@@ -282,6 +286,10 @@
     </property>
     <property name="text">
      <string>Historique de visionnage</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../resources/icons/film-timeline.png</normaloff>../resources/icons/film-timeline.png</iconset>
     </property>
    </widget>
   </widget>
@@ -303,36 +311,41 @@
     <rect>
      <x>810</x>
      <y>130</y>
-     <width>156</width>
-     <height>136</height>
+     <width>31</width>
+     <height>91</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QPushButton" name="add_serie_button">
       <property name="text">
-       <string>+</string>
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../resources/icons/plus.png</normaloff>../resources/icons/plus.png</iconset>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QPushButton" name="edit_serie_button">
       <property name="text">
-       <string>[0]</string>
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../resources/icons/pencil.png</normaloff>../resources/icons/pencil.png</iconset>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QPushButton" name="delete_serie_button">
       <property name="text">
-       <string>-</string>
+       <string/>
       </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton_4">
-      <property name="text">
-       <string>Détail des Visionnages</string>
+      <property name="icon">
+       <iconset>
+        <normaloff>../resources/icons/minus.png</normaloff>../resources/icons/minus.png</iconset>
       </property>
      </widget>
     </item>
@@ -343,36 +356,41 @@
     <rect>
      <x>810</x>
      <y>380</y>
-     <width>156</width>
-     <height>136</height>
+     <width>31</width>
+     <height>101</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
      <widget class="QPushButton" name="add_season_button">
       <property name="text">
-       <string>+</string>
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../resources/icons/plus.png</normaloff>../resources/icons/plus.png</iconset>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QPushButton" name="edit_season_button">
       <property name="text">
-       <string>[0]</string>
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../resources/icons/pencil.png</normaloff>../resources/icons/pencil.png</iconset>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QPushButton" name="delete_season_button">
       <property name="text">
-       <string>-</string>
+       <string/>
       </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton_3">
-      <property name="text">
-       <string>Détail des Visionnages</string>
+      <property name="icon">
+       <iconset>
+        <normaloff>../resources/icons/minus.png</normaloff>../resources/icons/minus.png</iconset>
       </property>
      </widget>
     </item>
@@ -381,7 +399,7 @@
   <widget class="QPushButton" name="view_deleted_elements_button">
    <property name="geometry">
     <rect>
-     <x>710</x>
+     <x>700</x>
      <y>50</y>
      <width>251</width>
      <height>31</height>
@@ -389,6 +407,19 @@
    </property>
    <property name="text">
     <string>Afficher les séries / saisons supprimées</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_5">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>10</y>
+     <width>31</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>effacer</string>
    </property>
   </widget>
  </widget>

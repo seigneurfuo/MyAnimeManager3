@@ -1,10 +1,13 @@
 #!/bin/env python3
+import random
+
 from PyQt5.QtWidgets import QWidget, QListWidgetItem
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QDir, QTime
 
 import os
 
+from database import Seasons
 from utils import duration_calculation
 
 
@@ -21,8 +24,8 @@ class ToolsTab(QWidget):
         loadUi(os.path.join(os.path.dirname(__file__), "tools_tab.ui"), self)
 
     def init_events(self):
-        self.go_button.clicked.connect(self.on_duration_calculation_button_click)
-        self.get_current_time_button.clicked.connect(self.on_get_current_time_button_click)
+        self.go_button.clicked.connect(self.when_duration_calculation_button_click)
+        self.get_current_time_button.clicked.connect(self.when_get_current_time_button_click)
 
         # Si n'importe quelle valeur de la spinbox est changée, alors on met à jour en temps réel
         self.timeEdit.timeChanged.connect(self.when_spinboxes_values_changed)
@@ -30,6 +33,8 @@ class ToolsTab(QWidget):
         self.spinBox_2.valueChanged.connect(self.when_spinboxes_values_changed)
         self.spinBox_3.valueChanged.connect(self.when_spinboxes_values_changed)
         self.spinBox_4.valueChanged.connect(self.when_spinboxes_values_changed)
+
+        self.select_random_season_button.clicked.connect(self.when_select_random_season_button_clicked)
 
     def when_visible(self):
         self.set_current_time()
@@ -54,11 +59,20 @@ class ToolsTab(QWidget):
     def when_spinboxes_values_changed(self):
         self.duration_calculation()
 
-    def on_duration_calculation_button_click(self):
+    def when_duration_calculation_button_click(self):
         self.duration_calculation()
 
     def set_current_time(self):
         self.timeEdit.setTime(QTime.currentTime())
 
-    def on_get_current_time_button_click(self):
+    def when_get_current_time_button_click(self):
         self.set_current_time()
+
+    def when_select_random_season_button_clicked(self):
+        states = [0, 1, 2] if self.checkBox.isChecked() else [0, 1]
+
+        seasons = Seasons.select().where(Seasons.state.in_(states), Seasons.is_deleted == 0).order_by(Seasons.id)
+        random_season = random.choice(seasons)
+
+        msg = "{} - {}".format(random_season.serie.name, random_season.name)
+        self.label_7.setText(msg)

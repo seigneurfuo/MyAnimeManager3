@@ -160,7 +160,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../../../MyAnimeManager 2/ressources/icons/edit-delete-5.ico</normaloff>../../../MyAnimeManager 2/ressources/icons/edit-delete-5.ico</iconset>
+           <normaloff>../resources/icons/minus.png</normaloff>../resources/icons/minus.png</iconset>
          </property>
         </widget>
        </item>
@@ -188,7 +188,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../../../MyAnimeManager 2/ressources/icons/today.ico</normaloff>../../../MyAnimeManager 2/ressources/icons/today.ico</iconset>
+           <normaloff>../resources/icons/calendar.png</normaloff>../resources/icons/calendar.png</iconset>
          </property>
         </widget>
        </item>
@@ -306,7 +306,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../../../MyAnimeManager 2/ressources/icons/folder-2.ico</normaloff>../../../MyAnimeManager 2/ressources/icons/folder-2.ico</iconset>
+           <normaloff>../resources/icons/folder-horizontal-open.png</normaloff>../resources/icons/folder-horizontal-open.png</iconset>
          </property>
         </widget>
        </item>
@@ -317,6 +317,10 @@
          </property>
          <property name="text">
           <string>Historique de visionnage</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../resources/icons/film-timeline.png</normaloff>../resources/icons/film-timeline.png</iconset>
          </property>
         </widget>
        </item>
@@ -342,7 +346,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../../../MyAnimeManager 2/ressources/icons/edit-add-4.ico</normaloff>../../../MyAnimeManager 2/ressources/icons/edit-add-4.ico</iconset>
+           <normaloff>../resources/icons/eye--plus.png</normaloff>../resources/icons/eye--plus.png</iconset>
          </property>
         </widget>
        </item>

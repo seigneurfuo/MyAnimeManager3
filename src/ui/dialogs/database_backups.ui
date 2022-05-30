@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>498</width>
+    <width>511</width>
     <height>343</height>
    </rect>
   </property>
@@ -66,7 +66,11 @@ Les données de cette session serons sauvegardées dans une sauvegarde
         <bool>true</bool>
        </property>
        <property name="text">
-        <string>Restaurer la sauvegarde choisie</string>
+        <string>Restaurer la sauvegarde sélectionnée</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../resources/icons/clock-history.png</normaloff>../../resources/icons/clock-history.png</iconset>
        </property>
       </widget>
      </item>
@@ -74,6 +78,10 @@ Les données de cette session serons sauvegardées dans une sauvegarde
       <widget class="QPushButton" name="pushButton_2">
        <property name="text">
         <string>Créer une sauvegarde manuelle</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../resources/icons/database--plus.png</normaloff>../../resources/icons/database--plus.png</iconset>
        </property>
       </widget>
      </item>

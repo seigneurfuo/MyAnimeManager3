@@ -129,7 +129,7 @@
   <action name="quit_action">
    <property name="icon">
     <iconset>
-     <normaloff>:/icons/icons/delete.ico</normaloff>:/icons/icons/delete.ico</iconset>
+     <normaloff>../resources/icons/cross.png</normaloff>../resources/icons/cross.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Quitter</string>
@@ -160,6 +160,10 @@
    </property>
   </action>
   <action name="about_action">
+   <property name="icon">
+    <iconset>
+     <normaloff>../resources/icons/question.png</normaloff>../resources/icons/question.png</iconset>
+   </property>
    <property name="text">
     <string>A propos ...</string>
    </property>

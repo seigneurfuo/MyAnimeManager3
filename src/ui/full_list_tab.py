@@ -49,6 +49,7 @@ class FullListTab(QWidget):
         self.show_view_history_button.clicked.connect(self.when_show_view_history_button_is_clicked)
 
         self.search_box.textChanged.connect(self.when_search_box_content_changed)
+        self.search_box.returnPressed.connect(self.when_search_box_content_changed)
         # endregion
 
     def when_visible(self):

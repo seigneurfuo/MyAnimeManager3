@@ -37,7 +37,7 @@ class FullListTab(QWidget):
 
         self.add_serie_button.clicked.connect(self.when_add_serie_button_clicked)
         self.edit_serie_button.clicked.connect(self.when_edit_serie_button_clicked)
-        self.delete_serie_button.clicked.connect(self.when_delete_serie_button_clicked)        # FIXME:
+        self.delete_serie_button.clicked.connect(self.when_delete_serie_button_clicked)  # FIXME:
 
         self.add_season_button.clicked.connect(self.when_add_season_button_clicked)
         self.edit_season_button.clicked.connect(self.when_edit_season_button_clicked)
@@ -148,7 +148,6 @@ class FullListTab(QWidget):
     def when_view_deleted_elements_button_clicked(self):
         deleted_series = Series().select().where(Series.is_deleted == 1).order_by(Series.sort_id)
         deleted_seasons = Seasons().select().where(Seasons.is_deleted == 1).order_by(Seasons.sort_id)
-        print(deleted_seasons)
         dialog = DeletedElements(deleted_series, deleted_seasons)
 
         # TODO:
@@ -191,14 +190,12 @@ class FullListTab(QWidget):
         # On masque ou none le bouton pour parcourir le dossier
         self.open_folder_button.setEnabled(os.path.exists(season.serie.path))
 
-
     def when_seasons_list_current_index_changed(self):
         current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
 
-        # TODO: Click automatique sur le premier élement lors du changement si une saison existe ?
+        # Click automatique sur le premier élement lors du changement si une saison existe ?
         if current_item:
             self.current_season_id = current_item.data(Qt.UserRole)
-            print(self.current_season_id)
 
         season = Seasons().get(Seasons.id == self.current_season_id)
         self.fill_season_data(season)

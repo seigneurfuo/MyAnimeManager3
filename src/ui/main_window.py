@@ -8,7 +8,6 @@ from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtCore import QUrl
 
 import database
-from utils import open_folder
 from ui.planning_tab import PlanningTab
 from ui.full_list_tab import FullListTab
 from ui.list2_tab import List2
@@ -112,26 +111,23 @@ class MainWindow(QMainWindow):
             database.Seasons.sort_id)
 
         for season in seasons:
-            if not season.serie.id in seasons_passed and season.state != 4:
+            if season.serie.id not in seasons_passed and season.state != 4:
 
                 if season.serie.sort_id == 0 and (season.view_count > 0 or season.watched_episodes > 0):
                     seasons_passed.append(season.serie.id)
                     msg = "Série: {}. L'identifiant est toujours \"{}\" alors que des épisodes on déja étés vus.".format(
                         season.serie.name, season.serie.sort_id)
                     messages.append(msg)
-                    # print(msg)
 
                 elif season.episodes == 0:
                     msg = "Série: {}. La saison \"{}\" n'a aucun nombre d'épisodes définis.".format(season.sort_id,
                                                                                                     season.name)
                     messages.append(msg)
-                    # print(msg)
 
                 # On supprime tout les espaces. S'il ne reste rien, alors c'est que le tire de la saison est vide.
                 elif season.name.replace(" ", "") == "":
                     msg = "Série: {}. La saison \"{}\" à un nom vide. ".format(season.serie.name, season.sort_id)
                     messages.append(msg)
-                    # print(msg)
 
         return messages
 

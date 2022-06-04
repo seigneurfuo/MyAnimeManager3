@@ -228,9 +228,8 @@ class PlanningTab(QWidget):
     def when_open_folder_button_is_clicked(self):
         if self.current_season_id:
             season = Seasons().get(Seasons.id == self.current_season_id)
-            path = season.serie.path
-            if os.path.exists(path):
-                QDesktopServices.openUrl(QUrl.fromLocalFile(path))
+            if os.path.exists(season.serie.path):
+                QDesktopServices.openUrl(QUrl.fromLocalFile(season.serie.path))
 
     def when_show_view_history_button_is_clicked(self):
         if self.current_season_id:

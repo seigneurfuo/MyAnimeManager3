@@ -38,6 +38,7 @@ class Seasons(BaseModel):
     view_count = IntegerField(constraints=[SQL("DEFAULT 0")])
     state = IntegerField()
     favorite = IntegerField(constraints=[SQL("DEFAULT 0")])
+    description = TextField(null=True)
     is_deleted = IntegerField(constraints=[SQL("DEFAULT 0")])
 
     class Meta:

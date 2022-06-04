@@ -37,8 +37,7 @@ class FullListTab(QWidget):
 
         self.add_serie_button.clicked.connect(self.when_add_serie_button_clicked)
         self.edit_serie_button.clicked.connect(self.when_edit_serie_button_clicked)
-        # FIXME:
-        self.delete_serie_button.clicked.connect(self.when_delete_serie_button_clicked)
+        self.delete_serie_button.clicked.connect(self.when_delete_serie_button_clicked)        # FIXME:
 
         self.add_season_button.clicked.connect(self.when_add_season_button_clicked)
         self.edit_season_button.clicked.connect(self.when_edit_season_button_clicked)
@@ -65,7 +64,8 @@ class FullListTab(QWidget):
         self.comboBox.clear()
 
         if search_query:
-            series = Series().select().where(Series.is_deleted == 0, Series.name.contains(search_query)).order_by(Series.sort_id)
+            series = Series().select().where(Series.is_deleted == 0, Series.name.contains(search_query)).order_by(
+                Series.sort_id)
         else:
             series = Series().select().where(Series.is_deleted == 0).order_by(Series.sort_id)
 
@@ -95,9 +95,6 @@ class FullListTab(QWidget):
         for field, value in fields:
             field.setText(value)
 
-        # FIXME: Utiliser en fonction de la classe la bonne fonction ?
-        self.plainTextEdit.setPlainText(serie.description)
-
     # endregion
 
     def when_add_serie_button_clicked(self):
@@ -122,7 +119,6 @@ class FullListTab(QWidget):
             serie.is_deleted = 1
             serie.save()
 
-            # self.on_series_list_current_index_changed()
             self.fill_series_combobox()
 
     def when_add_season_button_clicked(self):
@@ -130,7 +126,7 @@ class FullListTab(QWidget):
             # ----- Supression des saisons -----
             season = Seasons()
             serie = Series().get(self.current_serie_id)
-            seasons_types = SeasonsTypes().select(1) # FIXME
+            seasons_types = SeasonsTypes().select(1)  # FIXME
             season_dialog = SeasonDialog(season, serie, seasons_types)
 
             if season_dialog.exec_():
@@ -139,7 +135,7 @@ class FullListTab(QWidget):
     def when_edit_season_button_clicked(self):
         if self.current_season_id:
             season = Seasons().get(self.current_season_id)
-            seasons_types = SeasonsTypes().select(1) # FIXME
+            seasons_types = SeasonsTypes().select(1)  # FIXME
             season_dialog = SeasonDialog(season, serie=None, seasons_types=seasons_types)
             if season_dialog.exec_():
                 self.when_visible()
@@ -181,8 +177,9 @@ class FullListTab(QWidget):
                 self.tableWidget.setItem(row_index, col_index, item)
 
         # Si on à au moiins une série, alors on affiche la première de la liste
-        # if seasons:
-        # self.tableWidget.setCurrentCell(0, 0)
+        if seasons:
+            self.tableWidget.setCurrentCell(0, 0)
+            self.when_seasons_list_current_index_changed()
 
         # endregion
 

@@ -30,7 +30,6 @@ class DBBackupsManager:
     def _remove_old_backups(self):
         backups = self.get_dbs_list()
         if len(backups) >= self.backups_limit:
-            # TODO: Supression de la version la plus vieille
             print("Supression des vieilles sauvegardes")
 
             nb_backups_to_delete = len(backups) - 10

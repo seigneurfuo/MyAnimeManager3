@@ -75,8 +75,6 @@ class FullListTab(QWidget):
         self.current_serie_id = self.comboBox.currentData()
 
     def when_series_list_current_index_changed(self):
-        # ----- -----
-
         self.current_serie_id = self.comboBox.currentData()
 
         if self.current_serie_id:
@@ -190,15 +188,30 @@ class FullListTab(QWidget):
         # On masque ou none le bouton pour parcourir le dossier
         self.open_folder_button.setEnabled(os.path.exists(season.serie.path))
 
+    def clear_season_data(self):
+        fields = [self.label_12,
+                  self.label_8,
+                  self.label_10,
+                  self.label_16,
+                  self.label_17,
+                  self.label_19]
+
+        for field in fields:
+            field.clear()
+
+        self.open_folder_button.setEnabled(False)
+
     def when_seasons_list_current_index_changed(self):
         current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
 
-        # Click automatique sur le premier élement lors du changement si une saison existe ?
         if current_item:
             self.current_season_id = current_item.data(Qt.UserRole)
 
-        season = Seasons().get(Seasons.id == self.current_season_id)
-        self.fill_season_data(season)
+            season = Seasons().get(Seasons.id == self.current_season_id)
+            self.fill_season_data(season)
+
+        else:
+            self.clear_season_data()
 
     def when_show_view_history_button_is_clicked(self):
         if self.current_season_id:

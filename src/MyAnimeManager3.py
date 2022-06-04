@@ -50,7 +50,7 @@ class Application(QApplication):
         # Génération des tables
         if not os.path.exists(self.database_path):
             database.database.init(self.database_path)
-            database.database.create_tables([database.Series, database.Seasons])
+            database.database.create_tables([database.Series, database.Seasons, database.Planning])
 
         else:
             database.database.init(self.database_path)

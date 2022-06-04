@@ -15,7 +15,7 @@ class DBBackupsManager:
         if not os.path.isdir(self.backups_folderpath):
             os.makedirs(self.backups_folderpath)
 
-    def get_dbs_list(self):
+    def get_dbs_list(self, filter=None):
         self._create_backup_folder()
 
         databases_backups = [
@@ -23,12 +23,13 @@ class DBBackupsManager:
             for filename in os.listdir(self.backups_folderpath) \
             if os.path.isfile(os.path.join(self.backups_folderpath, filename)) \
                and os.path.join(self.backups_folderpath, filename).endswith(self.database_pattern)
+               and ((filter == "auto" and "auto" in filename) or not filter)
         ]
 
         return sorted(databases_backups)
 
     def _remove_old_backups(self):
-        backups = self.get_dbs_list()
+        backups = self.get_dbs_list(filter="auto") # Ne supprime que les sauvegardes automatiques
         if len(backups) >= self.backups_limit:
             print("Supression des vieilles sauvegardes")
 

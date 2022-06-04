@@ -67,5 +67,7 @@ class DatabaseHistory(QDialog):
                 item.setToolTip(state)
                 self.tableWidget.setItem(row_index, 1, item)
 
+        self.tableWidget.resizeColumnsToContents()
+
     def reject(self):
         super(DatabaseHistory, self).reject()

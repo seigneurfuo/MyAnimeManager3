@@ -1,6 +1,7 @@
 import os
 
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QDialog, QTableWidgetItem
 from PyQt5.uic import loadUi
 
@@ -57,13 +58,20 @@ class DatabaseHistory(QDialog):
 
             if "-manual-" in short_filename or "-auto-" in short_filename:
                 item = QTableWidgetItem(short_filename)
+                item.setIcon(QIcon("resources/icons/blue-document-clock.png"))
                 item.setToolTip(filepath)
                 item.setData(Qt.UserRole, filepath)
                 self.tableWidget.setItem(row_index, 0, item)
 
-                state = self.tr("Manuelle") if "-manual-" in short_filename else self.tr("Automatique")
+                if "-manual-" in short_filename:
+                    state = self.tr("Manuelle")
+                    state_icon = "resources/icons/user.png"
+                else:
+                    state = self.tr("Automatique")
+                    state_icon = "resources/icons/database.png"
 
                 item = QTableWidgetItem(state)
+                item.setIcon(QIcon(state_icon))
                 item.setToolTip(state)
                 self.tableWidget.setItem(row_index, 1, item)
 

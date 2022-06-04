@@ -35,7 +35,7 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -103,25 +103,45 @@ p, li { white-space: pre-wrap; }
        <property name="text">
         <string>Indéfini</string>
        </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../resources/icons/question.png</normaloff>../../resources/icons/question.png</iconset>
+       </property>
       </item>
       <item>
        <property name="text">
         <string>A voir</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../resources/icons/clock.png</normaloff>../../resources/icons/clock.png</iconset>
        </property>
       </item>
       <item>
        <property name="text">
         <string>En cours</string>
        </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../resources/icons/film.png</normaloff>../../resources/icons/film.png</iconset>
+       </property>
       </item>
       <item>
        <property name="text">
         <string>Terminé</string>
        </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../resources/icons/tick.png</normaloff>../../resources/icons/tick.png</iconset>
+       </property>
       </item>
       <item>
        <property name="text">
         <string>Abandonné</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../resources/icons/cross.png</normaloff>../../resources/icons/cross.png</iconset>
        </property>
       </item>
      </widget>

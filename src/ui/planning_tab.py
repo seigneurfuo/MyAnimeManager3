@@ -96,6 +96,8 @@ class PlanningTab(QWidget):
             col_data.setToolTip(col_data.text())
             self.tableWidget_7.setItem(col_index, 2, col_data)
 
+        self.tableWidget_7.resizeColumnsToContents()
+
     def fill_to_watch_table(self):
         """
         Fonction qui rempli la liste des épisodes à voir
@@ -148,6 +150,8 @@ class PlanningTab(QWidget):
                 progress_bar.setAlignment(Qt.AlignCenter)
 
             self.tableWidget_6.setCellWidget(col_index, 4, progress_bar)
+
+        self.tableWidget_6.resizeColumnsToContents()
 
     def when_today_button_clicked(self):
         """Fonction qui ramène le calendrier à la date actuelle"""

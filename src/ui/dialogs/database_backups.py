@@ -15,12 +15,13 @@ class DatabaseHistory(QDialog):
 
         self.db_backups = []
         self.selected_backup = None
+        self.folderpath = os.path.join(os.path.dirname(__file__))
 
         self.init_ui()
         self.init_events()
 
     def init_ui(self):
-        loadUi(os.path.join(os.path.dirname(__file__), "database_backups.ui"), self)
+        loadUi(os.path.join(self.folderpath, "database_backups.ui"), self)
         # self.setWindowTitle(self.serie.name)
 
         self.fill_data()
@@ -58,17 +59,17 @@ class DatabaseHistory(QDialog):
 
             if "-manual-" in short_filename or "-auto-" in short_filename:
                 item = QTableWidgetItem(short_filename)
-                item.setIcon(QIcon("resources/icons/blue-document-clock.png"))
+                item.setIcon(QIcon(os.path.join(self.folderpath, "resources/icons/blue-document-clock.png")))
                 item.setToolTip(filepath)
                 item.setData(Qt.UserRole, filepath)
                 self.tableWidget.setItem(row_index, 0, item)
 
                 if "-manual-" in short_filename:
                     state = self.tr("Manuelle")
-                    state_icon = "resources/icons/user.png"
+                    state_icon = os.path.join(self.folderpath, "../../resources/icons/user.png")
                 else:
                     state = self.tr("Automatique")
-                    state_icon = "resources/icons/database.png"
+                    state_icon = os.path.join(self.folderpath, "../../resources/icons/database.png")
 
                 item = QTableWidgetItem(state)
                 item.setIcon(QIcon(state_icon))

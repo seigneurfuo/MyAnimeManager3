@@ -116,19 +116,6 @@
      <string>TextLabel</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>620</x>
-      <y>220</y>
-      <width>161</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Ouvrir le dossier de la série</string>
-    </property>
-   </widget>
   </widget>
   <widget class="QLabel" name="label_5">
    <property name="geometry">
@@ -258,7 +245,7 @@
      <string>&lt;Date de la saison&gt;</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="open_folder_button">
     <property name="geometry">
      <rect>
       <x>600</x>

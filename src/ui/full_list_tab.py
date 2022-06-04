@@ -59,7 +59,6 @@ class FullListTab(QWidget):
         # On force l'affichage de l'informaton pour la première série au lancement
         self.when_series_list_current_index_changed()
 
-    # region ----- Serie combobox -----
     def fill_series_combobox(self, search_query=None):
         self.comboBox.clear()
 
@@ -75,8 +74,6 @@ class FullListTab(QWidget):
 
         self.current_serie_id = self.comboBox.currentData()
 
-    # endregion
-
     def when_series_list_current_index_changed(self):
         # ----- -----
 
@@ -88,14 +85,11 @@ class FullListTab(QWidget):
             self.fill_serie_data(serie)
             self.fill_season_list(serie)
 
-    # region ----- Remplissage de la liste des informations sur la série -----
     def fill_serie_data(self, serie):
         fields = [(self.label_3, serie.name)]
 
         for field, value in fields:
             field.setText(value)
-
-    # endregion
 
     def when_add_serie_button_clicked(self):
         serie = Series()
@@ -161,14 +155,14 @@ class FullListTab(QWidget):
         if dialog.exec_():
             pass
 
-    # region ----- Remplissage de la liste des saisons -----
     def fill_season_list(self, serie):
         seasons = Seasons().select().where(Seasons.serie == serie.id, Seasons.is_deleted == 0).order_by(Seasons.sort_id)
         row_count = len(seasons)
         self.label_2.setText(str(row_count))
         self.tableWidget.setRowCount(row_count)
+
         for row_index, season in enumerate(seasons):
-            columns = [season.type.name, season.name]
+            columns = [str(season.sort_id), season.type.name, season.name]
 
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
@@ -176,21 +170,27 @@ class FullListTab(QWidget):
                 item.setData(Qt.UserRole, season.id)
                 self.tableWidget.setItem(row_index, col_index, item)
 
-        # Si on à au moiins une série, alors on affiche la première de la liste
+        # Si on à au moins une série, alors on affiche la première de la liste
         if seasons:
             self.tableWidget.setCurrentCell(0, 0)
             self.when_seasons_list_current_index_changed()
 
-        # endregion
-
     def fill_season_data(self, season):
-        fields = [(self.label_8, season.name),
-                  (self.label_10, str(season.year))]
+        fields = [(self.label_12, str(season.sort_id)),
+                  (self.label_8, season.name),
+                  (self.label_10, str(season.year)),
+                  (self.label_16, str(season.episodes)),
+                  (self.label_17, str(season.watched_episodes)),
+                  (self.label_19, str(season.view_count))]
 
         for field, value in fields:
             field.setText(value)
 
         self.plainTextEdit.setPlainText(season.description)
+
+        # On masque ou none le bouton pour parcourir le dossier
+        self.open_folder_button.setEnabled(os.path.exists(season.serie.path))
+
 
     def when_seasons_list_current_index_changed(self):
         current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)

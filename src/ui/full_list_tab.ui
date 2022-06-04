@@ -6,23 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>881</width>
-    <height>548</height>
+    <width>841</width>
+    <height>530</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QComboBox" name="comboBox">
-   <property name="geometry">
-    <rect>
-     <x>100</x>
-     <y>0</y>
-     <width>491</width>
-     <height>31</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
@@ -87,19 +77,6 @@
      <string>Titre:</string>
     </property>
    </widget>
-  </widget>
-  <widget class="QLabel" name="label_5">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>101</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Liste des séries: </string>
-   </property>
   </widget>
   <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
@@ -389,31 +366,30 @@
     </property>
    </widget>
   </widget>
-  <widget class="QLineEdit" name="search_box">
-   <property name="geometry">
-    <rect>
-     <x>600</x>
-     <y>0</y>
-     <width>191</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="placeholderText">
-    <string>Filtrer les éléments de la liste</string>
-   </property>
-  </widget>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>800</x>
      <y>40</y>
      <width>34</width>
-     <height>98</height>
+     <height>110</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QPushButton" name="add_serie_button">
+      <property name="minimumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -425,6 +401,18 @@
     </item>
     <item>
      <widget class="QPushButton" name="edit_serie_button">
+      <property name="minimumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -436,6 +424,18 @@
     </item>
     <item>
      <widget class="QPushButton" name="delete_serie_button">
+      <property name="minimumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -453,12 +453,24 @@
      <x>800</x>
      <y>160</y>
      <width>34</width>
-     <height>101</height>
+     <height>110</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
      <widget class="QPushButton" name="add_season_button">
+      <property name="minimumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -470,6 +482,18 @@
     </item>
     <item>
      <widget class="QPushButton" name="edit_season_button">
+      <property name="minimumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -481,6 +505,18 @@
     </item>
     <item>
      <widget class="QPushButton" name="delete_season_button">
+      <property name="minimumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -509,18 +545,52 @@
      <normaloff>../resources/icons/edit-list.png</normaloff>../resources/icons/edit-list.png</iconset>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_5">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>800</x>
+     <x>0</x>
      <y>0</y>
-     <width>31</width>
-     <height>31</height>
+     <width>831</width>
+     <height>30</height>
     </rect>
    </property>
-   <property name="text">
-    <string>effacer</string>
-   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>Liste des séries: </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QComboBox" name="comboBox">
+      <property name="minimumSize">
+       <size>
+        <width>320</width>
+        <height>0</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QLineEdit" name="search_box">
+      <property name="placeholderText">
+       <string>Filtrer les éléments de la liste</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3">
+     <widget class="QPushButton" name="pushButton_5">
+      <property name="text">
+       <string>Effacer</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../resources/icons/eraser.png</normaloff>../resources/icons/eraser.png</iconset>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

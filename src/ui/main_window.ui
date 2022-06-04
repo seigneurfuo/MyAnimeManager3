@@ -97,6 +97,7 @@
     <property name="title">
      <string>?</string>
     </property>
+    <addaction name="bug_report_action"/>
     <addaction name="about_action"/>
    </widget>
    <widget class="QMenu" name="file_menu">
@@ -202,6 +203,15 @@
    </property>
    <property name="text">
     <string>Revenir à une ancienne version</string>
+   </property>
+  </action>
+  <action name="bug_report_action">
+   <property name="icon">
+    <iconset>
+     <normaloff>../resources/icons/bug--exclamation.png</normaloff>../resources/icons/bug--exclamation.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rapport un bug</string>
    </property>
   </action>
  </widget>

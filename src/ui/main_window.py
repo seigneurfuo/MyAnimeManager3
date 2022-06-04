@@ -1,5 +1,6 @@
 import os
 import shutil
+import webbrowser
 from datetime import datetime
 
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
@@ -66,7 +67,8 @@ class MainWindow(QMainWindow):
         self.open_profile_action.triggered.connect(self.when_menu_action_open_profile_clicked)
 
         self.planning_export_action.triggered.connect(self.when_menu_action_planning_export_clicked)
-        self.about_action.triggered.connect(self.when_menu__action_about_clicked)
+        self.about_action.triggered.connect(self.when_menu_action_about_clicked)
+        self.bug_report_action.triggered.connect(self.when_menu_action_bug_report_clicked)
         self.check_problems_action.triggered.connect(self.when_menu_action_check_collection_clicked)
         self.open_database_backups_action.triggered.connect(self.when_menu_action_open_database_history)
 
@@ -136,10 +138,13 @@ class MainWindow(QMainWindow):
         dialog = CollectionProblems(messages)
         dialog.exec_()
 
-    def when_menu__action_about_clicked(self):
+    def when_menu_action_about_clicked(self):
         dialog = About()
         dialog.exec_()
         # tutorial(self)
+
+    def when_menu_action_bug_report_clicked(self):
+        webbrowser.open_new("https://github.com/seigneurfuo/MyAnimeManager3/issues/new")
 
     def when_menu_action_open_database_history(self):
         dialog = DatabaseHistory(self)

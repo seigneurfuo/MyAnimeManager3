@@ -34,6 +34,7 @@ class SeasonDialog(QDialog):
         self.spinBox_4.setValue(self.season.episodes)
         self.spinBox_3.setValue(self.season.watched_episodes)
         self.spinBox_2.setValue(self.season.view_count)
+        self.textEdit.setPlainText(self.season.description)
 
     def save_data(self):
         # Si création
@@ -47,6 +48,7 @@ class SeasonDialog(QDialog):
         self.season.episodes = self.spinBox_4.value()
         self.season.watched_episodes = self.spinBox_3.value()
         self.season.view_count = self.spinBox_2.value()
+        self.season.description = self.textEdit.toPlainText()
 
         self.season.save()
 

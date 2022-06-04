@@ -193,8 +193,9 @@ class FullListTab(QWidget):
         for field, value in fields:
             field.setText(value)
 
+        self.plainTextEdit.setPlainText(season.description)
+
     def when_seasons_list_current_index_changed(self):
-        # self.tableWidget.currentItem()
         current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
 
         # TODO: Click automatique sur le premier élement lors du changement si une saison existe ?

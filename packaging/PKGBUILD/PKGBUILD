@@ -1,5 +1,5 @@
 pkgname="myanimemanager3"
-pkgver=2022.05.30
+pkgver=2022.06.05
 pkgrel=1
 pkgdesc="Un logiciel de gestion de séries et d'animés."
 url="https://seigneurfuo.com"
@@ -16,7 +16,7 @@ PKGDEST="$(pwd)/dist"
 pkgver() {
     cd "${srcdir}/MyAnimeManager3"
     # Date du dernier commit au format YYYY.mm.dd
-    echo "$(git show -s --format=%cs | tr - .)"
+    echo "$(git show -s --format=%cd --date=format:"%Y.%m.%d")"
 }
 
 package() {

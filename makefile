@@ -1,5 +1,5 @@
 APPNAME=myanimemanager3
-APPVERSION=$(shell git show -s --format=%cs | tr - .)
+APPVERSION=$(shell git show -s --format=%cd --date=format:"%Y.%m.%d")
 
 archlinux-build:
 	cd "packaging/PKGBUILD"; \
@@ -17,5 +17,5 @@ manjaro-build:
 manjaro-install:
 	archlinux-install
 
-dist:
-	archlinux-build
+windows-build:
+	call packaging/windows/build.bat

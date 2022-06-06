@@ -152,9 +152,6 @@ class MainWindow(QMainWindow):
         selected_backup = dialog.selected_backup
 
         if selected_backup:
-            db_backups_manager = DBBackupsManager(self)
-            db_backups_manager.restore_database_backup(selected_backup)
-
             QMessageBox.information(None, "Base de données restaurée", \
                                     "Le logiciel va se fermer. Veuillez le relancer pour que les modifications soient prises en compte", QMessageBox.Ok)
             self.close()

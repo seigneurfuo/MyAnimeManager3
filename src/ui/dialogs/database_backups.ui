@@ -24,8 +24,7 @@
     <widget class="QLabel" name="label">
      <property name="text">
       <string>Cet écran permet de restaurer une version précédente des données.
-Les données de cette session serons sauvegardées dans une sauvegarde
- notée manuelle.</string>
+Les données de cette session serons sauvegardées dans une sauvegarde  notée manuelle.</string>
      </property>
     </widget>
    </item>

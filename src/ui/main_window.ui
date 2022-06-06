@@ -202,7 +202,7 @@
      <normaloff>../resources/icons/clock-history.png</normaloff>../resources/icons/clock-history.png</iconset>
    </property>
    <property name="text">
-    <string>Revenir à une ancienne version</string>
+    <string>Revenir à une sauvegarde précédente</string>
    </property>
   </action>
   <action name="bug_report_action">

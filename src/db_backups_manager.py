@@ -65,3 +65,7 @@ class DBBackupsManager:
 
             print("Base de donnée restaurée:", filename, "->", dst)
             shutil.copy(filename, dst)
+
+    def remove_database_backup(self, filepath):
+        if os.path.exists(filepath):
+            os.remove(filepath)

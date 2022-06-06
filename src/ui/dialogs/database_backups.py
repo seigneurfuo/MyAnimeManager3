@@ -78,10 +78,10 @@ class DatabaseHistory(QDialog):
                 self.tableWidget.setItem(row_index, 0, item)
 
                 if "-manual-" in short_filename:
-                    state = self.tr("Manuelle")
+                    state = self.tr("Sauvegarde manuelle")
                     state_icon = os.path.join(self.folderpath, "../../resources/icons/user.png")
                 else:
-                    state = self.tr("Automatique")
+                    state = self.tr("Sauvegarde automatique")
                     state_icon = os.path.join(self.folderpath, "../../resources/icons/database.png")
 
                 item = QTableWidgetItem(state)

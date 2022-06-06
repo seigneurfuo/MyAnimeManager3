@@ -5,7 +5,7 @@ import os
 
 from PyQt5.QtCore import Qt, QDate, QUrl
 from PyQt5.QtGui import QColor, QDesktopServices
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QProgressBar, QMessageBox
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QProgressBar, QMessageBox, QHeaderView
 from PyQt5.uic import loadUi
 
 from ui.custom_calendar import CustomCalendar
@@ -39,7 +39,7 @@ class PlanningTab(QWidget):
         self.planning_calendar.selectionChanged.connect(self.when_planning_calender_date_changed)
         self.checkBox_4.clicked.connect(self.when_checkBox_4_clicked)
         self.add_to_watched_list_button.clicked.connect(self.when_add_to_watched_list_button_clicked)
-        self.open_folder_button.clicked.connect(self.when_open_folder_button_is_clicked)
+        self.open_folder_button.clicked.connect(self.when_open_folder_button_clicked)
         self.show_view_history_button.clicked.connect(self.when_show_view_history_button_is_clicked)
         self.date_edit.dateChanged.connect(self.when_date_edit_date_changed)
         self.delete_button.clicked.connect(self.when_delete_button_clicked)
@@ -97,6 +97,8 @@ class PlanningTab(QWidget):
             self.tableWidget_7.setItem(col_index, 2, col_data)
 
         self.tableWidget_7.resizeColumnsToContents()
+        self.tableWidget_7.horizontalHeader().setSectionResizeMode(self.tableWidget_7.columnCount() - 1, QHeaderView.ResizeToContents)
+
 
     def fill_to_watch_table(self):
         """
@@ -152,6 +154,7 @@ class PlanningTab(QWidget):
             self.tableWidget_6.setCellWidget(col_index, 4, progress_bar)
 
         self.tableWidget_6.resizeColumnsToContents()
+        self.tableWidget_6.horizontalHeader().setSectionResizeMode(self.tableWidget_6.columnCount() - 1, QHeaderView.ResizeToContents)
 
     def when_today_button_clicked(self):
         """Fonction qui ramène le calendrier à la date actuelle"""
@@ -225,7 +228,7 @@ class PlanningTab(QWidget):
             self.show_view_history_button.setEnabled(False)
             self.open_folder_button.setEnabled(False)
 
-    def when_open_folder_button_is_clicked(self):
+    def when_open_folder_button_clicked(self):
         if self.current_season_id:
             season = Seasons().get(Seasons.id == self.current_season_id)
             if os.path.exists(season.serie.path):

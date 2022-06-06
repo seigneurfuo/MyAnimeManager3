@@ -45,7 +45,7 @@ class FullListTab(QWidget):
 
         self.view_deleted_elements_button.clicked.connect(self.when_view_deleted_elements_button_clicked)
         # TODO: pushButton_2
-        self.open_folder_button.clicked.connect(self.when_open_folder_button_is_clicked)
+        self.open_folder_button.clicked.connect(self.when_open_folder_button_clicked)
         self.show_view_history_button.clicked.connect(self.when_show_view_history_button_is_clicked)
 
         self.search_box.textChanged.connect(self.when_search_box_content_changed)
@@ -224,7 +224,7 @@ class FullListTab(QWidget):
     def when_search_box_clear_button_clicked(self):
         self.search_box.clear()
 
-    def when_open_folder_button_is_clicked(self):
+    def when_open_folder_button_clicked(self):
         if self.current_season_id:
             season = Seasons().get(Seasons.id == self.current_season_id)
             if os.path.exists(season.serie.path):

@@ -86,6 +86,17 @@ Les données de cette session serons sauvegardées dans une sauvegarde
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string>Supprimer la sauvegarde</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../resources/icons/minus.png</normaloff>../../resources/icons/minus.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>

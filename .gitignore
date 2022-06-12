@@ -6,6 +6,9 @@ packaging/PKGBUILD/dist/*.pkg.*
 packaging/PKGBUILD/MyAnimeManager3/
 packaging/PKGBUILD/pkg/
 packaging/PKGBUILD/src/
+packaging/windows/dist/
+packaging/windows/*.exe
 pwiz.py
 src/venv/
 
+MyAnimeManager3.spec

@@ -12,6 +12,8 @@ class About(QDialog):
     def __init__(self):
         super(About, self).__init__()
 
+        self.logo_clicks = 0
+
         self.init_ui()
         self.init_events()
 
@@ -22,6 +24,7 @@ class About(QDialog):
         self.fill_data()
 
     def init_events(self):
+        #self.logo.clicked.connect(self.when_logo_clicked)
         pass
 
     def fill_data(self):
@@ -38,3 +41,9 @@ class About(QDialog):
         # self.name_label.setText(self._parent_qmainwindow.parent_qapplication.name)
         # self.version_label.setText(self._parent_qmainwindow.parent_qapplication.version)
         # self.description_label.setText(self._parent_qmainwindow.parent_qapplication.description)
+
+    def when_logo_clicked(self):
+        self.logo_clicks += 1
+
+        if self.logo_clicks == 5:
+            print("f")

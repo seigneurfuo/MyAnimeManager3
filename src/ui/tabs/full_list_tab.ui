@@ -545,7 +545,7 @@
      <normaloff>../resources/icons/edit-list.png</normaloff>../resources/icons/edit-list.png</iconset>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -569,6 +569,9 @@
         <width>320</width>
         <height>0</height>
        </size>
+      </property>
+      <property name="editable">
+       <bool>false</bool>
       </property>
      </widget>
     </item>

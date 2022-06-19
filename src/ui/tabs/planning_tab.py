@@ -8,7 +8,7 @@ from PyQt5.QtGui import QColor, QDesktopServices
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QProgressBar, QMessageBox, QHeaderView
 from PyQt5.uic import loadUi
 
-from ui.custom_calendar import CustomCalendar
+from ui.widgets.custom_calendar import CustomCalendar
 from database import Planning, Seasons
 from common import show_watch_history_dialog
 

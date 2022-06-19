@@ -9,10 +9,10 @@ from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtCore import QUrl
 
 import database
-from ui.planning_tab import PlanningTab
-from ui.full_list_tab import FullListTab
-from ui.list2_tab import List2
-from ui.tools_tab import ToolsTab
+from ui.tabs.planning_tab import PlanningTab
+from ui.tabs.full_list_tab import FullListTab
+from ui.tabs.list2_tab import List2
+from ui.tabs.tools_tab import ToolsTab
 
 from ui.dialogs.about import About
 from ui.dialogs.collection_problems import CollectionProblems

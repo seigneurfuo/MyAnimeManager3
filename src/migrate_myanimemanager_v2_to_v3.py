@@ -80,6 +80,7 @@ def migration_seasons():
         new_season.watched_episodes = season.season_watched_episodes
         new_season.view_count = season.season_view_count
         new_season.state = season.season_state
+        new_season.description = season.season_notes
         # TODO: new_season.favorite =
 
         # Migration de l'id de la série ratachée
@@ -132,11 +133,13 @@ def migration():
     mamdb3.database.init(MYANIMEMANAGER_3_DATABASE)
 
     # Création des tables sur la base de données mam3
+    print("Création des tables ...")
     tables = [mamdb3.Series, mamdb3.Seasons, mamdb3.SeasonsTypes, mamdb3.Planning, mamdb3.Studios, mamdb3.Tags,
               mamdb3.TagsGroups]
     mamdb3.database.create_tables(tables)
 
     # Migration de chaque table
+    print("Remplissage des tables")
     migration_series()
     populate_new_table_seasons_types()
     migration_seasons()
@@ -149,13 +152,6 @@ def migration():
 def main():
     print(MYANIMEMANAGER_2_DATABASE, "->", MYANIMEMANAGER_3_DATABASE)
 
-    msg = "Attention, cela va supprimer toutes les données de {}\nY/N: ".format(MYANIMEMANAGER_3_DATABASE)
-    # ask = input(msg).upper()
-    # if ask != "Y":
-    #     print("-> Sortie")
-    #     exit(0)
-
     migration()
-
 
 main()

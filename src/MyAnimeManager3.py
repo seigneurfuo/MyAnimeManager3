@@ -15,9 +15,11 @@ from ui.main_window import MainWindow
 class Application(QApplication):
     def __init__(self, args):
         super().__init__(args)
+
         self.app_dir = os.path.abspath(os.path.dirname(__file__))
+
         self.name = "MyAnimeManager 3"
-        self.version = "2022.05.06"
+        self.version = "DEV"
         self.description = self.tr("Un gestionnaire de séries multiplateforme écrit en Python3 et Qt5")
 
         self.setApplicationName(self.name)
@@ -47,6 +49,7 @@ class Application(QApplication):
 
         self.database_path = os.path.join(self.profile_path, database_path)
         print("Database path:", self.database_path)
+
         # Génération des tables
         if not os.path.exists(self.database_path):
             database.database.init(self.database_path)
@@ -57,5 +60,10 @@ class Application(QApplication):
 
 
 if __name__ == "__main__":
+    DEBUG = 1
+    if DEBUG == 1:
+        import cgitb
+        cgitb.enable(format='text')
+
     application = Application(sys.argv)
     application.exec_()

@@ -1,7 +1,7 @@
 import os
 
 from PyQt5.QtCore import QDir, Qt
-from PyQt5.QtWidgets import QDialog, QTableWidgetItem
+from PyQt5.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
 from PyQt5.uic import loadUi
 
 
@@ -29,13 +29,16 @@ class ViewHistory(QDialog):
         row_count = len(self.rows)
         self.label.setText("Nombre d'éléments: " + str(row_count))
         self.tableWidget.setRowCount(row_count)
-        for row_index, row in enumerate(self.rows):
 
+        for row_index, row in enumerate(self.rows):
             columns = [row.date.strftime("%d/%m/%Y"), row.season.name, str(row.episodes)]
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
                 item.setToolTip(item.text())
                 self.tableWidget.setItem(row_index, col_index, item)
+
+        self.tableWidget.resizeColumnsToContents()
+        self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1, QHeaderView.ResizeToContents)
 
     def accept(self):
         super(ViewHistory, self).accept()

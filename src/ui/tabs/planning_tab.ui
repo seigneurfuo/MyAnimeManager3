@@ -282,6 +282,32 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_43">
        <item>
+        <widget class="QPushButton" name="add_to_watched_list_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>191</width>
+           <height>31</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>191</width>
+           <height>31</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Ajouter aux épisodes vus</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../resources/icons/eye--plus.png</normaloff>../resources/icons/eye--plus.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="open_folder_button">
          <property name="enabled">
           <bool>false</bool>
@@ -307,32 +333,6 @@
          <property name="icon">
           <iconset>
            <normaloff>../resources/icons/folder-horizontal-open.png</normaloff>../resources/icons/folder-horizontal-open.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="add_to_watched_list_button">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>191</width>
-           <height>31</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>191</width>
-           <height>31</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Ajouter aux épisodes vus</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../resources/icons/eye--plus.png</normaloff>../resources/icons/eye--plus.png</iconset>
          </property>
         </widget>
        </item>

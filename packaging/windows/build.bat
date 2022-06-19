@@ -15,7 +15,15 @@ REM Nettoyage avant compilation
 rmdir /S /Q %DISTDIR%
 
 REM Clonage
-git clone .git %SRCDIR%
+if exist .git\ (
+    git clone .git %SRCDIR%
+) else (
+    echo ".git folder not found"
+    exit
+)
+
+
+
 
 REM Build
 pyinstaller %SRCDIR%/src/MyAnimeManager3.py ^

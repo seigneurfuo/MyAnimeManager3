@@ -303,7 +303,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../../resources/icons/eye--plus.png</normaloff>../../resources/icons/eye--plus.png</iconset>
+           <normaloff>../../resources/icons/eye-plus.png</normaloff>../../resources/icons/eye-plus.png</iconset>
          </property>
         </widget>
        </item>

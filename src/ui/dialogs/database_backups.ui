@@ -80,7 +80,7 @@ Les données de cette session serons sauvegardées dans une sauvegarde  notée m
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../resources/icons/database--plus.png</normaloff>../../resources/icons/database--plus.png</iconset>
+         <normaloff>../../resources/icons/database-plus.png</normaloff>../../resources/icons/database-plus.png</iconset>
        </property>
       </widget>
      </item>

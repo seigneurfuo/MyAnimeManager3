@@ -190,7 +190,7 @@
   <action name="check_problems_action">
    <property name="icon">
     <iconset>
-     <normaloff>../resources/icons/magnifier--exclamation.png</normaloff>../resources/icons/magnifier--exclamation.png</iconset>
+     <normaloff>../resources/icons/magnifier-exclamation.png</normaloff>../resources/icons/magnifier-exclamation.png</iconset>
    </property>
    <property name="text">
     <string>Vérifier les données</string>
@@ -208,7 +208,7 @@
   <action name="bug_report_action">
    <property name="icon">
     <iconset>
-     <normaloff>../resources/icons/bug--exclamation.png</normaloff>../resources/icons/bug--exclamation.png</iconset>
+     <normaloff>../resources/icons/bug-exclamation.png</normaloff>../resources/icons/bug-exclamation.png</iconset>
    </property>
    <property name="text">
     <string>Rapport un bug</string>

@@ -160,7 +160,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../resources/icons/minus.png</normaloff>../resources/icons/minus.png</iconset>
+           <normaloff>../../resources/icons/minus.png</normaloff>../../resources/icons/minus.png</iconset>
          </property>
         </widget>
        </item>
@@ -188,7 +188,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../resources/icons/calendar.png</normaloff>../resources/icons/calendar.png</iconset>
+           <normaloff>../../resources/icons/calendar.png</normaloff>../../resources/icons/calendar.png</iconset>
          </property>
         </widget>
        </item>
@@ -303,7 +303,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../resources/icons/eye--plus.png</normaloff>../resources/icons/eye--plus.png</iconset>
+           <normaloff>../../resources/icons/eye--plus.png</normaloff>../../resources/icons/eye--plus.png</iconset>
          </property>
         </widget>
        </item>
@@ -332,7 +332,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../resources/icons/folder-horizontal-open.png</normaloff>../resources/icons/folder-horizontal-open.png</iconset>
+           <normaloff>../../resources/icons/folder-horizontal-open.png</normaloff>../../resources/icons/folder-horizontal-open.png</iconset>
          </property>
         </widget>
        </item>
@@ -346,7 +346,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../resources/icons/film-timeline.png</normaloff>../resources/icons/film-timeline.png</iconset>
+           <normaloff>../../resources/icons/film-timeline.png</normaloff>../../resources/icons/film-timeline.png</iconset>
          </property>
         </widget>
        </item>

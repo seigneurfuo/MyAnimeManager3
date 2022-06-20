@@ -183,6 +183,8 @@ class FullListTab(QWidget):
         for field, value in fields:
             field.setText(value)
 
+
+        self.label_4.setVisible(season.favorite)
         self.plainTextEdit.setPlainText(season.description)
 
         # On masque ou none le bouton pour parcourir le dossier

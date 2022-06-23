@@ -53,6 +53,9 @@ class FullListTab(QWidget):
         # endregion
 
     def when_visible(self):
+        self.refresh_data()
+
+    def refresh_data(self):
         self.fill_series_combobox()
 
         # TODO: à garder ou pas ?
@@ -74,6 +77,10 @@ class FullListTab(QWidget):
 
         self.current_serie_id = self.comboBox.currentData()
 
+    def set_series_combobox_current_selection(self, serie_id):
+        index = self.comboBox.findData(serie_id)
+        self.comboBox.setCurrentIndex(index)
+
     def when_series_list_current_index_changed(self):
         self.current_serie_id = self.comboBox.currentData()
 
@@ -94,7 +101,8 @@ class FullListTab(QWidget):
         series_dialog = SerieDialog(serie)
 
         if series_dialog.exec_():
-            self.fill_series_combobox()
+            self.refresh_data()
+            self.set_series_combobox_current_selection(serie.id)
 
     def when_edit_serie_button_clicked(self):
         if self.current_serie_id:
@@ -102,7 +110,8 @@ class FullListTab(QWidget):
 
             series_dialog = SerieDialog(serie)
             if series_dialog.exec_():
-                self.when_visible()
+                self.refresh_data()
+                self.set_series_combobox_current_selection(serie.id)
 
     def when_delete_serie_button_clicked(self):
         if self.current_serie_id:
@@ -111,7 +120,7 @@ class FullListTab(QWidget):
             serie.is_deleted = 1
             serie.save()
 
-            self.fill_series_combobox()
+            self.refresh_data()
 
     def when_add_season_button_clicked(self):
         if self.current_serie_id:
@@ -122,7 +131,7 @@ class FullListTab(QWidget):
             season_dialog = SeasonDialog(season, serie, seasons_types)
 
             if season_dialog.exec_():
-                self.when_visible()
+                self.refresh_data()
 
     def when_edit_season_button_clicked(self):
         if self.current_season_id:
@@ -130,7 +139,7 @@ class FullListTab(QWidget):
             seasons_types = SeasonsTypes().select(1)  # FIXME
             season_dialog = SeasonDialog(season, serie=None, seasons_types=seasons_types)
             if season_dialog.exec_():
-                self.when_visible()
+                self.refresh_data()
 
     def when_delete_season_button_clicked(self):
         if self.current_season_id:

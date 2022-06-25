@@ -10,6 +10,7 @@ class BaseModel(Model):
         database = database
 
 class SeasonsTypes(BaseModel):
+    sort_id = IntegerField()
     name = TextField()
     description = TextField(null=True)
 

@@ -6,10 +6,10 @@ import os
 from pathlib import Path
 from PyQt5.QtWidgets import QApplication
 
-import database
 import default_settings
 
 from ui.main_window import MainWindow
+from database_manager import load_or_create_database
 
 
 class Application(QApplication):
@@ -32,7 +32,9 @@ class Application(QApplication):
                               self.tr("Annulée")]
 
         self.database_path = None
+
         self.load_profile()
+        self.load_database()
 
         self.mainwindow = MainWindow(self)
         self.mainwindow.show()
@@ -47,16 +49,8 @@ class Application(QApplication):
             # Création du dossier ./profile/covers qui créer en meme temps le dossier parent ./profile
             os.makedirs(self.profile_path)
 
-        self.database_path = os.path.join(self.profile_path, database_path)
-        print("Database path:", self.database_path)
-
-        # Génération des tables
-        if not os.path.exists(self.database_path):
-            database.database.init(self.database_path)
-            database.database.create_tables([database.Series, database.Seasons, database.Planning])
-
-        else:
-            database.database.init(self.database_path)
+    def load_database(self):
+        self.database_path = load_or_create_database(self.profile_path)
 
 
 if __name__ == "__main__":

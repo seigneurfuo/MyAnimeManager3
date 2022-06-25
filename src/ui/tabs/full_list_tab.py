@@ -127,7 +127,7 @@ class FullListTab(QWidget):
             # ----- Supression des saisons -----
             season = Seasons()
             serie = Series().get(self.current_serie_id)
-            seasons_types = SeasonsTypes().select(1)  # FIXME
+            seasons_types = SeasonsTypes().select()
             season_dialog = SeasonDialog(season, serie, seasons_types)
 
             if season_dialog.exec_():
@@ -136,7 +136,7 @@ class FullListTab(QWidget):
     def when_edit_season_button_clicked(self):
         if self.current_season_id:
             season = Seasons().get(self.current_season_id)
-            seasons_types = SeasonsTypes().select(1)  # FIXME
+            seasons_types = SeasonsTypes().select()
             season_dialog = SeasonDialog(season, serie=None, seasons_types=seasons_types)
             if season_dialog.exec_():
                 self.refresh_data()

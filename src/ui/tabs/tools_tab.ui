@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>639</width>
-    <height>304</height>
+    <height>406</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -283,6 +283,11 @@
      <column>
       <property name="text">
        <string>Saison</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Type</string>
       </property>
      </column>
     </widget>

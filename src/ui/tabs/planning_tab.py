@@ -4,7 +4,7 @@ import platform
 import os
 
 from PyQt5.QtCore import Qt, QDate, QUrl
-from PyQt5.QtGui import QColor, QDesktopServices
+from PyQt5.QtGui import QColor, QDesktopServices, QIcon
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QProgressBar, QMessageBox, QHeaderView
 from PyQt5.uic import loadUi
 
@@ -82,19 +82,15 @@ class PlanningTab(QWidget):
         row_count = len(planning_data_list)
         self.label_82.setText(str(row_count))
         self.tableWidget_7.setRowCount(row_count)
-        for col_index, row_data in enumerate(planning_data_list):
-            col_data = QTableWidgetItem(row_data.season.serie.name)
-            col_data.setToolTip(col_data.text())
-            col_data.setData(Qt.UserRole, row_data.id)
-            self.tableWidget_7.setItem(col_index, 0, col_data)
 
-            col_data = QTableWidgetItem(row_data.season.name)
-            col_data.setToolTip(col_data.text())
-            self.tableWidget_7.setItem(col_index, 1, col_data)
+        for row_index, planning_data in enumerate(planning_data_list):
+            columns = [planning_data.season.serie.name, planning_data.season.name, str(planning_data.episode)]
 
-            col_data = QTableWidgetItem(str(row_data.episode))
-            col_data.setToolTip(col_data.text())
-            self.tableWidget_7.setItem(col_index, 2, col_data)
+            for col_index, value in enumerate(columns):
+                item = QTableWidgetItem(value)
+                item.setToolTip(item.text())
+                item.setData(Qt.UserRole, planning_data.id)
+                self.tableWidget_7.setItem(row_index, col_index, item)
 
         self.tableWidget_7.resizeColumnsToContents()
         self.tableWidget_7.horizontalHeader().setSectionResizeMode(self.tableWidget_7.columnCount() - 1, QHeaderView.ResizeToContents)
@@ -116,28 +112,36 @@ class PlanningTab(QWidget):
         row_count = len(episodes_to_watch)
         self.tableWidget_6.setRowCount(row_count)
         for col_index, row_data in enumerate(episodes_to_watch):
+
             # Série
-            col_data = QTableWidgetItem(row_data.serie.name)
-            col_data.setToolTip(col_data.text())
-            col_data.setData(Qt.UserRole, row_data.id)
-            self.tableWidget_6.setItem(col_index, 0, col_data)
+            item = QTableWidgetItem(row_data.serie.name)
+            item.setToolTip(item.text())
+            item.setData(Qt.UserRole, row_data.id)
+            self.tableWidget_6.setItem(col_index, 0, item)
 
             # Saison
-            col_data = QTableWidgetItem(row_data.name)
-            col_data.setToolTip(col_data.text())
-            self.tableWidget_6.setItem(col_index, 1, col_data)
+            item = QTableWidgetItem(row_data.name)
+            item.setToolTip(item.text())
+            self.tableWidget_6.setItem(col_index, 1, item)
+
+            # Type
+            item = QTableWidgetItem(row_data.type.name)
+            item.setToolTip(item.text())
+            self.tableWidget_6.setItem(col_index, 2, item)
 
             # Etat FIXME: C'est pas très propre le self.parent.parent.season_states
-            col_data = QTableWidgetItem(self.parent.parent.season_states[row_data.state])
-            col_data.setToolTip(col_data.text())
-            self.tableWidget_6.setItem(col_index, 2, col_data)
+            season_state = self.parent.parent.season_states[row_data.state]
+            item = QTableWidgetItem(season_state["name"])
+            item.setIcon(QIcon(os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"])))
+            item.setToolTip(item.text())
+            self.tableWidget_6.setItem(col_index, 3, item)
 
             # Episode
             next_episode_index = int(row_data.watched_episodes) + 1
             next_episode_text = "{} / {}".format(next_episode_index, row_data.episodes)
-            col_data = QTableWidgetItem(next_episode_text)
-            col_data.setToolTip(col_data.text())
-            self.tableWidget_6.setItem(col_index, 3, col_data)
+            item = QTableWidgetItem(next_episode_text)
+            item.setToolTip(item.text())
+            self.tableWidget_6.setItem(col_index, 4, item)
 
             # Progression
             progress_bar = QProgressBar(self)
@@ -151,7 +155,7 @@ class PlanningTab(QWidget):
                 progress_bar.setStyleSheet("QProgressBar::chunk ""{""background-color: #2B65EC;""}")
                 progress_bar.setAlignment(Qt.AlignCenter)
 
-            self.tableWidget_6.setCellWidget(col_index, 4, progress_bar)
+            self.tableWidget_6.setCellWidget(col_index, 5, progress_bar)
 
         self.tableWidget_6.resizeColumnsToContents()
         self.tableWidget_6.horizontalHeader().setSectionResizeMode(self.tableWidget_6.columnCount() - 1, QHeaderView.ResizeToContents)

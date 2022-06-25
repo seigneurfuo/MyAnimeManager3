@@ -80,7 +80,7 @@ class ToolsTab(QWidget):
         for row_index, random_season_index in enumerate(random_seasons_indexes):
             random_season = seasons[random_season_index]
 
-            columns = [random_season.serie.name, random_season.name]
+            columns = [random_season.serie.name, random_season.name, random_season.type.name]
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
                 #item.setToolTip(item.text())

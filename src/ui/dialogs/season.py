@@ -18,6 +18,10 @@ class SeasonDialog(QDialog):
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "season.ui"), self)
 
+        # Remplissage des types
+        for seasons_type in self.seasons_types:
+            self.comboBox_2.addItem(seasons_type.name, userData=seasons_type.id)
+
         # Si création
         if self.season.id:
             self.setWindowTitle(self.season.name)
@@ -37,6 +41,11 @@ class SeasonDialog(QDialog):
         self.checkBox.setChecked(self.season.favorite)
         self.textEdit.setPlainText(self.season.description)
 
+        # Changement de l'index
+        index = self.comboBox_2.findData(self.season.type.id)
+        self.comboBox_2.setCurrentIndex(index)
+
+
     def save_data(self):
         # Si création
         if not self.season.id:
@@ -51,6 +60,7 @@ class SeasonDialog(QDialog):
         self.season.view_count = self.spinBox_2.value()
         self.season.favorite = self.checkBox.isChecked()
         self.season.description = self.textEdit.toPlainText()
+        self.season.type = self.comboBox_2.currentData()
 
         self.season.save()
 

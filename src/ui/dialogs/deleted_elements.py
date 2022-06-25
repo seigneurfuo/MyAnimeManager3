@@ -32,6 +32,7 @@ class DeletedElements(QDialog):
         for row_index, season in enumerate(self.deleted_seasons):
             # TODO: Ajouter les colonnes supplémentaires
             columns = [season.serie.name, season.name, season.type.name, season.state]
+
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
                 item.setToolTip(item.text())

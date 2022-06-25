@@ -11,6 +11,7 @@ from PyQt5.uic import loadUi
 from ui.widgets.custom_calendar import CustomCalendar
 from database import Planning, Seasons
 from common import show_watch_history_dialog
+from common import SEASONS_STATES
 
 
 class PlanningTab(QWidget):
@@ -129,8 +130,8 @@ class PlanningTab(QWidget):
             item.setToolTip(item.text())
             self.tableWidget_6.setItem(col_index, 2, item)
 
-            # Etat FIXME: C'est pas très propre le self.parent.parent.season_states
-            season_state = self.parent.parent.season_states[row_data.state]
+            # Etat
+            season_state = SEASONS_STATES[row_data.state]
             item = QTableWidgetItem(season_state["name"])
             item.setIcon(QIcon(os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"])))
             item.setToolTip(item.text())

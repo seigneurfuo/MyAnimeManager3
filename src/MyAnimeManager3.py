@@ -28,17 +28,6 @@ class Application(QApplication):
 
         self.default_settings = default_settings.DEFAULT_SETTINGS
         self.profile_path = None
-        self.season_states = [self.tr("Indéfinie"), self.tr("A voir"), self.tr("En cours"), self.tr("Terminée"),
-                              self.tr("Annulée")]
-
-        self.season_states = [
-            {"name": self.tr("Indéfinie"), "icon": "question.png"},
-            {"name": self.tr("A voir"), "icon": "clock.png"},
-            {"name": self.tr("En cours"), "icon": "film.png"},
-            {"name": self.tr("Terminée"), "icon": "tick.png"},
-            {"name": self.tr("Annulée"), "icon": "cross.png"},
-        ]
-
         self.database_path = None
 
         self.load_profile()
@@ -48,8 +37,6 @@ class Application(QApplication):
         self.mainwindow.show()
 
     def load_profile(self):
-        database_path = "database.sqlite3"
-
         # Creation du profil
         self.profile_path = os.path.join(Path.home(), ".myanimemanager3")
 

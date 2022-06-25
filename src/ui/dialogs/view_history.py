@@ -32,6 +32,7 @@ class ViewHistory(QDialog):
 
         for row_index, row in enumerate(self.rows):
             columns = [row.date.strftime("%d/%m/%Y"), row.season.name, str(row.episodes)]
+
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
                 item.setToolTip(item.text())

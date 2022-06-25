@@ -5,11 +5,12 @@ from datetime import datetime
 
 import utils
 
-from PyQt5.QtCore import QAbstractTableModel, QVariant, Qt
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem
 from PyQt5.uic import loadUi
 
-from database import database, Series, Seasons
+from database import Seasons
+from common import SEASONS_STATES
 
 class List2(QWidget):
     def __init__(self, parent):
@@ -50,7 +51,7 @@ class List2(QWidget):
             else:
                 age = ""
 
-            state = self.parent.parent.season_states[season.state]
+            state = SEASONS_STATES[season.state]
 
             columns = [ids, season.serie.name, season.type.name, season.name, str(season.episodes), year,
                        age, state, str(season.view_count)]

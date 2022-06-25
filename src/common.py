@@ -1,10 +1,16 @@
 #!/bin/env python3
 from database import Planning
+import peewee
 
 from ui.dialogs.view_history import ViewHistory
 
-import peewee
-
+SEASONS_STATES = [
+    {"name": "Indéfinie", "icon": "question.png"},
+    {"name": "A voir", "icon": "clock.png"},
+    {"name": "En cours", "icon": "film.png"},
+    {"name": "Terminée", "icon": "tick.png"},
+    {"name": "Annulée", "icon": "cross.png"},
+]
 
 def show_watch_history_dialog(season_id):
     # Utilisé pour faire un group concat....

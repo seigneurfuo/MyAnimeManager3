@@ -82,10 +82,6 @@ class MainWindow(QMainWindow):
 
     # print(self.parent_qapplication.profile.get_series())
 
-    def update_tab_content(self, tab_index):
-        if tab_index != -1 and tab_index < len(self.tabs) and self.tabs[tab_index] is not None:
-            self.tabs[tab_index].when_visible()
-
     def when_current_tab_changed(self, tab_index):
         """
         Fonction qui est appelée lorsqu'un onglet est cliqué
@@ -97,6 +93,10 @@ class MainWindow(QMainWindow):
         """
 
         self.update_tab_content(tab_index)
+
+    def update_tab_content(self, tab_index):
+        if tab_index != -1 and tab_index < len(self.tabs) and self.tabs[tab_index] is not None:
+            self.tabs[tab_index].when_visible()
 
     def when_menu_action_open_profile_clicked(self):
         QDesktopServices.openUrl(QUrl.fromLocalFile(self.profile_path))
@@ -152,40 +152,18 @@ class MainWindow(QMainWindow):
         selected_backup = dialog.selected_backup
 
         if selected_backup:
-            QMessageBox.information(None, "Base de données restaurée", \
-                                    "Le logiciel va se fermer. Veuillez le relancer pour que les modifications soient prises en compte", QMessageBox.Ok)
+            QMessageBox.information(
+                None, "Base de données restaurée",
+                "Le logiciel va se fermer. Veuillez le relancer pour que les modifications soient prises en compte",
+                QMessageBox.Ok)
             self.close()
-
 
     def backup_database_before_quit(self):
         db_backups_manager = DBBackupsManager(self)
         db_backups_manager.backup_current_database()
 
-    # TODO: Désactiver la sauvegarde automatique
     def closeEvent(self, a0):
         database.database.commit()
         self.backup_database_before_quit()
 
         super().close()
-
-
-    #         # Si il y a eu des modifications
-    #         if True: #TODO: Si il y à des chnagements
-    #
-    #             # Affiche la fenetre de dialogue d'enregistrement
-    #             save_question = QMessageBox.question(self, 'Enregistrer les changements',
-    #                                                  "Enregistrer les modifications ?",
-    #                                                  QMessageBox.Yes, QMessageBox.No)
-    #
-    #             # Si on clique sur Oui (Sauvegarder)
-    #             if save_question == QMessageBox.Yes:
-    #                 # Enregistre les modifications dans la bdd
-    #                 database.database.commit()
-    #
-    #             # Si on clique sur Quitter sans sauvegarder
-    #             elif save_question == QMessageBox.No:
-    #
-    #                 # Annule tout les changements depuis le dernier enregistrement
-    #                 database.database.rollback()
-    #
-    #         super().close()

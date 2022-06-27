@@ -3,6 +3,7 @@
 import os
 from datetime import datetime
 
+import peewee
 from PyQt5.QtGui import QIcon
 
 import utils
@@ -11,7 +12,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QCheckBox, QHeaderView
 from PyQt5.uic import loadUi
 
-from database import Seasons
+from database import Series, Seasons
 from common import SEASONS_STATES
 
 
@@ -36,7 +37,7 @@ class List2(QWidget):
     def fill_data(self):
         today_date_object = datetime.now()
 
-        data = Seasons().select().where(Seasons.is_deleted == 0).order_by(Seasons.sort_id)
+        data = Seasons().select().where(Seasons.is_deleted == 0).join(Series).order_by(Seasons.serie.sort_id, Seasons.sort_id)
         row_count = len(data)
 
         self.label.setText(self.tr("Nombre d'éléments: ") + str(row_count))

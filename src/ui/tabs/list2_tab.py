@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 
 import peewee
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QColor
 
 import utils
 
@@ -37,7 +37,9 @@ class List2(QWidget):
     def fill_data(self):
         today_date_object = datetime.now()
 
-        data = Seasons().select().where(Seasons.is_deleted == 0).join(Series).order_by(Seasons.serie.sort_id, Seasons.sort_id)
+        data = Seasons().select().where(Seasons.is_deleted == 0).join(Series)\
+            .order_by(Seasons.serie.sort_id, Seasons.serie.name, Seasons.sort_id, Seasons.name)
+
         row_count = len(data)
 
         self.label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
@@ -73,6 +75,10 @@ class List2(QWidget):
                     item = QTableWidgetItem(value)
                     item.setToolTip(item.text())
 
+                # Bandeau orangé pour les series avec un numéro temporaire
+                if season.serie.sort_id == 0:
+                    item.setBackground(QColor("#FCC981"))
+
                 item.setData(Qt.UserRole, season.id)
                 self.tableWidget.setItem(row_index, col_index, item)
 
@@ -80,6 +86,11 @@ class List2(QWidget):
             favorite_checkbox = QCheckBox()
             favorite_checkbox.setEnabled(False)
             favorite_checkbox.setChecked(season.favorite)
+
+            # Bandeau orangé pour les series avec un numéro temporaire
+            if season.serie.sort_id == 0:
+                favorite_checkbox.setStyleSheet("background-color: #FCC981")
+
             self.tableWidget.setCellWidget(row_index, len(columns), favorite_checkbox)
 
         self.tableWidget.resizeColumnsToContents()

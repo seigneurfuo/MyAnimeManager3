@@ -1,3 +1,4 @@
+import datetime
 import os
 
 from PyQt5.QtWidgets import QDialog
@@ -22,6 +23,10 @@ class SeasonDialog(QDialog):
         for seasons_type in self.seasons_types:
             self.comboBox_2.addItem(seasons_type.name, userData=seasons_type.id)
 
+        # # Année par défaut: année en cours
+        # current_year = int(datetime.date.today().strftime("%Y"))
+        # self.spinBox_5.setValue(current_year)
+
         # Si création
         if self.season.id:
             self.setWindowTitle(self.season.name)
@@ -34,6 +39,12 @@ class SeasonDialog(QDialog):
     def fill_data(self):
         self.spinBox.setValue(self.season.sort_id)
         self.lineEdit_2.setText(self.season.name)
+
+        if self.season.year:
+            self.spinBox_5.setValue(self.season.year)
+        else:
+            self.spinBox_5.clear()
+
         self.combobox_1.setCurrentIndex(self.season.state)
         self.spinBox_4.setValue(self.season.episodes)
         self.spinBox_3.setValue(self.season.watched_episodes)
@@ -53,6 +64,10 @@ class SeasonDialog(QDialog):
 
         self.season.sort_id = self.spinBox.value()
         self.season.name = self.lineEdit_2.text()
+
+        # TODO: Si année vide, metre le champ a None
+        self.season.year = self.spinBox_5.value()
+
         self.season.state = self.combobox_1.currentIndex()
         self.season.type = self.seasons_types  # TODO pour le meoment toujours saison
         self.season.episodes = self.spinBox_4.value()

@@ -153,8 +153,8 @@ class MainWindow(QMainWindow):
 
         if selected_backup:
             QMessageBox.information(
-                None, "Base de données restaurée",
-                "Le logiciel va se fermer. Veuillez le relancer pour que les modifications soient prises en compte",
+                None, self.tr("Base de données restaurée"),
+                self.tr("Le logiciel va se fermer. Veuillez le relancer pour que les modifications soient prises en compte"),
                 QMessageBox.Ok)
             self.close()
 

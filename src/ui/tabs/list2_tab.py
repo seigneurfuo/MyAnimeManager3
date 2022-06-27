@@ -3,14 +3,17 @@
 import os
 from datetime import datetime
 
+from PyQt5.QtGui import QIcon
+
 import utils
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QCheckBox, QHeaderView
 from PyQt5.uic import loadUi
 
 from database import Seasons
 from common import SEASONS_STATES
+
 
 class List2(QWidget):
     def __init__(self, parent):
@@ -38,6 +41,7 @@ class List2(QWidget):
 
         self.label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
         self.tableWidget.setRowCount(row_count)
+
         for row_index, season in enumerate(data):
             ids = "{} - {}".format(season.serie.sort_id, season.sort_id)
             year = str(season.year) if season.year and str(season.year) != "None" else ""
@@ -51,16 +55,35 @@ class List2(QWidget):
             else:
                 age = ""
 
-            state = SEASONS_STATES[season.state]
+            # TODO: icone de l'état de visonnage
+            season_state = SEASONS_STATES[season.state]
 
             columns = [ids, season.serie.name, season.type.name, season.name, str(season.episodes), year,
-                       age, state, str(season.view_count)]
+                       age, season_state['name'], str(season.view_count)]
 
             for col_index, value in enumerate(columns):
-                item = QTableWidgetItem(value)
-                item.setToolTip(item.text())
+                # FIXME: Un peut crade
+                if col_index == 7:
+                    item = QTableWidgetItem(season_state["name"])
+                    item.setIcon(
+                        QIcon(os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"])))
+
+                else:
+                    item = QTableWidgetItem(value)
+                    item.setToolTip(item.text())
+
                 item.setData(Qt.UserRole, season.id)
                 self.tableWidget.setItem(row_index, col_index, item)
+
+            # Favori
+            favorite_checkbox = QCheckBox()
+            favorite_checkbox.setEnabled(False)
+            favorite_checkbox.setChecked(season.favorite)
+            self.tableWidget.setCellWidget(row_index, len(columns), favorite_checkbox)
+
+        self.tableWidget.resizeColumnsToContents()
+        self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
+                                                                 QHeaderView.ResizeToContents)
 
     def when_export_button_clicked(self):
         utils.export_qtablewidget(self.tableWidget)

@@ -64,6 +64,11 @@
        <string>Nb. visionnages</string>
       </property>
      </column>
+     <column>
+      <property name="text">
+       <string>Favori</string>
+      </property>
+     </column>
     </widget>
    </item>
    <item row="1" column="0">

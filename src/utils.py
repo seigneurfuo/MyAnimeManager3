@@ -35,14 +35,14 @@ def duration_calculation(episodes_count, duration, pause_every, pause_duration, 
     return ret_list
 
 
-def export_qtablewidget(qtablewidget, app_data_folder):
+def export_qtablewidget(qtablewidget, app_data_folder, output_filename):
     print(app_data_folder)
     output_directory = os.path.join(app_data_folder, "exports")
     if not os.path.isdir(output_directory):
         os.makedirs(output_directory)
 
     date = datetime.now().strftime("%Y-%m-%d-%H%M%S")
-    output_filepath = os.path.join(output_directory, "planning{}.csv".format(date))
+    output_filepath = os.path.join(output_directory, "{}-export-{}.csv".format(date, output_filename))
 
     with open(output_filepath, "w", newline="") as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=";")

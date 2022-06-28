@@ -10,7 +10,7 @@ from PyQt5.uic import loadUi
 
 from ui.widgets.custom_calendar import CustomCalendar
 from database import Planning, Seasons
-from common import show_watch_history_dialog
+from common import display_view_history_dialog
 from common import SEASONS_STATES
 
 
@@ -247,7 +247,7 @@ class PlanningTab(QWidget):
 
     def when_show_view_history_button_is_clicked(self):
         if self.current_season_id:
-            show_watch_history_dialog(self.current_season_id)
+            display_view_history_dialog(self.current_season_id)
 
     def when_delete_button_clicked(self):
         if self.current_season_id:

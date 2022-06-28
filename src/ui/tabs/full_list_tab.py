@@ -10,7 +10,7 @@ from ui.dialogs.serie import SerieDialog
 from ui.dialogs.season import SeasonDialog
 from ui.dialogs.deleted_elements import DeletedElements
 from database import database, Series, Seasons, SeasonsTypes
-from common import show_watch_history_dialog
+from common import display_view_history_dialog
 
 
 class FullListTab(QWidget):
@@ -44,6 +44,7 @@ class FullListTab(QWidget):
         self.delete_season_button.clicked.connect(self.when_delete_season_button_clicked)
 
         self.view_deleted_elements_button.clicked.connect(self.when_view_deleted_elements_button_clicked)
+        self.pushButton.clicked.connect(self.when_view_history_button_clicked)
         # TODO: pushButton_2
         self.open_folder_button.clicked.connect(self.when_open_folder_button_clicked)
         self.show_view_history_button.clicked.connect(self.when_show_view_history_button_is_clicked)
@@ -162,6 +163,10 @@ class FullListTab(QWidget):
         if dialog.exec_():
             pass
 
+    def when_view_history_button_clicked(self):
+        if self.current_season_id:
+            display_view_history_dialog(self.current_season_id)
+
     def fill_season_list(self, serie):
         seasons = Seasons().select().where(Seasons.serie == serie.id, Seasons.is_deleted == 0).order_by(Seasons.sort_id)
         row_count = len(seasons)
@@ -227,7 +232,7 @@ class FullListTab(QWidget):
 
     def when_show_view_history_button_is_clicked(self):
         if self.current_season_id:
-            show_watch_history_dialog(self.current_season_id)
+            display_view_history_dialog(self.current_season_id)
 
     def when_search_box_content_changed(self):
         search_query = self.search_box.text()

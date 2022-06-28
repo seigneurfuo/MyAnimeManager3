@@ -99,7 +99,7 @@
      <item>
       <widget class="QPushButton" name="pushButton">
        <property name="text">
-        <string>Exporter le tableau</string>
+        <string>Exporter la liste</string>
        </property>
       </widget>
      </item>

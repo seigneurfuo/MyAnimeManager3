@@ -98,4 +98,4 @@ class List2(QWidget):
                                                                  QHeaderView.ResizeToContents)
 
     def when_export_button_clicked(self):
-        utils.export_qtablewidget(self.tableWidget)
+        utils.export_qtablewidget(self.tableWidget, self.parent.parent.profile_path)

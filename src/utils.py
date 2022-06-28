@@ -1,5 +1,6 @@
 #!/bin/env python3
-
+import csv
+import os
 from datetime import datetime, timedelta
 
 from PyQt5.QtGui import QCursor
@@ -7,11 +8,6 @@ from PyQt5.QtWidgets import QMessageBox
 
 
 def duration_calculation(episodes_count, duration, pause_every, pause_duration, start):
-    """
-
-    :return:
-    """
-
     ret_list = []
     is_pause = True if pause_every > 0 and pause_duration > 0 else False
 
@@ -39,10 +35,40 @@ def duration_calculation(episodes_count, duration, pause_every, pause_duration, 
     return ret_list
 
 
-def export_qtablewidget(qtablewidget):
-    for row_index in range(qtablewidget.rowCount()):
-        for col_index in range(qtablewidget.columnCount()):
-            item = qtablewidget.item(row_index, col_index).text()
+def export_qtablewidget(qtablewidget, app_data_folder):
+    print(app_data_folder)
+    output_directory = os.path.join(app_data_folder, "exports")
+    if not os.path.isdir(output_directory):
+        os.makedirs(output_directory)
+
+    date = datetime.now().strftime("%Y-%m-%d-%H%M%S")
+    output_filepath = os.path.join(output_directory, "planning{}.csv".format(date))
+
+    with open(output_filepath, "w", newline="") as csv_file:
+        csv_writer = csv.writer(csv_file, delimiter=";")
+
+        # Entetes
+        headers = []
+
+        print()
+
+        # Entete
+        row_data = []
+        for header_index in range(qtablewidget.columnCount()):
+            item = qtablewidget.horizontalHeaderItem(header_index)
+            row_data.append(item.text())
+
+        csv_writer.writerow(row_data)
+
+        # Données
+        for row_index in range(qtablewidget.rowCount()):
+            row_data = []
+            for col_index in range(qtablewidget.columnCount()):
+                item = qtablewidget.item(row_index, col_index)
+                text = item.text() if "text" in item.__dir__() else ""
+                row_data.append(text)
+
+            csv_writer.writerow(row_data)
 
 
 def set_cursor_on_center(qwidget):

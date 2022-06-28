@@ -70,6 +70,8 @@ def export_qtablewidget(qtablewidget, app_data_folder, output_filename):
 
             csv_writer.writerow(row_data)
 
+    return output_filepath
+
 
 def set_cursor_on_center(qwidget):
     QCursor().setPos(qwidget.mapToGlobal(qwidget.rect().center()))

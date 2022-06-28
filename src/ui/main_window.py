@@ -9,6 +9,7 @@ from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtCore import QUrl
 
 import database
+import exports
 from ui.tabs.planning_tab import PlanningTab
 from ui.tabs.full_list_tab import FullListTab
 from ui.tabs.list2_tab import List2
@@ -102,7 +103,11 @@ class MainWindow(QMainWindow):
         QDesktopServices.openUrl(QUrl.fromLocalFile(self.profile_path))
 
     def when_menu_action_planning_export_clicked(self):
-        pass
+        filepath = exports.export_planning_to_csv(self.parent.profile_path)
+
+        # Bouton pour ouvrir le dossier ?
+        QMessageBox.information(None, self.tr("Export terminé"),self.tr("Le fichier a été généré ici:") + "\n    " + filepath,
+                                QMessageBox.Ok)
 
     # TODO: Changer l'emplacement et metre ça ailleurs dans un autre fichier
     def get_collection_problems(self):

@@ -9,7 +9,7 @@ from PyQt5.QtGui import QIcon, QColor
 import utils
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QCheckBox, QHeaderView
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QCheckBox, QHeaderView, QMessageBox
 from PyQt5.uic import loadUi
 
 from database import Series, Seasons
@@ -98,4 +98,7 @@ class List2(QWidget):
                                                                  QHeaderView.ResizeToContents)
 
     def when_export_button_clicked(self):
-        utils.export_qtablewidget(self.tableWidget, self.parent.parent.profile_path, "liste")
+        filepath = utils.export_qtablewidget(self.tableWidget, self.parent.parent.profile_path, "liste")
+        # Bouton pour ouvrir le dossier ?
+        QMessageBox.information(None, self.tr("Export terminé"),self.tr("Le fichier a été généré ici:") + "\n    " + filepath,
+                                QMessageBox.Ok)

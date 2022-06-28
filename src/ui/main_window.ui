@@ -211,7 +211,7 @@
      <normaloff>../resources/icons/bug-exclamation.png</normaloff>../resources/icons/bug-exclamation.png</iconset>
    </property>
    <property name="text">
-    <string>Rapport un bug</string>
+    <string>Rapporter un bug</string>
    </property>
   </action>
  </widget>

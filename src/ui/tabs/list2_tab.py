@@ -13,7 +13,7 @@ from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QCheckBox, QHeaderView, Q
 from PyQt5.uic import loadUi
 
 from database import Series, Seasons
-from common import SEASONS_STATES
+from common import SEASONS_STATES, display_view_history_dialog
 
 
 class List2(QWidget):
@@ -21,6 +21,8 @@ class List2(QWidget):
         super().__init__(parent)
 
         self.parent = parent
+
+        self.current_season_id = None
 
         self.init_ui()
         self.init_events()
@@ -30,9 +32,22 @@ class List2(QWidget):
 
     def init_events(self):
         self.pushButton.clicked.connect(self.when_export_button_clicked)
+        self.pushButton_2.clicked.connect(self.when_show_view_history_button_is_clicked)
+        self.tableWidget.currentCellChanged.connect(self.when_current_cell_changed)
 
     def when_visible(self):
         self.fill_data()
+
+    def when_current_cell_changed(self):
+        self.update_current_season_id()
+
+    def update_current_season_id(self):
+        current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
+        self.current_season_id = current_item.data(Qt.UserRole) if current_item else None
+
+    def when_show_view_history_button_is_clicked(self):
+        if self.current_season_id:
+            display_view_history_dialog(self.current_season_id)
 
     def fill_data(self):
         today_date_object = datetime.now()

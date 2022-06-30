@@ -6,10 +6,10 @@ from PyQt5.uic import loadUi
 
 
 class ViewHistory(QDialog):
-    def __init__(self, season_id, rows):
+    def __init__(self, season, rows):
         super(ViewHistory, self).__init__()
 
-        self.season_id = season_id
+        self.season = season
         self.rows = rows
 
         self.init_ui()
@@ -18,7 +18,7 @@ class ViewHistory(QDialog):
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "view_history.ui"), self)
         # TODO: Title
-        self.setWindowTitle(self.tr("Historique de visionnage"))
+        self.setWindowTitle( self.tr("Historique de visionnage") + ": " + self.season.name)
 
         self.fill_data()
 

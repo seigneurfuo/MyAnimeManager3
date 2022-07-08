@@ -133,6 +133,7 @@ class FullListTab(QWidget):
 
             if season_dialog.exec_():
                 self.refresh_data()
+                self.set_series_combobox_current_selection(serie.id)
 
     def when_edit_season_button_clicked(self):
         if self.current_season_id:

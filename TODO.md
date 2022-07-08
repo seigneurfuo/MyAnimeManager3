@@ -2,9 +2,9 @@
 
 ## A faire
 
-- Type
+- ~~Type~~
 - Studio
-- Favoris
+- ~~Favoris~~
 - Tags
 
 - ~~Passer tout les select uniques avec un where sur une ID et remplacer par un GET
@@ -15,7 +15,7 @@
 - Double cliquer ou bien bouton pour aller directement sur la série / saison dans l'onglet full_list_tab
 - Combiner des refresh et autre dans une fonction fait pour
 
-- Changer le nom des évènements de on en when: self.on_
+- ~~Changer le nom des évènements de on en when: self.on_~~
 - Système de MAJ
 - Dialogue About + Licences logiciels + icones
 - Fichier de paramétrage json

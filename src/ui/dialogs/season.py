@@ -40,7 +40,7 @@ class SeasonDialog(QDialog):
         self.spinBox.setValue(self.season.sort_id)
         self.lineEdit_2.setText(self.season.name)
 
-        if self.season.year:
+        if self.season.year and str(self.season.year) != "None":
             self.spinBox_5.setValue(self.season.year)
         else:
             self.spinBox_5.clear()

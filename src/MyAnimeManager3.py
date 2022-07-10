@@ -22,8 +22,10 @@ class Application(QApplication):
         self.version = "DEV"
         self.description = self.tr("Un gestionnaire de séries multiplateforme écrit en Python3 et Qt5")
 
+        name_and_version = "{} - {}".format(self.name, self.version)
+
         self.setApplicationName(self.name)
-        self.setApplicationDisplayName(self.name)
+        self.setApplicationDisplayName(name_and_version)
         self.setApplicationVersion(self.version)
 
         self.default_settings = default_settings.DEFAULT_SETTINGS

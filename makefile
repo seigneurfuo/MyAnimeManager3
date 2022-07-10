@@ -9,13 +9,9 @@ archlinux-build:
 
 archlinux-install:
 	cd "packaging/PKGBUILD/dist"; \
-	sudo pacman -U $(APPNAME)-$(APPVERSION)-*;
+	sudo pacman -U $(APPNAME)-$(APPVERSION)-* --noconfirm;
 
-manjaro-build:
-	archlinux-build
-
-manjaro-install:
-	archlinux-install
+archlinux-build-install: archlinux-build archlinux-install
 
 windows-build:
 	call packaging/windows/build.bat

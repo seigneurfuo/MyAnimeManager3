@@ -19,6 +19,11 @@ pkgver() {
     echo "$(git show -s --format=%cd --date=format:"%Y.%m.%d")"
 }
 
+prepare() {
+	# Modification de la version dans le fichier
+	sed -i 's/self.version = "DEV"/self.version = "$(pkgver)"/g' "${srcdir}/MyAnimeManager3/src/MyAnimeManager3.py"
+}
+
 package() {
 	mkdir -p "${pkgdir}/opt/"
 	cp -R "${srcdir}/MyAnimeManager3/src" "${pkgdir}/opt/"

@@ -206,6 +206,7 @@ class PlanningTab(QWidget):
         # Changement d'état de la saison + RAZ
         if new_watched_episodes_value == current_season.episodes:
             current_season.watched_episodes = 0
+            current_season.view_count += 1
             current_season.state = 3  # Terminé
         else:
             current_season.watched_episodes = new_watched_episodes_value

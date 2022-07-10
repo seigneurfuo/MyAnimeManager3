@@ -8,7 +8,7 @@ class CustomCalendar(QCalendarWidget):
     """
 
     def __init__(self, parent=None):
-        QCalendarWidget.__init__(self, parent)
+        super().__init__()
         self.cell_background_color = None
         self.dates = []
 
@@ -23,7 +23,7 @@ class CustomCalendar(QCalendarWidget):
         self.cell_background_color = color
 
     def paintCell(self, painter, rect, date, **kwargs):
-        QCalendarWidget.paintCell(self, painter, rect, date, **kwargs)
+        super().paintCell(painter, rect, date, **kwargs)
 
         # Si une couleur à été choisi pour l'arrière plan des cellules, alors on l'applique
         if self.cell_background_color and date in self.dates:

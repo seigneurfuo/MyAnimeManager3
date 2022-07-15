@@ -265,9 +265,9 @@
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>160</y>
+      <y>180</y>
       <width>371</width>
-      <height>111</height>
+      <height>91</height>
      </rect>
     </property>
     <property name="readOnly">
@@ -281,7 +281,7 @@
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>140</y>
+      <y>160</y>
       <width>57</width>
       <height>16</height>
      </rect>
@@ -319,9 +319,9 @@
    <widget class="QLabel" name="label_16">
     <property name="geometry">
      <rect>
-      <x>480</x>
+      <x>470</x>
       <y>80</y>
-      <width>71</width>
+      <width>81</width>
       <height>16</height>
      </rect>
     </property>
@@ -405,6 +405,32 @@
     <property name="icon">
      <iconset>
       <normaloff>../../resources/icons/film-timeline.png</normaloff>../../resources/icons/film-timeline.png</iconset>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_20">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>140</y>
+      <width>41</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Etat:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_21">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>140</y>
+      <width>57</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;Etat&gt;</string>
     </property>
    </widget>
   </widget>

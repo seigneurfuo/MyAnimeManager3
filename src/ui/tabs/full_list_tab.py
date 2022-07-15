@@ -10,7 +10,7 @@ from ui.dialogs.serie import SerieDialog
 from ui.dialogs.season import SeasonDialog
 from ui.dialogs.deleted_elements import DeletedElements
 from database import database, Series, Seasons, SeasonsTypes
-from common import display_view_history_dialog
+from common import display_view_history_dialog, SEASONS_STATES
 
 
 class FullListTab(QWidget):
@@ -199,6 +199,10 @@ class FullListTab(QWidget):
         for field, value in fields:
             field.setText(value)
 
+        # Etat
+        season_state = SEASONS_STATES[season.state]
+        self.label_21.setText(season_state["name"])
+        #QIcon(os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"]))
 
         self.label_4.setVisible(season.favorite)
         self.plainTextEdit.setPlainText(season.description)

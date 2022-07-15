@@ -144,9 +144,8 @@ class MainWindow(QMainWindow):
         dialog.exec_()
 
     def when_menu_action_about_clicked(self):
-        dialog = About()
+        dialog = About(self)
         dialog.exec_()
-        # tutorial(self)
 
     def when_menu_action_bug_report_clicked(self):
         webbrowser.open_new("https://github.com/seigneurfuo/MyAnimeManager3/issues/new")

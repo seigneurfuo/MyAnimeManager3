@@ -10,6 +10,7 @@ import default_settings
 
 from ui.main_window import MainWindow
 from database_manager import load_or_create_database
+from common import app_name, app_version, app_description, app_name_and_version
 
 
 class Application(QApplication):
@@ -18,15 +19,9 @@ class Application(QApplication):
 
         self.app_dir = os.path.abspath(os.path.dirname(__file__))
 
-        self.name = "MyAnimeManager 3"
-        self.version = "DEV"
-        self.description = self.tr("Un gestionnaire de séries multiplateforme écrit en Python3 et Qt5")
-
-        name_and_version = "{} - {}".format(self.name, self.version)
-
-        self.setApplicationName(self.name)
-        self.setApplicationDisplayName(name_and_version)
-        self.setApplicationVersion(self.version)
+        self.setApplicationName(app_name)
+        self.setApplicationDisplayName(app_name_and_version)
+        self.setApplicationVersion(app_version)
 
         self.default_settings = default_settings.DEFAULT_SETTINGS
         self.profile_path = None

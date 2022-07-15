@@ -2,17 +2,22 @@ import os
 from platform import python_version
 
 from PyQt5.QtCore import QT_VERSION_STR, PYQT_VERSION_STR
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QDialog
 from PyQt5.uic import loadUi
 
 from peewee import __version__ as peewee_version
 
+import common
+
 
 class About(QDialog):
-    def __init__(self):
+    def __init__(self, parent):
         super(About, self).__init__()
+        self.parent = parent
 
         self.logo_clicks = 0
+        self.logo_data = ["heart.png", "user.png"]
 
         self.init_ui()
         self.init_events()
@@ -24,11 +29,10 @@ class About(QDialog):
         self.fill_data()
 
     def init_events(self):
-        #self.logo.clicked.connect(self.when_logo_clicked)
-        pass
+        self.logo.mousePressEvent = self.when_logo_clicked
 
     def fill_data(self):
-        fields = [(self.application_version, ""),
+        fields = [(self.application_version, common.app_version),
                   (self.python_version, python_version()),
                   (self.qt_version, QT_VERSION_STR),
                   (self.pyqt_version, PYQT_VERSION_STR),
@@ -37,13 +41,13 @@ class About(QDialog):
         for field, value in fields:
             field.setText(value)
 
-        # TODO:
-        # self.name_label.setText(self._parent_qmainwindow.parent_qapplication.name)
-        # self.version_label.setText(self._parent_qmainwindow.parent_qapplication.version)
-        # self.description_label.setText(self._parent_qmainwindow.parent_qapplication.description)
+    def when_logo_clicked(self, event):
 
-    def when_logo_clicked(self):
-        self.logo_clicks += 1
+        pixmap = os.path.join(os.path.dirname(__file__), "../../resources/icons/", self.logo_data[self.logo_clicks])
+        self.logo.setPixmap(QPixmap(pixmap))
 
-        if self.logo_clicks == 5:
-            print("f")
+        if self.logo_clicks == 1:
+            self.logo_clicks = 0
+        else:
+            self.logo_clicks += 1
+

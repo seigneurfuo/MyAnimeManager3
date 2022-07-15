@@ -7,7 +7,7 @@ from ui.dialogs.view_history import ViewHistory
 app_name = "MyAnimeManager 3"
 app_version = "DEV"
 app_description = "Un gestionnaire de séries multiplateforme écrit en Python3 et Qt5"
-app_name_and_version = "{} - {}".format(app_name, app_name)
+app_name_and_version = "{} - {}".format(app_name, app_version)
 
 SEASONS_STATES = [
     {"name": "Indéfinie", "icon": "question.png"},

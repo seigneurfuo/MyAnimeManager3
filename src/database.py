@@ -31,6 +31,7 @@ class Seasons(BaseModel):
     sort_id = IntegerField()
     name = TextField()
     year = IntegerField(null=True)
+    airing = BooleanField(null=False, default=True)
     serie = ForeignKeyField(column_name='serie', field='id', model=Series)
     type = ForeignKeyField(column_name='type', field='id', model=SeasonsTypes, null=True)
     studio = IntegerField(index=True, null=True)
@@ -38,7 +39,7 @@ class Seasons(BaseModel):
     watched_episodes = IntegerField(constraints=[SQL("DEFAULT 0")], null=True)
     view_count = IntegerField(constraints=[SQL("DEFAULT 0")])
     state = IntegerField()
-    favorite = BooleanField(constraints=[SQL("DEFAULT 0")])
+    favorite = BooleanField(null=False, default=True)
     description = TextField(null=True)
     is_deleted = IntegerField(constraints=[SQL("DEFAULT 0")])
 

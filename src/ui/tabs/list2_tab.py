@@ -77,7 +77,7 @@ class List2(QWidget):
             season_state = SEASONS_STATES[season.state]
 
             columns = [ids, season.serie.name, season.type.name, season.name, str(season.episodes), year,
-                       age, season_state['name'], str(season.view_count)]
+                       age, season_state['name']]
 
             for col_index, value in enumerate(columns):
                 # FIXME: Un peut crade
@@ -97,7 +97,22 @@ class List2(QWidget):
                 item.setData(Qt.UserRole, season.id)
                 self.tableWidget.setItem(row_index, col_index, item)
 
-            # Favori
+            # En diffusion
+            airing = self.tr("Oui") if season.airing else self.tr("Non")
+            item = QTableWidgetItem(airing)
+
+            if season.airing:
+                item.setForeground(QColor("#039d09"))
+
+            item.setToolTip(item.text())
+            self.tableWidget.setItem(row_index, len(columns), item)
+
+            # Nombre de visionnages
+            item = QTableWidgetItem(str(season.view_count))
+            item.setToolTip(item.text())
+            self.tableWidget.setItem(row_index, len(columns) + 1, item)
+
+            # Favoris
             favorite_checkbox = QCheckBox()
             favorite_checkbox.setEnabled(False)
             favorite_checkbox.setChecked(season.favorite)
@@ -106,7 +121,7 @@ class List2(QWidget):
             if season.serie.sort_id == 0:
                 favorite_checkbox.setStyleSheet("background-color: #FCC981")
 
-            self.tableWidget.setCellWidget(row_index, len(columns), favorite_checkbox)
+            self.tableWidget.setCellWidget(row_index, len(columns) + 2, favorite_checkbox)
 
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,

@@ -76,6 +76,11 @@
      </column>
      <column>
       <property name="text">
+       <string>En diffusion</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
        <string>Nb. visionnages</string>
       </property>
      </column>

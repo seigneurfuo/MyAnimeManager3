@@ -95,8 +95,8 @@ class PlanningTab(QWidget):
                 self.tableWidget_7.setItem(row_index, col_index, item)
 
         self.tableWidget_7.resizeColumnsToContents()
-        self.tableWidget_7.horizontalHeader().setSectionResizeMode(self.tableWidget_7.columnCount() - 1, QHeaderView.ResizeToContents)
-
+        self.tableWidget_7.horizontalHeader().setSectionResizeMode(self.tableWidget_7.columnCount() - 1,
+                                                                   QHeaderView.ResizeToContents)
 
     def fill_to_watch_table(self):
         """
@@ -106,8 +106,8 @@ class PlanningTab(QWidget):
 
         states = [2] if self.checkBox_4.isChecked() else [1, 2]
         # https://docs.peewee-orm.com/en/latest/peewee/query_operators.html 1 or 2
-        episodes_to_watch = Seasons.select()\
-            .where(Seasons.state.in_(states), Seasons.watched_episodes < Seasons.episodes, Seasons.is_deleted == 0)\
+        episodes_to_watch = Seasons.select() \
+            .where(Seasons.state.in_(states), Seasons.watched_episodes < Seasons.episodes, Seasons.is_deleted == 0) \
             .order_by(Seasons.id)
 
         # Nettoyage de la liste
@@ -143,29 +143,40 @@ class PlanningTab(QWidget):
             item.setToolTip(item.text())
             self.tableWidget_6.setItem(col_index, 4, item)
 
+            # En diffusion
+            airing = self.tr("Oui") if row_data.airing else self.tr("Non")
+            item = QTableWidgetItem(airing)
+
+            if row_data.airing:
+                item.setForeground(QColor("#039d09"))
+
+            item.setToolTip(item.text())
+            self.tableWidget_6.setItem(col_index, 5, item)
+
             # Episode
             next_episode_index = int(row_data.watched_episodes) + 1
             next_episode_text = "{} / {}".format(next_episode_index, row_data.episodes)
             item = QTableWidgetItem(next_episode_text)
+
             item.setToolTip(item.text())
-            self.tableWidget_6.setItem(col_index, 5, item)
+            self.tableWidget_6.setItem(col_index, 6, item)
 
             # Progression
             progress_bar = QProgressBar(self)
             progress_bar.setMinimum(0)
             progress_bar.setMaximum(row_data.episodes)
-            progress_bar.setValue(
-                row_data.watched_episodes)  # Car si un film donc épisode 1 / 1 on à déja une barre à 100%
+            progress_bar.setValue(row_data.watched_episodes)  # Car si un film donc épisode 1 / 1 on à déja une barre à 100%
 
             # Style différent si on est sous Windows
             if platform.system() == "Windows":
                 progress_bar.setStyleSheet("QProgressBar::chunk ""{""background-color: #2B65EC;""}")
                 progress_bar.setAlignment(Qt.AlignCenter)
 
-            self.tableWidget_6.setCellWidget(col_index, 6, progress_bar)
+            self.tableWidget_6.setCellWidget(col_index, 7, progress_bar)
 
         self.tableWidget_6.resizeColumnsToContents()
-        self.tableWidget_6.horizontalHeader().setSectionResizeMode(self.tableWidget_6.columnCount() - 1, QHeaderView.ResizeToContents)
+        self.tableWidget_6.horizontalHeader().setSectionResizeMode(self.tableWidget_6.columnCount() - 1,
+                                                                   QHeaderView.ResizeToContents)
 
     def when_today_button_clicked(self):
         """Fonction qui ramène le calendrier à la date actuelle"""
@@ -251,24 +262,44 @@ class PlanningTab(QWidget):
             display_view_history_dialog(self.current_season_id)
 
     def when_delete_button_clicked(self):
-        if self.current_season_id:
-            self.show_delete_watched_episode_window()
+        current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)
+        planning_id = current_item.data(Qt.UserRole) if current_item else None
 
-    def show_delete_watched_episode_window(self):
+        if planning_id:
+            planning_data = Planning.get(planning_id)
+            self.show_delete_watched_episode_window(planning_data)
+
+    def show_delete_watched_episode_window(self, planning_data):
+        episode_num = planning_data.episode
+        previous_episode_num = episode_num - 1
+        next_episode_num = episode_num + 1
+
         msg_box = QMessageBox(self)
         msg_box.setWindowTitle(self.tr("Supression d'un épisode vu"))
 
         # TODO: Traduction
-        msg_box.setText(self.tr("Vous aller supprimer le visionnagede l'épisode {}"))
-        yes_button = msg_box.addButton(self.tr("Définir l'épisode comme prochain épisode à voir et le supprimer"), QMessageBox.YesRole)
-        no_button = msg_box.addButton(self.tr("Supprimer uniquement l'épisode sans modifier le prochain épisode à voir"), QMessageBox.NoRole)
+        msg_box.setText(self.tr("Vous aller supprimer le visionnage de l'épisode: {}.".format(episode_num)))
+
+        remove_and_decrement_episode = msg_box.addButton(self.tr(
+            "Supprimer l'épisode {0}. Prochain épisode suggéré: {0}".format(episode_num)), QMessageBox.YesRole)
+
+        remove_and_keep_episode_num = msg_box.addButton(self.tr(
+            "Supprimer l'épisode {0}. Prochain épisode suggéré: {1}".format(episode_num, next_episode_num)),
+                                       QMessageBox.NoRole)
+
         msg_box.addButton(self.tr("Annuler"), QMessageBox.RejectRole)
         msg_box.exec_()
 
-        if msg_box.clickedButton() == yes_button:
-            return 0
+        if msg_box.clickedButton() == remove_and_decrement_episode:
 
-        elif msg_box.clickedButton() == no_button:
-            return 1
-        else:
-            return -1
+            # FIXME: Mache pas
+            season = Seasons.get(planning_data.season)
+            season.watched_episodes = previous_episode_num
+            season.save()
+
+            Planning.get(planning_data.id).delete_instance()
+            self.fill_data()
+
+        elif msg_box.clickedButton() == remove_and_keep_episode_num:
+            Planning.get(planning_data.id).delete_instance()
+            self.fill_data()

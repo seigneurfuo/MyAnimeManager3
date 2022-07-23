@@ -284,6 +284,11 @@
        </column>
        <column>
         <property name="text">
+         <string>En diffusion</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
          <string>Episode</string>
         </property>
        </column>

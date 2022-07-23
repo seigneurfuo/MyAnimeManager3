@@ -50,6 +50,7 @@ class SeasonDialog(QDialog):
         self.spinBox_3.setValue(self.season.watched_episodes)
         self.spinBox_2.setValue(self.season.view_count)
         self.checkBox.setChecked(self.season.favorite)
+        self.checkBox_2.setChecked(self.season.airing)
         self.textEdit.setPlainText(self.season.description)
 
         # Changement de l'index
@@ -74,6 +75,7 @@ class SeasonDialog(QDialog):
         self.season.watched_episodes = self.spinBox_3.value()
         self.season.view_count = self.spinBox_2.value()
         self.season.favorite = self.checkBox.isChecked()
+        self.season.airing = self.checkBox_2.isChecked()
         self.season.description = self.textEdit.toPlainText()
         self.season.type = self.comboBox_2.currentData()
 

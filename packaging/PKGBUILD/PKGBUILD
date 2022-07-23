@@ -1,5 +1,5 @@
 pkgname="myanimemanager3"
-pkgver=2022.07.10
+pkgver=2022.07.15
 pkgrel=1
 pkgdesc="Un logiciel de gestion de séries et d'animés."
 url="https://seigneurfuo.com"
@@ -21,7 +21,7 @@ pkgver() {
 
 prepare() {
 	# Modification de la version dans le fichier
-	sed -i "s/\"DEV\"/\"${pkgver}\"/g" "${srcdir}/MyAnimeManager3/src/MyAnimeManager3.py"
+	sed -i "s/\"DEV\"/\"${pkgver}\"/g" "${srcdir}/MyAnimeManager3/src/common.py"
 }
 
 package() {

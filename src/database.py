@@ -22,7 +22,7 @@ class Series(BaseModel):
     name = TextField()
     description = TextField(null=True)
     path = TextField(null=True)
-    is_deleted = BooleanField(null=False, default=True)
+    is_deleted = IntegerField(constraints=[SQL("DEFAULT 0")])
 
     class Meta:
         table_name = 'Series'
@@ -41,7 +41,7 @@ class Seasons(BaseModel):
     state = IntegerField()
     favorite = BooleanField(null=False, default=True)
     description = TextField(null=True)
-    is_deleted = BooleanField(null=False, default=True)
+    is_deleted = IntegerField(constraints=[SQL("DEFAULT 0")])
 
     class Meta:
         table_name = 'Seasons'

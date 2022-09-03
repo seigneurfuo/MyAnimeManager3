@@ -1,7 +1,7 @@
 import os
 
-from PyQt5.QtCore import QDir, Qt
-from PyQt5.QtWidgets import QDialog, QTableWidgetItem, QHeaderView, QCheckBox, QHBoxLayout, QWidget
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QDialog, QTableWidgetItem, QHeaderView, QCheckBox
 from PyQt5.uic import loadUi
 
 
@@ -46,12 +46,11 @@ class DeletedElements(QDialog):
                 item = QTableWidgetItem(value)
                 item.setToolTip(item.text())
                 item.setData(Qt.UserRole, season.id)
-                self.tableWidget.setItem(row_index, col_index+1, item)
+                self.tableWidget.setItem(row_index, col_index + 1, item)
 
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
                                                                  QHeaderView.ResizeToContents)
-
 
     def get_checked_for_restoration(self):
         # Saisons

@@ -157,7 +157,8 @@ class FullListTab(QWidget):
 
     def when_view_deleted_elements_button_clicked(self):
         deleted_series = Series().select().where(Series.is_deleted == 1).order_by(Series.sort_id)
-        deleted_seasons = Seasons().select().where(Seasons.is_deleted == 1, Series.is_deleted == 0).join(Series).order_by(Seasons.sort_id)
+        deleted_seasons = Seasons().select().where(Seasons.is_deleted == 1, Series.is_deleted == 0).join(
+            Series).order_by(Seasons.sort_id)
         dialog = DeletedElements(deleted_series, deleted_seasons)
 
         # TODO:
@@ -167,7 +168,6 @@ class FullListTab(QWidget):
                     season = Seasons.get(season_id)
                     season.is_deleted = 0
                     season.save()
-
 
     def when_view_history_button_clicked(self):
         if self.current_season_id:
@@ -207,7 +207,7 @@ class FullListTab(QWidget):
         # Etat
         season_state = SEASONS_STATES[season.state]
         self.label_21.setText(season_state["name"])
-        #QIcon(os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"]))
+        # QIcon(os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"]))
 
         self.label_4.setVisible(season.favorite)
         self.plainTextEdit.setPlainText(season.description)

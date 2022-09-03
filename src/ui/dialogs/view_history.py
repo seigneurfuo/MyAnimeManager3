@@ -18,7 +18,7 @@ class ViewHistory(QDialog):
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "view_history.ui"), self)
         # TODO: Title
-        self.setWindowTitle( self.tr("Historique de visionnage") + ": " + self.season.name)
+        self.setWindowTitle(self.tr("Historique de visionnage") + ": " + self.season.name)
 
         self.fill_data()
 
@@ -27,13 +27,18 @@ class ViewHistory(QDialog):
 
     def fill_data(self):
         row_count = len(self.rows)
-        self.label.setText("Nombre d'éléments: " + str(row_count))
+        self.label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
+        self.label_2.setText(self.tr("Nombre de visionnages: ") + str(self.season.view_count))
         self.tableWidget.setRowCount(row_count)
 
         for row_index, row in enumerate(self.rows):
             columns = [row.date.strftime("%d/%m/%Y"), row.season.name, str(row.episodes)]
 
+            # FIXME: Ne fonctionne pas quand il y à plusieurs épisodes
             for col_index, value in enumerate(columns):
+                if(col_index == 2) and row.episodes == row.season.episodes:
+                    value = "{} (Fin)".format(value)
+
                 item = QTableWidgetItem(value)
                 item.setToolTip(item.text())
                 self.tableWidget.setItem(row_index, col_index, item)

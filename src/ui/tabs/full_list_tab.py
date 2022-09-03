@@ -157,12 +157,17 @@ class FullListTab(QWidget):
 
     def when_view_deleted_elements_button_clicked(self):
         deleted_series = Series().select().where(Series.is_deleted == 1).order_by(Series.sort_id)
-        deleted_seasons = Seasons().select().where(Seasons.is_deleted == 1).order_by(Seasons.sort_id)
+        deleted_seasons = Seasons().select().where(Seasons.is_deleted == 1, Series.is_deleted == 0).join(Series).order_by(Seasons.sort_id)
         dialog = DeletedElements(deleted_series, deleted_seasons)
 
         # TODO:
         if dialog.exec_():
-            pass
+            if dialog.seasons_to_restore:
+                for season_id in dialog.seasons_to_restore:
+                    season = Seasons.get(season_id)
+                    season.is_deleted = 0
+                    season.save()
+
 
     def when_view_history_button_clicked(self):
         if self.current_season_id:

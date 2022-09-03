@@ -228,6 +228,12 @@
    </item>
    <item row="3" column="0">
     <widget class="QGroupBox" name="groupBox">
+     <property name="styleSheet">
+      <string notr="true">QGroupBox
+{
+    border:  1px solid black
+}</string>
+     </property>
      <property name="title">
       <string>Saison aléatoire</string>
      </property>
@@ -236,6 +242,17 @@
        <widget class="QCheckBox" name="checkBox">
         <property name="text">
          <string>Inclure les séries en cours</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="select_random_season_button">
+        <property name="text">
+         <string>Lancer</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../resources/icons/gear.png</normaloff>../../resources/icons/gear.png</iconset>
         </property>
        </widget>
       </item>
@@ -256,52 +273,41 @@
         </item>
        </layout>
       </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="select_random_season_button">
-        <property name="text">
-         <string>Lancer</string>
+      <item row="2" column="0" colspan="3">
+       <widget class="QTableWidget" name="tableWidget">
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
         </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../../resources/icons/gear.png</normaloff>../../resources/icons/gear.png</iconset>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SingleSelection</enum>
         </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectRows</enum>
+        </property>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="verticalHeaderDefaultSectionSize">
+         <number>20</number>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>Série</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Saison</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Type</string>
+         </property>
+        </column>
        </widget>
       </item>
      </layout>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <widget class="QTableWidget" name="tableWidget">
-     <property name="editTriggers">
-      <set>QAbstractItemView::NoEditTriggers</set>
-     </property>
-     <property name="selectionMode">
-      <enum>QAbstractItemView::SingleSelection</enum>
-     </property>
-     <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectRows</enum>
-     </property>
-     <attribute name="horizontalHeaderStretchLastSection">
-      <bool>true</bool>
-     </attribute>
-     <attribute name="verticalHeaderDefaultSectionSize">
-      <number>20</number>
-     </attribute>
-     <column>
-      <property name="text">
-       <string>Série</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Saison</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Type</string>
-      </property>
-     </column>
     </widget>
    </item>
   </layout>

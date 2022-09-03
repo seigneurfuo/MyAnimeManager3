@@ -18,8 +18,6 @@ class DeletedElements(QDialog):
 
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "deleted_elements.ui"), self)
-        #self.setWindowTitle(self.serie.name)
-
         self.fill_data()
 
     def init_events(self):
@@ -32,13 +30,13 @@ class DeletedElements(QDialog):
 
         for row_index, season in enumerate(self.deleted_seasons):
             # Case à cocher
-            #restore_checkbox_widget = QWidget()
-            #restore_checkbox_h_box = QHBoxLayout()
+            # restore_checkbox_widget = QWidget()
+            # restore_checkbox_h_box = QHBoxLayout()
             restore_checkbox = QCheckBox()
-            #restore_checkbox_h_box.addWidget(restore_checkbox)
-            #favorite_checkbox.setEnabled(False)
-            #favorite_checkbox.setChecked(season.favorite)
-            #restore_checkbox_widget.setLayout(restore_checkbox_h_box)
+            # restore_checkbox_h_box.addWidget(restore_checkbox)
+            # favorite_checkbox.setEnabled(False)
+            # favorite_checkbox.setChecked(season.favorite)
+            # restore_checkbox_widget.setLayout(restore_checkbox_h_box)
             self.tableWidget.setCellWidget(row_index, 0, restore_checkbox)
 
             # TODO: Ajouter les colonnes supplémentaires

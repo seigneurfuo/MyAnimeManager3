@@ -66,8 +66,7 @@ class SeasonDialog(QDialog):
         self.season.sort_id = self.spinBox.value()
         self.season.name = self.lineEdit_2.text()
 
-        # TODO: Si année vide, metre le champ a None
-        self.season.year = self.spinBox_5.value()
+        self.season.year = None if self.spinBox_5.value() == 0 else self.spinBox_5.value()
 
         self.season.state = self.combobox_1.currentIndex()
         self.season.type = self.seasons_types  # TODO pour le meoment toujours saison

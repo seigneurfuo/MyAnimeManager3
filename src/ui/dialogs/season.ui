@@ -241,7 +241,17 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <tabstops>
+  <tabstop>spinBox</tabstop>
   <tabstop>lineEdit_2</tabstop>
+  <tabstop>spinBox_5</tabstop>
+  <tabstop>comboBox_2</tabstop>
+  <tabstop>combobox_1</tabstop>
+  <tabstop>checkBox_2</tabstop>
+  <tabstop>spinBox_4</tabstop>
+  <tabstop>spinBox_3</tabstop>
+  <tabstop>spinBox_2</tabstop>
+  <tabstop>checkBox</tabstop>
+  <tabstop>textEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>

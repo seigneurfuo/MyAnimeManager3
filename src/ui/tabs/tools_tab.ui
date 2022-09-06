@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>639</width>
-    <height>406</height>
+    <height>403</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -312,6 +312,19 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>timeEdit</tabstop>
+  <tabstop>get_current_time_button</tabstop>
+  <tabstop>spinBox</tabstop>
+  <tabstop>spinBox_2</tabstop>
+  <tabstop>spinBox_3</tabstop>
+  <tabstop>spinBox_4</tabstop>
+  <tabstop>go_button</tabstop>
+  <tabstop>listWidget</tabstop>
+  <tabstop>checkBox</tabstop>
+  <tabstop>select_random_season_button</tabstop>
+  <tabstop>tableWidget</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

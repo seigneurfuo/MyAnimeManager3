@@ -44,8 +44,7 @@ class FullListTab(QWidget):
         self.delete_season_button.clicked.connect(self.when_delete_season_button_clicked)
 
         self.view_deleted_elements_button.clicked.connect(self.when_view_deleted_elements_button_clicked)
-        self.pushButton.clicked.connect(self.when_view_history_button_clicked)
-        # TODO: pushButton_2
+
         self.open_folder_button.clicked.connect(self.when_open_folder_button_clicked)
         self.show_view_history_button.clicked.connect(self.when_show_view_history_button_is_clicked)
 
@@ -60,7 +59,7 @@ class FullListTab(QWidget):
         self.fill_series_combobox()
 
         # TODO: à garder ou pas ?
-        # On force l'affichage de l'informaton pour la première série au lancement
+        # On force l'affichage de l'information pour la première série au lancement
         self.when_series_list_current_index_changed()
 
     def fill_series_combobox(self, search_query=None):
@@ -180,10 +179,11 @@ class FullListTab(QWidget):
         self.tableWidget.setRowCount(row_count)
 
         for row_index, season in enumerate(seasons):
-            columns = [str(season.sort_id), season.type.name, season.name]
+            columns = [season.sort_id, season.type.name, season.name, season.year, season.episodes,
+                       season.watched_episodes, season.view_count, SEASONS_STATES[season.state]["name"], season.favorite]
 
             for col_index, value in enumerate(columns):
-                item = QTableWidgetItem(value)
+                item = QTableWidgetItem(str(value))
                 item.setToolTip(item.text())
                 item.setData(Qt.UserRole, season.id)
                 self.tableWidget.setItem(row_index, col_index, item)

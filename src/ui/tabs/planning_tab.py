@@ -56,6 +56,8 @@ class PlanningTab(QWidget):
         self.fill_watched_table()
         self.fill_to_watch_table()
 
+        self.update_current_season_id()
+
     def when_planning_calender_date_changed(self):
         # Change aussi la date sur le selecteur de date
         self.date_edit.setDate(self.planning_calendar.selectedDate())

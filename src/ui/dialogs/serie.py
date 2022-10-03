@@ -41,7 +41,7 @@ class SerieDialog(QDialog):
 
     def save_data(self):
         self.serie.sort_id = self.spinBox.value()
-        self.serie.name = self.lineEdit_2.text()
+        self.serie.name = self.lineEdit_2.text().strip()
         self.serie.path = self.lineEdit_3.text()
 
         self.serie.save()

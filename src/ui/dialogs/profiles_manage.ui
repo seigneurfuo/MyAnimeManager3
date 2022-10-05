@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>560</width>
+    <height>320</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../resources/icons/film-timeline.png</normaloff>../../resources/icons/film-timeline.png</iconset>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>536</width>
+        <height>260</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0" colspan="2">
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="no_profile_found_label">
+           <property name="text">
+            <string>Aucun profil existant. Créer-en un nouveau !</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="1" column="0" rowspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="text">
+        <string>Créer un nouveau profil</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../resources/icons/plus.png</normaloff>../../resources/icons/plus.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Supprimer le profil</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../resources/icons/minus.png</normaloff>../../resources/icons/minus.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

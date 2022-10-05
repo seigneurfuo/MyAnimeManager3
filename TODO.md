@@ -3,12 +3,11 @@
 ## A faire
 
 - ~~Type~~
-- Studio
+- Studios ?
 - ~~Favoris~~
 - Tags
 
-- ~~Passer tout les select uniques avec un where sur une ID et remplacer par un GET
-  Par exemple: Series().get(Series.id == current_season_id)~~
+- ~~Passer tout les select uniques avec un where sur une ID et remplacer par un GET Par exemple: Series().get(Series.id == current_season_id)~~
 
 - Passer tout les get en unique. Remplacer par exemple **Series().get(Series.id == current_season_id)** **par Series().get(current_season_id)**
 
@@ -25,3 +24,10 @@
 - Afficher le titre de la série quand le nom de la saison est vide ?
 - Liste des séries et saisons supprimées:
   - Restaurer / supprimer définitivement
+
+- Profiles
+  - Permettre la création
+  - Permettre la suppression
+  - Permettre la modification de l'image
+  - Permettre la personalisation du nom
+    - ../ et compagnie à vérifier

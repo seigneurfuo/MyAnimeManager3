@@ -7,6 +7,8 @@ from pathlib import Path
 from PyQt5.QtWidgets import QApplication
 
 import default_settings
+import profiles
+from ui.dialogs.profiles_manage import ProfilesManage
 
 from ui.main_window import MainWindow
 from database_manager import load_or_create_database
@@ -24,32 +26,44 @@ class Application(QApplication):
         self.setApplicationVersion(app_version)
 
         self.default_settings = default_settings.DEFAULT_SETTINGS
-        self.profile_path = None
+        self.profile = None
         self.database_path = None
 
         self.load_profile()
         self.load_database()
 
+        display_name = self.tr("Profil: {} - {}").format(self.profile.name, app_name_and_version)
+        self.setApplicationDisplayName(display_name)
+
         self.mainwindow = MainWindow(self)
         self.mainwindow.show()
 
     def load_profile(self):
-        # Creation du profil
-        self.profile_path = os.path.join(Path.home(), ".myanimemanager3")
+        profiles_list = profiles.get_profiles_list()
 
-        if not os.path.exists(self.profile_path):
-            # Création du dossier ./profile/covers qui créer en meme temps le dossier parent ./profile
-            os.makedirs(self.profile_path)
+        # Si pas de profil ou bien plusieurs, on ouvre l'assistant
+        if len(profiles_list) != 1:
+            profiles_manage = ProfilesManage(profiles_list, ProfilesManage.roles.choose)
+            profiles_manage.exec_()
+
+            if profiles_manage.selected_profile == None:
+                self.exit(0)
+            else:
+                self.profile = profiles_manage.selected_profile
+
+        else:
+            # Creation du profil
+            self.profile = profiles_list[0]
 
     def load_database(self):
-        self.database_path = load_or_create_database(self.profile_path)
+        self.database_path = load_or_create_database(self.profile)
 
 
 if __name__ == "__main__":
-    DEBUG = 1
-    if DEBUG == 1:
-        import cgitb
-        cgitb.enable(format='text')
+    # DEBUG = 1
+    # if DEBUG == 1:
+    #     import cgitb
+    #     cgitb.enable(format='text')
 
     application = Application(sys.argv)
     application.exec_()

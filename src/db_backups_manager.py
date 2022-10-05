@@ -2,14 +2,16 @@ import os
 import shutil
 from datetime import datetime
 
+from database_manager import DATABASE_NAME
+
 
 class DBBackupsManager:
     def __init__(self, parent):
         self.parent = parent
         self.backups_limit = self.parent.parent.default_settings["backups_limit"]
-        self.database_pattern = "-database.sqlite3"
+        self.database_pattern = "-{}".format(DATABASE_NAME)
         self.backups_foldername = "db-backups"
-        self.backups_folderpath = os.path.join(self.parent.parent.profile_path, self.backups_foldername)
+        self.backups_folderpath = os.path.join(self.parent.parent.profile.path, self.backups_foldername)
 
     def _create_backup_folder(self):
         if not os.path.isdir(self.backups_folderpath):
@@ -46,9 +48,9 @@ class DBBackupsManager:
 
         date = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
         src = self.parent.parent.database_path
-        database_backups_folderpath = os.path.join(self.parent.parent.profile_path, "db-backups")
+        database_backups_folderpath = os.path.join(self.parent.parent.profile.path, "db-backups")
         backup_type = "auto" if automatic else "manual"
-        dst = os.path.join(database_backups_folderpath, "{}-{}-database.sqlite3".format(date,backup_type))
+        dst = os.path.join(database_backups_folderpath, "{}-{}{}".format(date, backup_type, self.database_pattern))
 
         print("Base de donnée copiée:", src, "->", dst)
         shutil.copy(src, dst)

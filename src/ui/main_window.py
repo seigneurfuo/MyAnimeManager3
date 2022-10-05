@@ -1,7 +1,5 @@
 import os
-import shutil
 import webbrowser
-from datetime import datetime
 
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from PyQt5.uic import loadUi
@@ -9,17 +7,23 @@ from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtCore import QUrl
 
 import database
-import exports
+
+from profiles import get_profiles_list
+
+# Onglets
 from ui.tabs.planning_tab import PlanningTab
 from ui.tabs.full_list_tab import FullListTab
 from ui.tabs.list2_tab import List2
 from ui.tabs.tools_tab import ToolsTab
 
+# Dialogues
 from ui.dialogs.about import About
 from ui.dialogs.collection_problems import CollectionProblems
 from ui.dialogs.database_backups import DatabaseHistory
+from ui.dialogs.profiles_manage import ProfilesManage
 
 from db_backups_manager import DBBackupsManager
+from exports import export_planning_to_csv
 
 
 class MainWindow(QMainWindow):
@@ -27,7 +31,6 @@ class MainWindow(QMainWindow):
         super().__init__(parent=None)
         self.parent = parent
         self.app_dir = parent.app_dir
-        self.profile_path = parent.profile_path
 
         self.tabs = tuple()
 
@@ -71,7 +74,8 @@ class MainWindow(QMainWindow):
         self.about_action.triggered.connect(self.when_menu_action_about_clicked)
         self.bug_report_action.triggered.connect(self.when_menu_action_bug_report_clicked)
         self.check_problems_action.triggered.connect(self.when_menu_action_check_collection_clicked)
-        self.open_database_backups_action.triggered.connect(self.when_menu_action_open_database_history)
+        self.open_database_backups_action.triggered.connect(self.when_menu_action_open_database_backups)
+        self.manage_profiles_action.triggered.connect(self.when_menu_action_manage_profiles)
 
         # ----- Clic sur les onglets -----
         self.tabWidget.currentChanged.connect(self.when_current_tab_changed)
@@ -100,10 +104,10 @@ class MainWindow(QMainWindow):
             self.tabs[tab_index].when_visible()
 
     def when_menu_action_open_profile_clicked(self):
-        QDesktopServices.openUrl(QUrl.fromLocalFile(self.profile_path))
+        QDesktopServices.openUrl(QUrl.fromLocalFile(self.profile.path))
 
     def when_menu_action_planning_export_clicked(self):
-        filepath = exports.export_planning_to_csv(self.parent.profile_path)
+        filepath = export_planning_to_csv(self.parent.profile.path)
 
         # Bouton pour ouvrir le dossier ?
         QMessageBox.information(None, self.tr("Export terminé"), self.tr("Le fichier a été généré ici:") + "\n    " + filepath,
@@ -154,20 +158,24 @@ class MainWindow(QMainWindow):
     def when_menu_action_bug_report_clicked(self):
         webbrowser.open_new("https://github.com/seigneurfuo/MyAnimeManager3/issues/new")
 
-    def when_menu_action_open_database_history(self):
+    def when_menu_action_open_database_backups(self):
         dialog = DatabaseHistory(self)
         dialog.exec_()
-        selected_backup = dialog.selected_backup
 
-        if selected_backup:
+        if dialog.selected_backup:
             QMessageBox.information(
                 None, self.tr("Base de données restaurée"),
                 self.tr("Le logiciel va se fermer. Veuillez le relancer pour que les modifications soient prises en compte"),
                 QMessageBox.Ok)
             self.close()
 
+    def when_menu_action_manage_profiles(self):
+        profiles_list = get_profiles_list()
+        profiles_manage = ProfilesManage(profiles_list, ProfilesManage.roles.manage)
+        profiles_manage.exec_()
+
     def backup_database_before_quit(self):
-        db_backups_manager = DBBackupsManager(self)
+        db_backups_manager = DBBackupsManager(self,)
         db_backups_manager.backup_current_database()
 
     def closeEvent(self, a0):

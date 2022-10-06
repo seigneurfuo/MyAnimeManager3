@@ -47,11 +47,6 @@ def export_qtablewidget(qtablewidget, app_data_folder, output_filename):
     with open(output_filepath, "w", newline="") as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=";")
 
-        # Entetes
-        headers = []
-
-        print()
-
         # Entete
         row_data = []
         for header_index in range(qtablewidget.columnCount()):

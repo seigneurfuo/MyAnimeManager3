@@ -8,8 +8,7 @@ from PyQt5.uic import loadUi
 
 from peewee import __version__ as peewee_version
 
-import common
-
+from common import app_name, app_version
 
 class About(QDialog):
     def __init__(self, parent):
@@ -17,7 +16,10 @@ class About(QDialog):
         self.parent = parent
 
         self.logo_clicks = 0
-        self.logo_data = ["heart.png", "user.png"]
+        self.icons_path = os.path.join(os.path.dirname(__file__), "../../resources/icons")
+        self.logo_data = [icon for icon in os.listdir(self.icons_path)
+                                          if os.path.isfile(os.path.join(self.icons_path, icon))
+                                          and icon.endswith(".png")]
 
         self.init_ui()
         self.init_events()
@@ -32,7 +34,8 @@ class About(QDialog):
         self.logo.mousePressEvent = self.when_logo_clicked
 
     def fill_data(self):
-        fields = [(self.application_version, common.app_version),
+        fields = [(self.application_name, app_name),
+                  (self.application_version, app_version),
                   (self.python_version, python_version()),
                   (self.qt_version, QT_VERSION_STR),
                   (self.pyqt_version, PYQT_VERSION_STR),
@@ -42,12 +45,10 @@ class About(QDialog):
             field.setText(value)
 
     def when_logo_clicked(self, event):
-
-        pixmap = os.path.join(os.path.dirname(__file__), "../../resources/icons/", self.logo_data[self.logo_clicks])
+        pixmap = os.path.join(os.path.dirname(__file__), self.icons_path, self.logo_data[self.logo_clicks])
         self.logo.setPixmap(QPixmap(pixmap))
 
-        if self.logo_clicks == 1:
+        if self.logo_clicks == len(self.logo_data) - 1:
             self.logo_clicks = 0
         else:
             self.logo_clicks += 1
-

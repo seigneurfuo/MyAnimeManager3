@@ -32,7 +32,7 @@ class Application(QApplication):
         self.load_profile()
         self.load_database()
 
-        display_name = self.tr("Profil: {} - {}").format(self.profile.name, app_name_and_version)
+        display_name = self.tr("{} - Profil: {}").format(app_name_and_version, self.profile.name)
         self.setApplicationDisplayName(display_name)
 
         self.mainwindow = MainWindow(self)

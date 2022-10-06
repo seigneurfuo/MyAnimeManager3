@@ -7,13 +7,13 @@ from pathlib import Path
 from PyQt5.QtWidgets import QApplication
 
 import default_settings
-import profiles
+
 from ui.dialogs.profiles_manage import ProfilesManage
 
 from ui.main_window import MainWindow
 from database_manager import load_or_create_database
-from common import app_name, app_version, app_description, app_name_and_version
-
+from profiles import Profiles
+from common import app_name, app_version, app_description, app_name_and_version, APPLICATION_DATA_PATH, PROFILES_PATH
 
 class Application(QApplication):
     def __init__(self, args):
@@ -39,15 +39,21 @@ class Application(QApplication):
         self.mainwindow.show()
 
     def load_profile(self):
-        profiles_list = profiles.get_profiles_list()
+        # Creation des dossiers de l'applications
+        if not os.path.isdir(APPLICATION_DATA_PATH):
+            os.makedirs(APPLICATION_DATA_PATH)
+            os.makedirs(PROFILES_PATH)
+            return None
+
+        profiles_list = Profiles.get_profiles_list()
 
         # Si pas de profil ou bien plusieurs, on ouvre l'assistant
         if len(profiles_list) != 1:
-            profiles_manage = ProfilesManage(profiles_list, ProfilesManage.roles.choose)
+            profiles_manage = ProfilesManage(ProfilesManage.roles.choose, None)
             profiles_manage.exec_()
 
             if profiles_manage.selected_profile == None:
-                self.exit(0)
+                exit(0)
             else:
                 self.profile = profiles_manage.selected_profile
 
@@ -60,10 +66,10 @@ class Application(QApplication):
 
 
 if __name__ == "__main__":
-    # DEBUG = 1
-    # if DEBUG == 1:
-    #     import cgitb
-    #     cgitb.enable(format='text')
+    DEBUG = 1
+    if DEBUG == 1:
+        import cgitb
+        cgitb.enable(format='text')
 
     application = Application(sys.argv)
     application.exec_()

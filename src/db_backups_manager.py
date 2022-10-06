@@ -33,14 +33,11 @@ class DBBackupsManager:
     def _remove_old_backups(self):
         backups = self.get_dbs_list(filter="auto") # Ne supprime que les sauvegardes automatiques
         if len(backups) >= self.backups_limit:
-            print("Supression des vieilles sauvegardes")
-
             nb_backups_to_delete = len(backups) - 10
             backups_to_remove = backups[:nb_backups_to_delete]
 
             for backup in backups_to_remove:
                 if os.path.isfile(backup):
-                    print("    ", backup)
                     os.remove(backup)
 
     def backup_current_database(self, automatic=True):

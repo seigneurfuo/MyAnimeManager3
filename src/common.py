@@ -13,6 +13,7 @@ app_description = "Un gestionnaire de séries multiplateforme écrit en Python3 
 app_name_and_version = "{} - {}".format(app_name, app_version)
 
 APPLICATION_DATA_PATH = os.path.join(Path.home(), ".myanimemanager3")
+PROFILES_PATH = os.path.join(APPLICATION_DATA_PATH, "profiles")
 
 SEASONS_STATES = [
     {"name": "Indéfinie", "icon": "question.png"},

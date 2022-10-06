@@ -4,9 +4,8 @@ import database
 
 DATABASE_NAME = "database.sqlite3"
 
-
-def load_or_create_database(profile_path):
-    database_path = os.path.join(profile_path, DATABASE_NAME)
+def load_or_create_database(profile):
+    database_path = os.path.join(profile.path, DATABASE_NAME)
     print("Database path:", database_path)
 
     # Génération des tables
@@ -18,7 +17,7 @@ def load_or_create_database(profile_path):
 
     else:
         database.database.init(database_path)
-        populate_tables() # FIXME: A supprimer
+        populate_tables() # On laisse ça si MAJ
 
     return database_path
 

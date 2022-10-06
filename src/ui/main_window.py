@@ -8,7 +8,7 @@ from PyQt5.QtCore import QUrl
 
 import database
 
-from profiles import get_profiles_list
+from profiles import Profiles
 
 # Onglets
 from ui.tabs.planning_tab import PlanningTab
@@ -80,9 +80,6 @@ class MainWindow(QMainWindow):
         # ----- Clic sur les onglets -----
         self.tabWidget.currentChanged.connect(self.when_current_tab_changed)
 
-        # Affichage de l'emplacement des données de l'utilisateur
-        # self.statusbar.showMessage(self.tr("Données utilisateur: {}".format(self.app_dir)))
-
     # TODO: evenement lors du click sur un onglet
 
     # print(self.parent_qapplication.profile.get_series())
@@ -104,7 +101,7 @@ class MainWindow(QMainWindow):
             self.tabs[tab_index].when_visible()
 
     def when_menu_action_open_profile_clicked(self):
-        QDesktopServices.openUrl(QUrl.fromLocalFile(self.profile.path))
+        QDesktopServices.openUrl(QUrl.fromLocalFile(self.parent.profile.path))
 
     def when_menu_action_planning_export_clicked(self):
         filepath = export_planning_to_csv(self.parent.profile.path)
@@ -170,8 +167,8 @@ class MainWindow(QMainWindow):
             self.close()
 
     def when_menu_action_manage_profiles(self):
-        profiles_list = get_profiles_list()
-        profiles_manage = ProfilesManage(profiles_list, ProfilesManage.roles.manage)
+        profiles_list = Profiles.get_profiles_list()
+        profiles_manage = ProfilesManage(ProfilesManage.roles.manage, self.parent.profile)
         profiles_manage.exec_()
 
     def backup_database_before_quit(self):

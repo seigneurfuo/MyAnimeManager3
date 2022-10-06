@@ -35,7 +35,7 @@
         <x>0</x>
         <y>0</y>
         <width>536</width>
-        <height>260</height>
+        <height>238</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
@@ -57,7 +57,7 @@
      </widget>
     </widget>
    </item>
-   <item row="1" column="0" rowspan="2">
+   <item row="2" column="0" rowspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QPushButton" name="pushButton">
@@ -101,6 +101,13 @@
       </spacer>
      </item>
     </layout>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Profil selectionné: Aucun</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

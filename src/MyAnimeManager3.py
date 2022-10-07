@@ -43,7 +43,6 @@ class Application(QApplication):
         if not os.path.isdir(APPLICATION_DATA_PATH):
             os.makedirs(APPLICATION_DATA_PATH)
             os.makedirs(PROFILES_PATH)
-            return None
 
         profiles_list = Profiles.get_profiles_list()
 

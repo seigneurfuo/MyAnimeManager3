@@ -26,8 +26,10 @@
   - Restaurer / supprimer définitivement
 
 - Profiles
-  - Permettre la création
-  - Permettre la suppression
-  - Permettre la modification de l'image
-  - Permettre la personalisation du nom
+  - Convertion JPG -> PNG
+  - ~~Permettre la création~~
+  - ~~Permettre la suppression~~
+  - ~~Permetre l'ajout d'une image~~
+  - ~~Permettre la modification de l'image~~
+  - ~~Permettre la personalisation du nom~~
     - ../ et compagnie à vérifier

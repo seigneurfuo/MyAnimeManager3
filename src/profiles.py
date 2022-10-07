@@ -5,24 +5,29 @@ from common import PROFILES_PATH
 from database_manager import DATABASE_NAME, load_or_create_database
 
 class Profiles():
-    def __init__(self, path=None, name=None):
-        if name == None:
-            self.path = path
-            self.name = os.path.basename(self.path)
-
-        else:
-            self.name = name
-            self.path = os.path.join(PROFILES_PATH, self.name)
+    def __init__(self, name):
+        self.name = name
+        self.path = os.path.join(PROFILES_PATH, self.name)
+        self.picture_filename = "picture.png"
 
     def __repr__(self):
         return self.path
 
     def create(self):
-        # TODO: Sanitize
+        # TODO: Sanitize (déplacer le contenu de la vérificaiton de la fenetre des profils ici ?
 
-        # Create folder
-        os.makedirs(self.path)
-        load_or_create_database(self.path)
+        # Existe déja
+        if os.path.isdir(self.path):
+            return False
+        else:
+            # Create folder
+            os.makedirs(self.path)
+            load_or_create_database(self)
+
+    def set_picture(self, picture_path):
+        if picture_path and os.path.isfile(picture_path):
+            dst = os.path.join(self.path, self.picture_filename)
+            shutil.copy(picture_path, dst)
 
     def get_picture(self):
         picture_path = os.path.join(self.path, "picture.png")
@@ -32,9 +37,23 @@ class Profiles():
         else:
             return picture_path
 
+    def rename(self, new_name):
+        new_path = os.path.join(PROFILES_PATH, new_name)
+
+        # Le profil existe déja
+        if os.path.isdir(new_path):
+            return False
+        else:
+            os.makedirs(new_path)
+            os.rename(self.path, new_path)
+            self.delete()
+
     def delete(self):
-        if os.path.isdir(self.path):
+        if self.exists():
             shutil.rmtree(self.path, ignore_errors=True)
+
+    def exists(self):
+        return os.path.isdir(self.path)
 
     @staticmethod
     def get_profiles_list():

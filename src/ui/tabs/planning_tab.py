@@ -5,7 +5,8 @@ import os
 
 from PyQt5.QtCore import Qt, QDate, QUrl
 from PyQt5.QtGui import QColor, QDesktopServices, QIcon
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QProgressBar, QMessageBox, QHeaderView
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QProgressBar, QMessageBox, QHeaderView, QDialog, QGridLayout, \
+    QLineEdit, QLabel, QCalendarWidget, QDialogButtonBox
 from PyQt5.uic import loadUi
 
 from ui.widgets.custom_calendar import CustomCalendar
@@ -44,15 +45,14 @@ class PlanningTab(QWidget):
         self.show_view_history_button.clicked.connect(self.when_show_view_history_button_is_clicked)
         self.date_edit.dateChanged.connect(self.when_date_edit_date_changed)
         self.delete_button.clicked.connect(self.when_delete_button_clicked)
+        self.change_date_button.clicked.connect(self.when_change_date_button_clicked)
 
     def when_visible(self):
         self.update_date_on_widgets()
         self.fill_data()
 
     def fill_data(self):
-        # Coloration des jours sur le calendrier
-        self.planning_calendar.dates = [record.date for record in Planning().select().order_by(Planning.date)]
-
+        self.fill_calendar_dates()
         self.fill_watched_table()
         self.fill_to_watch_table()
 
@@ -68,6 +68,10 @@ class PlanningTab(QWidget):
     def when_date_edit_date_changed(self):
         self.planning_calendar.setSelectedDate(self.date_edit.date())
         self.fill_watched_table()
+
+    def fill_calendar_dates(self):
+        # Coloration des jours sur le calendrier
+        self.planning_calendar.dates = [record.date for record in Planning().select().order_by(Planning.date)]
 
     def fill_watched_table(self):
         """
@@ -253,6 +257,8 @@ class PlanningTab(QWidget):
             self.show_view_history_button.setEnabled(False)
             self.open_folder_button.setEnabled(False)
 
+    # TODO: Update watched table buttons
+
     def when_open_folder_button_clicked(self):
         if self.current_season_id:
             season = Seasons().get(Seasons.id == self.current_season_id)
@@ -270,6 +276,21 @@ class PlanningTab(QWidget):
         if planning_id:
             planning_data = Planning.get(planning_id)
             self.show_delete_watched_episode_window(planning_data)
+
+    def when_change_date_button_clicked(self):
+        current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)
+        planning_id = current_item.data(Qt.UserRole) if current_item else None
+
+        if planning_id:
+            planning_data = Planning.get(planning_id)
+            dialog = ChangeDateDialog(planning_data.date)
+            if dialog.exec_() and dialog.new_date and dialog.new_date != planning_data.date:
+
+                planning_data.date = dialog.new_date
+                planning_data.save()
+
+                self.fill_calendar_dates()
+                self.fill_watched_table()
 
     def show_delete_watched_episode_window(self, planning_data):
         episode_num = planning_data.episode
@@ -305,3 +326,48 @@ class PlanningTab(QWidget):
         elif msg_box.clickedButton() == remove_and_keep_episode_num:
             Planning.get(planning_data.id).delete_instance()
             self.fill_data()
+
+class ChangeDateDialog(QDialog):
+    def __init__(self, original_date):
+        super(ChangeDateDialog, self).__init__()
+
+        self.original_date = original_date
+        self.new_date = None
+
+        self.init_ui()
+        self.init_events()
+
+    def init_ui(self):
+        self.setWindowTitle("title") # TODO:
+
+        layout = QGridLayout()
+
+        self.calendar = QCalendarWidget()
+        self.calendar.setSelectedDate(self.original_date)
+        self.date_label = QLabel(str(self.original_date))
+
+        self.button_box = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+
+        layout.addWidget(self.calendar, 0, 0)
+        layout.addWidget(self.date_label, 0, 1)
+        layout.addWidget(self.button_box, 1, 1)
+
+        self.setLayout(layout)
+
+        self.update_date_label()
+
+    def init_events(self):
+        self.button_box.accepted.connect(self.accept)
+        self.button_box.rejected.connect(self.reject)
+
+    def update_date_label(self):
+        date = self.calendar.selectedDate()
+        date_string = date.toString("dd-MM-yyyy")
+        self.date_label.setText(date_string)
+
+    def accept(self):
+        self.new_date = self.calendar.selectedDate().toPyDate()
+        super(ChangeDateDialog, self).accept()
+
+    def reject(self):
+        super(ChangeDateDialog, self).reject()

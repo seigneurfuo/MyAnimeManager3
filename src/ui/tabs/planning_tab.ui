@@ -153,7 +153,21 @@
         </spacer>
        </item>
        <item>
+        <widget class="QPushButton" name="change_date_button">
+         <property name="text">
+          <string>Modifier la date</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../resources/icons/pencil.png</normaloff>../../resources/icons/pencil.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="delete_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="maximumSize">
           <size>
            <width>91</width>

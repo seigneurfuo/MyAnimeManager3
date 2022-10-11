@@ -12,7 +12,6 @@ Name "MyAnimeManager3"
 ; !undef StdOut
 ; Name "MyApp SVN.${SVNREV}"
 
-
 OutFile "myanimemanager3-${version}-installer-windows.exe"
 
 # Request application privileges for Windows Vista and higher
@@ -44,15 +43,15 @@ Section
     # Copie des fichiers
     File /r "${SRCPATH}\*"
     
-    # define uninstaller name
-    WriteUninstaller "$INSTDIR\uninstall.exe"
+    # Création d'un désinstallateur
+    WriteUninstaller "$INSTDIR\Uninstall.exe"
 
     # Inscription de l'application dans le registre
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\MyAnimeManager3" "DisplayName" "MyAnimeManager3"
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\MyAnimeManager3" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\MyAnimeManager3" "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
     
-    # Racouci dans le menu démarrer
-    CreateShortcut "$SMPROGRAMS\MyAnimeManager3.lnk" "$INSTDIR\MyAnimeManager3.exe"
+    # Racourcis dans le menu démarrer
+    CreateShortcut "$SMPROGRAMS\MyAnimeManager3.lnk" "$INSTDIR\MyAnimeManager3.exe" "$INSTDIR\resources\icon.ico"
 SectionEnd
 
 
@@ -68,7 +67,7 @@ Section "Uninstall"
     Delete "$INSTDIR"
     
     # Delete the uninstaller
-    Delete "$INSTDIR\uninstall.exe"
+    Delete "$INSTDIR\Uninstall.exe"
 
     # Supression du racoucis dans les programmes
     Delete "$SMPROGRAMS\MyAnimeManager3.lnk"

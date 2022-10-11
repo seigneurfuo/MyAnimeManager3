@@ -13,3 +13,5 @@ src/venv/
 
 MyAnimeManager3.spec
 venv/
+packaging/windows/src/
+packaging/windows/bin/

@@ -1,6 +1,6 @@
 @echo off
 
-REM Packaing dans le dossier temporaire
+REM Packaging dans le dossier temporaire
 call packaging\windows\build.bat
 
 REM Création de l'installateur

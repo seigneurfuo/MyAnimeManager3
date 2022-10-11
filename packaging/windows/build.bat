@@ -1,10 +1,9 @@
 @echo off
-REM 2022.06.05
 
 REM Chemin & config
 REM Version TODO: A faire en dynamique
 set PRODUCT=MyAnimeManager3
-set VERSION=2022.06.05
+set VERSION=2022.10.11
 
 set ROOTDIR=packaging\windows
 set SRCDIR=%ROOTDIR%\src
@@ -12,7 +11,17 @@ set BINDIR=%ROOTDIR%\bin
 set DISTDIR=%ROOTDIR%\dist
 
 REM Nettoyage avant compilation
-rmdir /S /Q %DISTDIR%
+if exist %SRCDIR%\ (
+    rmdir /S /Q %SRCDIR%
+)
+
+if exist %BINDIR%\ (
+    rmdir /S /Q %BINDIR%
+)
+
+if exist %DISTDIR%\ (
+    rmdir /S /Q %DISTDIR%
+)
 
 REM Clonage
 if exist .git\ (
@@ -22,11 +31,10 @@ if exist .git\ (
     exit
 )
 
-
-
+REM TODO: Remplacer dynamiquement la version dans le fichier (remplacer le DEV)
 
 REM Build
-pyinstaller %SRCDIR%/src/MyAnimeManager3.py ^
+python -m PyInstaller %SRCDIR%/src/MyAnimeManager3.py ^
 --name %PRODUCT% ^
 --workpath %BINDIR% ^
 --distpath %DISTDIR% ^
@@ -45,7 +53,3 @@ REM xcopy /s /e %ROOTDIR%\%PRODUCT%\src\ui\ %DISTDIR%\ui\
 REM Si export dossier
 xcopy /s /e %SRCDIR%\src\resources\ %DISTDIR%\%PRODUCT%\resources\
 xcopy /s /e %SRCDIR%\src\ui\ %DISTDIR%\%PRODUCT%\ui\
-
-REM Nettoyage après compilation
-rmdir /S /Q %SRCDIR%
-rmdir /S /Q %BINDIR%

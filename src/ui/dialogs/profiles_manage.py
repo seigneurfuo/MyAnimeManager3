@@ -127,10 +127,10 @@ class ProfilesManage(QDialog):
         # Empèche de supprimer le profil en cours
         if self.current_profile and profile.path == self.current_profile.path:
             self.pushButton_2.setEnabled(False)
+            self.pushButton_3.setEnabled(False)
         else:
             self.pushButton_2.setEnabled(True)
-
-        self.pushButton_3.setEnabled(True)
+            self.pushButton_3.setEnabled(True)
 
     def when_create_profile_button_clicked(self):
         profile_edit_dialog = ProfileEditDialog()
@@ -169,7 +169,6 @@ class ProfilesManage(QDialog):
                 self.update_all()
 
     def when_delete_profile_button_clicked(self):
-
         choice = QMessageBox.information(None, self.tr("Supression d'un profil"),
                                          self.tr("Etes vous sûr de vouloir supprimer le profil: {} ?".format(self.selected_profile.name)),
                                          QMessageBox.Yes | QMessageBox.Cancel)

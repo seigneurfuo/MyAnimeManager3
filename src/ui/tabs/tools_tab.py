@@ -42,11 +42,11 @@ class ToolsTab(QWidget):
     def duration_calculation(self):
         self.listWidget.clear()
 
-        episodes_count = self.spinBox.value()
-        episodes_duration = self.spinBox_2.value()
+        episodes_count = self.episodes_count_spinbox.value()
+        episodes_duration = self.episodes_duration_spinbox.value()
 
-        pause_every = self.spinBox_4.value()
-        pause_duration = self.spinBox_3.value()
+        pause_every = self.pauses_every_spinbox.value()
+        pause_duration = self.pauses_duration_spinbox.value()
 
         start_time_string = str(self.timeEdit.dateTime().toString("hh:mm"))
 

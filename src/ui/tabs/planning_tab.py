@@ -315,7 +315,7 @@ class PlanningTab(QWidget):
 
         if msg_box.clickedButton() == remove_and_decrement_episode:
 
-            # FIXME: Mache pas
+            # FIXME: Marche pas
             season = Seasons.get(planning_data.season)
             season.watched_episodes = previous_episode_num
             season.save()
@@ -344,26 +344,36 @@ class ChangeDateDialog(QDialog):
 
         self.calendar = QCalendarWidget()
         self.calendar.setSelectedDate(self.original_date)
-        self.date_label = QLabel(str(self.original_date))
+
+        orignal_date = self.original_date.strftime("%d-%m-%Y")
+        self.date_label_old = QLabel(orignal_date)
+        self.date_label_new = QLabel(orignal_date)
 
         self.button_box = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
 
-        layout.addWidget(self.calendar, 0, 0)
-        layout.addWidget(self.date_label, 0, 1)
-        layout.addWidget(self.button_box, 1, 1)
+        layout.addWidget(self.calendar, 1, 0)
 
+        grid_layout = QGridLayout()
+        grid_layout.addWidget(QLabel(self.tr("Ancienne date:")), 1, 1)
+        grid_layout.addWidget(self.date_label_old, 1, 2)
+        grid_layout.addWidget(QLabel(self.tr("Nouvelle date:")), 2, 1)
+        grid_layout.addWidget(self.date_label_new, 2, 2)
+        layout.addLayout(grid_layout, 1, 1)
+        layout.addWidget(self.button_box, 3, 2)
         self.setLayout(layout)
 
         self.update_date_label()
 
     def init_events(self):
+        self.calendar.selectionChanged.connect(self.update_date_label)
+
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
 
     def update_date_label(self):
         date = self.calendar.selectedDate()
         date_string = date.toString("dd-MM-yyyy")
-        self.date_label.setText(date_string)
+        self.date_label_new.setText(date_string)
 
     def accept(self):
         self.new_date = self.calendar.selectedDate().toPyDate()

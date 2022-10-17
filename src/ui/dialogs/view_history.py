@@ -45,8 +45,5 @@ class ViewHistory(QDialog):
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1, QHeaderView.ResizeToContents)
 
-    def accept(self):
-        super(ViewHistory, self).accept()
-
     def reject(self):
         super(ViewHistory, self).reject()

@@ -5,19 +5,22 @@ from PyQt5.uic import loadUi
 
 
 class ViewHistory(QDialog):
-    def __init__(self, season, rows):
+    def __init__(self, season, serie_episodes, season_episodes):
         super(ViewHistory, self).__init__()
 
         self.season = season
-        self.rows = rows
+        self.serie_episodes = serie_episodes
+        self.season_episodes = season_episodes
 
         self.init_ui()
         self.init_events()
 
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "view_history.ui"), self)
-        # TODO: Title
-        self.setWindowTitle(self.tr("Historique de visionnage") + ": " + self.season.name)
+
+        self.tabWidget.setCurrentIndex(0)
+
+        self.setWindowTitle(self.tr("Historique de visionnage") + ": " + self.season.serie.name)
 
         self.fill_data()
 
@@ -25,25 +28,44 @@ class ViewHistory(QDialog):
         pass
 
     def fill_data(self):
-        row_count = len(self.rows)
-        self.label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
-        self.label_2.setText(self.tr("Nombre de visionnages: ") + str(self.season.view_count))
-        self.tableWidget.setRowCount(row_count)
+        self.fill_season_history()
+        self.fill_serie_history()
 
-        for row_index, row in enumerate(self.rows):
-            columns = [row.date.strftime("%d/%m/%Y"), row.season.name, str(row.episodes)]
+    def fill_serie_history(self):
+        row_count = len(self.serie_episodes)
+        self.serie_label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
+        self.serie_table.setRowCount(row_count)
+
+        for row_index, row in enumerate(self.serie_episodes):
+            columns = [row.date.strftime("%d/%m/%Y"), row.season.name, self.season.type.name, str(row.episodes)]
 
             # FIXME: Ne fonctionne pas quand il y à plusieurs épisodes
             for col_index, value in enumerate(columns):
-                if(col_index == 2) and row.episodes == row.season.episodes:
-                    value = "{} (Fin)".format(value)
-
                 item = QTableWidgetItem(value)
                 item.setToolTip(item.text())
-                self.tableWidget.setItem(row_index, col_index, item)
+                self.serie_table.setItem(row_index, col_index, item)
 
-        self.tableWidget.resizeColumnsToContents()
-        self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1, QHeaderView.ResizeToContents)
+        self.serie_table.resizeColumnsToContents()
+        self.serie_table.horizontalHeader().setSectionResizeMode(self.serie_table.columnCount() - 1,
+                                                                 QHeaderView.ResizeToContents)
+
+    def fill_season_history(self):
+        row_count = len(self.season_episodes)
+        self.season_label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
+        self.season_table.setRowCount(row_count)
+
+        for row_index, row in enumerate(self.season_episodes):
+            columns = [row.date.strftime("%d/%m/%Y"), row.season.name, self.season.type.name, str(row.episodes)]
+
+            # FIXME: Ne fonctionne pas quand il y à plusieurs épisodes
+            for col_index, value in enumerate(columns):
+                item = QTableWidgetItem(value)
+                item.setToolTip(item.text())
+                self.season_table.setItem(row_index, col_index, item)
+
+        self.season_table.resizeColumnsToContents()
+        self.season_table.horizontalHeader().setSectionResizeMode(self.season_table.columnCount() - 1,
+                                                                 QHeaderView.ResizeToContents)
 
     def reject(self):
         super(ViewHistory, self).reject()

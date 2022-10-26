@@ -27,7 +27,7 @@
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
-       <string>Saison</string>
+       <string>Saison sélectionnée</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>

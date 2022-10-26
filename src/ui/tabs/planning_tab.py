@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QProgressBar, QMessageBox
     QLineEdit, QLabel, QCalendarWidget, QDialogButtonBox
 from PyQt5.uic import loadUi
 
+from ui.dialogs.edit_date import EditDateDialog
 from ui.widgets.custom_calendar import CustomCalendar
 from database import Planning, Seasons
 from common import display_view_history_dialog
@@ -30,6 +31,8 @@ class PlanningTab(QWidget):
         loadUi(os.path.join(os.path.dirname(__file__), "planning_tab.ui"), self)
 
         self.planning_calendar = CustomCalendar()
+        self.planning_calendar.setGridVisible(True)
+        self.planning_calendar.setVerticalHeaderFormat(QCalendarWidget.NoVerticalHeader)
         self.planning_calendar.setCellsBackgroundColor(QColor(115, 210, 22, 50))
         self.verticalLayout.insertWidget(1, self.planning_calendar)
 
@@ -283,12 +286,8 @@ class PlanningTab(QWidget):
 
         if planning_id:
             planning_data = Planning.get(planning_id)
-            dialog = ChangeDateDialog(planning_data.date)
-            if dialog.exec_() and dialog.new_date and dialog.new_date != planning_data.date:
-
-                planning_data.date = dialog.new_date
-                planning_data.save()
-
+            dialog = EditDateDialog(planning_data)
+            if dialog.exec_():
                 self.fill_calendar_dates()
                 self.fill_watched_table()
 
@@ -326,58 +325,3 @@ class PlanningTab(QWidget):
         elif msg_box.clickedButton() == remove_and_keep_episode_num:
             Planning.get(planning_data.id).delete_instance()
             self.fill_data()
-
-class ChangeDateDialog(QDialog):
-    def __init__(self, original_date):
-        super(ChangeDateDialog, self).__init__()
-
-        self.original_date = original_date
-        self.new_date = None
-
-        self.init_ui()
-        self.init_events()
-
-    def init_ui(self):
-        self.setWindowTitle("title") # TODO:
-
-        layout = QGridLayout()
-
-        self.calendar = QCalendarWidget()
-        self.calendar.setSelectedDate(self.original_date)
-
-        orignal_date = self.original_date.strftime("%d-%m-%Y")
-        self.date_label_old = QLabel(orignal_date)
-        self.date_label_new = QLabel(orignal_date)
-
-        self.button_box = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
-
-        layout.addWidget(self.calendar, 1, 0)
-
-        grid_layout = QGridLayout()
-        grid_layout.addWidget(QLabel(self.tr("Ancienne date:")), 1, 1)
-        grid_layout.addWidget(self.date_label_old, 1, 2)
-        grid_layout.addWidget(QLabel(self.tr("Nouvelle date:")), 2, 1)
-        grid_layout.addWidget(self.date_label_new, 2, 2)
-        layout.addLayout(grid_layout, 1, 1)
-        layout.addWidget(self.button_box, 3, 2)
-        self.setLayout(layout)
-
-        self.update_date_label()
-
-    def init_events(self):
-        self.calendar.selectionChanged.connect(self.update_date_label)
-
-        self.button_box.accepted.connect(self.accept)
-        self.button_box.rejected.connect(self.reject)
-
-    def update_date_label(self):
-        date = self.calendar.selectedDate()
-        date_string = date.toString("dd-MM-yyyy")
-        self.date_label_new.setText(date_string)
-
-    def accept(self):
-        self.new_date = self.calendar.selectedDate().toPyDate()
-        super(ChangeDateDialog, self).accept()
-
-    def reject(self):
-        super(ChangeDateDialog, self).reject()

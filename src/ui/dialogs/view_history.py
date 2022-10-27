@@ -37,7 +37,9 @@ class ViewHistory(QDialog):
         self.serie_table.setRowCount(row_count)
 
         for row_index, row in enumerate(self.serie_episodes):
-            columns = [row.date.strftime("%d/%m/%Y"), row.season.name, self.season.type.name, str(row.episodes)]
+            friends = ", ".join([friend_planning.friend.name for friend_planning in row.friends])
+            columns = [row.date.strftime("%d/%m/%Y"), row.season.name, self.season.type.name, str(row.episode),
+                       friends]
 
             # FIXME: Ne fonctionne pas quand il y à plusieurs épisodes
             for col_index, value in enumerate(columns):

@@ -135,6 +135,11 @@
          <string>Episode</string>
         </property>
        </column>
+       <column>
+        <property name="text">
+         <string>Vu avec</string>
+        </property>
+       </column>
       </widget>
      </item>
      <item>

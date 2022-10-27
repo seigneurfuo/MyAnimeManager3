@@ -11,7 +11,7 @@ from PyQt5.uic import loadUi
 
 from ui.dialogs.edit_date import EditDateDialog
 from ui.widgets.custom_calendar import CustomCalendar
-from database import Planning, Seasons
+from database import Planning, Seasons, Friends
 from common import display_view_history_dialog
 from common import SEASONS_STATES
 
@@ -74,7 +74,7 @@ class PlanningTab(QWidget):
 
     def fill_calendar_dates(self):
         # Coloration des jours sur le calendrier
-        self.planning_calendar.dates = [record.date for record in Planning().select().order_by(Planning.date)]
+        self.planning_calendar.dates = [record.date for record in Planning().select().distinct().order_by(Planning.date)]
 
     def fill_watched_table(self):
         """
@@ -94,8 +94,10 @@ class PlanningTab(QWidget):
         self.tableWidget_7.setRowCount(row_count)
 
         for row_index, planning_data in enumerate(planning_data_list):
+            friends = ", ".join([friend_planning.friend.name for friend_planning in planning_data.friends])
             columns = ["{} - {}".format(planning_data.serie.sort_id, planning_data.season.sort_id),
-                       planning_data.season.serie.name, planning_data.season.name, str(planning_data.episode)]
+                       planning_data.season.serie.name, planning_data.season.name, str(planning_data.episode),
+                       friends]
 
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
@@ -286,7 +288,8 @@ class PlanningTab(QWidget):
 
         if planning_id:
             planning_data = Planning.get(planning_id)
-            dialog = EditDateDialog(planning_data)
+            full_friends_list = Friends.select()
+            dialog = EditDateDialog(planning_data, full_friends_list)
             if dialog.exec_():
                 self.fill_calendar_dates()
                 self.fill_watched_table()

@@ -32,7 +32,7 @@ class Seasons(BaseModel):
     name = TextField()
     year = IntegerField(null=True)
     airing = BooleanField(null=False, default=True)
-    serie = ForeignKeyField(column_name='serie', field='id', model=Series)
+    serie = ForeignKeyField(column_name='serie', field='id', model=Series, backref="seasons")
     type = ForeignKeyField(column_name='type', field='id', model=SeasonsTypes, null=True)
     studio = IntegerField(index=True, null=True)
     episodes = IntegerField(constraints=[SQL("DEFAULT 0")])
@@ -48,7 +48,7 @@ class Seasons(BaseModel):
 
 class Planning(BaseModel):
     serie = ForeignKeyField(column_name='serie', field='id', model=Series)
-    season = ForeignKeyField(column_name='season', field='id', model=Seasons, null=True)
+    season = ForeignKeyField(column_name='season', field='id', model=Seasons)
     date = DateField()
     episode = IntegerField()
 
@@ -75,3 +75,15 @@ class Tags(BaseModel):
     class Meta:
         table_name = 'Tags'
 
+class Friends(BaseModel):
+    name = TextField()
+
+    class Meta:
+        table_name = 'Friends'
+
+class FriendsPlanning(BaseModel):
+    friend = ForeignKeyField(column_name='friend', field='id', model=Friends, null=True, backref='plannings')
+    planning = ForeignKeyField(column_name='planning', field='id', model=Planning, null=True, backref='friends')
+
+    class Meta:
+        table_name = 'FriendsPlanning'

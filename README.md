@@ -2,7 +2,7 @@
 
 La continuation de MyAnimeManager1 et MyAnimeManager2.
 
-![](docs/imgs/2021-04-04-16-57-23.png)
+![](docs/imgs/2022-10-28-01-43-43.png)
 
 Commencé en 2018.
 
@@ -10,6 +10,12 @@ Commencé en 2018.
 - python
 - python-qt5
 - peewee
+
+## Lancement simple sans instalation
+
+```sh
+python3 src/MyAnimeManager3.py
+```
 
 ## Migration des données de MyAnimeManager2 vers MyAnimeManager3
 Pour migrer depuis la version 2, il est possible d'éxecuter un script qui va reprendre toutes les données et les migrer sur la nouvelle version:

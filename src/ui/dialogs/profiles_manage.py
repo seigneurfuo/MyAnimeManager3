@@ -28,6 +28,7 @@ class ProfilesManage(QDialog):
         self.update_profiles_list()
 
         self.init_ui()
+        self.fill_data()
         self.init_events()
 
     def init_ui(self):
@@ -48,8 +49,6 @@ class ProfilesManage(QDialog):
             title = self.tr("Gestion des profils")
 
         self.setWindowTitle(title)
-
-        self.fill_data()
 
     def init_events(self):
         self.pushButton.clicked.connect(self.when_create_profile_button_clicked)

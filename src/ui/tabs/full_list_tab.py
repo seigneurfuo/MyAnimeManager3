@@ -56,6 +56,8 @@ class FullListTab(QWidget):
         self.refresh_data()
 
     def refresh_data(self):
+        # On vide la liste des recherche
+        self.search_box.clear()
         self.fill_series_combobox()
 
         # TODO: à garder ou pas ?
@@ -179,8 +181,10 @@ class FullListTab(QWidget):
         self.tableWidget.setRowCount(row_count)
 
         for row_index, season in enumerate(seasons):
-            columns = [season.sort_id, season.type.name, season.name, season.year, season.episodes,
-                       season.watched_episodes, season.view_count, SEASONS_STATES[season.state]["name"], season.favorite]
+            columns = [season.sort_id, season.name, season.type.name,
+                       season.year if season.year and str(season.year) != "None" else "",
+                       season.episodes, season.view_count, SEASONS_STATES[season.state]["name"],
+                       self.tr("Oui") if season.favorite else self.tr("Non")]
 
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(str(value))
@@ -194,21 +198,6 @@ class FullListTab(QWidget):
             self.when_seasons_list_current_index_changed()
 
     def fill_season_data(self, season):
-        fields = [(self.label_12, str(season.sort_id)),
-                  (self.label_8, season.name),
-                  (self.label_10, str(season.year)),
-                  (self.label_16, str(season.episodes)),
-                  (self.label_17, str(season.watched_episodes)),
-                  (self.label_19, str(season.view_count))]
-
-        for field, value in fields:
-            field.setText(value)
-
-        # Etat
-        season_state = SEASONS_STATES[season.state]
-        self.label_21.setText(season_state["name"])
-        # QIcon(os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"]))
-
         self.label_4.setVisible(season.favorite)
         self.plainTextEdit.setPlainText(season.description)
 
@@ -216,16 +205,7 @@ class FullListTab(QWidget):
         self.open_folder_button.setEnabled(os.path.exists(season.serie.path))
 
     def clear_season_data(self):
-        fields = [self.label_12,
-                  self.label_8,
-                  self.label_10,
-                  self.label_16,
-                  self.label_17,
-                  self.label_19]
-
-        for field in fields:
-            field.clear()
-
+        self.plainTextEdit.clear()
         self.open_folder_button.setEnabled(False)
 
     def when_seasons_list_current_index_changed(self):

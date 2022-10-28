@@ -8,7 +8,7 @@ from PyQt5.QtCore import QDir, QTime
 import os
 
 from database import Seasons
-from utils import duration_calculation
+from utils import get_duration_list
 
 
 class ToolsTab(QWidget):
@@ -40,8 +40,6 @@ class ToolsTab(QWidget):
         self.set_current_time()
 
     def duration_calculation(self):
-        self.listWidget.clear()
-
         episodes_count = self.episodes_count_spinbox.value()
         episodes_duration = self.episodes_duration_spinbox.value()
 
@@ -50,11 +48,21 @@ class ToolsTab(QWidget):
 
         start_time_string = str(self.timeEdit.dateTime().toString("hh:mm"))
 
-        rows = duration_calculation(episodes_count, episodes_duration, pause_every, pause_duration, start_time_string)
+        rows = get_duration_list(episodes_count, episodes_duration, pause_every, pause_duration, start_time_string)
+
+        row_count = len(rows)
+        self.tableWidget_2.setRowCount(row_count)
 
         # TODO: Tablewidget Type: Episode / Pause, Heure début, Heure fin
-        for row in rows:
-            self.listWidget.addItem(QListWidgetItem(row))
+        for row_index, row in enumerate(rows):
+            for col_index, value in enumerate(row):
+                item = QTableWidgetItem(str(value))
+                item.setToolTip(item.text())
+                self.tableWidget_2.setItem(row_index, col_index, item)
+
+        self.tableWidget_2.resizeColumnsToContents()
+        self.tableWidget_2.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
+                                                                 QHeaderView.ResizeToContents)
 
     # def when_spinboxes_values_changed(self):
     #     self.duration_calculation()

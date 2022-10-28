@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>655</width>
+    <width>657</width>
     <height>413</height>
    </rect>
   </property>
@@ -309,7 +309,32 @@
        </layout>
       </item>
       <item>
-       <widget class="QListWidget" name="listWidget"/>
+       <widget class="QTableWidget" name="tableWidget_2">
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SingleSelection</enum>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectRows</enum>
+        </property>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>Action</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Début</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Fin</string>
+         </property>
+        </column>
+       </widget>
       </item>
      </layout>
     </widget>

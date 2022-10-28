@@ -7,16 +7,17 @@ from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import QMessageBox
 
 
-def duration_calculation(episodes_count, duration, pause_every, pause_duration, start):
+def get_duration_list(episodes_count, duration, pause_every, pause_duration, start):
     ret_list = []
     is_pause = True if pause_every > 0 and pause_duration > 0 else False
+    pause_count = 0
 
     start = datetime.strptime(start, "%H:%M")
 
     for episode_num in range(episodes_count):
         end = start + timedelta(minutes=duration)
-        row = "{:02d} - {:02d}:{:02d} -> {:02d}:{:02d}".format(episode_num + 1, start.hour, start.minute, end.hour,
-                                                               end.minute)
+        row = ["Visionnage #{}".format(episode_num + 1), "{:02d}:{:02d}".format(start.hour, start.minute),
+               "{:02d}:{:02d}".format(end.hour,end.minute)]
 
         ret_list.append(row)
 
@@ -25,8 +26,10 @@ def duration_calculation(episodes_count, duration, pause_every, pause_duration, 
 
         # Gestion des pauses - Effectue une pause si episode_num est bien un multiple de pause_every
         if is_pause and (episode_num + 1) % pause_every == 0:
+            pause_count += 1
             end = start + timedelta(minutes=pause_duration)
-            row = "Pause - {:02d}:{:02d} -> {:02d}:{:02d}".format(start.hour, start.minute, end.hour, end.minute)
+            row = ["Pause #{}".format(pause_count), "{:02d}:{:02d}".format(start.hour, start.minute),
+                   "{:02d}:{:02d}".format(end.hour, end.minute)]
             ret_list.append(row)
 
             # Décale la plage
@@ -36,13 +39,14 @@ def duration_calculation(episodes_count, duration, pause_every, pause_duration, 
 
 
 def export_qtablewidget(qtablewidget, app_data_folder, output_filename):
-    print(app_data_folder)
+    # TODO: case à cocher
+
     output_directory = os.path.join(app_data_folder, "exports")
     if not os.path.isdir(output_directory):
         os.makedirs(output_directory)
 
     date = datetime.now().strftime("%Y-%m-%d-%H%M%S")
-    output_filepath = os.path.join(output_directory, "{}-export-{}.csv".format(date, output_filename))
+    output_filepath = os.path.join(output_directory, "export-{}-{}.csv".format(output_filename, date))
 
     with open(output_filepath, "w", newline="") as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=";")

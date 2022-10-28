@@ -5,8 +5,7 @@ import os
 
 from PyQt5.QtCore import Qt, QDate, QUrl
 from PyQt5.QtGui import QColor, QDesktopServices, QIcon
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QProgressBar, QMessageBox, QHeaderView, QDialog, QGridLayout, \
-    QLineEdit, QLabel, QCalendarWidget, QDialogButtonBox
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QProgressBar, QMessageBox, QHeaderView, QCalendarWidget
 from PyQt5.uic import loadUi
 
 from ui.dialogs.edit_date import EditDateDialog
@@ -74,7 +73,7 @@ class PlanningTab(QWidget):
 
     def fill_calendar_dates(self):
         # Coloration des jours sur le calendrier
-        self.planning_calendar.dates = [record.date for record in Planning().select().distinct().order_by(Planning.date)]
+        self.planning_calendar.dates = [record.date for record in Planning().select().group_by(Planning.date).order_by(Planning.date)]
 
     def fill_watched_table(self):
         """
@@ -94,10 +93,10 @@ class PlanningTab(QWidget):
         self.tableWidget_7.setRowCount(row_count)
 
         for row_index, planning_data in enumerate(planning_data_list):
-            friends = ", ".join([friend_planning.friend.name for friend_planning in planning_data.friends])
+            friends = [friend_planning.friend.name for friend_planning in planning_data.friends]
             columns = ["{} - {}".format(planning_data.serie.sort_id, planning_data.season.sort_id),
                        planning_data.season.serie.name, planning_data.season.name, str(planning_data.episode),
-                       friends]
+                       ", ".join(friends)]
 
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)

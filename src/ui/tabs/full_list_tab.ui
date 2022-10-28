@@ -244,6 +244,11 @@
       <string>Favoris</string>
      </property>
     </column>
+    <column>
+     <property name="text">
+      <string>Vu avec</string>
+     </property>
+    </column>
    </widget>
    <widget class="Line" name="line">
     <property name="geometry">

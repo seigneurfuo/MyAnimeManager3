@@ -12,7 +12,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QCheckBox, QHeaderView, QMessageBox
 from PyQt5.uic import loadUi
 
-from database import Series, Seasons
+from database import Series, Seasons, Friends, Planning, FriendsPlanning
 from common import SEASONS_STATES, display_view_history_dialog
 
 
@@ -81,6 +81,7 @@ class List2(QWidget):
 
             for col_index, value in enumerate(columns):
                 # FIXME: Un peut crade
+
                 if col_index == 7:
                     item = QTableWidgetItem(season_state["name"])
                     item.setIcon(
@@ -90,11 +91,12 @@ class List2(QWidget):
                     item = QTableWidgetItem(value)
                     item.setToolTip(item.text())
 
+                item.setData(Qt.UserRole, season.id)
+
                 # Bandeau orangé pour les series avec un numéro temporaire
-                if season.serie.sort_id == 0:
+                if col_index == 0 and season.serie.sort_id == 0:
                     item.setBackground(QColor("#FCC981"))
 
-                item.setData(Qt.UserRole, season.id)
                 self.tableWidget.setItem(row_index, col_index, item)
 
             # En diffusion
@@ -117,11 +119,16 @@ class List2(QWidget):
             favorite_checkbox.setEnabled(False)
             favorite_checkbox.setChecked(season.favorite)
 
-            # Bandeau orangé pour les series avec un numéro temporaire
-            if season.serie.sort_id == 0:
-                favorite_checkbox.setStyleSheet("background-color: #FCC981")
-
             self.tableWidget.setCellWidget(row_index, len(columns) + 2, favorite_checkbox)
+
+            # Amis
+            friends = [friend.name for friend in
+                       Friends.select(Friends.name).where(Seasons.id == season.id).join(FriendsPlanning)
+                       .join(Planning).join(Seasons).group_by(Friends.name)]
+
+            item = QTableWidgetItem(", ".join(friends))
+            item.setToolTip(item.text())
+            self.tableWidget.setItem(row_index, len(columns) + 3, item)
 
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,

@@ -1,6 +1,6 @@
 #!/bin/env python3
 from PyQt5.QtGui import QDesktopServices
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QHeaderView
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt, QUrl
 
@@ -9,7 +9,7 @@ import os
 from ui.dialogs.serie import SerieDialog
 from ui.dialogs.season import SeasonDialog
 from ui.dialogs.deleted_elements import DeletedElements
-from database import database, Series, Seasons, SeasonsTypes
+from database import database, Series, Seasons, SeasonsTypes, FriendsPlanning, Friends, Planning
 from common import display_view_history_dialog, SEASONS_STATES
 
 
@@ -181,16 +181,25 @@ class FullListTab(QWidget):
         self.tableWidget.setRowCount(row_count)
 
         for row_index, season in enumerate(seasons):
+            friends = [friend.name for friend in
+                       Friends.select(Friends.name).where(Seasons.id == season.id).join(FriendsPlanning)
+                       .join(Planning).join(Seasons).group_by(Friends.name)]
+
             columns = [season.sort_id, season.name, season.type.name,
                        season.year if season.year and str(season.year) != "None" else "",
                        season.episodes, season.view_count, SEASONS_STATES[season.state]["name"],
-                       self.tr("Oui") if season.favorite else self.tr("Non")]
+                       self.tr("Oui") if season.favorite else self.tr("Non"), ", ".join(friends)]
 
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(str(value))
                 item.setToolTip(item.text())
                 item.setData(Qt.UserRole, season.id)
                 self.tableWidget.setItem(row_index, col_index, item)
+
+
+        self.tableWidget.resizeColumnsToContents()
+        self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
+                                                                 QHeaderView.ResizeToContents)
 
         # Si on à au moins une série, alors on affiche la première de la liste
         if seasons:

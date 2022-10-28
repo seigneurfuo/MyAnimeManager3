@@ -89,6 +89,11 @@
        <string>Favori</string>
       </property>
      </column>
+     <column>
+      <property name="text">
+       <string>Vu avec</string>
+      </property>
+     </column>
     </widget>
    </item>
    <item row="1" column="0">
@@ -128,6 +133,10 @@
       <widget class="QPushButton" name="pushButton">
        <property name="text">
         <string>Exporter la liste</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../resources/icons/document-export.png</normaloff>../../resources/icons/document-export.png</iconset>
        </property>
       </widget>
      </item>

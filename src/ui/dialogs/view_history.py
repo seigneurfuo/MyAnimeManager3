@@ -3,6 +3,8 @@ import os
 from PyQt5.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
 from PyQt5.uic import loadUi
 
+from database import Planning, Friends, Seasons, FriendsPlanning, Series
+
 
 class ViewHistory(QDialog):
     def __init__(self, season, serie_episodes, season_episodes):
@@ -37,9 +39,13 @@ class ViewHistory(QDialog):
         self.serie_table.setRowCount(row_count)
 
         for row_index, row in enumerate(self.serie_episodes):
-            friends = ", ".join([friend_planning.friend.name for friend_planning in row.friends])
-            columns = [row.date.strftime("%d/%m/%Y"), row.season.name, self.season.type.name, str(row.episode),
-                       friends]
+            # Pas très propre mais fonctionnel
+            friends = [friend.name for friend in
+                       Friends.select(Friends.name).where(Seasons.id == row.season.id).where(Planning.date == row.date) \
+                           .join(FriendsPlanning).join(Planning).join(Seasons).group_by(Friends.name)]
+
+            columns = [row.date.strftime("%d/%m/%Y"), row.season.name, self.season.type.name, row.episodes,
+                       ", ".join(friends)]
 
             # FIXME: Ne fonctionne pas quand il y à plusieurs épisodes
             for col_index, value in enumerate(columns):
@@ -57,7 +63,11 @@ class ViewHistory(QDialog):
         self.season_table.setRowCount(row_count)
 
         for row_index, row in enumerate(self.season_episodes):
-            columns = [row.date.strftime("%d/%m/%Y"), row.season.name, self.season.type.name, str(row.episode)]
+            friends = [friend.name for friend in
+                       Friends.select(Friends.name).where(Seasons.id == row.season.id).where(Planning.date == row.date) \
+                           .join(FriendsPlanning).join(Planning).join(Seasons).group_by(Friends.name)]
+
+            columns = [row.date.strftime("%d/%m/%Y"), row.season.name, self.season.type.name, row.episodes, ", ".join(friends)]
 
             # FIXME: Ne fonctionne pas quand il y à plusieurs épisodes
             for col_index, value in enumerate(columns):

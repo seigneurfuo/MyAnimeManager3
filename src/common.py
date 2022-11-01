@@ -2,7 +2,7 @@
 import os
 from pathlib import Path
 
-from database import Planning, Seasons, Series
+from database import Planning, Seasons, Series, FriendsPlanning
 import peewee
 
 from ui.dialogs.view_history import ViewHistory
@@ -30,9 +30,13 @@ def display_view_history_dialog(season_id):
     episodes = (peewee.fn.GROUP_CONCAT(Planning.episode).python_value(
         lambda s: ", ".join([str(i) for i in (s or '').split(',') if i])))
 
-    # episodes.alias('episodes'))
-    serie_episodes = Planning().select().where(Planning.serie == season.serie.id).order_by(Planning.date, Planning.episode)
-    season_episodes = Planning().select().where(Planning.season == season.id).order_by(Planning.date, Planning.episode)
+    serie_episodes = Planning().select(Planning.date, Planning.season, episodes.alias('episodes')) \
+        .where(Planning.serie == season.serie.id) \
+        .group_by(Planning.date).order_by(Planning.date, Planning.episode)
+
+    season_episodes = Planning().select(Planning.date, Planning.season, episodes.alias('episodes')) \
+        .where(Planning.season == season.id) \
+        .group_by(Planning.date).order_by(Planning.date, Planning.episode)
 
     dialog = ViewHistory(season, serie_episodes, season_episodes)
     dialog.exec_()

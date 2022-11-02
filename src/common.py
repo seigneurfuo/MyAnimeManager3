@@ -2,7 +2,7 @@
 import os
 from pathlib import Path
 
-from database import Planning, Seasons, Series, FriendsPlanning
+from database import Planning, Seasons
 import peewee
 
 from ui.dialogs.view_history import ViewHistoryDialog

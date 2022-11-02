@@ -3,7 +3,6 @@
 import os
 from datetime import datetime
 
-import peewee
 from PyQt5.QtGui import QIcon, QColor
 
 import utils

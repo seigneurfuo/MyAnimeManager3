@@ -1,10 +1,8 @@
 import os
-from pathlib import Path
 
 from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtWidgets import QDialog, QPushButton, QToolButton, QLabel, QInputDialog, QLineEdit, QGridLayout, \
-    QFileDialog, QDialogButtonBox, QMessageBox
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QDialog, QToolButton, QMessageBox
 from PyQt5.uic import loadUi
 
 from profiles import Profiles

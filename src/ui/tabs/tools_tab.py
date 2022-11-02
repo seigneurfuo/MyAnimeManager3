@@ -1,9 +1,9 @@
 #!/bin/env python3
 import random
 
-from PyQt5.QtWidgets import QWidget, QListWidgetItem, QTableWidgetItem, QHeaderView
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QHeaderView
 from PyQt5.uic import loadUi
-from PyQt5.QtCore import QDir, QTime
+from PyQt5.QtCore import QTime
 
 import os
 

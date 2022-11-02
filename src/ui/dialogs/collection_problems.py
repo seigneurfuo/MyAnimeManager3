@@ -1,6 +1,5 @@
 import os
 
-from PyQt5.QtCore import QDir, Qt
 from PyQt5.QtWidgets import QDialog, QTableWidgetItem
 from PyQt5.uic import loadUi
 

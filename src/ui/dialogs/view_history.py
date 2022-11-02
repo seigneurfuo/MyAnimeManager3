@@ -3,7 +3,7 @@ import os
 from PyQt5.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
 from PyQt5.uic import loadUi
 
-from database import Planning, Friends, Seasons, FriendsPlanning, Series
+from database import Planning, Friends, Seasons, FriendsPlanning
 
 
 class ViewHistoryDialog(QDialog):

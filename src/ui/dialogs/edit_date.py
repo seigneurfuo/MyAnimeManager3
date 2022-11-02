@@ -1,7 +1,7 @@
 import os
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QCalendarWidget, QComboBox, QTableWidgetItem, QHeaderView
+from PyQt5.QtWidgets import QDialog, QCalendarWidget, QTableWidgetItem, QHeaderView
 from PyQt5.uic import loadUi
 
 class EditDateDialog(QDialog):
@@ -93,6 +93,7 @@ class EditDateDialog(QDialog):
             self.planning_data.save()
 
         # TODO: Save
+
 
     def accept(self):
         self.save_data()

@@ -1,4 +1,3 @@
-import datetime
 import os
 
 from PyQt5.QtWidgets import QDialog

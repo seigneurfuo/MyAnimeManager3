@@ -107,7 +107,7 @@ class MainWindow(QMainWindow):
         filepath = export_planning_to_csv(self.parent.profile.path)
 
         # Bouton pour ouvrir le dossier ?
-        QMessageBox.information(None, self.tr("Export terminé"), self.tr("Le fichier a été généré ici:") + "\n    " + filepath,
+        QMessageBox.information(self, self.tr("Export terminé"), self.tr("Le fichier a été généré ici:") + "\n    " + filepath,
                                 QMessageBox.Ok)
 
     # TODO: Changer l'emplacement et metre ça ailleurs dans un autre fichier
@@ -161,7 +161,7 @@ class MainWindow(QMainWindow):
 
         if dialog.selected_backup:
             QMessageBox.information(
-                None, self.tr("Base de données restaurée"),
+                self, self.tr("Base de données restaurée"),
                 self.tr("Le logiciel va se fermer. Veuillez le relancer pour que les modifications soient prises en compte"),
                 QMessageBox.Ok)
             self.close()

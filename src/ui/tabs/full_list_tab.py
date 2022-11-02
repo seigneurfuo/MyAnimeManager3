@@ -9,7 +9,7 @@ import os
 from ui.dialogs.serie import SerieDialog
 from ui.dialogs.season import SeasonDialog
 from ui.dialogs.deleted_elements import DeletedElementsDialog
-from database import database, Series, Seasons, SeasonsTypes, FriendsPlanning, Friends, Planning
+from database import Series, Seasons, SeasonsTypes, FriendsPlanning, Friends, Planning
 from common import display_view_history_dialog, SEASONS_STATES
 
 

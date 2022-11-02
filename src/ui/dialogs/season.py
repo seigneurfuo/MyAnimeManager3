@@ -7,7 +7,7 @@ from PyQt5.uic import loadUi
 
 class SeasonDialog(QDialog):
     def __init__(self, season, serie, seasons_types):
-        super(SeasonDialog, self).__init__()
+        super().__init__()
 
         self.season = season
         self.serie = serie
@@ -81,7 +81,7 @@ class SeasonDialog(QDialog):
 
     def accept(self):
         self.save_data()
-        super(SeasonDialog, self).accept()
+        super().accept()
 
     def reject(self):
-        super(SeasonDialog, self).reject()
+        super().reject()

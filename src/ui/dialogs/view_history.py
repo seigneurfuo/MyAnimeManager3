@@ -8,7 +8,7 @@ from database import Planning, Friends, Seasons, FriendsPlanning, Series
 
 class ViewHistory(QDialog):
     def __init__(self, season, serie_episodes, season_episodes):
-        super(ViewHistory, self).__init__()
+        super().__init__()
 
         self.season = season
         self.serie_episodes = serie_episodes
@@ -80,4 +80,4 @@ class ViewHistory(QDialog):
                                                                  QHeaderView.ResizeToContents)
 
     def reject(self):
-        super(ViewHistory, self).reject()
+        super().reject()

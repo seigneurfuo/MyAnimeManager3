@@ -10,7 +10,7 @@ from db_backups_manager import DBBackupsManager
 
 class DatabaseHistory(QDialog):
     def __init__(self, parent):
-        super(DatabaseHistory, self).__init__()
+        super().__init__()
         self.parent = parent
 
         self.db_backups = []
@@ -95,4 +95,4 @@ class DatabaseHistory(QDialog):
 
 
     def reject(self):
-        super(DatabaseHistory, self).reject()
+        super().reject()

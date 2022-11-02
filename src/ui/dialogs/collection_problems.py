@@ -7,7 +7,7 @@ from PyQt5.uic import loadUi
 
 class CollectionProblems(QDialog):
     def __init__(self, messages):
-        super(CollectionProblems, self).__init__()
+        super().__init__()
 
         self.messages = messages
 
@@ -34,7 +34,7 @@ class CollectionProblems(QDialog):
             self.tableWidget.setItem(row_index, 0, item)
 
     def accept(self):
-        super(CollectionProblems, self).accept()
+        super().accept()
 
     def reject(self):
-        super(CollectionProblems, self).reject()
+        super().reject()

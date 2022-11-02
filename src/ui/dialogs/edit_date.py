@@ -6,7 +6,7 @@ from PyQt5.uic import loadUi
 
 class EditDateDialog(QDialog):
     def __init__(self, planning_data, full_friends_list):
-        super(EditDateDialog, self).__init__()
+        super().__init__()
 
         self.planning_data = planning_data
         self.full_friends_list = full_friends_list
@@ -96,7 +96,7 @@ class EditDateDialog(QDialog):
 
     def accept(self):
         self.save_data()
-        super(EditDateDialog, self).accept()
+        super().accept()
 
     def reject(self):
-        super(EditDateDialog, self).reject()
+        super().reject()

@@ -6,7 +6,7 @@ from PyQt5.uic import loadUi
 
 class SerieDialog(QDialog):
     def __init__(self, serie):
-        super(SerieDialog, self).__init__()
+        super().__init__()
 
         self.serie = serie
 
@@ -48,7 +48,7 @@ class SerieDialog(QDialog):
 
     def accept(self):
         self.save_data()
-        super(SerieDialog, self).accept()
+        super().accept()
 
     def reject(self):
-        super(SerieDialog, self).reject()
+        super().reject()

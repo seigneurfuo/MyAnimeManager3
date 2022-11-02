@@ -16,7 +16,7 @@ class ProfilesManage(QDialog):
         choose = 1
 
     def __init__(self, role, current_profile):
-        super(ProfilesManage, self).__init__()
+        super().__init__()
 
         self.role = role
         self.current_profile = current_profile
@@ -178,7 +178,7 @@ class ProfilesManage(QDialog):
 
 class ProfileEditDialog(QDialog):
     def __init__(self, profile=None):
-        super(ProfileEditDialog, self).__init__()
+        super().__init__()
 
         self.profile = profile
         self.profile_name = None
@@ -246,7 +246,7 @@ class ProfileEditDialog(QDialog):
         self.profile_picture.setPixmap(resized_pixmap)
 
     def accept(self):
-        super(ProfileEditDialog, self).accept()
+        super().accept()
 
         profile_name = self.profile_name_entry.text().strip()
 
@@ -258,4 +258,4 @@ class ProfileEditDialog(QDialog):
         self.profile_name = profile_name
 
     def reject(self):
-        super(ProfileEditDialog, self).reject()
+        super().reject()

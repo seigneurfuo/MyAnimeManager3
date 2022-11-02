@@ -7,7 +7,7 @@ from PyQt5.uic import loadUi
 
 class DeletedElements(QDialog):
     def __init__(self, deleted_series, deleted_seasons):
-        super(DeletedElements, self).__init__()
+        super().__init__()
 
         self.deleted_series = deleted_series
         self.deleted_seasons = deleted_seasons
@@ -61,7 +61,7 @@ class DeletedElements(QDialog):
 
     def accept(self):
         self.get_checked_for_restoration()
-        super(DeletedElements, self).accept()
+        super().accept()
 
     def reject(self):
-        super(DeletedElements, self).reject()
+        super().reject()

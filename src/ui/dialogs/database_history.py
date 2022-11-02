@@ -8,7 +8,7 @@ from PyQt5.uic import loadUi
 from db_backups_manager import DBBackupsManager
 
 
-class DatabaseHistory(QDialog):
+class DatabaseHistoryDialog(QDialog):
     def __init__(self, parent):
         super().__init__()
         self.parent = parent
@@ -21,7 +21,7 @@ class DatabaseHistory(QDialog):
         self.init_events()
 
     def init_ui(self):
-        loadUi(os.path.join(self.folderpath, "database_backups.ui"), self)
+        loadUi(os.path.join(self.folderpath, "database_history.ui"), self)
         # self.setWindowTitle(self.serie.name)
 
         self.fill_data()

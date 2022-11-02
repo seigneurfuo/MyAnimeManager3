@@ -44,7 +44,7 @@ class PlanningTab(QWidget):
         self.checkBox_4.clicked.connect(self.when_checkBox_4_clicked)
         self.add_to_watched_list_button.clicked.connect(self.when_add_to_watched_list_button_clicked)
         self.open_folder_button.clicked.connect(self.when_open_folder_button_clicked)
-        self.show_view_history_button.clicked.connect(self.when_show_view_history_button_is_clicked)
+        self.show_view_history_button.clicked.connect(self.when_show_view_history_button_clicked)
         self.date_edit.dateChanged.connect(self.when_date_edit_date_changed)
         self.delete_button.clicked.connect(self.when_delete_button_clicked)
         self.change_date_button.clicked.connect(self.when_change_date_button_clicked)
@@ -269,7 +269,7 @@ class PlanningTab(QWidget):
             if os.path.exists(season.serie.path):
                 QDesktopServices.openUrl(QUrl.fromLocalFile(season.serie.path))
 
-    def when_show_view_history_button_is_clicked(self):
+    def when_show_view_history_button_clicked(self):
         if self.current_season_id:
             display_view_history_dialog(self.current_season_id)
 

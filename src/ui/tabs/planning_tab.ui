@@ -14,213 +14,169 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="1">
-    <layout class="QVBoxLayout" name="verticalLayout_17">
+   <item row="0" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_44">
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QLabel" name="label_81">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Episodes vus pour cette date:</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QDateEdit" name="date_edit"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="today_button">
+           <property name="maximumSize">
+            <size>
+             <width>101</width>
+             <height>27</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Aujourd'hui</string>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>../../resources/icons/calendar.png</normaloff>../../resources/icons/calendar.png</iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_17">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_44">
+         <item>
+          <widget class="QLabel" name="label_81">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Episodes vus pour cette date:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_82">
+           <property name="minimumSize">
+            <size>
+             <width>221</width>
+             <height>18</height>
+            </size>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </item>
        <item>
-        <widget class="QLabel" name="label_82">
+        <widget class="QTableWidget" name="tableWidget_7">
          <property name="minimumSize">
           <size>
-           <width>221</width>
-           <height>18</height>
+           <width>499</width>
+           <height>126</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
          </property>
          <property name="layoutDirection">
           <enum>Qt::LeftToRight</enum>
          </property>
-         <property name="text">
-          <string>TextLabel</string>
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
          </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
+         <property name="rowCount">
+          <number>0</number>
          </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="QTableWidget" name="tableWidget_7">
-       <property name="minimumSize">
-        <size>
-         <width>499</width>
-         <height>126</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
-       </property>
-       <property name="editTriggers">
-        <set>QAbstractItemView::NoEditTriggers</set>
-       </property>
-       <property name="selectionMode">
-        <enum>QAbstractItemView::SingleSelection</enum>
-       </property>
-       <property name="selectionBehavior">
-        <enum>QAbstractItemView::SelectRows</enum>
-       </property>
-       <property name="rowCount">
-        <number>0</number>
-       </property>
-       <attribute name="horizontalHeaderDefaultSectionSize">
-        <number>100</number>
-       </attribute>
-       <attribute name="horizontalHeaderHighlightSections">
-        <bool>true</bool>
-       </attribute>
-       <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-        <bool>false</bool>
-       </attribute>
-       <attribute name="horizontalHeaderStretchLastSection">
-        <bool>true</bool>
-       </attribute>
-       <attribute name="verticalHeaderVisible">
-        <bool>false</bool>
-       </attribute>
-       <attribute name="verticalHeaderMinimumSectionSize">
-        <number>20</number>
-       </attribute>
-       <attribute name="verticalHeaderDefaultSectionSize">
-        <number>20</number>
-       </attribute>
-       <column>
-        <property name="text">
-         <string>Ids</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Série</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Saison</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Episode</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Vu avec</string>
-        </property>
-       </column>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_45">
-       <item>
-        <spacer name="horizontalSpacer_17">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="change_date_button">
-         <property name="text">
-          <string>Modifier la date</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../../resources/icons/pencil.png</normaloff>../../resources/icons/pencil.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="delete_button">
-         <property name="enabled">
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>100</number>
+         </attribute>
+         <attribute name="horizontalHeaderHighlightSections">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
           <bool>false</bool>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>91</width>
-           <height>31</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Retirer</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../../resources/icons/minus.png</normaloff>../../resources/icons/minus.png</iconset>
-         </property>
+         </attribute>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="verticalHeaderMinimumSectionSize">
+          <number>20</number>
+         </attribute>
+         <attribute name="verticalHeaderDefaultSectionSize">
+          <number>20</number>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>Ids</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Série</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Saison</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Episode</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Vu avec</string>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>
      </item>
     </layout>
    </item>
-   <item row="0" column="0">
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QDateEdit" name="date_edit"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="today_button">
-         <property name="maximumSize">
-          <size>
-           <width>101</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Aujourd'hui</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../../resources/icons/calendar.png</normaloff>../../resources/icons/calendar.png</iconset>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </item>
-   <item row="1" column="0" colspan="2">
+   <item row="2" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_16">
      <item>
       <widget class="QLabel" name="label_80">
@@ -367,6 +323,54 @@
         </widget>
        </item>
       </layout>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_45">
+     <item>
+      <spacer name="horizontalSpacer_17">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="change_date_button">
+       <property name="text">
+        <string>Modifier la date</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../resources/icons/pencil.png</normaloff>../../resources/icons/pencil.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="delete_button">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>91</width>
+         <height>31</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Retirer</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../resources/icons/minus.png</normaloff>../../resources/icons/minus.png</iconset>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

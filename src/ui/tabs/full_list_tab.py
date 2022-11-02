@@ -92,11 +92,22 @@ class FullListTab(QWidget):
             self.fill_serie_data(serie)
             self.fill_season_list(serie)
 
+        else:
+            self.current_season_id = 0
+            self.clear_serie_data()
+            self.tableWidget.setRowCount(0)
+
     def fill_serie_data(self, serie):
         fields = [(self.label_3, serie.name)]
 
         for field, value in fields:
             field.setText(value)
+
+    def clear_serie_data(self):
+        fields = [self.label_3, self.label_2]
+
+        for field in fields:
+            field.clear()
 
     def when_add_serie_button_clicked(self):
         serie = Series()

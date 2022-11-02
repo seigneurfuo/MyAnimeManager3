@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QDialog, QTableWidgetItem, QHeaderView, QCheckBox
 from PyQt5.uic import loadUi
 
 
-class DeletedElements(QDialog):
+class DeletedElementsDialog(QDialog):
     def __init__(self, deleted_series, deleted_seasons):
         super().__init__()
 

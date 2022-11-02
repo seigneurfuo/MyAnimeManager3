@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QDialog, QTableWidgetItem
 from PyQt5.uic import loadUi
 
 
-class CollectionProblems(QDialog):
+class CollectionProblemsDialog(QDialog):
     def __init__(self, messages):
         super().__init__()
 

@@ -17,10 +17,10 @@ from ui.tabs.list2_tab import List2
 from ui.tabs.tools_tab import ToolsTab
 
 # Dialogues
-from ui.dialogs.about import About
-from ui.dialogs.collection_problems import CollectionProblems
-from ui.dialogs.database_backups import DatabaseHistory
-from ui.dialogs.profiles_manage import ProfilesManage
+from ui.dialogs.about import AboutDialog
+from ui.dialogs.collection_problems import CollectionProblemsDialog
+from ui.dialogs.database_history import DatabaseHistoryDialog
+from ui.dialogs.profiles_manage import ProfilesManageDialog
 
 from db_backups_manager import DBBackupsManager
 from exports import export_planning_to_csv
@@ -145,18 +145,18 @@ class MainWindow(QMainWindow):
 
     def when_menu_action_check_collection_clicked(self):
         messages = self.get_collection_problems()
-        dialog = CollectionProblems(messages)
+        dialog = CollectionProblemsDialog(messages)
         dialog.exec_()
 
     def when_menu_action_about_clicked(self):
-        dialog = About(self)
+        dialog = AboutDialog(self)
         dialog.exec_()
 
     def when_menu_action_bug_report_clicked(self):
         webbrowser.open_new("https://github.com/seigneurfuo/MyAnimeManager3/issues/new")
 
     def when_menu_action_open_database_backups(self):
-        dialog = DatabaseHistory(self)
+        dialog = DatabaseHistoryDialog(self)
         dialog.exec_()
 
         if dialog.selected_backup:
@@ -168,7 +168,7 @@ class MainWindow(QMainWindow):
 
     def when_menu_action_manage_profiles(self):
         profiles_list = Profiles.get_profiles_list()
-        profiles_manage = ProfilesManage(ProfilesManage.roles.manage, self.parent.profile)
+        profiles_manage = ProfilesManageDialog(ProfilesManageDialog.roles.manage, self.parent.profile)
         profiles_manage.exec_()
 
     def backup_database_before_quit(self):

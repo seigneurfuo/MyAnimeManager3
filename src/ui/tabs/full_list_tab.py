@@ -8,7 +8,7 @@ import os
 
 from ui.dialogs.serie import SerieDialog
 from ui.dialogs.season import SeasonDialog
-from ui.dialogs.deleted_elements import DeletedElements
+from ui.dialogs.deleted_elements import DeletedElementsDialog
 from database import database, Series, Seasons, SeasonsTypes, FriendsPlanning, Friends, Planning
 from common import display_view_history_dialog, SEASONS_STATES
 
@@ -160,7 +160,7 @@ class FullListTab(QWidget):
         deleted_series = Series().select().where(Series.is_deleted == 1).order_by(Series.sort_id)
         deleted_seasons = Seasons().select().where(Seasons.is_deleted == 1, Series.is_deleted == 0).join(
             Series).order_by(Seasons.sort_id)
-        dialog = DeletedElements(deleted_series, deleted_seasons)
+        dialog = DeletedElementsDialog(deleted_series, deleted_seasons)
 
         # TODO:
         if dialog.exec_():

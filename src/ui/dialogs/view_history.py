@@ -6,7 +6,7 @@ from PyQt5.uic import loadUi
 from database import Planning, Friends, Seasons, FriendsPlanning, Series
 
 
-class ViewHistory(QDialog):
+class ViewHistoryDialog(QDialog):
     def __init__(self, season, serie_episodes, season_episodes):
         super().__init__()
 

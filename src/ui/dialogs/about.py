@@ -10,7 +10,7 @@ from peewee import __version__ as peewee_version
 
 from common import app_name, app_version
 
-class About(QDialog):
+class AboutDialog(QDialog):
     def __init__(self, parent):
         super().__init__()
         self.parent = parent

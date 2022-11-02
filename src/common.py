@@ -5,7 +5,7 @@ from pathlib import Path
 from database import Planning, Seasons, Series, FriendsPlanning
 import peewee
 
-from ui.dialogs.view_history import ViewHistory
+from ui.dialogs.view_history import ViewHistoryDialog
 
 app_name = "MyAnimeManager 3"
 app_version = "DEV"
@@ -38,5 +38,5 @@ def display_view_history_dialog(season_id):
         .where(Planning.season == season.id) \
         .group_by(Planning.date).order_by(Planning.date, Planning.episode)
 
-    dialog = ViewHistory(season, serie_episodes, season_episodes)
+    dialog = ViewHistoryDialog(season, serie_episodes, season_episodes)
     dialog.exec_()

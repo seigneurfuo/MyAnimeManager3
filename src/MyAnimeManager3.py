@@ -8,12 +8,14 @@ from PyQt5.QtWidgets import QApplication
 
 import default_settings
 
-from ui.dialogs.profiles_manage import ProfilesManage
+from ui.dialogs.profiles_manage import ProfilesManageDialog
 
 from ui.main_window import MainWindow
 from database_manager import load_or_create_database
 from profiles import Profiles
 from common import app_name, app_version, app_description, app_name_and_version, APPLICATION_DATA_PATH, PROFILES_PATH
+from ui.themes import get_themes_list
+
 
 class Application(QApplication):
     def __init__(self, args):
@@ -48,7 +50,7 @@ class Application(QApplication):
 
         # Si pas de profil ou bien plusieurs, on ouvre l'assistant
         if len(profiles_list) != 1:
-            profiles_manage = ProfilesManage(ProfilesManage.roles.choose, None)
+            profiles_manage = ProfilesManageDialog(ProfilesManageDialog.roles.choose, None)
             profiles_manage.exec_()
 
             if profiles_manage.selected_profile == None:

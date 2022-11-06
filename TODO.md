@@ -14,12 +14,12 @@
 - ~~Changer le nom des évènements de on en when: self.on_~~
 - Déplacer le chargement des données dans fill_dat aau lieu de les metre dans init_ui()
 - Utiliser Serie.seasons pour récupérer toutes les saison d'une série au lieu de faire: seasons.serie_id == XXX
-- Renommer toutes les classes dialog en Dialog à la fin du nom de la classe
-- Changer les _is_clicked en _clicked
+- ~~Renommer toutes les classes dialog en Dialog à la fin du nom de la classe~~
+- ~~Changer les _is_clicked en _clicked~~
 
 ## Améliorations
 - Voir si dans la table Planning, on peut enlever la colonne serie comme on à déja la saison, on peut faire un season.serie pour récupérer les infos de la série.
-- Retirer la date vue du planning
+- Retirer la date vue du planning <- Pas compris
 - Double cliquer ou bien bouton pour aller directement sur la série / saison dans l'onglet full_list_tab
 - Combiner des refresh et autre dans une fonction fait pour
 

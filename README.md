@@ -26,11 +26,11 @@ python3 src/migrate_myanimemanager_v2_to_v3.py
 
 Pour le moment, la configuration est à faire dans le fichier du script.
 
-## Compilation / Empactage
+## Compilation & Installation
 
 ### Archlinux / Manjaro
 
 ```sh
 make archlinux-build
-make manjaro-build
+make archlinux-install
 ```

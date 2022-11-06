@@ -12,13 +12,13 @@ class EditDateDialog(QDialog):
         self.full_friends_list = full_friends_list
         self.friends = [friend_planning.friend for friend_planning in planning_data.friends]
 
-        loadUi(os.path.join(os.path.dirname(__file__), "edit_date.ui"), self)
-
         self.init_ui()
         self.init_events()
         self.fill_data()
 
     def init_ui(self):
+        loadUi(os.path.join(os.path.dirname(__file__), "edit_date.ui"), self)
+
         self.calendar = QCalendarWidget()
         self.calendar.setGridVisible(True)
         self.calendar.setVerticalHeaderFormat(QCalendarWidget.NoVerticalHeader)

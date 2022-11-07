@@ -279,7 +279,12 @@ class PlanningTab(QWidget):
 
         if planning_id:
             planning_data = Planning.get(planning_id)
-            self.show_delete_watched_episode_window(planning_data)
+            planning_data.delete_instance()
+
+            self.fill_calendar_dates()
+            self.fill_watched_table()
+
+            #self.show_delete_watched_episode_window(planning_data)
 
     def when_change_date_button_clicked(self):
         current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)

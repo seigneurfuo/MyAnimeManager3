@@ -10,7 +10,7 @@ from PyQt5.uic import loadUi
 
 from ui.dialogs.edit_date import EditDateDialog
 from ui.widgets.custom_calendar import CustomCalendar
-from database import Planning, Seasons, Friends
+from database import Planning, Seasons, Friends, FriendsPlanning
 from common import display_view_history_dialog
 from common import SEASONS_STATES
 
@@ -294,7 +294,21 @@ class PlanningTab(QWidget):
             planning_data = Planning.get(planning_id)
             full_friends_list = Friends.select()
             dialog = EditDateDialog(planning_data, full_friends_list)
+
             if dialog.exec_():
+
+                # Supression des amis
+                for friend_id in dialog.friends_to_remove:
+                    FriendsPlanning.get(FriendsPlanning.planning == planning_id and FriendsPlanning.friend == friend_id) \
+                        .delete_instance()
+
+                # Ajout des amis
+                for friend_id in dialog.friends_to_add:
+                    planning_data = FriendsPlanning()
+                    planning_data.friend = friend_id
+                    planning_data.planning = planning_id
+                    planning_data.save()
+
                 self.fill_calendar_dates()
                 self.fill_watched_table()
 

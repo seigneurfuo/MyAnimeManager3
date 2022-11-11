@@ -12,6 +12,9 @@ class EditDateDialog(QDialog):
         self.full_friends_list = full_friends_list
         self.friends = [friend_planning.friend for friend_planning in planning_data.friends]
 
+        self.friends_to_add = []
+        self.friends_to_remove = []
+
         self.init_ui()
         self.init_events()
         self.fill_data()
@@ -54,8 +57,13 @@ class EditDateDialog(QDialog):
     def when_remove_friend_button_clicked(self):
         selected_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
         if selected_item:
-            friend = selected_item.data(Qt.UserRole)
-            self.friends.remove(friend)
+            selected_friend_id = selected_item.data(Qt.UserRole)
+
+            # Suppression de l'id de l'ami selectionné
+            for index, friend in enumerate(self.friends):
+                if friend.id == selected_friend_id:
+                    self.friends.pop(index)
+                    break
 
             self.fill_friends_table()
             self.update_friends_combobox()
@@ -93,7 +101,11 @@ class EditDateDialog(QDialog):
             self.planning_data.save()
 
         # TODO: Save
+        old_friends_ids = [friend_planning.friend.id for friend_planning in self.planning_data.friends]
+        friends_ids = [friend.id for friend in self.friends]
 
+        self.friends_to_remove = [item for item in old_friends_ids if item not in friends_ids]
+        self.friends_to_add = [item for item in friends_ids if item not in old_friends_ids]
 
     def accept(self):
         self.save_data()

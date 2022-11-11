@@ -104,7 +104,7 @@ class MainWindow(QMainWindow):
         QDesktopServices.openUrl(QUrl.fromLocalFile(self.parent.profile.path))
 
     def when_menu_action_planning_export_clicked(self):
-        filepath = export_planning_to_csv(self.parent.profile.path)
+        filepath = export_planning_to_csv(self)
 
         # Bouton pour ouvrir le dossier ?
         QMessageBox.information(self, self.tr("Export terminé"), self.tr("Le fichier a été généré ici:") + "\n    " + filepath,

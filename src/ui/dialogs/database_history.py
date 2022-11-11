@@ -1,3 +1,4 @@
+import datetime
 import os
 
 from PyQt5.QtCore import Qt
@@ -32,7 +33,6 @@ class DatabaseHistoryDialog(QDialog):
         self.pushButton_3.clicked.connect(self.when_remove_button_clicked)
 
     def when_restore_button_clicked(self):
-        # FIXME: Crash
         selected_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
         if selected_item:
             selected_backup = selected_item.data(Qt.UserRole) if selected_item else None
@@ -68,26 +68,30 @@ class DatabaseHistoryDialog(QDialog):
         self.tableWidget.setRowCount(row_count)
 
         for row_index, filepath in enumerate(db_backups):
-            short_filename = os.path.basename(filepath)
 
-            if "-manual-" in short_filename or "-auto-" in short_filename:
-                item = QTableWidgetItem(short_filename)
-                item.setIcon(QIcon(os.path.join(self.folderpath, "resources/icons/blue-document-clock.png")))
-                item.setToolTip(filepath)
-                item.setData(Qt.UserRole, filepath)
-                self.tableWidget.setItem(row_index, 0, item)
+            # Nom
+            filename = os.path.basename(filepath)
+            date_elements = filename.split("-")[:-2]
+            short_filename = "{}/{}/{} à {}h{}m{}s".format(date_elements[2], date_elements[1], date_elements[0], date_elements[3], date_elements[4],  date_elements[5])
 
-                if "-manual-" in short_filename:
-                    state = self.tr("Sauvegarde manuelle")
-                    state_icon = os.path.join(self.folderpath, "../../resources/icons/user.png")
-                else:
-                    state = self.tr("Sauvegarde automatique")
-                    state_icon = os.path.join(self.folderpath, "../../resources/icons/database.png")
+            item = QTableWidgetItem(short_filename)
+            item.setIcon(QIcon(os.path.join(self.folderpath, "resources/icons/blue-document-clock.png")))
+            item.setToolTip(filepath)
+            item.setData(Qt.UserRole, filepath)
+            self.tableWidget.setItem(row_index, 0, item)
 
-                item = QTableWidgetItem(state)
-                item.setIcon(QIcon(state_icon))
-                item.setToolTip(state)
-                self.tableWidget.setItem(row_index, 1, item)
+            # Icone
+            if "-manual-" in short_filename:
+                state = self.tr("Sauvegarde manuelle")
+                state_icon = os.path.join(self.folderpath, "../../resources/icons/user.png")
+            else:
+                state = self.tr("Sauvegarde automatique")
+                state_icon = os.path.join(self.folderpath, "../../resources/icons/database.png")
+
+            item = QTableWidgetItem(state)
+            item.setIcon(QIcon(state_icon))
+            item.setToolTip(state)
+            self.tableWidget.setItem(row_index, 1, item)
 
 
         self.tableWidget.resizeColumnsToContents()

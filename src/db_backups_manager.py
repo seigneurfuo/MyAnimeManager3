@@ -4,7 +4,6 @@ from datetime import datetime
 
 from database_manager import DATABASE_NAME
 
-
 class DBBackupsManager:
     def __init__(self, parent):
         self.parent = parent
@@ -17,7 +16,7 @@ class DBBackupsManager:
         if not os.path.isdir(self.backups_folderpath):
             os.makedirs(self.backups_folderpath)
 
-    def get_dbs_list(self, filter=None):
+    def get_dbs_list(self):
         self._create_backup_folder()
 
         databases_backups = [
@@ -25,13 +24,13 @@ class DBBackupsManager:
             for filename in os.listdir(self.backups_folderpath) \
             if os.path.isfile(os.path.join(self.backups_folderpath, filename)) \
                and os.path.join(self.backups_folderpath, filename).endswith(self.database_pattern)
-               and ((filter == "auto" and "auto" in filename) or not filter)
+               and "-manual-" in filename or "-auto-" in filename
         ]
 
         return sorted(databases_backups)
 
     def _remove_old_backups(self):
-        backups = self.get_dbs_list(filter="auto") # Ne supprime que les sauvegardes automatiques
+        backups = self.get_dbs_list()
         if len(backups) >= self.backups_limit:
             nb_backups_to_delete = len(backups) - 10
             backups_to_remove = backups[:nb_backups_to_delete]

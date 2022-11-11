@@ -37,8 +37,9 @@ class Application(QApplication):
         display_name = self.tr("{} - Profil: {}").format(core.app_name_and_version, self.profile.name)
         self.setApplicationDisplayName(display_name)
 
-        self.mainwindow = MainWindow(self)
-        self.mainwindow.show()
+        mainwindow = MainWindow(self)
+        mainwindow.move(self.desktop().screen().rect().center() - mainwindow.rect().center())
+        mainwindow.show()
 
     def load_profile(self):
         # Creation des dossiers de l'applications

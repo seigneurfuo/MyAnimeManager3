@@ -299,15 +299,15 @@ class PlanningTab(QWidget):
 
                 # Supression des amis
                 for friend_id in dialog.friends_to_remove:
-                    FriendsPlanning.get(FriendsPlanning.planning == planning_id and FriendsPlanning.friend == friend_id) \
-                        .delete_instance()
+                    friend_planning = FriendsPlanning.get(FriendsPlanning.planning == planning_id, FriendsPlanning.friend == friend_id)
+                    friend_planning.delete_instance()
 
                 # Ajout des amis
                 for friend_id in dialog.friends_to_add:
-                    planning_data = FriendsPlanning()
-                    planning_data.friend = friend_id
-                    planning_data.planning = planning_id
-                    planning_data.save()
+                    friend_planning_data = FriendsPlanning()
+                    friend_planning_data.friend = friend_id
+                    friend_planning_data.planning = planning_id
+                    friend_planning_data.save()
 
                 self.fill_calendar_dates()
                 self.fill_watched_table()

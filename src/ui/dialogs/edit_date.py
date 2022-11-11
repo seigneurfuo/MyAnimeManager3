@@ -4,6 +4,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QCalendarWidget, QTableWidgetItem, QHeaderView
 from PyQt5.uic import loadUi
 
+
 class EditDateDialog(QDialog):
     def __init__(self, planning_data, full_friends_list):
         super().__init__()
@@ -81,7 +82,7 @@ class EditDateDialog(QDialog):
 
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
-                                                                   QHeaderView.ResizeToContents)
+                                                                 QHeaderView.ResizeToContents)
 
     def update_friends_combobox(self):
         self.comboBox.clear()

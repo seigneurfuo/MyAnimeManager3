@@ -129,6 +129,7 @@ class List2(QWidget):
             item.setToolTip(item.text())
             self.tableWidget.setItem(row_index, len(columns) + 3, item)
 
+        self.tableWidget.clearSelection()
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
                                                                  QHeaderView.ResizeToContents)

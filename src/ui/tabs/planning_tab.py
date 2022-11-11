@@ -5,7 +5,8 @@ import os
 
 from PyQt5.QtCore import Qt, QDate, QUrl
 from PyQt5.QtGui import QColor, QDesktopServices, QIcon
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QProgressBar, QMessageBox, QHeaderView, QCalendarWidget
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QProgressBar, QMessageBox, QHeaderView, QCalendarWidget, \
+    QTableWidget
 from PyQt5.uic import loadUi
 
 from ui.dialogs.edit_date import EditDateDialog
@@ -36,8 +37,10 @@ class PlanningTab(QWidget):
         self.verticalLayout.insertWidget(1, self.planning_calendar)
 
     def init_events(self):
-        self.tableWidget_6.currentCellChanged.connect(self.when_current_cell_changed)
-        self.tableWidget_6.cellDoubleClicked.connect(self.when_current_cell_double_clicked)
+        self.tableWidget_6.currentCellChanged.connect(self.when_to_watch_table_current_cell_changed)
+        self.tableWidget_6.cellDoubleClicked.connect(self.when_to_watch_table_current_cell_double_clicked)
+
+        self.tableWidget_7.currentCellChanged.connect(self.when_watched_table_current_cell_changed)
 
         self.today_button.clicked.connect(self.when_today_button_clicked)
         self.planning_calendar.selectionChanged.connect(self.when_planning_calender_date_changed)
@@ -81,6 +84,10 @@ class PlanningTab(QWidget):
         :return:
         """
 
+        # Désactivation des boutons associés au tableau
+        self.change_date_button.setEnabled(False)
+        self.delete_button.setEnabled(False)
+
         # Nettoyage du nombre d'épisodes vus pour cette date
         self.label_82.setText("")
 
@@ -104,6 +111,7 @@ class PlanningTab(QWidget):
                 item.setData(Qt.UserRole, planning_data.id)
                 self.tableWidget_7.setItem(row_index, col_index, item)
 
+        self.tableWidget_7.clearSelection()
         self.tableWidget_7.resizeColumnsToContents()
         self.tableWidget_7.horizontalHeader().setSectionResizeMode(self.tableWidget_7.columnCount() - 1,
                                                                    QHeaderView.ResizeToContents)
@@ -184,6 +192,7 @@ class PlanningTab(QWidget):
 
             self.tableWidget_6.setCellWidget(col_index, 7, progress_bar)
 
+        #self.tableWidget_6.clearSelection() # On ne le laisse pas car ça peut etre utile pour valider plusieurs fois des épisodes d'une même saison à la suite
         self.tableWidget_6.resizeColumnsToContents()
         self.tableWidget_6.horizontalHeader().setSectionResizeMode(self.tableWidget_6.columnCount() - 1,
                                                                    QHeaderView.ResizeToContents)
@@ -207,8 +216,13 @@ class PlanningTab(QWidget):
     def when_add_to_watched_list_button_clicked(self):
         self.add_to_watched_list()
 
-    def when_current_cell_double_clicked(self):
+    def when_to_watch_table_current_cell_double_clicked(self):
         self.add_to_watched_list()
+
+    def when_watched_table_current_cell_changed(self):
+        is_row_selected = (self.tableWidget_7.item(self.tableWidget_6.currentRow(), 0) != -1)
+        self.change_date_button.setEnabled(is_row_selected)
+        self.delete_button.setEnabled(is_row_selected)
 
     def add_episode_to_planning(self, season_id):
         calendar_date = self.planning_calendar.selectedDate().toPyDate()
@@ -237,7 +251,7 @@ class PlanningTab(QWidget):
     def when_checkBox_4_clicked(self):
         self.fill_to_watch_table()
 
-    def when_current_cell_changed(self):
+    def when_to_watch_table_current_cell_changed(self):
         self.update_current_season_id()
 
     def update_current_season_id(self):

@@ -60,6 +60,7 @@ class ToolsTab(QWidget):
                 item.setToolTip(item.text())
                 self.tableWidget_2.setItem(row_index, col_index, item)
 
+        self.tableWidget_2.clearSelection()
         self.tableWidget_2.resizeColumnsToContents()
         self.tableWidget_2.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
                                                                  QHeaderView.ResizeToContents)

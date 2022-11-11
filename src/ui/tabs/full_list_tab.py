@@ -61,10 +61,6 @@ class FullListTab(QWidget):
         self.search_box.clear()
         self.fill_series_combobox()
 
-        # TODO: à garder ou pas ?
-        # On force l'affichage de l'information pour la première série au lancement
-        self.when_series_list_current_index_changed()
-
     def fill_series_combobox(self, search_query=None):
         self.comboBox.clear()
 
@@ -208,15 +204,11 @@ class FullListTab(QWidget):
                 item.setData(Qt.UserRole, season.id)
                 self.tableWidget.setItem(row_index, col_index, item)
 
-
+        self.tableWidget.clearSelection()
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
                                                                  QHeaderView.ResizeToContents)
 
-        # Si on à au moins une série, alors on affiche la première de la liste
-        if seasons:
-            self.tableWidget.setCurrentCell(0, 0)
-            self.when_seasons_list_current_index_changed()
 
     def fill_season_data(self, season):
         self.label_4.setVisible(season.favorite)

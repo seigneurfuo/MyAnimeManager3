@@ -1,7 +1,7 @@
 import os
 import shutil
 
-from common import PROFILES_PATH
+from core import PROFILES_PATH
 from database_manager import DATABASE_NAME, load_or_create_database
 
 class Profiles():

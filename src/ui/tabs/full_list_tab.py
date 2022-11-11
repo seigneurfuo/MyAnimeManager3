@@ -6,12 +6,13 @@ from PyQt5.QtCore import Qt, QUrl
 
 import os
 
+from core import SEASONS_STATES
+from common import display_view_history_dialog
+from database import Series, Seasons, SeasonsTypes, FriendsPlanning, Friends, Planning
+
 from ui.dialogs.serie import SerieDialog
 from ui.dialogs.season import SeasonDialog
 from ui.dialogs.deleted_elements import DeletedElementsDialog
-from database import Series, Seasons, SeasonsTypes, FriendsPlanning, Friends, Planning
-from common import display_view_history_dialog, SEASONS_STATES
-
 
 class FullListTab(QWidget):
     def __init__(self, parent):

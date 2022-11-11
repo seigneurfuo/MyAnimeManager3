@@ -8,7 +8,7 @@ from PyQt5.uic import loadUi
 
 from peewee import __version__ as peewee_version
 
-from common import app_name, app_version
+from core import app_name, app_version
 
 class AboutDialog(QDialog):
     def __init__(self, parent):

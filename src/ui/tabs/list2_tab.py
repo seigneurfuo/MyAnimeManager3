@@ -5,14 +5,14 @@ from datetime import datetime
 
 from PyQt5.QtGui import QIcon, QColor
 
-import utils
-
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QCheckBox, QHeaderView, QMessageBox
 from PyQt5.uic import loadUi
 
+import utils
+from core import SEASONS_STATES
+from common import display_view_history_dialog
 from database import Series, Seasons, Friends, Planning, FriendsPlanning
-from common import SEASONS_STATES, display_view_history_dialog
 
 
 class List2(QWidget):

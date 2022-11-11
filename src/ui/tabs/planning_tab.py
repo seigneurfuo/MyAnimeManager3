@@ -11,8 +11,8 @@ from PyQt5.uic import loadUi
 from ui.dialogs.edit_date import EditDateDialog
 from ui.widgets.custom_calendar import CustomCalendar
 from database import Planning, Seasons, Friends, FriendsPlanning
+from core import SEASONS_STATES
 from common import display_view_history_dialog
-from common import SEASONS_STATES
 
 
 class PlanningTab(QWidget):

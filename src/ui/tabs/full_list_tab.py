@@ -114,7 +114,7 @@ class FullListTab(QWidget):
         serie = Series()
         series_dialog = SerieDialog(serie)
 
-        if series_dialog.exec_():
+        if series_dialog.exec():
             self.refresh_data()
             self.set_series_combobox_current_selection(serie.id)
 
@@ -123,7 +123,7 @@ class FullListTab(QWidget):
             serie = Series().get(self.current_serie_id)
 
             series_dialog = SerieDialog(serie)
-            if series_dialog.exec_():
+            if series_dialog.exec():
                 self.refresh_data()
                 self.set_series_combobox_current_selection(serie.id)
 
@@ -144,7 +144,7 @@ class FullListTab(QWidget):
             seasons_types = SeasonsTypes().select()
             season_dialog = SeasonDialog(season, serie, seasons_types)
 
-            if season_dialog.exec_():
+            if season_dialog.exec():
                 self.refresh_data()
                 self.set_series_combobox_current_selection(serie.id)
 
@@ -153,7 +153,7 @@ class FullListTab(QWidget):
             season = Seasons().get(self.current_season_id)
             seasons_types = SeasonsTypes().select()
             season_dialog = SeasonDialog(season, serie=None, seasons_types=seasons_types)
-            if season_dialog.exec_():
+            if season_dialog.exec():
                 self.refresh_data()
                 self.set_series_combobox_current_selection(season.serie.id)
 
@@ -175,7 +175,7 @@ class FullListTab(QWidget):
         dialog = DeletedElementsDialog(deleted_series, deleted_seasons)
 
         # TODO:
-        if dialog.exec_():
+        if dialog.exec():
             if dialog.seasons_to_restore:
                 for season_id in dialog.seasons_to_restore:
                     season = Seasons.get(season_id)

@@ -21,7 +21,7 @@ def display_view_history_dialog(season_id):
         .group_by(Planning.date).order_by(Planning.date, Planning.episode)
 
     dialog = ViewHistoryDialog(season, serie_episodes, season_episodes)
-    dialog.exec_()
+    dialog.exec()
 
 def display_friends_dialog():
     pass

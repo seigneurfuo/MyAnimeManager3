@@ -295,7 +295,7 @@ class PlanningTab(QWidget):
             full_friends_list = Friends.select()
             dialog = EditDateDialog(planning_data, full_friends_list)
 
-            if dialog.exec_():
+            if dialog.exec():
 
                 # Supression des amis
                 for friend_id in dialog.friends_to_remove:
@@ -331,7 +331,7 @@ class PlanningTab(QWidget):
                                        QMessageBox.NoRole)
 
         msg_box.addButton(self.tr("Annuler"), QMessageBox.RejectRole)
-        msg_box.exec_()
+        msg_box.exec()
 
         if msg_box.clickedButton() == remove_and_decrement_episode:
 

@@ -146,18 +146,18 @@ class MainWindow(QMainWindow):
     def when_menu_action_check_collection_clicked(self):
         messages = self.get_collection_problems()
         dialog = CollectionProblemsDialog(messages)
-        dialog.exec_()
+        dialog.exec()
 
     def when_menu_action_about_clicked(self):
         dialog = AboutDialog(self)
-        dialog.exec_()
+        dialog.exec()
 
     def when_menu_action_bug_report_clicked(self):
         webbrowser.open_new("https://github.com/seigneurfuo/MyAnimeManager3/issues/new")
 
     def when_menu_action_open_database_backups(self):
         dialog = DatabaseHistoryDialog(self)
-        dialog.exec_()
+        dialog.exec()
 
         if dialog.selected_backup:
             QMessageBox.information(
@@ -169,7 +169,7 @@ class MainWindow(QMainWindow):
     def when_menu_action_manage_profiles(self):
         profiles_list = Profiles.get_profiles_list()
         profiles_manage = ProfilesManageDialog(ProfilesManageDialog.roles.manage, self.parent.profile)
-        profiles_manage.exec_()
+        profiles_manage.exec()
 
     def backup_database_before_quit(self):
         db_backups_manager = DBBackupsManager(self,)

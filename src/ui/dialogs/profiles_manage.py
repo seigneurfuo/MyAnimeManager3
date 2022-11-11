@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QDialog, QToolButton, QMessageBox
 from PyQt5.uic import loadUi
 
 from profiles import Profiles
+from ui.dialogs.profile_edit import ProfileEditDialog
 
 
 class ProfilesManageDialog(QDialog):
@@ -132,7 +133,7 @@ class ProfilesManageDialog(QDialog):
     def when_create_profile_button_clicked(self):
         profile_edit_dialog = ProfileEditDialog()
 
-        if profile_edit_dialog.exec_():
+        if profile_edit_dialog.exec():
             new_profile_name = profile_edit_dialog.profile_name
             new_profile_picture = profile_edit_dialog.picture_filepath
 
@@ -149,7 +150,7 @@ class ProfilesManageDialog(QDialog):
 
         profile_edit_dialog = ProfileEditDialog(self.selected_profile)
 
-        if profile_edit_dialog.exec_():
+        if profile_edit_dialog.exec():
             new_profile_name = profile_edit_dialog.profile_name
             new_profile_picture = profile_edit_dialog.picture_filepath
             picture_edited = profile_edit_dialog.profile_picture_edited

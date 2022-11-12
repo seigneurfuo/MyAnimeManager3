@@ -60,7 +60,7 @@ class List2(QWidget):
         self.tableWidget.setRowCount(row_count)
 
         for row_index, season in enumerate(data):
-            ids = "{} - {}".format(season.serie.sort_id, season.sort_id)
+            ids = "{:03d} - {}".format(season.serie.sort_id, season.sort_id)
             year = str(season.year) if season.year and str(season.year) != "None" else ""
 
             # Calcul de l'age

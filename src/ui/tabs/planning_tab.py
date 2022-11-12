@@ -101,7 +101,7 @@ class PlanningTab(QWidget):
 
         for row_index, planning_data in enumerate(planning_data_list):
             friends = [friend_planning.friend.name for friend_planning in planning_data.friends]
-            columns = ["{} - {}".format(planning_data.serie.sort_id, planning_data.season.sort_id),
+            columns = ["{:03d} - {}".format(planning_data.serie.sort_id, planning_data.season.sort_id),
                        planning_data.season.serie.name, planning_data.season.name, str(planning_data.episode),
                        ", ".join(friends)]
 
@@ -132,7 +132,7 @@ class PlanningTab(QWidget):
         row_count = len(episodes_to_watch)
         self.tableWidget_6.setRowCount(row_count)
         for col_index, row_data in enumerate(episodes_to_watch):
-            ids = "{} - {}".format(row_data.serie.sort_id, row_data.sort_id)
+            ids = "{:03d} - {}".format(row_data.serie.sort_id, row_data.sort_id)
             item = QTableWidgetItem(ids)
             item.setToolTip(item.text())
             item.setData(Qt.UserRole, row_data.id)

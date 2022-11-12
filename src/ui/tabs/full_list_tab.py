@@ -1,6 +1,6 @@
 #!/bin/env python3
 from PyQt5.QtGui import QDesktopServices
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QHeaderView
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QHeaderView, QCompleter
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt, QUrl
 
@@ -34,8 +34,6 @@ class FullListTab(QWidget):
         self.tableWidget.currentItemChanged.connect(self.when_seasons_list_current_index_changed)
 
         # region ----- Boutons -----
-        self.pushButton_5.clicked.connect(self.when_search_box_clear_button_clicked)
-
         self.add_serie_button.clicked.connect(self.when_add_serie_button_clicked)
         self.edit_serie_button.clicked.connect(self.when_edit_serie_button_clicked)
         self.delete_serie_button.clicked.connect(self.when_delete_serie_button_clicked)  # FIXME:
@@ -48,31 +46,27 @@ class FullListTab(QWidget):
 
         self.open_folder_button.clicked.connect(self.when_open_folder_button_clicked)
         self.show_view_history_button.clicked.connect(self.when_show_view_history_button_clicked)
-
-        self.search_box.textChanged.connect(self.when_search_box_content_changed)
-        self.search_box.returnPressed.connect(self.when_search_box_content_changed)
         # endregion
 
     def when_visible(self):
         self.refresh_data()
 
     def refresh_data(self):
-        # On vide la liste des recherche
-        self.search_box.clear()
         self.fill_series_combobox()
 
-    def fill_series_combobox(self, search_query=None):
+    def fill_series_combobox(self):
         self.comboBox.clear()
-
-        if search_query:
-            series = Series().select().where(Series.is_deleted == 0, Series.name.contains(search_query)).order_by(
-                Series.sort_id)
-        else:
-            series = Series().select().where(Series.is_deleted == 0).order_by(Series.sort_id)
-
+        completer_data = []
+        series = Series().select().where(Series.is_deleted == 0).order_by(Series.sort_id)
         for serie in series:
-            text = "{0} - {1}".format(serie.sort_id, serie.name)
+            text = "{:03d} - {}".format(serie.sort_id, serie.name)
             self.comboBox.addItem(text, userData=serie.id)
+            completer_data.append(text)
+
+        completer = QCompleter(completer_data)
+        completer.setFilterMode(Qt.MatchContains)
+        completer.setCaseSensitivity(Qt.CaseInsensitive)
+        self.comboBox.setCompleter(completer)
 
         self.current_serie_id = self.comboBox.currentData()
 
@@ -236,13 +230,6 @@ class FullListTab(QWidget):
     def when_show_view_history_button_clicked(self):
         if self.current_season_id:
             display_view_history_dialog(self.current_season_id)
-
-    def when_search_box_content_changed(self):
-        search_query = self.search_box.text()
-        self.fill_series_combobox(search_query)
-
-    def when_search_box_clear_button_clicked(self):
-        self.search_box.clear()
 
     def when_open_folder_button_clicked(self):
         if self.current_season_id:

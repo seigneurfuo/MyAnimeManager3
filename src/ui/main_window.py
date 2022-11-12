@@ -104,7 +104,7 @@ class MainWindow(QMainWindow):
         QDesktopServices.openUrl(QUrl.fromLocalFile(self.parent.profile.path))
 
     def when_menu_action_planning_export_clicked(self):
-        filepath = export_planning_to_csv(self)
+        filepath = export_planning_to_csv(self.parent.profile.path)
 
         # Bouton pour ouvrir le dossier ?
         QMessageBox.information(self, self.tr("Export terminé"), self.tr("Le fichier a été généré ici:") + "\n    " + filepath,
@@ -167,7 +167,6 @@ class MainWindow(QMainWindow):
             self.close()
 
     def when_menu_action_manage_profiles(self):
-        profiles_list = Profiles.get_profiles_list()
         profiles_manage = ProfilesManageDialog(ProfilesManageDialog.roles.manage, self.parent.profile)
         profiles_manage.exec()
 

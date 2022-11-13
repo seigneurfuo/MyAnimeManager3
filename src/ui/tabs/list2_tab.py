@@ -51,7 +51,7 @@ class List2(QWidget):
     def fill_data(self):
         today_date_object = datetime.now()
 
-        data = Seasons().select().where(Seasons.is_deleted == 0).join(Series)\
+        data = Seasons().select().where(Seasons.is_deleted == 0).join(Series) \
             .order_by(Seasons.serie.sort_id, Seasons.serie.name, Seasons.sort_id, Seasons.name)
 
         row_count = len(data)
@@ -137,5 +137,6 @@ class List2(QWidget):
     def when_export_button_clicked(self):
         filepath = utils.export_qtablewidget(self.tableWidget, self.parent.parent.profile.path, "liste")
         # Bouton pour ouvrir le dossier ?
-        QMessageBox.information(None, self.tr("Export terminé"),self.tr("Le fichier a été généré ici:") + "\n    " + filepath,
+        QMessageBox.information(None, self.tr("Export terminé"),
+                                self.tr("Le fichier a été généré ici:") + "\n    " + filepath,
                                 QMessageBox.Ok)

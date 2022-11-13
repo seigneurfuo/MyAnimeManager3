@@ -4,6 +4,7 @@ import shutil
 from core import PROFILES_PATH
 from database_manager import DATABASE_NAME, load_or_create_database
 
+
 class Profiles():
     def __init__(self, name):
         self.name = name

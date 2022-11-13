@@ -7,10 +7,11 @@ from pathlib import Path
 
 import database
 
+
 # TODO: Asynchrone QThread
-def export_planning_to_csv(parent):
+def export_planning_to_csv(app_data_folder):
     # Création du dossier exports
-    output_directory = os.path.join(parent.parent.profile.path, "exports")
+    output_directory = os.path.join(app_data_folder, "exports")
     if not os.path.isdir(output_directory):
         os.makedirs(output_directory)
 

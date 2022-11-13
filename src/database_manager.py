@@ -4,6 +4,7 @@ import database
 
 DATABASE_NAME = "database.sqlite3"
 
+
 def load_or_create_database(profile):
     database_path = os.path.join(profile.path, DATABASE_NAME)
     print("Database path:", database_path)
@@ -17,7 +18,7 @@ def load_or_create_database(profile):
 
     else:
         database.database.init(database_path)
-        populate_tables() # On laisse ça si MAJ
+        populate_tables()  # On laisse ça si MAJ
 
     return database_path
 
@@ -25,7 +26,10 @@ def load_or_create_database(profile):
 def populate_tables():
     populate_seasons_types()
 
+
 database.database.atomic()
+
+
 def populate_seasons_types():
     seasons_types = [
         {"sort_id": 1, "name": "Episodes"},

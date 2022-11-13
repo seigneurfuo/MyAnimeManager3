@@ -10,6 +10,7 @@ from peewee import __version__ as peewee_version
 
 from core import app_name, app_version
 
+
 class AboutDialog(QDialog):
     def __init__(self, parent):
         super().__init__()
@@ -18,8 +19,8 @@ class AboutDialog(QDialog):
         self.logo_clicks = 0
         self.icons_path = os.path.join(os.path.dirname(__file__), "../../resources/icons")
         self.logo_data = [icon for icon in os.listdir(self.icons_path)
-                                          if os.path.isfile(os.path.join(self.icons_path, icon))
-                                          and icon.endswith(".png")]
+                          if os.path.isfile(os.path.join(self.icons_path, icon))
+                          and icon.endswith(".png")]
 
         self.init_ui()
         self.init_events()

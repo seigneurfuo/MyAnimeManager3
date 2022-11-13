@@ -62,7 +62,8 @@ class ProfileEditDialog(QDialog):
         self.update_profile_picture()
 
     def when_profile_picture_browse_clicked(self):
-        picture_file = QFileDialog.getOpenFileName(self, self.tr("Choisir une image pour la photo de profil..."), "", "Images (*.png *.jpg)") # FIXME: Dossier du user
+        picture_file = QFileDialog.getOpenFileName(self, self.tr("Choisir une image pour la photo de profil..."), "",
+                                                   "Images (*.png *.jpg)")  # FIXME: Dossier du user
 
         if picture_file:
             self.picture_filepath = picture_file[0]

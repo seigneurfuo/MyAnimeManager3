@@ -67,7 +67,8 @@ class ViewHistoryDialog(QDialog):
                        Friends.select(Friends.name).where(Seasons.id == row.season.id).where(Planning.date == row.date) \
                            .join(FriendsPlanning).join(Planning).join(Seasons).group_by(Friends.name)]
 
-            columns = [row.date.strftime("%d/%m/%Y"), row.season.name, self.season.type.name, row.episodes, ", ".join(friends)]
+            columns = [row.date.strftime("%d/%m/%Y"), row.season.name, self.season.type.name, row.episodes,
+                       ", ".join(friends)]
 
             # FIXME: Ne fonctionne pas quand il y à plusieurs épisodes
             for col_index, value in enumerate(columns):
@@ -77,7 +78,7 @@ class ViewHistoryDialog(QDialog):
 
         self.season_table.resizeColumnsToContents()
         self.season_table.horizontalHeader().setSectionResizeMode(self.season_table.columnCount() - 1,
-                                                                 QHeaderView.ResizeToContents)
+                                                                  QHeaderView.ResizeToContents)
 
     def reject(self):
         super().reject()

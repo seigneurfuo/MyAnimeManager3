@@ -17,7 +17,7 @@ def get_duration_list(episodes_count, duration, pause_every, pause_duration, sta
     for episode_num in range(episodes_count):
         end = start + timedelta(minutes=duration)
         row = ["Visionnage #{}".format(episode_num + 1), "{:02d}:{:02d}".format(start.hour, start.minute),
-               "{:02d}:{:02d}".format(end.hour,end.minute)]
+               "{:02d}:{:02d}".format(end.hour, end.minute)]
 
         ret_list.append(row)
 

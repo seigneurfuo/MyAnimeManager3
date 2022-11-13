@@ -5,6 +5,7 @@ import peewee
 
 from ui.dialogs.view_history import ViewHistoryDialog
 
+
 def display_view_history_dialog(season_id):
     # Utilisé pour faire un group concat...
     season = Seasons.get(season_id)
@@ -22,6 +23,7 @@ def display_view_history_dialog(season_id):
 
     dialog = ViewHistoryDialog(season, serie_episodes, season_episodes)
     dialog.exec()
+
 
 def display_friends_dialog():
     pass

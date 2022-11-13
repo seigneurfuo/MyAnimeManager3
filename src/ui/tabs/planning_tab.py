@@ -76,7 +76,8 @@ class PlanningTab(QWidget):
 
     def fill_calendar_dates(self):
         # Coloration des jours sur le calendrier
-        self.planning_calendar.dates = [record.date for record in Planning().select().group_by(Planning.date).order_by(Planning.date)]
+        self.planning_calendar.dates = [record.date for record in
+                                        Planning().select().group_by(Planning.date).order_by(Planning.date)]
 
     def fill_watched_table(self):
         """
@@ -183,7 +184,8 @@ class PlanningTab(QWidget):
             progress_bar = QProgressBar(self)
             progress_bar.setMinimum(0)
             progress_bar.setMaximum(row_data.episodes)
-            progress_bar.setValue(row_data.watched_episodes)  # Car si un film donc épisode 1 / 1 on à déja une barre à 100%
+            progress_bar.setValue(
+                row_data.watched_episodes)  # Car si un film donc épisode 1 / 1 on à déja une barre à 100%
 
             # Style différent si on est sous Windows
             if platform.system() == "Windows":
@@ -192,7 +194,7 @@ class PlanningTab(QWidget):
 
             self.tableWidget_6.setCellWidget(col_index, 7, progress_bar)
 
-        #self.tableWidget_6.clearSelection() # On ne le laisse pas car ça peut etre utile pour valider plusieurs fois des épisodes d'une même saison à la suite
+        # self.tableWidget_6.clearSelection() # On ne le laisse pas car ça peut etre utile pour valider plusieurs fois des épisodes d'une même saison à la suite
         self.tableWidget_6.resizeColumnsToContents()
         self.tableWidget_6.horizontalHeader().setSectionResizeMode(self.tableWidget_6.columnCount() - 1,
                                                                    QHeaderView.ResizeToContents)
@@ -298,7 +300,7 @@ class PlanningTab(QWidget):
             self.fill_calendar_dates()
             self.fill_watched_table()
 
-            #self.show_delete_watched_episode_window(planning_data)
+            # self.show_delete_watched_episode_window(planning_data)
 
     def when_change_date_button_clicked(self):
         current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)
@@ -313,7 +315,8 @@ class PlanningTab(QWidget):
 
                 # Supression des amis
                 for friend_id in dialog.friends_to_remove:
-                    friend_planning = FriendsPlanning.get(FriendsPlanning.planning == planning_id, FriendsPlanning.friend == friend_id)
+                    friend_planning = FriendsPlanning.get(FriendsPlanning.planning == planning_id,
+                                                          FriendsPlanning.friend == friend_id)
                     friend_planning.delete_instance()
 
                 # Ajout des amis
@@ -342,7 +345,7 @@ class PlanningTab(QWidget):
 
         remove_and_keep_episode_num = msg_box.addButton(self.tr(
             "Supprimer l'épisode {0}. Prochain épisode suggéré: {1}".format(episode_num, next_episode_num)),
-                                       QMessageBox.NoRole)
+            QMessageBox.NoRole)
 
         msg_box.addButton(self.tr("Annuler"), QMessageBox.RejectRole)
         msg_box.exec()

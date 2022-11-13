@@ -4,6 +4,7 @@ from datetime import datetime
 
 from database_manager import DATABASE_NAME
 
+
 class DBBackupsManager:
     def __init__(self, parent):
         self.parent = parent
@@ -20,9 +21,9 @@ class DBBackupsManager:
         self._create_backup_folder()
 
         databases_backups = [
-            os.path.join(self.backups_folderpath, filename) \
-            for filename in os.listdir(self.backups_folderpath) \
-            if os.path.isfile(os.path.join(self.backups_folderpath, filename)) \
+            os.path.join(self.backups_folderpath, filename)
+            for filename in os.listdir(self.backups_folderpath)
+            if os.path.isfile(os.path.join(self.backups_folderpath, filename))
                and os.path.join(self.backups_folderpath, filename).endswith(self.database_pattern)
                and "-manual-" in filename or "-auto-" in filename
         ]

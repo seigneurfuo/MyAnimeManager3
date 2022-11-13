@@ -107,7 +107,8 @@ class MainWindow(QMainWindow):
         filepath = export_planning_to_csv(self.parent.profile.path)
 
         # Bouton pour ouvrir le dossier ?
-        QMessageBox.information(self, self.tr("Export terminé"), self.tr("Le fichier a été généré ici:") + "\n    " + filepath,
+        QMessageBox.information(self, self.tr("Export terminé"),
+                                self.tr("Le fichier a été généré ici:") + "\n    " + filepath,
                                 QMessageBox.Ok)
 
     # TODO: Changer l'emplacement et metre ça ailleurs dans un autre fichier
@@ -123,23 +124,25 @@ class MainWindow(QMainWindow):
 
                 if season.serie.sort_id == 0 and (season.view_count > 0 or season.watched_episodes > 0):
                     seasons_passed.append(season.serie.id)
-                    msg = self.tr("Série: {}. L'identifiant est toujours \"{}\" alors que des épisodes on déja étés vus.").format(
+                    msg = self.tr(
+                        "Série: {}. L'identifiant est toujours \"{}\" alors que des épisodes on déja étés vus.").format(
                         season.serie.name, season.serie.sort_id)
                     messages.append(msg)
 
                 elif season.episodes == 0:
-                    msg = self.tr("Série: {}. La saison \"{}\" n'a aucun nombre d'épisodes définis.").format(season.sort_id,
-                                                                                                    season.name)
+                    msg = self.tr("Série: {}. La saison \"{}\" n'a aucun nombre d'épisodes définis.").format(
+                        season.sort_id,
+                        season.name)
                     messages.append(msg)
 
                 # On supprime tout les espaces. S'il ne reste rien, alors c'est que le tire de la saison est vide.
                 elif season.name.replace(" ", "") == "":
-                    msg = self.tr("Série: {}. La saison \"{}\" à un nom vide.").format(season.serie.name, season.sort_id)
+                    msg = self.tr("Série: {}. La saison \"{}\" à un nom vide.").format(season.serie.name,
+                                                                                       season.sort_id)
                     messages.append(msg)
 
         # TODO: Séries vides
         # Séries avec le meme identifiant
-        
 
         return messages
 
@@ -162,7 +165,8 @@ class MainWindow(QMainWindow):
         if dialog.selected_backup:
             QMessageBox.information(
                 self, self.tr("Base de données restaurée"),
-                self.tr("Le logiciel va se fermer. Veuillez le relancer pour que les modifications soient prises en compte"),
+                self.tr(
+                    "Le logiciel va se fermer. Veuillez le relancer pour que les modifications soient prises en compte"),
                 QMessageBox.Ok)
             self.close()
 
@@ -171,7 +175,7 @@ class MainWindow(QMainWindow):
         profiles_manage.exec()
 
     def backup_database_before_quit(self):
-        db_backups_manager = DBBackupsManager(self,)
+        db_backups_manager = DBBackupsManager(self, )
         db_backups_manager.backup_current_database()
 
     def closeEvent(self, a0):

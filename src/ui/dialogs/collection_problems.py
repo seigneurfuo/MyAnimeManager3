@@ -15,7 +15,7 @@ class CollectionProblemsDialog(QDialog):
 
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "collection_problems.ui"), self)
-        #self.setWindowTitle(self.serie.name)
+        # self.setWindowTitle(self.serie.name)
 
         self.fill_data()
 

@@ -95,7 +95,6 @@ class ProfilesManageDialog(QDialog):
             self.gridLayout.addWidget(btn, row_index, col_index)
             col_index += 1
 
-
     def update_all(self):
         self.selected_profile = None
 
@@ -168,7 +167,8 @@ class ProfilesManageDialog(QDialog):
 
     def when_delete_profile_button_clicked(self):
         choice = QMessageBox.information(None, self.tr("Supression d'un profil"),
-                                         self.tr("Etes vous sûr de vouloir supprimer le profil: {} ?".format(self.selected_profile.name)),
+                                         self.tr("Etes vous sûr de vouloir supprimer le profil: {} ?".format(
+                                             self.selected_profile.name)),
                                          QMessageBox.Yes | QMessageBox.Cancel)
 
         if choice == QMessageBox.Yes:

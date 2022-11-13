@@ -72,7 +72,8 @@ class DatabaseHistoryDialog(QDialog):
             # Nom
             filename = os.path.basename(filepath)
             date_elements = filename.split("-")[:-2]
-            short_filename = "{}/{}/{} à {}h{}m{}s".format(date_elements[2], date_elements[1], date_elements[0], date_elements[3], date_elements[4],  date_elements[5])
+            short_filename = "{}/{}/{} à {}h{}m{}s".format(date_elements[2], date_elements[1], date_elements[0],
+                                                           date_elements[3], date_elements[4], date_elements[5])
 
             item = QTableWidgetItem(short_filename)
             item.setIcon(QIcon(os.path.join(self.folderpath, "resources/icons/blue-document-clock.png")))
@@ -93,10 +94,9 @@ class DatabaseHistoryDialog(QDialog):
             item.setToolTip(state)
             self.tableWidget.setItem(row_index, 1, item)
 
-
         self.tableWidget.resizeColumnsToContents()
-        self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1, QHeaderView.ResizeToContents)
-
+        self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
+                                                                 QHeaderView.ResizeToContents)
 
     def reject(self):
         super().reject()

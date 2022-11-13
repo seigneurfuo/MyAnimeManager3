@@ -1,6 +1,7 @@
 # Inspiré par: https://pypi.org/project/pyqtdarktheme/
 import os.path
 
+
 class Theme():
     def __init__(self, path):
         self.path = path

@@ -14,6 +14,7 @@ from ui.dialogs.serie import SerieDialog
 from ui.dialogs.season import SeasonDialog
 from ui.dialogs.deleted_elements import DeletedElementsDialog
 
+
 class FullListTab(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
@@ -202,7 +203,6 @@ class FullListTab(QWidget):
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
                                                                  QHeaderView.ResizeToContents)
-
 
     def fill_season_data(self, season):
         self.label_4.setVisible(season.favorite)

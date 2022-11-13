@@ -24,7 +24,7 @@ class SeasonDialog(QDialog):
         # Remplissage de l'état des saisons
         for index, season_state in enumerate(core.SEASONS_STATES):
             state_icon = os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"])
-            self.combobox_1.addItem(QIcon(state_icon), season_state["name"], userData=index+1)
+            self.combobox_1.addItem(QIcon(state_icon), season_state["name"], userData=index + 1)
 
         # Remplissage des types
         for seasons_type in self.seasons_types:
@@ -63,7 +63,6 @@ class SeasonDialog(QDialog):
         # Changement de l'index
         index = self.comboBox_2.findData(self.season.type.id)
         self.comboBox_2.setCurrentIndex(index)
-
 
     def save_data(self):
         # Si création

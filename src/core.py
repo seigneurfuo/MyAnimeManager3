@@ -14,5 +14,6 @@ SEASONS_STATES = [
     {"name": "A voir", "icon": "clock.png"},
     {"name": "En cours", "icon": "film.png"},
     {"name": "Terminée", "icon": "tick.png"},
-    {"name": "Annulée", "icon": "cross.png"},
+    {"name": "Abandonné", "icon": "cross.png"},
+    {"name": "En pause", "icon": "control-pause.png"},
 ]

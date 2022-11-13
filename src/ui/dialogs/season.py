@@ -1,7 +1,10 @@
 import os
 
-from PyQt5.QtWidgets import QDialog
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QDialog, QComboBox
 from PyQt5.uic import loadUi
+
+import core
 
 
 class SeasonDialog(QDialog):
@@ -17,6 +20,11 @@ class SeasonDialog(QDialog):
 
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "season.ui"), self)
+
+        # Remplissage de l'état des saisons
+        for index, season_state in enumerate(core.SEASONS_STATES):
+            state_icon = os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"])
+            self.combobox_1.addItem(QIcon(state_icon), season_state["name"], userData=index+1)
 
         # Remplissage des types
         for seasons_type in self.seasons_types:

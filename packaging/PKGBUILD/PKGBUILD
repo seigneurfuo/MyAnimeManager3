@@ -21,7 +21,7 @@ pkgver() {
 
 prepare() {
 	# Modification de la version dans le fichier
-	sed -i "s/\"DEV\"/\"${pkgver}\"/g" "${srcdir}/MyAnimeManager3/src/common.py"
+	sed -i "s/\"DEV\"/\"${pkgver}\"/g" "${srcdir}/MyAnimeManager3/src/core.py"
 }
 
 package() {

@@ -10,6 +10,7 @@ packaging/windows/dist/
 packaging/windows/*.exe
 pwiz.py
 src/venv/
+Tests/
 
 MyAnimeManager3.spec
 venv/

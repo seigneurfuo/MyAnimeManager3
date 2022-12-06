@@ -191,12 +191,19 @@ class FullListTab(QWidget):
             columns = [season.sort_id, season.name, season.type.name,
                        season.year if season.year and str(season.year) != "None" else "",
                        season.episodes, season.view_count, SEASONS_STATES[season.state]["name"],
-                       self.tr("Oui") if season.favorite else self.tr("Non"), ", ".join(friends)]
+                       season.rating, ", ".join(friends)]
 
             for col_index, value in enumerate(columns):
-                item = QTableWidgetItem(str(value))
-                item.setToolTip(item.text())
-                item.setData(Qt.UserRole, season.id)
+                if col_index == 8:
+                    rating = next(rating for rating in core.RATING_LEVELS if rating["value"] == season.rating)
+                    icon_path = os.path.join(os.path.dirname(__file__), "../../resources/icons", rating["icon"])
+                    item = QTableWidgetItem()
+                    item.setIcon(QIcon(icon_path))
+                else:
+                    item = QTableWidgetItem(str(value))
+                    item.setToolTip(item.text())
+                    item.setData(Qt.UserRole, season.id)
+
                 self.tableWidget.setItem(row_index, col_index, item)
 
         self.tableWidget.clearSelection()
@@ -205,15 +212,23 @@ class FullListTab(QWidget):
                                                                  QHeaderView.ResizeToContents)
 
     def fill_season_data(self, season):
-        self.label_4.setVisible(season.favorite)
+        # Note
+        rating = next(rating for rating in core.RATING_LEVELS if rating["value"] == season.rating)
+        pixmap_path = os.path.join(os.path.dirname(__file__), "../../resources/icons", rating["icon"])
+        # TODO: Ratio à conserver
+        self.label_4.setPixmap(QPixmap(pixmap_path))
+
         self.plainTextEdit.setPlainText(season.description)
 
-        # On masque ou none le bouton pour parcourir le dossier
+        # On masque ou non le bouton pour parcourir le dossier
         self.open_folder_button.setEnabled(os.path.exists(season.serie.path))
+        self.show_view_history_button.setEnabled(True)
 
     def clear_season_data(self):
         self.plainTextEdit.clear()
         self.open_folder_button.setEnabled(False)
+        self.show_view_history_button.setEnabled(False)
+        self.label_4.setPixmap(QPixmap())
 
     def when_seasons_list_current_index_changed(self):
         current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)

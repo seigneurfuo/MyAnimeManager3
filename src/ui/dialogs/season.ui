@@ -135,13 +135,6 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="9" column="2">
-      <widget class="QCheckBox" name="checkBox">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
      <item row="3" column="2">
       <widget class="QComboBox" name="comboBox_2"/>
      </item>
@@ -180,6 +173,13 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
+     <item row="9" column="2">
+      <widget class="QComboBox" name="comboBox">
+       <property name="currentIndex">
+        <number>-1</number>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -208,7 +208,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>spinBox_4</tabstop>
   <tabstop>spinBox_3</tabstop>
   <tabstop>spinBox_2</tabstop>
-  <tabstop>checkBox</tabstop>
   <tabstop>textEdit</tabstop>
  </tabstops>
  <resources/>

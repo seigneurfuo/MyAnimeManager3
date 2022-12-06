@@ -113,12 +113,15 @@ class List2(QWidget):
             item.setToolTip(item.text())
             self.tableWidget.setItem(row_index, len(columns) + 1, item)
 
-            # Favoris
-            favorite_checkbox = QCheckBox()
-            favorite_checkbox.setEnabled(False)
-            favorite_checkbox.setChecked(season.favorite)
+            # Note
+            rating = next(rating for rating in core.RATING_LEVELS if rating["value"] == season.rating)
+            pixmap_path = os.path.join(os.path.dirname(__file__), "../../resources/icons", rating["icon"])
+            # TODO: Ratio à conserver
 
-            self.tableWidget.setCellWidget(row_index, len(columns) + 2, favorite_checkbox)
+            favorite_qlabel = QLabel()
+            favorite_qlabel.setPixmap(QPixmap(pixmap_path))
+
+            self.tableWidget.setCellWidget(row_index, len(columns) + 2, favorite_qlabel)
 
             # Amis
             friends = [friend.name for friend in

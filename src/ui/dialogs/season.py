@@ -56,7 +56,11 @@ class SeasonDialog(QDialog):
         self.spinBox_4.setValue(self.season.episodes)
         self.spinBox_3.setValue(self.season.watched_episodes)
         self.spinBox_2.setValue(self.season.view_count)
-        self.checkBox.setChecked(self.season.favorite)
+
+        if self.season.rating is not None:
+            index = self.comboBox.findData(self.season.rating)
+            self.comboBox.setCurrentIndex(index)
+
         self.checkBox_2.setChecked(self.season.airing)
         self.textEdit.setPlainText(self.season.description)
 
@@ -78,7 +82,7 @@ class SeasonDialog(QDialog):
         self.season.episodes = self.spinBox_4.value()
         self.season.watched_episodes = self.spinBox_3.value()
         self.season.view_count = self.spinBox_2.value()
-        self.season.favorite = self.checkBox.isChecked()
+        self.season.rating = self.comboBox.currentData()
         self.season.airing = self.checkBox_2.isChecked()
         self.season.description = self.textEdit.toPlainText()
         self.season.type = self.comboBox_2.currentData()

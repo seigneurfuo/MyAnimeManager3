@@ -39,7 +39,7 @@ class Seasons(BaseModel):
     watched_episodes = IntegerField(constraints=[SQL("DEFAULT 0")], null=True)
     view_count = IntegerField(constraints=[SQL("DEFAULT 0")])
     state = IntegerField()
-    favorite = BooleanField(null=False, default=True)
+    rating = IntegerField(null=True)
     description = TextField(null=True)
     is_deleted = IntegerField(constraints=[SQL("DEFAULT 0")])
 

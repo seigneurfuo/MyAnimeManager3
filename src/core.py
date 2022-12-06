@@ -17,3 +17,9 @@ SEASONS_STATES = [
     {"name": "Abandonné", "icon": "cross.png"},
     {"name": "En pause", "icon": "control-pause.png"},
 ]
+
+RATING_LEVELS = [
+    {"name": "Pas de note", "value": None, "icon": ""},
+    {"name": "J'aime pas", "value": -1, "icon": "thumb-down.png"},
+    {"name": "J'aime", "value": 1, "icon": "thumb-up.png"},
+]

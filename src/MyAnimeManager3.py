@@ -31,8 +31,8 @@ class Application(QApplication):
         self.profile = None
         self.database_path = None
 
-        self.load_profile()
-        self.load_database()
+        self.profile = self.load_profile()
+        self.database_path =  self.load_database()
 
         display_name = self.tr("{} - Profil: {}").format(core.app_name_and_version, self.profile.name)
         self.setApplicationDisplayName(display_name)
@@ -57,20 +57,23 @@ class Application(QApplication):
             if profiles_manage.selected_profile == None:
                 exit(0)
             else:
-                self.profile = profiles_manage.selected_profile
+                profile = profiles_manage.selected_profile
 
         else:
             # Creation du profil
-            self.profile = profiles_list[0]
+            profile = profiles_list[0]
+
+        return profile
 
     def load_database(self):
-        self.database_path = load_or_create_database(self.profile)
+        return load_or_create_database(self.profile)
 
 
 if __name__ == "__main__":
     DEBUG = 1
     if DEBUG == 1:
         import cgitb
+
         cgitb.enable(format='text')
 
     application = Application(sys.argv)

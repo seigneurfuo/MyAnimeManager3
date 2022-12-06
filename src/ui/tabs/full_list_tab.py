@@ -1,6 +1,6 @@
 #!/bin/env python3
-from PyQt5.QtGui import QDesktopServices
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QHeaderView, QCompleter
+from PyQt5.QtGui import QDesktopServices, QPixmap, QIcon
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QHeaderView, QCompleter, QComboBox, QTableWidget
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt, QUrl
 
@@ -14,6 +14,8 @@ from ui.dialogs.serie import SerieDialog
 from ui.dialogs.season import SeasonDialog
 from ui.dialogs.deleted_elements import DeletedElementsDialog
 
+import core
+
 
 class FullListTab(QWidget):
     def __init__(self, parent):
@@ -26,6 +28,8 @@ class FullListTab(QWidget):
 
         self.init_ui()
         self.init_events()
+
+        self.clear_season_data()
 
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "full_list_tab.ui"), self)
@@ -59,10 +63,19 @@ class FullListTab(QWidget):
         self.comboBox.clear()
         completer_data = []
         series = Series().select().where(Series.is_deleted == 0).order_by(Series.sort_id)
-        for serie in series:
+        for index, serie in enumerate(series):
             text = "{:03d} - {}".format(serie.sort_id, serie.name)
             self.comboBox.addItem(text, userData=serie.id)
+
+            # Autocomplétion
             completer_data.append(text)
+
+            # Icones
+            if len(serie.name) > 0:
+                first_letter = serie.name[0].lower()
+                pixmap_path = os.path.join(os.path.dirname(__file__),
+                                           "../../resources/icons/blue-document-attribute-{}.png".format(first_letter))
+                self.comboBox.setItemData(index, QPixmap(pixmap_path), Qt.DecorationRole)
 
         completer = QCompleter(completer_data)
         completer.setFilterMode(Qt.MatchContains)
@@ -79,7 +92,7 @@ class FullListTab(QWidget):
         self.current_serie_id = self.comboBox.currentData()
 
         if self.current_serie_id:
-            serie = Series().get(Series.id == self.current_serie_id)
+            serie = Series().get(self.current_serie_id)
 
             self.fill_serie_data(serie)
             self.fill_season_list(serie)
@@ -151,7 +164,7 @@ class FullListTab(QWidget):
     def when_delete_season_button_clicked(self):
         if self.current_season_id:
             season = Seasons().get(self.current_season_id)
-            serie = Series().get(Series.id == self.current_serie_id)
+            serie = Series().get(self.current_serie_id)
 
             season.is_deleted = 1
             season.save()
@@ -178,7 +191,7 @@ class FullListTab(QWidget):
             display_view_history_dialog(self.current_season_id)
 
     def fill_season_list(self, serie):
-        seasons = Seasons().select().where(Seasons.serie == serie.id, Seasons.is_deleted == 0).order_by(Seasons.sort_id)
+        seasons = serie.seasons.where(Seasons.is_deleted == 0).order_by(Seasons.sort_id)
         row_count = len(seasons)
         self.label_2.setText(str(row_count))
         self.tableWidget.setRowCount(row_count)
@@ -236,7 +249,7 @@ class FullListTab(QWidget):
         if current_item:
             self.current_season_id = current_item.data(Qt.UserRole)
 
-            season = Seasons().get(Seasons.id == self.current_season_id)
+            season = Seasons().get(self.current_season_id)
             self.fill_season_data(season)
 
         else:
@@ -248,6 +261,6 @@ class FullListTab(QWidget):
 
     def when_open_folder_button_clicked(self):
         if self.current_season_id:
-            season = Seasons().get(Seasons.id == self.current_season_id)
+            season = Seasons().get(self.current_season_id)
             if os.path.exists(season.serie.path):
                 QDesktopServices.openUrl(QUrl.fromLocalFile(season.serie.path))

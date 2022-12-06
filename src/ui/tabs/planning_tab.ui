@@ -301,7 +301,7 @@
        <item>
         <widget class="QPushButton" name="show_view_history_button">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="text">
           <string>Historique de visionnage</string>

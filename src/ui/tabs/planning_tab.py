@@ -228,7 +228,7 @@ class PlanningTab(QWidget):
 
     def add_episode_to_planning(self, season_id):
         calendar_date = self.planning_calendar.selectedDate().toPyDate()
-        current_season = Seasons().get(Seasons.id == season_id)
+        current_season = Seasons().get(season_id)
 
         new_watched_episodes_value = current_season.watched_episodes + 1
 
@@ -268,8 +268,9 @@ class PlanningTab(QWidget):
             self.show_view_history_button.setEnabled(True)
 
             # Active ou désactive le bouton d'ouverture du dossier de la série
-            season = Seasons().get(Seasons.id == self.current_season_id)
+            season = Seasons().get(self.current_season_id)
             self.open_folder_button.setEnabled(os.path.exists(season.serie.path))
+            self.show_view_history_button.setEnabled(True)
 
         else:
             # On désactive les boutons qui ont une action avec une série selectionnée
@@ -281,7 +282,7 @@ class PlanningTab(QWidget):
 
     def when_open_folder_button_clicked(self):
         if self.current_season_id:
-            season = Seasons().get(Seasons.id == self.current_season_id)
+            season = Seasons().get(self.current_season_id)
             if os.path.exists(season.serie.path):
                 QDesktopServices.openUrl(QUrl.fromLocalFile(season.serie.path))
 

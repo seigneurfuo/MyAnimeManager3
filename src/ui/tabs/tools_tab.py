@@ -82,7 +82,7 @@ class ToolsTab(QWidget):
         seasons = Seasons.select().where(Seasons.state.in_(states), Seasons.is_deleted == 0).order_by(Seasons.id)
 
         MAX_ELEMENTS = 10
-        random_seasons_indexes = [random.randint(0, len(seasons) - 1) for x in range(MAX_ELEMENTS)]
+        random_seasons_indexes = [random.randint(0, len(seasons) - 1) for _ in range(MAX_ELEMENTS)]
 
         self.tableWidget.setRowCount(MAX_ELEMENTS)
 

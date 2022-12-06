@@ -8,8 +8,6 @@ from PyQt5.QtCore import QUrl
 
 import database
 
-from profiles import Profiles
-
 # Onglets
 from ui.tabs.planning_tab import PlanningTab
 from ui.tabs.full_list_tab import FullListTab
@@ -25,6 +23,7 @@ from ui.dialogs.profiles_manage import ProfilesManageDialog
 from db_backups_manager import DBBackupsManager
 from exports import export_planning_to_csv
 
+import utils
 
 class MainWindow(QMainWindow):
     def __init__(self, parent):
@@ -111,43 +110,8 @@ class MainWindow(QMainWindow):
                                 self.tr("Le fichier a été généré ici:") + "\n    " + filepath,
                                 QMessageBox.Ok)
 
-    # TODO: Changer l'emplacement et metre ça ailleurs dans un autre fichier
-    def get_collection_problems(self):
-        seasons_passed = []
-        messages = []
-
-        seasons = database.Seasons().select().join(database.Series).where(database.Seasons.is_deleted == 0).order_by(
-            database.Seasons.sort_id)
-
-        for season in seasons:
-            if season.serie.id not in seasons_passed and season.state != 4:
-
-                if season.serie.sort_id == 0 and (season.view_count > 0 or season.watched_episodes > 0):
-                    seasons_passed.append(season.serie.id)
-                    msg = self.tr(
-                        "Série: {}. L'identifiant est toujours \"{}\" alors que des épisodes on déja étés vus.").format(
-                        season.serie.name, season.serie.sort_id)
-                    messages.append(msg)
-
-                elif season.episodes == 0:
-                    msg = self.tr("Série: {}. La saison \"{}\" n'a aucun nombre d'épisodes définis.").format(
-                        season.sort_id,
-                        season.name)
-                    messages.append(msg)
-
-                # On supprime tout les espaces. S'il ne reste rien, alors c'est que le tire de la saison est vide.
-                elif season.name.replace(" ", "") == "":
-                    msg = self.tr("Série: {}. La saison \"{}\" à un nom vide.").format(season.serie.name,
-                                                                                       season.sort_id)
-                    messages.append(msg)
-
-        # TODO: Séries vides
-        # Séries avec le meme identifiant
-
-        return messages
-
     def when_menu_action_check_collection_clicked(self):
-        messages = self.get_collection_problems()
+        messages = utils.get_collection_problems()
         dialog = CollectionProblemsDialog(messages)
         dialog.exec()
 

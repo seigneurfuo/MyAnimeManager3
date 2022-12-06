@@ -47,7 +47,6 @@ class ViewHistoryDialog(QDialog):
             columns = [row.date.strftime("%d/%m/%Y"), row.season.name, self.season.type.name, row.episodes,
                        ", ".join(friends)]
 
-            # FIXME: Ne fonctionne pas quand il y à plusieurs épisodes
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
                 item.setToolTip(item.text())

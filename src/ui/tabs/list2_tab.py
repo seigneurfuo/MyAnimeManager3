@@ -3,16 +3,19 @@
 import os
 from datetime import datetime
 
-from PyQt5.QtGui import QIcon, QColor
+from PyQt5.QtGui import QIcon, QColor, QPixmap
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QCheckBox, QHeaderView, QMessageBox
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QCheckBox, QHeaderView, QMessageBox, QLabel
 from PyQt5.uic import loadUi
 
 import utils
-from core import SEASONS_STATES
+
+from core import SEASONS_STATES, RATING_LEVELS
 from common import display_view_history_dialog
 from database import Series, Seasons, Friends, Planning, FriendsPlanning
+
+import core
 
 
 class List2(QWidget):
@@ -21,13 +24,12 @@ class List2(QWidget):
 
         self.parent = parent
 
-        self.current_season_id = None
-
         self.init_ui()
         self.init_events()
 
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "list2_tab.ui"), self)
+        self.pushButton_2.setEnabled(False)
 
     def init_events(self):
         self.pushButton.clicked.connect(self.when_export_button_clicked)
@@ -38,15 +40,14 @@ class List2(QWidget):
         self.fill_data()
 
     def when_current_cell_changed(self):
-        self.update_current_season_id()
-
-    def update_current_season_id(self):
-        current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
-        self.current_season_id = current_item.data(Qt.UserRole) if current_item else None
+        self.pushButton_2.setEnabled(True)
 
     def when_show_view_history_button_clicked(self):
-        if self.current_season_id:
-            display_view_history_dialog(self.current_season_id)
+        current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
+        current_season_id = current_item.data(Qt.UserRole) if current_item else None
+
+        if current_season_id:
+            display_view_history_dialog(current_season_id)
 
     def fill_data(self):
         today_date_object = datetime.now()
@@ -83,12 +84,23 @@ class List2(QWidget):
 
                 if col_index == 7:
                     item = QTableWidgetItem(season_state["name"])
-                    item.setIcon(
-                        QIcon(os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"])))
+                    icon = QIcon(os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"]))
+                    item.setIcon(icon)
 
                 else:
                     item = QTableWidgetItem(value)
                     item.setToolTip(item.text())
+
+                # Icone
+                if col_index == 1 and len(season.serie.name) > 0:
+                    first_letter = season.serie.name[0].lower()
+                    icon_path = os.path.join(os.path.dirname(__file__), "../../resources/icons/blue-document-attribute-{}.png".format(first_letter))
+                    item.setIcon(QIcon(icon_path))
+
+                if col_index == 3 and len(season.name) > 0:
+                    first_letter = season.name[0].lower()
+                    icon_path = os.path.join(os.path.dirname(__file__), "../../resources/icons/blue-document-attribute-{}.png".format(first_letter))
+                    item.setIcon(QIcon(icon_path))
 
                 item.setData(Qt.UserRole, season.id)
 
@@ -140,6 +152,6 @@ class List2(QWidget):
     def when_export_button_clicked(self):
         filepath = utils.export_qtablewidget(self.tableWidget, self.parent.parent.profile.path, "liste")
         # Bouton pour ouvrir le dossier ?
-        QMessageBox.information(None, self.tr("Export terminé"),
+        QMessageBox.information(self, self.tr("Export terminé"),
                                 self.tr("Le fichier a été généré ici:") + "\n    " + filepath,
                                 QMessageBox.Ok)

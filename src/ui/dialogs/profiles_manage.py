@@ -166,7 +166,7 @@ class ProfilesManageDialog(QDialog):
                 self.update_all()
 
     def when_delete_profile_button_clicked(self):
-        choice = QMessageBox.information(None, self.tr("Supression d'un profil"),
+        choice = QMessageBox.information(self, self.tr("Supression d'un profil"),
                                          self.tr("Etes vous sûr de vouloir supprimer le profil: {} ?".format(
                                              self.selected_profile.name)),
                                          QMessageBox.Yes | QMessageBox.Cancel)

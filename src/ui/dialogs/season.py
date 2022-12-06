@@ -1,7 +1,7 @@
 import os
 
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QDialog, QComboBox
+from PyQt5.QtWidgets import QDialog
 from PyQt5.uic import loadUi
 
 import core
@@ -30,9 +30,13 @@ class SeasonDialog(QDialog):
         for seasons_type in self.seasons_types:
             self.comboBox_2.addItem(seasons_type.name, userData=seasons_type.id)
 
-        # # Année par défaut: année en cours
-        # current_year = int(datetime.date.today().strftime("%Y"))
-        # self.spinBox_5.setValue(current_year)
+        # Remplissage de la note
+        for rating_level in core.RATING_LEVELS:
+            rating_icon = os.path.join(os.path.dirname(__file__), "../../resources/icons/", rating_level["icon"])
+            self.comboBox.addItem(QIcon(rating_icon), rating_level["name"], userData=rating_level["value"])
+
+        # Empèche de metre un nombre d'épisodes vus plus haut que le total d'épisode
+        self.spinBox_3.setMaximum(self.season.episodes)
 
         # Si création
         if self.season.id:
@@ -40,7 +44,6 @@ class SeasonDialog(QDialog):
             self.fill_data()
 
     def init_events(self):
-        # TODO: Empècher de metre un nombre d'épisodes vus plus haut que le total
         pass
 
     def fill_data(self):

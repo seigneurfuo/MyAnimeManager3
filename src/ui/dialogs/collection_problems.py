@@ -15,7 +15,7 @@ class CollectionProblemsDialog(QDialog):
 
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "collection_problems.ui"), self)
-        # self.setWindowTitle(self.serie.name)
+        self.setWindowTitle(self.tr("Vérification des données"))
 
         self.fill_data()
 
@@ -24,7 +24,7 @@ class CollectionProblemsDialog(QDialog):
 
     def fill_data(self):
         row_count = len(self.messages)
-        self.label.setText("Nombre d'éléments: " + str(row_count))
+        self.label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
         self.tableWidget.setRowCount(row_count)
 
         for row_index, message in enumerate(self.messages):

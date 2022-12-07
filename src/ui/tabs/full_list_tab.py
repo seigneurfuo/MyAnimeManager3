@@ -207,7 +207,7 @@ class FullListTab(QWidget):
                        season.rating, ", ".join(friends)]
 
             for col_index, value in enumerate(columns):
-                if col_index == 8:
+                if col_index == 7:
                     rating = next(rating for rating in core.RATING_LEVELS if rating["value"] == season.rating)
                     icon_path = os.path.join(os.path.dirname(__file__), "../../resources/icons", rating["icon"])
                     item = QTableWidgetItem()

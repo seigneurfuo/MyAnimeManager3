@@ -35,11 +35,11 @@ class SeasonDialog(QDialog):
             rating_icon = os.path.join(os.path.dirname(__file__), "../../resources/icons/", rating_level["icon"])
             self.comboBox.addItem(QIcon(rating_icon), rating_level["name"], userData=rating_level["value"])
 
-        # Empèche de metre un nombre d'épisodes vus plus haut que le total d'épisode
-        self.spinBox_3.setMaximum(self.season.episodes)
-
-        # Si création
+        # Si modification
         if self.season.id:
+            # Empèche de metre un nombre d'épisodes vus plus haut que le total d'épisode
+            self.spinBox_3.setMaximum(self.season.episodes)
+
             self.setWindowTitle(self.season.name)
             self.fill_data()
 

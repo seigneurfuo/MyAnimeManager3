@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=MyAnimeManager3
+Type=Application
+Terminal=false
+Exec=python /opt/myanimemanager3/MyAnimeManager3.py
+Icon=/opt/myanimemanager3/resources/icon
+StartupNotify=true
+Categories=AudioVideo;
+Keywords=MyAnimeManager3

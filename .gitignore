@@ -2,17 +2,23 @@ src/**/*.pyc
 src/database2.sqlite3
 .idea/
 src/**/__pycache__/
+
 packaging/PKGBUILD/dist/*.pkg.*
 packaging/PKGBUILD/MyAnimeManager3/
 packaging/PKGBUILD/pkg/
 packaging/PKGBUILD/src/
+
 packaging/windows/dist/
 packaging/windows/*.exe
+packaging/windows/src/
+packaging/windows/bin/
+
 pwiz.py
 src/venv/
 Tests/
 
 MyAnimeManager3.spec
 venv/
-packaging/windows/src/
-packaging/windows/bin/
+
+packaging/appimage/myanimemanager3.AppDir
+packaging/appimage/**/*.AppImage

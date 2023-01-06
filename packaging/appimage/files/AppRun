@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Export APPRUN if running from an extracted image
+self="$(readlink -f -- $0)"
+here="${self%/*}"
+APPDIR="${APPDIR:-${here}}"
+
+# Python
+"${APPDIR}/opt/python3.10/bin/python3.10" "${APPDIR}/opt/myanimemanager3/MyAnimeManager3.py"

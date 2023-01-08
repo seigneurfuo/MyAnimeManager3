@@ -4,6 +4,8 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QCalendarWidget, QTableWidgetItem, QHeaderView
 from PyQt5.uic import loadUi
 
+from ui.dialogs.friends_manage import FriendManageDialog
+
 
 class EditDateDialog(QDialog):
     def __init__(self, planning_data, full_friends_list):
@@ -34,6 +36,7 @@ class EditDateDialog(QDialog):
         self.calendar.selectionChanged.connect(self.update_date_label)
         self.pushButton.clicked.connect(self.when_add_friend_button_clicked)
         self.pushButton_2.clicked.connect(self.when_remove_friend_button_clicked)
+        self.pushButton_3.clicked.connect(self.open_friends_list)
 
     def fill_data(self):
         self.update_friends_combobox()
@@ -94,6 +97,12 @@ class EditDateDialog(QDialog):
         date = self.calendar.selectedDate()
         date_string = date.toString("dd/MM/yyyy")
         self.new_date_label.setText(date_string)
+
+    def open_friends_list(self):
+        dialog = FriendManageDialog()
+        if(dialog.exec()):
+            self.full_friends_list = dialog.friends_list
+            self.update_friends_combobox()
 
     def save_data(self):
         new_date = self.calendar.selectedDate().toPyDate()

@@ -30,7 +30,7 @@ class EditDateDialog(QDialog):
         self.calendar.setVerticalHeaderFormat(QCalendarWidget.NoVerticalHeader)
         self.calendar.setSelectedDate(self.planning_data.date)
 
-        self.verticalLayout_2.addWidget(self.calendar)
+        self.verticalLayout_2.insertWidget(0, self.calendar)
 
     def init_events(self):
         self.calendar.selectionChanged.connect(self.update_date_label)

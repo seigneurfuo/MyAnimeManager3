@@ -203,11 +203,11 @@ class FullListTab(QWidget):
 
             columns = [season.sort_id, season.name, season.type.name,
                        season.year if season.year and str(season.year) != "None" else "",
-                       season.episodes, season.view_count, SEASONS_STATES[season.state]["name"],
+                       season.episodes, season.watched_episodes, season.view_count, SEASONS_STATES[season.state]["name"],
                        season.rating, ", ".join(friends)]
 
             for col_index, value in enumerate(columns):
-                if col_index == 7:
+                if col_index == 8:
                     rating = next(rating for rating in core.RATING_LEVELS if rating["value"] == season.rating)
                     icon_path = os.path.join(os.path.dirname(__file__), "../../resources/icons", rating["icon"])
                     item = QTableWidgetItem()

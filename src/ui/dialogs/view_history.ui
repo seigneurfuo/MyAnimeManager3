@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -40,6 +40,9 @@
          </property>
          <attribute name="horizontalHeaderStretchLastSection">
           <bool>true</bool>
+         </attribute>
+         <attribute name="verticalHeaderDefaultSectionSize">
+          <number>20</number>
          </attribute>
          <column>
           <property name="text">
@@ -58,7 +61,7 @@
          </column>
          <column>
           <property name="text">
-           <string>Episode</string>
+           <string>Episode(s)</string>
           </property>
          </column>
          <column>

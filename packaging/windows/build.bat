@@ -31,6 +31,9 @@ if exist .git\ (
     exit
 )
 
+git submodule init
+git submodule update
+
 REM TODO: Remplacer dynamiquement la version dans le fichier (remplacer le DEV)
 
 REM Build

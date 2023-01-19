@@ -35,6 +35,7 @@ git submodule init
 git submodule update
 
 REM TODO: Remplacer dynamiquement la version dans le fichier (remplacer le DEV)
+REM TODO: --icon=%SRCDIR%/resources/icon.png ^
 
 REM Build
 python -m PyInstaller %SRCDIR%/src/MyAnimeManager3.py ^

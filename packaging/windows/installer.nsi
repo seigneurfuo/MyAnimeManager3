@@ -1,8 +1,11 @@
+!include "FileFunc.nsh"
+
 !define PRODUCT "MyAnimeManager3"
 !define SRCPATH "dist\MyAnimeManager3"
+!define UNINSTALLER_REGEDIT_PATH "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}"
 
-# The name of the installer
-Name "MyAnimeManager3"
+# Le nom de l'installateur
+Name "${PRODUCT}"
 
 ; # The file to write
 ; !tempfile StdOut
@@ -21,7 +24,7 @@ RequestExecutionLevel admin
 Unicode True
 
 # set desktop as install directory
-InstallDir "$PROGRAMFILES\MyAnimeManager3"
+InstallDir "$PROGRAMFILES\${PRODUCT}"
 
 ; !Include 'MUI.nsh'
 ; !insertmacro MUI_PAGE_DIRECTORY
@@ -37,7 +40,7 @@ Section
     ; !insertmacro MUI_UNPAGE_INSTFILES
     ; !insertmacro MUI_UNPAGE_FINISH
 
-    # define output path
+    # Définition du répertoire d'installation
     SetOutPath $INSTDIR
     
     # Copie des fichiers
@@ -47,11 +50,21 @@ Section
     WriteUninstaller "$INSTDIR\Uninstall.exe"
 
     # Inscription de l'application dans le registre
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\MyAnimeManager3" "DisplayName" "MyAnimeManager3"
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\MyAnimeManager3" "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
+    WriteRegStr HKLM "${UNINSTALLER_REGEDIT_PATH}" "DisplayName" "${PRODUCT}"
+    WriteRegStr HKLM "${UNINSTALLER_REGEDIT_PATH}" "Publisher" "seigneurfuo" 
+    WriteRegStr HKLM "${UNINSTALLER_REGEDIT_PATH}" "DisplayIcon" "$\"$INSTDIR\Uninstall.exe,0$\""
+    WriteRegStr HKLM "${UNINSTALLER_REGEDIT_PATH}" "URLInfoAbout" "https://github.com/seigneurfuo/myanimemanager3"
+
+    # ----- Calcul de la taille de l'application -----
+    ${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
+    IntFmt $0 "0x%08X" $0
+    WriteRegDWORD HKLM "${UNINSTALLER_REGEDIT_PATH}" "EstimatedSize" "$0"
+
+    WriteRegStr HKLM "${UNINSTALLER_REGEDIT_PATH}" "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
+    WriteRegStr HKLM "${UNINSTALLER_REGEDIT_PATH}" "QuietUninstallString" "$\"$INSTDIR\Uninstall.exe$\" /S"
     
     # Racourcis dans le menu démarrer
-    CreateShortcut "$SMPROGRAMS\MyAnimeManager3.lnk" "$INSTDIR\MyAnimeManager3.exe" "$INSTDIR\resources\icon.ico"
+    CreateShortcut "$SMPROGRAMS\${PRODUCT}.lnk" "$INSTDIR\MyAnimeManager3.exe" "" "$INSTDIR\resources\icon.png"
 SectionEnd
 
 
@@ -60,8 +73,8 @@ Section "Uninstall"
     # Affiche le détail de désinstallation
     SetDetailsView show
 
-    #
-    DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\MyAnimeManager3"
+    # Supression de la liste des prograùùes
+    DeleteRegKey HKLM "${UNINSTALLER_REGEDIT_PATH}"
 
     # Delete installed file
     Delete "$INSTDIR"
@@ -70,7 +83,7 @@ Section "Uninstall"
     Delete "$INSTDIR\Uninstall.exe"
 
     # Supression du racoucis dans les programmes
-    Delete "$SMPROGRAMS\MyAnimeManager3.lnk"
+    Delete "$SMPROGRAMS\${PRODUCT}.lnk"
 
     # Supression du dossier du programme
     RMDir /r $INSTDIR

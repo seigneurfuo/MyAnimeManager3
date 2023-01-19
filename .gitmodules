@@ -1,9 +1,6 @@
-[submodule "src/ui/themes/EClaesson-QTDark"]
-	path = src/ui/themes/EClaesson-QTDark
-	url = https://github.com/EClaesson/QTDark
 [submodule "src/resources/themes/EClaesson-QTDark"]
 	path = src/resources/themes/EClaesson-QTDark
-	url = https://github.com/EClaesson/QTDark
+	url = https://github.com/Lumyo/darkorange-pyside-stylesheet
 [submodule "src/resources/themes/Lumyo-darkorange"]
 	path = src/resources/themes/Lumyo-darkorange
-	url = https://github.com/Lumyo/darkorange-pyside-stylesheet
+	url = https://github.com/EClaesson/QTDark

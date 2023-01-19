@@ -5,21 +5,28 @@ import os.path
 class Theme():
     def __init__(self, path):
         self.path = path
-        self.name = os.path.basename(self.path)
+        self.name, extension = os.path.splitext(os.path.basename(self.path))
 
     def __repr__(self):
         return self.path
 
     def load(self):
-        with open(self.path, "r") as theme_file:
-            return theme_file.read()
+        if os.path.isfile(self.path):
+            with open(self.path, "r") as theme_file:
+                return theme_file.read()
+        else:
+            return ""
 
 
 def get_themes_list():
+    # Theme par défaut du système
+    default_theme = Theme("")
+    default_theme.name = "Thême par défaut du système"
+
     themes_path = os.path.realpath(os.path.join(os.path.dirname(__file__), "../resources/themes/"))
     extensions = (".stylesheet", ".qss")
 
-    themes = []
+    themes = [default_theme]
 
     for root, directories, filenames in os.walk(themes_path):
         for filename in filenames:
@@ -28,3 +35,8 @@ def get_themes_list():
                 themes.append(Theme(filepath))
 
     return themes
+
+def set_theme_to(QApplication, theme_filename):
+    if theme_filename:
+        theme = Theme(theme_filename)
+        QApplication.setStyleSheet(theme.load())

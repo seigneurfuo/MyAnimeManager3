@@ -121,6 +121,7 @@
     <addaction name="check_problems_action"/>
     <addaction name="open_database_backups_action"/>
     <addaction name="manage_profiles_action"/>
+    <addaction name="open_settings_action"/>
    </widget>
    <addaction name="file_menu"/>
    <addaction name="menuOutils"/>
@@ -222,6 +223,15 @@
    </property>
    <property name="text">
     <string>Gérer les profils</string>
+   </property>
+  </action>
+  <action name="open_settings_action">
+   <property name="icon">
+    <iconset>
+     <normaloff>../resources/icons/gear.png</normaloff>../resources/icons/gear.png</iconset>
+   </property>
+   <property name="text">
+    <string>Options...</string>
    </property>
   </action>
  </widget>

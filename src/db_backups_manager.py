@@ -8,7 +8,7 @@ from database_manager import DATABASE_NAME
 class DBBackupsManager:
     def __init__(self, parent):
         self.parent = parent
-        self.backups_limit = self.parent.parent.default_settings["backups_limit"]
+        self.backups_limit = self.parent.parent.settings["backups_limit"]
         self.database_pattern = "-{}".format(DATABASE_NAME)
         self.backups_foldername = "db-backups"
         self.backups_folderpath = os.path.join(self.parent.parent.profile.path, self.backups_foldername)

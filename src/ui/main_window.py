@@ -19,6 +19,7 @@ from ui.dialogs.about import AboutDialog
 from ui.dialogs.collection_problems import CollectionProblemsDialog
 from ui.dialogs.database_history import DatabaseHistoryDialog
 from ui.dialogs.profiles_manage import ProfilesManageDialog
+from ui.dialogs.settings import SettingsDialog
 
 from db_backups_manager import DBBackupsManager
 from exports import export_planning_to_csv
@@ -65,16 +66,15 @@ class MainWindow(QMainWindow):
         self.tabWidget.setCurrentIndex(0)  # TODO: Configuration
 
     def init_events(self):
-        # FIXME: Ouvrir plutot le dossier utilisateur !
         # Menus
         self.open_profile_action.triggered.connect(self.when_menu_action_open_profile_clicked)
-
         self.planning_export_action.triggered.connect(self.when_menu_action_planning_export_clicked)
         self.about_action.triggered.connect(self.when_menu_action_about_clicked)
         self.bug_report_action.triggered.connect(self.when_menu_action_bug_report_clicked)
         self.check_problems_action.triggered.connect(self.when_menu_action_check_collection_clicked)
-        self.open_database_backups_action.triggered.connect(self.when_menu_action_open_database_backups)
-        self.manage_profiles_action.triggered.connect(self.when_menu_action_manage_profiles)
+        self.open_database_backups_action.triggered.connect(self.when_menu_action_open_database_backups_clicked)
+        self.manage_profiles_action.triggered.connect(self.when_menu_action_manage_profiles_clicked)
+        self.open_settings_action.triggered.connect(self.when_menu_action_settings_clicked)
 
         # ----- Clic sur les onglets -----
         self.tabWidget.currentChanged.connect(self.when_current_tab_changed)
@@ -122,7 +122,7 @@ class MainWindow(QMainWindow):
     def when_menu_action_bug_report_clicked(self):
         webbrowser.open_new("https://github.com/seigneurfuo/MyAnimeManager3/issues/new")
 
-    def when_menu_action_open_database_backups(self):
+    def when_menu_action_open_database_backups_clicked(self):
         dialog = DatabaseHistoryDialog(self)
         dialog.exec()
 
@@ -134,12 +134,16 @@ class MainWindow(QMainWindow):
                 QMessageBox.Ok)
             self.close()
 
-    def when_menu_action_manage_profiles(self):
+    def when_menu_action_manage_profiles_clicked(self):
         profiles_manage = ProfilesManageDialog(ProfilesManageDialog.roles.manage, self.parent.profile)
         profiles_manage.exec()
 
+    def when_menu_action_settings_clicked(self):
+        settings_dialog = SettingsDialog(self)
+        settings_dialog.exec()
+
     def backup_database_before_quit(self):
-        db_backups_manager = DBBackupsManager(self, )
+        db_backups_manager = DBBackupsManager(self)
         db_backups_manager.backup_current_database()
 
     def closeEvent(self, a0):

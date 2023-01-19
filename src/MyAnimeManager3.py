@@ -1,12 +1,9 @@
 #!/bin/env python3
-
+import json
 import sys
 import os
 
-from pathlib import Path
 from PyQt5.QtWidgets import QApplication
-
-import default_settings
 
 from ui.dialogs.profiles_manage import ProfilesManageDialog
 
@@ -14,7 +11,8 @@ from ui.main_window import MainWindow
 from database_manager import load_or_create_database
 from profiles import Profiles
 import core
-from ui.themes import get_themes_list
+from common import load_settings
+from ui.themes import get_themes_list, set_theme_to
 
 
 class Application(QApplication):
@@ -27,17 +25,22 @@ class Application(QApplication):
         self.setApplicationDisplayName(core.app_name_and_version)
         self.setApplicationVersion(core.app_version)
 
-        self.default_settings = default_settings.DEFAULT_SETTINGS
+        self.settings = load_settings(core.PROFILES_PATH)
         self.profile = None
         self.database_path = None
 
         self.profile = self.load_profile()
         self.database_path =  self.load_database()
 
+        # Définition du thême
+        set_theme_to(self, self.settings["application_stylesheet"])
+
         display_name = self.tr("{} - Profil: {}").format(core.app_name_and_version, self.profile.name)
         self.setApplicationDisplayName(display_name)
 
         mainwindow = MainWindow(self)
+
+        # Centrage de la fenêtre principale
         mainwindow.move(self.desktop().screen().rect().center() - mainwindow.rect().center())
         mainwindow.show()
 
@@ -68,12 +71,10 @@ class Application(QApplication):
     def load_database(self):
         return load_or_create_database(self.profile)
 
-
 if __name__ == "__main__":
-    DEBUG = 1
+    DEBUG = 0
     if DEBUG == 1:
         import cgitb
-
         cgitb.enable(format='text')
 
     application = Application(sys.argv)

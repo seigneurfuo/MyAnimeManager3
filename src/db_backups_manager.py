@@ -33,7 +33,7 @@ class DBBackupsManager:
     def _remove_old_backups(self):
         backups = self.get_dbs_list()
         if len(backups) >= self.backups_limit:
-            nb_backups_to_delete = len(backups) - 10
+            nb_backups_to_delete = len(backups) - self.backups_limit
             backups_to_remove = backups[:nb_backups_to_delete]
 
             for backup in backups_to_remove:

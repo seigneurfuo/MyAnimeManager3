@@ -23,7 +23,8 @@ class DatabaseHistoryDialog(QDialog):
 
     def init_ui(self):
         loadUi(os.path.join(self.folderpath, "database_history.ui"), self)
-        # self.setWindowTitle(self.serie.name)
+        self.setWindowTitle("Sauvegardes")
+        self.label_2.setText("Nombre de sauvegardes automatiques à conserver: {}".format(self.parent.parent.settings["backups_limit"]))
 
         self.fill_data()
 

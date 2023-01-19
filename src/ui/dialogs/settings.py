@@ -40,10 +40,13 @@ class SettingsDialog(QDialog):
         index = self.comboBox.findData(current_theme)
         self.comboBox.setCurrentIndex(index)
 
-
+        # Conservation des sauvegardes
+        self.spinBox.setValue(self.settings["backups_limit"])
 
     def save_settings_to_file(self):
         self.settings["application_stylesheet"] = self.comboBox.currentData()
+        self.settings["backups_limit"] = self.spinBox.value()
+
         self.parent.parent.settings = self.settings
         save_settings(core.PROFILES_PATH, self.settings)
 

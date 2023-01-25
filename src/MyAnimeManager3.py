@@ -29,11 +29,11 @@ class Application(QApplication):
         self.profile = None
         self.database_path = None
 
-        self.profile = self.load_profile()
-        self.database_path =  self.load_database()
-
         # Définition du thême
         set_theme_to(self, self.settings["application_stylesheet"])
+
+        self.profile = self.load_profile()
+        self.database_path =  self.load_database()
 
         display_name = self.tr("{} - Profil: {}").format(core.app_name_and_version, self.profile.name)
         self.setApplicationDisplayName(display_name)

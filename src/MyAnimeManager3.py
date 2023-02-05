@@ -4,20 +4,24 @@ import sys
 import os
 
 from PyQt5.QtWidgets import QApplication
-
+import core
+import updater
 from ui.dialogs.profiles_manage import ProfilesManageDialog
 
 from ui.main_window import MainWindow
 from database_manager import load_or_create_database
 from profiles import Profiles
-import core
+
 from common import load_settings
-from ui.themes import get_themes_list, set_theme_to
+from ui.themes import set_theme_to
 
 
 class Application(QApplication):
     def __init__(self, args):
         super().__init__(args)
+
+        if core.app_version != "DEV":
+            updater.check_for_update()
 
         self.app_dir = os.path.abspath(os.path.dirname(__file__))
 

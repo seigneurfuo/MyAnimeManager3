@@ -50,6 +50,7 @@ class PlanningTab(QWidget):
         self.show_view_history_button.clicked.connect(self.when_show_view_history_button_clicked)
         self.date_edit.dateChanged.connect(self.when_date_edit_date_changed)
         self.delete_button.clicked.connect(self.when_delete_button_clicked)
+        self.go_to_serie_data_button.clicked.connect(self.when_go_to_serie_data_button_clicked)
         self.change_date_button.clicked.connect(self.when_change_date_button_clicked)
 
     def when_visible(self):
@@ -267,6 +268,9 @@ class PlanningTab(QWidget):
             # On active le bouton d'historique
             self.show_view_history_button.setEnabled(True)
 
+            # On active le obutton pour aller à la fiche de l'animé
+            self.go_to_serie_data_button.setEnabled(True)
+
             # Active ou désactive le bouton d'ouverture du dossier de la série
             season = Seasons().get(self.current_season_id)
             self.open_folder_button.setEnabled(os.path.exists(season.serie.path))
@@ -276,6 +280,7 @@ class PlanningTab(QWidget):
             # On désactive les boutons qui ont une action avec une série selectionnée
             self.add_to_watched_list_button.setEnabled(False)
             self.show_view_history_button.setEnabled(False)
+            self.go_to_serie_data_button.setEnabled(False)
             self.open_folder_button.setEnabled(False)
 
     # TODO: Update watched table buttons
@@ -364,3 +369,13 @@ class PlanningTab(QWidget):
         elif msg_box.clickedButton() == remove_and_keep_episode_num:
             Planning.get(planning_data.id).delete_instance()
             self.fill_data()
+
+    def when_go_to_serie_data_button_clicked(self):
+        current_item = self.tableWidget_6.item(self.tableWidget_6.currentRow(), 0)
+        current_season_id = current_item.data(Qt.UserRole) if current_item else None
+
+        if current_season_id:
+            season = Seasons().get(self.current_season_id)
+
+            self.parent.tabWidget.setCurrentIndex(1)
+            t = self.parent.full_list_tab.set_series_combobox_current_selection(season.serie.id)

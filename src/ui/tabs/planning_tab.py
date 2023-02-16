@@ -32,7 +32,7 @@ class PlanningTab(QWidget):
         self.planning_calendar = CustomCalendar()
         self.planning_calendar.setGridVisible(True)
         self.planning_calendar.setVerticalHeaderFormat(QCalendarWidget.NoVerticalHeader)
-        self.planning_calendar.setCellsBackgroundColor(QColor(115, 210, 22, 50))
+        self.planning_calendar.set_cells_background_color(QColor(115, 210, 22, 50))
         self.verticalLayout.insertWidget(1, self.planning_calendar)
 
     def init_events(self):
@@ -383,4 +383,4 @@ class PlanningTab(QWidget):
             season = Seasons().get(current_season_id)
 
             self.parent.tabWidget.setCurrentIndex(1)
-            t = self.parent.full_list_tab.set_series_combobox_current_selection(season.serie.id)
+            self.parent.full_list_tab.set_series_combobox_current_selection(season.serie.id)

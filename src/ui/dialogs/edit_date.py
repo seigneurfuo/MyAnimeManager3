@@ -100,7 +100,7 @@ class EditDateDialog(QDialog):
 
     def open_friends_list(self):
         dialog = FriendManageDialog()
-        if(dialog.exec()):
+        if dialog.exec():
             self.full_friends_list = dialog.friends_list
             self.update_friends_combobox()
 

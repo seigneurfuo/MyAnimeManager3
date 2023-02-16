@@ -26,4 +26,4 @@ def check_for_update():
                 webbrowser.open(release_page_url, 2)
 
     except:
-        print()
+        pass

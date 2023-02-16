@@ -2,7 +2,7 @@
 import os.path
 
 
-class Theme():
+class Theme:
     def __init__(self, path):
         self.path = path
         self.name, extension = os.path.splitext(os.path.basename(self.path))
@@ -36,7 +36,7 @@ def get_themes_list():
 
     return themes
 
-def set_theme_to(QApplication, theme_filename):
+def set_theme_to(qapplication, theme_filename):
     if theme_filename:
         theme = Theme(theme_filename)
-        QApplication.setStyleSheet(theme.load())
+        qapplication.setStyleSheet(theme.load())

@@ -20,16 +20,17 @@ class Application(QApplication):
     def __init__(self, args):
         super().__init__(args)
 
-        if core.app_version != "DEV":
-            updater.check_for_update()
-
         self.app_dir = os.path.abspath(os.path.dirname(__file__))
 
         self.setApplicationName(core.app_name)
         self.setApplicationDisplayName(core.app_name_and_version)
         self.setApplicationVersion(core.app_version)
 
-        self.settings = load_settings(core.PROFILES_PATH)
+        self.settings = load_settings()
+
+        if core.app_version == "DEV" and self.settings['updates_check']:
+            updater.check_for_update()
+
         self.profile = None
         self.database_path = None
 

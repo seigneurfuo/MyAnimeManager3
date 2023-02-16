@@ -53,7 +53,7 @@ class SettingsDialog(QDialog):
         self.parent.parent.settings = self.settings
 
         # Sauvegarde des paramètres
-        save_settings(core.PROFILES_PATH, self.settings)
+        save_settings(self.settings)
 
     def accept(self):
         self.save_settings_to_file()

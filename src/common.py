@@ -5,7 +5,7 @@ import os
 from database import Planning, Seasons
 import peewee
 
-from core import DEFAULT_CONFIG_DATA
+from core import DEFAULT_CONFIG_DATA, APPLICATION_DATA_PATH
 from ui.dialogs.view_history import ViewHistoryDialog
 
 
@@ -28,8 +28,8 @@ def display_view_history_dialog(season_id):
     dialog.exec()
 
 
-def load_settings(application_config_folder):
-    settings_filepath = os.path.join(application_config_folder, "settings.json")
+def load_settings():
+    settings_filepath = os.path.join(APPLICATION_DATA_PATH, "settings.json")
     user_config = {}
 
     if os.path.isfile(settings_filepath):
@@ -52,16 +52,19 @@ def load_settings(application_config_folder):
                     user_config[default_config_key] = DEFAULT_CONFIG_DATA[default_config_key]
 
             # Sauvegarde des paramètres
-            save_settings(application_config_folder, user_config)
+            save_settings(user_config)
 
     else:
         print("Chargement de la configuration par défaut")
         user_config = DEFAULT_CONFIG_DATA
 
+        # Sauvegarde des paramètres
+        save_settings(user_config)
+
     return user_config
 
-def save_settings(application_config_folder, data):
-    settings_filepath = os.path.join(application_config_folder, "settings.json")
+def save_settings(data):
+    settings_filepath = os.path.join(APPLICATION_DATA_PATH, "settings.json")
 
     with open(settings_filepath, "w") as settings_file:
         json.dump(data, settings_file)

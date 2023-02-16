@@ -23,9 +23,6 @@ class FullListTab(QWidget):
 
         self.parent = parent
 
-        self.current_serie_id = None
-        self.current_season_id = None
-
         self.init_ui()
         self.init_events()
 
@@ -59,6 +56,13 @@ class FullListTab(QWidget):
     def refresh_data(self):
         self.fill_series_combobox()
 
+    def get_current_serie_id(self):
+        return self.comboBox.currentData()
+
+    def get_current_season_id(self):
+        current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
+        return current_item.data(Qt.UserRole) if current_item else None
+
     def fill_series_combobox(self):
         self.comboBox.clear()
         completer_data = []
@@ -82,25 +86,25 @@ class FullListTab(QWidget):
         completer.setCaseSensitivity(Qt.CaseInsensitive)
         self.comboBox.setCompleter(completer)
 
-        self.current_serie_id = self.comboBox.currentData()
-
     def set_series_combobox_current_selection(self, serie_id):
         index = self.comboBox.findData(serie_id)
         self.comboBox.setCurrentIndex(index)
 
     def when_series_list_current_index_changed(self):
-        self.current_serie_id = self.comboBox.currentData()
+        self.clear_serie_data()
 
-        if self.current_serie_id:
-            serie = Series().get(self.current_serie_id)
+        current_serie_id = self.get_current_serie_id()
+        if current_serie_id:
+            serie = Series().get(current_serie_id)
 
             self.fill_serie_data(serie)
             self.fill_season_list(serie)
 
         else:
-            self.current_season_id = 0
-            self.clear_serie_data()
+            #self.current_season_id = 0 # FIXME
             self.tableWidget.setRowCount(0)
+
+        self.clear_season_data()
 
     def fill_serie_data(self, serie):
         fields = [(self.label_3, serie.name)]
@@ -108,11 +112,17 @@ class FullListTab(QWidget):
         for field, value in fields:
             field.setText(value)
 
+        # On masque ou non le bouton pour parcourir le dossier de la série
+        self.open_folder_button.setEnabled(os.path.exists(serie.path))
+
     def clear_serie_data(self):
         fields = [self.label_3, self.label_2]
 
         for field in fields:
             field.clear()
+
+        # On masque pour parcourir le dossier de la série
+        self.open_folder_button.setEnabled(False)
 
     def when_add_serie_button_clicked(self):
         serie = Series()
@@ -123,8 +133,9 @@ class FullListTab(QWidget):
             self.set_series_combobox_current_selection(serie.id)
 
     def when_edit_serie_button_clicked(self):
-        if self.current_serie_id:
-            serie = Series().get(self.current_serie_id)
+        current_serie_id = self.get_current_serie_id()
+        if current_serie_id:
+            serie = Series().get(current_serie_id)
 
             series_dialog = SerieDialog(serie)
             if series_dialog.exec():
@@ -132,19 +143,21 @@ class FullListTab(QWidget):
                 self.set_series_combobox_current_selection(serie.id)
 
     def when_delete_serie_button_clicked(self):
-        if self.current_serie_id:
+        current_serie_id = self.get_current_serie_id()
+        if current_serie_id:
             # ----- Supression des saisons -----
-            serie = Series().get(self.current_serie_id)
+            serie = Series().get(current_serie_id)
             serie.is_deleted = 1
             serie.save()
 
             self.refresh_data()
 
     def when_add_season_button_clicked(self):
-        if self.current_serie_id:
+        current_serie_id = self.get_current_serie_id()
+        if current_serie_id:
             # ----- Supression des saisons -----
             season = Seasons()
-            serie = Series().get(self.current_serie_id)
+            serie = Series().get(current_serie_id)
             seasons_types = SeasonsTypes().select()
             season_dialog = SeasonDialog(season, serie, seasons_types)
 
@@ -153,8 +166,9 @@ class FullListTab(QWidget):
                 self.set_series_combobox_current_selection(serie.id)
 
     def when_edit_season_button_clicked(self):
-        if self.current_season_id:
-            season = Seasons().get(self.current_season_id)
+        current_season_id = self.get_current_season_id()
+        if current_season_id:
+            season = Seasons().get(current_season_id)
             seasons_types = SeasonsTypes().select()
             season_dialog = SeasonDialog(season, serie=None, seasons_types=seasons_types)
             if season_dialog.exec():
@@ -162,9 +176,11 @@ class FullListTab(QWidget):
                 self.set_series_combobox_current_selection(season.serie.id)
 
     def when_delete_season_button_clicked(self):
-        if self.current_season_id:
-            season = Seasons().get(self.current_season_id)
-            serie = Series().get(self.current_serie_id)
+        current_serie_id = self.get_current_serie_id()
+        current_season_id = self.get_current_season_id()
+        if current_season_id:
+            serie = Series().get(current_serie_id)
+            season = Seasons().get(current_season_id)
 
             season.is_deleted = 1
             season.save()
@@ -187,8 +203,9 @@ class FullListTab(QWidget):
                     season.save()
 
     def when_view_history_button_clicked(self):
-        if self.current_season_id:
-            display_view_history_dialog(self.current_season_id)
+        current_season_id = self.get_current_season_id()
+        if current_season_id:
+            display_view_history_dialog(current_season_id)
 
     def fill_season_list(self, serie):
         seasons = serie.seasons.where(Seasons.is_deleted == 0).order_by(Seasons.sort_id)
@@ -232,35 +249,31 @@ class FullListTab(QWidget):
         self.label_4.setPixmap(QPixmap(pixmap_path))
 
         self.plainTextEdit.setPlainText(season.description)
-
-        # On masque ou non le bouton pour parcourir le dossier
-        self.open_folder_button.setEnabled(os.path.exists(season.serie.path))
         self.show_view_history_button.setEnabled(True)
 
     def clear_season_data(self):
         self.plainTextEdit.clear()
-        self.open_folder_button.setEnabled(False)
         self.show_view_history_button.setEnabled(False)
         self.label_4.setPixmap(QPixmap())
+        self.plainTextEdit.clear()
 
     def when_seasons_list_current_index_changed(self):
-        current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
-
-        if current_item:
-            self.current_season_id = current_item.data(Qt.UserRole)
-
-            season = Seasons().get(self.current_season_id)
+        current_season_id = self.get_current_season_id()
+        if current_season_id:
+            season = Seasons().get(current_season_id)
             self.fill_season_data(season)
 
         else:
             self.clear_season_data()
 
     def when_show_view_history_button_clicked(self):
-        if self.current_season_id:
-            display_view_history_dialog(self.current_season_id)
+        current_season_id = self.get_current_season_id()
+        if current_season_id:
+            display_view_history_dialog(current_season_id)
 
     def when_open_folder_button_clicked(self):
-        if self.current_season_id:
-            season = Seasons().get(self.current_season_id)
-            if os.path.exists(season.serie.path):
-                QDesktopServices.openUrl(QUrl.fromLocalFile(season.serie.path))
+        current_serie_id = self.get_current_serie_id()
+        if current_serie_id:
+            serie = Series().get(current_serie_id)
+            if os.path.exists(serie.path):
+                QDesktopServices.openUrl(QUrl.fromLocalFile(serie.path))

@@ -21,7 +21,6 @@ class PlanningTab(QWidget):
         super().__init__(parent)
 
         self.parent = parent
-        self.current_season_id = None
         self.planning_calendar = QWidget()
 
         self.init_ui()
@@ -63,6 +62,10 @@ class PlanningTab(QWidget):
         self.fill_to_watch_table()
 
         self.update_current_season_id()
+
+    def get_current_season_id(self):
+        current_item = self.tableWidget_6.item(self.tableWidget_6.currentRow(), 0)
+        return current_item.data(Qt.UserRole) if current_item else None
 
     def when_planning_calender_date_changed(self):
         # Change aussi la date sur le selecteur de date
@@ -133,7 +136,9 @@ class PlanningTab(QWidget):
         # Nettoyage de la liste
         row_count = len(episodes_to_watch)
         self.tableWidget_6.setRowCount(row_count)
+
         for col_index, row_data in enumerate(episodes_to_watch):
+            # Id
             ids = "{:03d} - {}".format(row_data.serie.sort_id, row_data.sort_id)
             item = QTableWidgetItem(ids)
             item.setToolTip(item.text())
@@ -212,8 +217,9 @@ class PlanningTab(QWidget):
         self.date_edit.setDate(current_date)
 
     def add_to_watched_list(self):
-        if self.current_season_id:
-            self.add_episode_to_planning(self.current_season_id)
+        current_season_id = self.get_current_season_id()
+        if current_season_id:
+            self.add_episode_to_planning(current_season_id)
             self.fill_data()
 
     def when_add_to_watched_list_button_clicked(self):
@@ -258,10 +264,9 @@ class PlanningTab(QWidget):
         self.update_current_season_id()
 
     def update_current_season_id(self):
-        current_item = self.tableWidget_6.item(self.tableWidget_6.currentRow(), 0)
-        self.current_season_id = current_item.data(Qt.UserRole) if current_item else None
+        current_season_id = self.get_current_season_id()
 
-        if self.current_season_id:
+        if current_season_id:
             # On active le bouton d'ajout aux épisodes vus
             self.add_to_watched_list_button.setEnabled(True)
 
@@ -272,7 +277,7 @@ class PlanningTab(QWidget):
             self.go_to_serie_data_button.setEnabled(True)
 
             # Active ou désactive le bouton d'ouverture du dossier de la série
-            season = Seasons().get(self.current_season_id)
+            season = Seasons().get(current_season_id)
             self.open_folder_button.setEnabled(os.path.exists(season.serie.path))
             self.show_view_history_button.setEnabled(True)
 
@@ -286,14 +291,16 @@ class PlanningTab(QWidget):
     # TODO: Update watched table buttons
 
     def when_open_folder_button_clicked(self):
-        if self.current_season_id:
-            season = Seasons().get(self.current_season_id)
+        current_season_id = self.get_current_season_id()
+        if current_season_id:
+            season = Seasons().get(current_season_id)
             if os.path.exists(season.serie.path):
                 QDesktopServices.openUrl(QUrl.fromLocalFile(season.serie.path))
 
     def when_show_view_history_button_clicked(self):
-        if self.current_season_id:
-            display_view_history_dialog(self.current_season_id)
+        current_season_id = self.get_current_season_id()
+        if current_season_id:
+            display_view_history_dialog(current_season_id)
 
     def when_delete_button_clicked(self):
         current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)
@@ -371,11 +378,9 @@ class PlanningTab(QWidget):
             self.fill_data()
 
     def when_go_to_serie_data_button_clicked(self):
-        current_item = self.tableWidget_6.item(self.tableWidget_6.currentRow(), 0)
-        current_season_id = current_item.data(Qt.UserRole) if current_item else None
-
+        current_season_id = self.get_current_season_id()
         if current_season_id:
-            season = Seasons().get(self.current_season_id)
+            season = Seasons().get(current_season_id)
 
             self.parent.tabWidget.setCurrentIndex(1)
             t = self.parent.full_list_tab.set_series_combobox_current_selection(season.serie.id)

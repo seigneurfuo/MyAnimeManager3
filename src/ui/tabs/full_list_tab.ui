@@ -411,7 +411,7 @@
      <item>
       <widget class="QPushButton" name="open_folder_button">
        <property name="text">
-        <string>Ouvrir le dossier de la saison</string>
+        <string>Ouvrir le dossier de la série</string>
        </property>
        <property name="icon">
         <iconset>

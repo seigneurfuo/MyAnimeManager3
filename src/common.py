@@ -30,14 +30,35 @@ def display_view_history_dialog(season_id):
 
 def load_settings(application_config_folder):
     settings_filepath = os.path.join(application_config_folder, "settings.json")
+    user_config = {}
 
     if os.path.isfile(settings_filepath):
         with open(settings_filepath, "r") as settings_file:
             print("Chargement de la configuration depuis:", settings_filepath)
-            return json.load(settings_file)
+            user_config = json.load(settings_file)
+
+        # On vérifie que l'on est le même nombre de cléfs par rapport à la configuration par défaut.
+        # Si ce n'est pas le cas, alors on ajoute les cléfs manquantes sur le configuration de l'utilisateur en pernant les valeurs par défaut
+        default_config_keys = DEFAULT_CONFIG_DATA.keys()
+        user_config_keys = user_config.keys()
+
+        if len(user_config_keys) != len(default_config_keys):
+            for default_config_key in default_config_keys:
+                if default_config_key not in user_config_keys:
+                    msg = "Ajout de la cléf manquante dans la configuration de l'utilisateur: {}".format(default_config_key)
+                    print(msg)
+
+                    # Application de la nouvelle valeur
+                    user_config[default_config_key] = DEFAULT_CONFIG_DATA[default_config_key]
+
+            # Sauvegarde des paramètres
+            save_settings(application_config_folder, user_config)
+
     else:
         print("Chargement de la configuration par défaut")
-        return DEFAULT_CONFIG_DATA
+        user_config = DEFAULT_CONFIG_DATA
+
+    return user_config
 
 def save_settings(application_config_folder, data):
     settings_filepath = os.path.join(application_config_folder, "settings.json")

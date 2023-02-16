@@ -12,7 +12,8 @@ PROFILES_PATH = os.path.join(APPLICATION_DATA_PATH, "profiles")
 
 DEFAULT_CONFIG_DATA = {
     "application_stylesheet": None,
-    "backups_limit": 10
+    "backups_limit": 10,
+    "updates_check": True
 }
 
 SEASONS_STATES = [

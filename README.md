@@ -34,3 +34,11 @@ Pour le moment, la configuration est à faire dans le fichier du script.
 make archlinux-build
 make archlinux-install
 ```
+
+### Windows
+
+Installer: git, nsis, Python3, PyInstaller (```pip install pyinstaller```)
+Ensuite: ```pip install -r requirements.txt```
+
+Depuis la racine du projet:
+.\packaging\windows\build.bat

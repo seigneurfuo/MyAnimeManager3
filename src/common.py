@@ -64,6 +64,9 @@ def load_settings():
     return user_config
 
 def save_settings(data):
+    if not os.path.isdir(APPLICATION_DATA_PATH):
+        os.makedirs(APPLICATION_DATA_PATH)
+
     settings_filepath = os.path.join(APPLICATION_DATA_PATH, "settings.json")
 
     with open(settings_filepath, "w") as settings_file:

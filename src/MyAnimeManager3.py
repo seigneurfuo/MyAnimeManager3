@@ -51,8 +51,7 @@ class Application(QApplication):
 
     def load_profile(self):
         # Creation des dossiers de l'applications
-        if not os.path.isdir(core.APPLICATION_DATA_PATH):
-            os.makedirs(core.APPLICATION_DATA_PATH)
+        if not os.path.isdir(core.PROFILES_PATH):
             os.makedirs(core.PROFILES_PATH)
 
         profiles_list = Profiles.get_profiles_list()

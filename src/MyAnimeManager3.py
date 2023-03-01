@@ -28,7 +28,7 @@ class Application(QApplication):
 
         self.settings = load_settings()
 
-        if core.app_version == "DEV" and self.settings['updates_check']:
+        if core.app_version != "DEV" and self.settings['updates_check']:
             updater.check_for_update()
 
         self.profile = None

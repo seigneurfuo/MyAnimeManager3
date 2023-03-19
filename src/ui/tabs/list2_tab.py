@@ -30,10 +30,12 @@ class List2(QWidget):
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "list2_tab.ui"), self)
         self.pushButton_2.setEnabled(False)
+        self.go_to_serie_data_button.setEnabled(False)
 
     def init_events(self):
         self.pushButton.clicked.connect(self.when_export_button_clicked)
         self.pushButton_2.clicked.connect(self.when_show_view_history_button_clicked)
+        self.go_to_serie_data_button.clicked.connect(self.when_go_to_serie_data_button_clicked)
         self.tableWidget.currentCellChanged.connect(self.when_current_cell_changed)
 
     def when_visible(self):
@@ -41,6 +43,7 @@ class List2(QWidget):
 
     def when_current_cell_changed(self):
         self.pushButton_2.setEnabled(True)
+        self.go_to_serie_data_button.setEnabled(True)
 
     def when_show_view_history_button_clicked(self):
         current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
@@ -48,6 +51,16 @@ class List2(QWidget):
 
         if current_season_id:
             display_view_history_dialog(current_season_id)
+
+    def when_go_to_serie_data_button_clicked(self):
+        current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
+        current_season_id = current_item.data(Qt.UserRole) if current_item else None
+
+        if current_season_id:
+            season = Seasons().get(current_season_id)
+
+            self.parent.tabWidget.setCurrentIndex(1)
+            self.parent.full_list_tab.set_series_combobox_current_selection(season.serie.id)
 
     def fill_data(self):
         today_date_object = datetime.now()

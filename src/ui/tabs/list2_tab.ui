@@ -130,6 +130,17 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="go_to_serie_data_button">
+       <property name="text">
+        <string>Fiche de la série</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../resources/icons/films.png</normaloff>../../resources/icons/films.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButton">
        <property name="text">
         <string>Exporter la liste</string>

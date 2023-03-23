@@ -93,7 +93,7 @@ def get_collection_problems():
 
             elif season.episodes == 0:
                 msg = tr("Série: {}. La saison \"{}\" n'a aucun nombre d'épisodes définis.").format(
-                    season.sort_id,
+                    season.serie.name,
                     season.name)
                 messages.append(msg)
 

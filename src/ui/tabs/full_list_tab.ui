@@ -207,6 +207,90 @@
         </property>
        </widget>
       </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QTableWidget" name="tableWidget">
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SingleSelection</enum>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectRows</enum>
+        </property>
+        <property name="verticalScrollMode">
+         <enum>QAbstractItemView::ScrollPerPixel</enum>
+        </property>
+        <property name="horizontalScrollMode">
+         <enum>QAbstractItemView::ScrollPerPixel</enum>
+        </property>
+        <attribute name="horizontalHeaderVisible">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="horizontalHeaderHighlightSections">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="verticalHeaderVisible">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="verticalHeaderDefaultSectionSize">
+         <number>20</number>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>ID</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Titre</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Type</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Année</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Nb. épisodes</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Nb. d'épisodes vus</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Nb. visionnages</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Etat</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Note</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Vu avec</string>
+         </property>
+        </column>
+       </widget>
+      </item>
       <item row="1" column="2">
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
@@ -323,84 +407,6 @@
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QTableWidget" name="tableWidget">
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
-        </property>
-        <property name="selectionMode">
-         <enum>QAbstractItemView::SingleSelection</enum>
-        </property>
-        <property name="selectionBehavior">
-         <enum>QAbstractItemView::SelectRows</enum>
-        </property>
-        <attribute name="horizontalHeaderVisible">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="horizontalHeaderHighlightSections">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="horizontalHeaderStretchLastSection">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="verticalHeaderVisible">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="verticalHeaderDefaultSectionSize">
-         <number>20</number>
-        </attribute>
-        <column>
-         <property name="text">
-          <string>ID</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Titre</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Type</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Année</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Nb. épisodes</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Nb. d'épisodes vus</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Nb. visionnages</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Etat</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Note</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Vu avec</string>
-         </property>
-        </column>
        </widget>
       </item>
      </layout>

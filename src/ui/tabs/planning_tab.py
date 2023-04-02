@@ -343,41 +343,6 @@ class PlanningTab(QWidget):
                 self.fill_calendar_dates()
                 self.fill_watched_table()
 
-    def show_delete_watched_episode_window(self, planning_data):
-        episode_num = planning_data.episode
-        previous_episode_num = episode_num - 1
-        next_episode_num = episode_num + 1
-
-        msg_box = QMessageBox(self)
-        msg_box.setWindowTitle(self.tr("Supression d'un épisode vu"))
-
-        # TODO: Traduction
-        msg_box.setText(self.tr("Vous aller supprimer le visionnage de l'épisode: {}.".format(episode_num)))
-
-        remove_and_decrement_episode = msg_box.addButton(self.tr(
-            "Supprimer l'épisode {0}. Prochain épisode suggéré: {0}".format(episode_num)), QMessageBox.YesRole)
-
-        remove_and_keep_episode_num = msg_box.addButton(self.tr(
-            "Supprimer l'épisode {0}. Prochain épisode suggéré: {1}".format(episode_num, next_episode_num)),
-            QMessageBox.NoRole)
-
-        msg_box.addButton(self.tr("Annuler"), QMessageBox.RejectRole)
-        msg_box.exec()
-
-        if msg_box.clickedButton() == remove_and_decrement_episode:
-
-            # FIXME: Marche pas
-            season = Seasons.get(planning_data.season)
-            season.watched_episodes = previous_episode_num
-            season.save()
-
-            Planning.get(planning_data.id).delete_instance()
-            self.fill_data()
-
-        elif msg_box.clickedButton() == remove_and_keep_episode_num:
-            Planning.get(planning_data.id).delete_instance()
-            self.fill_data()
-
     def when_go_to_serie_data_button_clicked(self):
         current_season_id = self.get_current_season_id()
         if current_season_id:

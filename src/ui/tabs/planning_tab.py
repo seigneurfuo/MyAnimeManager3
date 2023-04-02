@@ -107,7 +107,8 @@ class PlanningTab(QWidget):
         for row_index, planning_data in enumerate(planning_data_list):
             friends = [friend_planning.friend.name for friend_planning in planning_data.friends]
             columns = ["{:03d} - {}".format(planning_data.serie.sort_id, planning_data.season.sort_id),
-                       planning_data.season.serie.name, planning_data.season.name, str(planning_data.episode),
+                       planning_data.season.serie.name, planning_data.season.name,
+                       str(planning_data.episode) + " (Fin)" if planning_data.episode == planning_data.season.episodes else str(planning_data.episode),
                        ", ".join(friends)]
 
             for col_index, value in enumerate(columns):

@@ -13,6 +13,8 @@ from ui.tabs.planning_tab import PlanningTab
 from ui.tabs.full_list_tab import FullListTab
 from ui.tabs.list2_tab import List2
 from ui.tabs.tools_tab import ToolsTab
+from ui.tabs.stats_tab import StatsTab
+
 
 # Dialogues
 from ui.dialogs.about import AboutDialog
@@ -59,8 +61,12 @@ class MainWindow(QMainWindow):
         self.tools_tab = ToolsTab(self)
         self.tools_tab_layout.addWidget(self.tools_tab)
 
+        # Onglet 5 - Statistiques
+        self.stats_tab = StatsTab(self)
+        self.stats_tab_layout.addWidget(self.stats_tab)
+
         # Remplissage de la liste des onglets
-        self.tabs = (self.planning_tab, self.full_list_tab, self.list2_tab, self.tools_tab)
+        self.tabs = (self.planning_tab, self.full_list_tab, self.list2_tab, self.tools_tab, self.stats_tab)
 
         # Onglet par défaut
         self.tabWidget.setCurrentIndex(0)  # TODO: Configuration

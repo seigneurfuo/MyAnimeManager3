@@ -76,8 +76,7 @@ class Application(QApplication):
         return load_or_create_database(self.profile)
 
 if __name__ == "__main__":
-    DEBUG = 0
-    if DEBUG == 1:
+    if core.app_version == "DEV":
         import cgitb
         cgitb.enable(format='text')
 

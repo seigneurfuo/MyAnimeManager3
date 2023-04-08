@@ -24,7 +24,8 @@ class StatsTab(QWidget):
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "stats.ui"), self)
 
-        requests_list = ["Nombre de saisons par année", "Saisons les plus revisionnées"]
+        requests_list = [self.tr("Nombre de saisons par année"), self.tr("Saisons les plus revisionnées"),
+                         self.tr("Saison avec le plus d'épisodes")]
         for index, name in enumerate(requests_list):
             self.comboBox.addItem(name, userData=index)
 
@@ -69,9 +70,15 @@ class StatsTab(QWidget):
 
         # Saisons les plus revisionnées
         if request_index == 1:
-            headers = ["Saison", "Nombre"]
-            request = Seasons.select(Seasons.name, Seasons.view_count)\
+            headers = ["Série", "Saison", "Nombre"]
+            request = Seasons.select(Series.name.alias("serie_name"), Seasons.name, Seasons.view_count).join(Series)\
                 .where(Seasons.is_deleted == 0)\
                 .order_by(Seasons.view_count.desc()).dicts()
+
+        if request_index == 2:
+            headers = ["Série", "Saison", "Nombre"]
+            request = Seasons.select(Series.name.alias("serie_name"), Seasons.name, Seasons.episodes).join(Series)\
+                .where(Seasons.is_deleted == 0)\
+                .order_by(Seasons.episodes.desc()).dicts()
 
         return headers, request

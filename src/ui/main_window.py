@@ -15,7 +15,6 @@ from ui.tabs.list2_tab import List2
 from ui.tabs.tools_tab import ToolsTab
 from ui.tabs.stats_tab import StatsTab
 
-
 # Dialogues
 from ui.dialogs.about import AboutDialog
 from ui.dialogs.collection_problems import CollectionProblemsDialog
@@ -26,6 +25,7 @@ from ui.dialogs.settings import SettingsDialog
 from db_backups_manager import DBBackupsManager
 from exports import export_planning_to_csv
 
+import core
 import utils
 
 class MainWindow(QMainWindow):
@@ -126,7 +126,7 @@ class MainWindow(QMainWindow):
         dialog.exec()
 
     def when_menu_action_bug_report_clicked(self):
-        webbrowser.open_new("https://github.com/seigneurfuo/MyAnimeManager3/issues/new")
+        webbrowser.open_new(core.bugtracker_url)
 
     def when_menu_action_open_database_backups_clicked(self):
         dialog = DatabaseHistoryDialog(self)

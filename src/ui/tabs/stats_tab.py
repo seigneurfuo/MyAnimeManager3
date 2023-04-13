@@ -8,7 +8,7 @@ from PyQt5.QtCore import QTime
 import os
 
 import peewee
-from database import Series, Seasons
+from database import Series, Seasons, Planning
 
 class StatsTab(QWidget):
     def __init__(self, parent):
@@ -24,8 +24,9 @@ class StatsTab(QWidget):
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "stats.ui"), self)
 
-        requests_list = [self.tr("Nombre de saisons par année"), self.tr("Saisons les plus revisionnées"),
-                         self.tr("Saison avec le plus d'épisodes")]
+        requests_list = [self.tr("Nombre de saisons par année de sortie"), self.tr("Saisons les plus revisionnées"),
+                         self.tr("Saison avec le plus d'épisodes"), self.tr("Nombre d'épisodes vus par année"),
+                         self.tr("Séries avec le plus d'épisodes")]
         for index, name in enumerate(requests_list):
             self.comboBox.addItem(name, userData=index)
 
@@ -69,16 +70,29 @@ class StatsTab(QWidget):
                 .group_by(Seasons.year).order_by(Seasons.year).dicts()
 
         # Saisons les plus revisionnées
-        if request_index == 1:
+        elif request_index == 1:
             headers = ["Série", "Saison", "Nombre"]
             request = Seasons.select(Series.name.alias("serie_name"), Seasons.name, Seasons.view_count).join(Series)\
-                .where(Seasons.is_deleted == 0)\
-                .order_by(Seasons.view_count.desc()).dicts()
+                .where(Seasons.is_deleted == 0).order_by(Seasons.view_count.desc()).dicts()
 
-        if request_index == 2:
+        # Saison avec le plus d'épisodes
+        elif request_index == 2:
             headers = ["Série", "Saison", "Nombre"]
             request = Seasons.select(Series.name.alias("serie_name"), Seasons.name, Seasons.episodes).join(Series)\
-                .where(Seasons.is_deleted == 0)\
-                .order_by(Seasons.episodes.desc()).dicts()
+                .where(Seasons.is_deleted == 0).order_by(Seasons.episodes.desc()).dicts()
+
+        #
+        elif request_index == 3:
+            headers = ["Année", "Nombre"]
+            request = Planning.select(Planning.date.year, peewee.fn.COUNT(Planning.id))\
+                .group_by(Planning.date.year).order_by(Planning.date.year).dicts()
+
+        # Séries avec le plus d'épisodes
+        elif request_index == 4:
+            headers = ["Série", "Nombre saisons", "Nombre épisodes"]
+            request = Seasons.select(Series.name.alias("serie_name"), peewee.fn.COUNT(Seasons.id),
+                                     peewee.fn.SUM(Seasons.episodes)).join(Series)\
+                .where(Seasons.is_deleted == 0).group_by(Series.id)\
+                .order_by(peewee.fn.SUM(Seasons.episodes).desc()).dicts()
 
         return headers, request

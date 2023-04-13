@@ -1,7 +1,7 @@
 #!/bin/env python3
 import random
 
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QHeaderView
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QHeaderView, QMessageBox
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QTime
 
@@ -9,6 +9,9 @@ import os
 
 import peewee
 from database import Series, Seasons, Planning
+
+import utils
+
 
 class StatsTab(QWidget):
     def __init__(self, parent):
@@ -32,6 +35,7 @@ class StatsTab(QWidget):
 
     def init_events(self):
         self.comboBox.currentIndexChanged.connect(self.when_stats_list_current_index_changed)
+        self.export_button.clicked.connect(self.when_export_button_clicked)
 
     def when_visible(self):
         self.fill_stats_table_data()
@@ -59,6 +63,15 @@ class StatsTab(QWidget):
         self.stats_table.resizeColumnsToContents()
         # self.stats_table.horizontalHeader().setSectionResizeMode(self.stats_table.columnCount() - 1,
         #                                                          QHeaderView.ResizeToContents)
+
+    def when_export_button_clicked(self):
+        request_name = self.comboBox.currentText()
+
+        filepath = utils.export_qtablewidget(self.stats_table, self.parent.parent.profile.path, request_name)
+        # TODO: Bouton pour ouvrir le dossier ?
+        QMessageBox.information(self, self.tr("Export terminé"),
+                                self.tr("Le fichier a été généré ici:") + "\n    " + filepath,
+                                QMessageBox.Ok)
 
     def execute_request(self):
         request_index = self.comboBox.currentData()

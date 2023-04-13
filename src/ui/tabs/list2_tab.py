@@ -78,7 +78,7 @@ class List2(QWidget):
             year = str(season.year) if season.year and str(season.year) != "None" else ""
 
             # Calcul de l'age
-            if year:
+            if year and len(year) == 4:
                 # Différence entre deux dates
                 release_year_datetime_object = datetime.strptime(str(season.year), "%Y")
                 age_diff = today_date_object.year - release_year_datetime_object.year

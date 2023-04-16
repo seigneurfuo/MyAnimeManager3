@@ -10,9 +10,10 @@ packaging/PKGBUILD/MyAnimeManager3/
 packaging/PKGBUILD/pkg/
 packaging/PKGBUILD/src/
 
-packaging/noarch/
-packaging/results_*/
-packaging/.build-*
+packaging/rpm/*.rpm
+packaging/rpm/noarch/
+packaging/rpm/results_*/
+packaging/rpm/.build-*
 
 packaging/windows/dist/
 packaging/windows/*.exe

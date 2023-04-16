@@ -13,18 +13,21 @@ Commencé en 2018.
 
 ## Lancement simple sans instalation
 
+Après avoir cloné le dépot: on peut lancer la commande suivant pour disposer de thêmes supplémentaires. Elle n'est pas obligatoire:
+
+```sh
+git submodule update
+```
+
+Installer les dépendances suivantes:
+
+- python
+- python-qt5
+- python-peewee
+
 ```sh
 python3 src/MyAnimeManager3.py
 ```
-
-## Migration des données de MyAnimeManager2 vers MyAnimeManager3
-Pour migrer depuis la version 2, il est possible d'éxecuter un script qui va reprendre toutes les données et les migrer sur la nouvelle version:
-
-```sh
-python3 src/migrate_myanimemanager_v2_to_v3.py
-```
-
-Pour le moment, la configuration est à faire dans le fichier du script.
 
 ## Compilation & Installation
 

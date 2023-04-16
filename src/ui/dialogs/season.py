@@ -79,7 +79,7 @@ class SeasonDialog(QDialog):
         self.season.sort_id = self.spinBox.value()
         self.season.name = self.lineEdit_2.text().strip()
 
-        self.season.year = None if self.spinBox_5.value() == 0 or len(self.spinBox_5.value()) != 4 else self.spinBox_5.value()
+        self.season.year = None if self.spinBox_5.value() == 0 or len(str(self.spinBox_5.value())) != 4 else self.spinBox_5.value()
 
         self.season.state = self.combobox_1.currentIndex()
         self.season.episodes = self.spinBox_4.value()

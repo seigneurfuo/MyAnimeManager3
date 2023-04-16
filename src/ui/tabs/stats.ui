@@ -43,6 +43,12 @@
    </item>
    <item row="1" column="0" colspan="2">
     <widget class="QTableWidget" name="stats_table">
+     <property name="verticalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="horizontalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
      <property name="sortingEnabled">
       <bool>true</bool>
      </property>

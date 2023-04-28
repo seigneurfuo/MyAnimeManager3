@@ -44,7 +44,7 @@ class ViewHistoryDialog(QDialog):
                        Friends.select(Friends.name).where(Seasons.id == row.season.id).where(Planning.date == row.date) \
                            .join(FriendsPlanning).join(Planning).join(Seasons).group_by(Friends.name)]
 
-            columns = [row.date.strftime("%d/%m/%Y"), row.season.name, self.season.type.name, row.episodes,
+            columns = [row.date.strftime("%d/%m/%Y"), "{} - {}".format(row.season.sort_id, row.season.name), self.season.type.name, row.episodes,
                        ", ".join(friends)]
 
             for col_index, value in enumerate(columns):
@@ -66,7 +66,7 @@ class ViewHistoryDialog(QDialog):
                        Friends.select(Friends.name).where(Seasons.id == row.season.id).where(Planning.date == row.date) \
                            .join(FriendsPlanning).join(Planning).join(Seasons).group_by(Friends.name)]
 
-            columns = [row.date.strftime("%d/%m/%Y"), row.season.name, self.season.type.name, row.episodes,
+            columns = [row.date.strftime("%d/%m/%Y"), "{} - {}".format(row.season.sort_id, row.season.name), self.season.type.name, row.episodes,
                        ", ".join(friends)]
 
             # FIXME: Ne fonctionne pas quand il y à plusieurs épisodes

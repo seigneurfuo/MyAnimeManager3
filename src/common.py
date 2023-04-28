@@ -18,7 +18,7 @@ def display_view_history_dialog(season_id):
 
     serie_episodes = Planning().select(Planning.date, Planning.season, episodes.alias('episodes')) \
         .where(Planning.serie == season.serie.id) \
-        .group_by(Planning.date).order_by(Planning.date, Planning.episode)
+        .group_by(Planning.date, Planning.season).order_by(Planning.date, Planning.episode)
 
     season_episodes = Planning().select(Planning.date, Planning.season, episodes.alias('episodes')) \
         .where(Planning.season == season.id) \

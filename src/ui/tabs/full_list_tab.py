@@ -205,7 +205,7 @@ class FullListTab(QWidget):
     def when_view_history_button_clicked(self):
         current_season_id = self.get_current_season_id()
         if current_season_id:
-            display_view_history_dialog(current_season_id)
+            display_view_history_dialog(self, current_season_id)
 
     def fill_season_list(self, serie):
         seasons = serie.seasons.where(Seasons.is_deleted == 0).order_by(Seasons.sort_id)
@@ -269,7 +269,7 @@ class FullListTab(QWidget):
     def when_show_view_history_button_clicked(self):
         current_season_id = self.get_current_season_id()
         if current_season_id:
-            display_view_history_dialog(current_season_id)
+            display_view_history_dialog(self, current_season_id)
 
     def when_open_folder_button_clicked(self):
         current_serie_id = self.get_current_serie_id()

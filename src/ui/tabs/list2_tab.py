@@ -50,7 +50,7 @@ class List2(QWidget):
         current_season_id = current_item.data(Qt.UserRole) if current_item else None
 
         if current_season_id:
-            display_view_history_dialog(current_season_id)
+            display_view_history_dialog(self, current_season_id)
 
     def when_go_to_serie_data_button_clicked(self):
         current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)

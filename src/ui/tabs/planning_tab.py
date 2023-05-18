@@ -5,8 +5,7 @@ import os
 
 from PyQt5.QtCore import Qt, QDate, QUrl
 from PyQt5.QtGui import QColor, QDesktopServices, QIcon
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QProgressBar, QMessageBox, QHeaderView, QCalendarWidget, \
-    QTableWidget
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QProgressBar, QHeaderView, QCalendarWidget
 from PyQt5.uic import loadUi
 
 from ui.dialogs.edit_date import EditDateDialog
@@ -77,6 +76,10 @@ class PlanningTab(QWidget):
     def when_date_edit_date_changed(self):
         self.planning_calendar.setSelectedDate(self.date_edit.date())
         self.fill_watched_table()
+
+    def set_planning_date(self, date):
+        self.date_edit.setDate(QDate(date))
+        self.when_date_edit_date_changed()
 
     def fill_calendar_dates(self):
         # Coloration des jours sur le calendrier
@@ -307,7 +310,7 @@ class PlanningTab(QWidget):
     def when_show_view_history_button_clicked(self):
         current_season_id = self.get_current_season_id()
         if current_season_id:
-            display_view_history_dialog(current_season_id)
+            display_view_history_dialog(self, current_season_id)
 
     def when_delete_button_clicked(self):
         current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)

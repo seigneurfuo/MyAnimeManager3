@@ -7,7 +7,7 @@ arch=('any')
 license=('')
 groups=("★ seigneurfuo: Paquets persos")
 depends=("python" "python-pyqt5" "python-peewee")
-source=("${pkgname}.desktop" "git+file:///home/seigneurfuo/Projets/MyAnimeManager/MyAnimeManager3#branch=master")
+source=("${pkgname}.desktop" "git+file:///home/$USER/Projets/MyAnimeManager/MyAnimeManager3#branch=master")
 md5sums=('SKIP'
          'SKIP')
 

@@ -9,7 +9,7 @@ from core import DEFAULT_CONFIG_DATA, APPLICATION_DATA_PATH
 from ui.dialogs.view_history import ViewHistoryDialog
 
 
-def display_view_history_dialog(season_id):
+def display_view_history_dialog(parent, season_id):
     season = Seasons.get(season_id)
 
     # Utilisé pour faire un group concat...
@@ -24,7 +24,7 @@ def display_view_history_dialog(season_id):
         .where(Planning.season == season.id) \
         .group_by(Planning.date).order_by(Planning.date, Planning.episode)
 
-    dialog = ViewHistoryDialog(season, serie_episodes, season_episodes)
+    dialog = ViewHistoryDialog(parent, season, serie_episodes, season_episodes)
     dialog.exec()
 
 

@@ -295,6 +295,10 @@
             <property name="text">
              <string>Calculer</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>../../resources/icons/gear.png</normaloff>../../resources/icons/gear.png</iconset>
+            </property>
            </widget>
           </item>
          </layout>

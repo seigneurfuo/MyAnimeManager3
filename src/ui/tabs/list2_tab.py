@@ -29,8 +29,6 @@ class List2(QWidget):
 
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "list2_tab.ui"), self)
-        self.pushButton_2.setEnabled(False)
-        self.go_to_serie_data_button.setEnabled(False)
 
     def init_events(self):
         self.pushButton.clicked.connect(self.when_export_button_clicked)
@@ -40,6 +38,9 @@ class List2(QWidget):
 
     def when_visible(self):
         self.fill_data()
+
+        self.pushButton_2.setEnabled(False)
+        self.go_to_serie_data_button.setEnabled(False)
 
     def when_current_cell_changed(self):
         self.pushButton_2.setEnabled(True)

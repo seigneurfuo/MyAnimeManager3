@@ -22,9 +22,8 @@ class ViewHistoryDialog(QDialog):
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "view_history.ui"), self)
 
-        self.tabWidget.setCurrentIndex(0)
-
         self.setWindowTitle(self.tr("Historique de visionnage") + ": " + self.season.serie.name)
+        self.tabWidget.setCurrentIndex(0)
 
         self.fill_data()
 
@@ -32,10 +31,10 @@ class ViewHistoryDialog(QDialog):
         self.pushButton.clicked.connect(self.when_go_to_planning_date)
 
     def fill_data(self):
-        self.fill_season_history()
-        self.fill_serie_history()
+        self.fill_seasons_history()
+        self.fill_series_history()
 
-    def fill_serie_history(self):
+    def fill_series_history(self):
         row_count = len(self.serie_episodes)
         self.serie_label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
         self.serie_table.setRowCount(row_count)
@@ -59,7 +58,7 @@ class ViewHistoryDialog(QDialog):
         self.serie_table.horizontalHeader().setSectionResizeMode(self.serie_table.columnCount() - 1,
                                                                  QHeaderView.ResizeToContents)
 
-    def fill_season_history(self):
+    def fill_seasons_history(self):
         row_count = len(self.season_episodes)
         self.season_label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
         self.season_table.setRowCount(row_count)

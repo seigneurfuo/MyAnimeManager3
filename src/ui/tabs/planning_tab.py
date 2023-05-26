@@ -52,6 +52,9 @@ class PlanningTab(QWidget):
         self.change_date_button.clicked.connect(self.when_change_date_button_clicked)
 
     def when_visible(self):
+        self.refresh_data()
+
+    def refresh_data(self):
         self.update_date_on_widgets()
         self.fill_data()
 

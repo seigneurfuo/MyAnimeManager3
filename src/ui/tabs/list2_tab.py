@@ -37,6 +37,9 @@ class List2(QWidget):
         self.tableWidget.currentCellChanged.connect(self.when_current_cell_changed)
 
     def when_visible(self):
+        self.refresh_data()
+
+    def refresh_data(self):
         self.fill_data()
 
         self.pushButton_2.setEnabled(False)

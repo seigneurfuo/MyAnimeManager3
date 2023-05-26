@@ -37,6 +37,9 @@ class ToolsTab(QWidget):
         self.select_random_season_button.clicked.connect(self.when_select_random_season_button_clicked)
 
     def when_visible(self):
+        self.refresh_data()
+
+    def refresh_data(self):
         self.set_current_time()
 
     def duration_calculation(self):

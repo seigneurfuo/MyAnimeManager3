@@ -45,7 +45,7 @@
      </attribute>
      <column>
       <property name="text">
-       <string>ID</string>
+       <string>Ids</string>
       </property>
      </column>
      <column>

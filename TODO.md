@@ -8,6 +8,7 @@
 
 ### En priorité
 - Améliorer le responsive
+- Unifier les "IDS" dans les tableaux et autres. Une colonne avec ID sur chiffres (voir planning de visionnage)
 
 ### Conventions des programmation
 - Déplacer le chargement des données dans fill_data au lieu de les metre dans init_ui()

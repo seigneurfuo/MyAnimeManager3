@@ -121,7 +121,8 @@ class PlanningTab(QWidget):
                 episode_number += self.tr(" (unique)")
 
             columns = ["{:03d} - {}".format(planning_data.serie.sort_id, planning_data.season.sort_id),
-                       planning_data.season.serie.name, planning_data.season.name, episode_number, ", ".join(friends)]
+                       planning_data.season.serie.name, planning_data.season.name, planning_data.season.type.name,
+                       episode_number, ", ".join(friends)]
 
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)

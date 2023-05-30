@@ -168,7 +168,12 @@
          </column>
          <column>
           <property name="text">
-           <string>Episode</string>
+           <string>Type</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>N° Episode</string>
           </property>
          </column>
          <column>

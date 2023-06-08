@@ -14,6 +14,173 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="3" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout_16">
+     <item>
+      <widget class="QLabel" name="label_80">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Episodes à voir:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTableWidget" name="tableWidget_6">
+       <property name="minimumSize">
+        <size>
+         <width>497</width>
+         <height>164</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+       <property name="verticalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
+       <property name="horizontalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
+       <attribute name="horizontalHeaderStretchLastSection">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="verticalHeaderMinimumSectionSize">
+        <number>20</number>
+       </attribute>
+       <attribute name="verticalHeaderDefaultSectionSize">
+        <number>20</number>
+       </attribute>
+       <attribute name="verticalHeaderStretchLastSection">
+        <bool>false</bool>
+       </attribute>
+       <column>
+        <property name="text">
+         <string>Ids</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Série</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Saison</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Type</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Etat</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>En diffusion</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Episode</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Avancement</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_43">
+       <item>
+        <widget class="QPushButton" name="add_to_watched_list_button">
+         <property name="text">
+          <string>Ajouter aux épisodes vus</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../resources/icons/eye-plus.png</normaloff>../../resources/icons/eye-plus.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="open_folder_button">
+         <property name="text">
+          <string>Ouvrir le dossier</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../resources/icons/folder-horizontal-open.png</normaloff>../../resources/icons/folder-horizontal-open.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="to_watch_table_show_view_history_button">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Historique de visionnage</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../resources/icons/film-timeline.png</normaloff>../../resources/icons/film-timeline.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="go_to_serie_data_button">
+         <property name="text">
+          <string>Fiche de la série</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../resources/icons/films.png</normaloff>../../resources/icons/films.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_4">
+         <property name="text">
+          <string>N'afficher que les séries en cours</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1">
      <item>
@@ -187,173 +354,6 @@
      </item>
     </layout>
    </item>
-   <item row="2" column="0">
-    <layout class="QVBoxLayout" name="verticalLayout_16">
-     <item>
-      <widget class="QLabel" name="label_80">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Episodes à voir:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QTableWidget" name="tableWidget_6">
-       <property name="minimumSize">
-        <size>
-         <width>497</width>
-         <height>164</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
-       </property>
-       <property name="editTriggers">
-        <set>QAbstractItemView::NoEditTriggers</set>
-       </property>
-       <property name="selectionMode">
-        <enum>QAbstractItemView::SingleSelection</enum>
-       </property>
-       <property name="selectionBehavior">
-        <enum>QAbstractItemView::SelectRows</enum>
-       </property>
-       <property name="verticalScrollMode">
-        <enum>QAbstractItemView::ScrollPerPixel</enum>
-       </property>
-       <property name="horizontalScrollMode">
-        <enum>QAbstractItemView::ScrollPerPixel</enum>
-       </property>
-       <attribute name="horizontalHeaderStretchLastSection">
-        <bool>true</bool>
-       </attribute>
-       <attribute name="verticalHeaderVisible">
-        <bool>false</bool>
-       </attribute>
-       <attribute name="verticalHeaderMinimumSectionSize">
-        <number>20</number>
-       </attribute>
-       <attribute name="verticalHeaderDefaultSectionSize">
-        <number>20</number>
-       </attribute>
-       <attribute name="verticalHeaderStretchLastSection">
-        <bool>false</bool>
-       </attribute>
-       <column>
-        <property name="text">
-         <string>Ids</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Série</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Saison</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Type</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Etat</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>En diffusion</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Episode</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Avancement</string>
-        </property>
-       </column>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_43">
-       <item>
-        <widget class="QPushButton" name="add_to_watched_list_button">
-         <property name="text">
-          <string>Ajouter aux épisodes vus</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../../resources/icons/eye-plus.png</normaloff>../../resources/icons/eye-plus.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="open_folder_button">
-         <property name="text">
-          <string>Ouvrir le dossier</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../../resources/icons/folder-horizontal-open.png</normaloff>../../resources/icons/folder-horizontal-open.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="show_view_history_button">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Historique de visionnage</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../../resources/icons/film-timeline.png</normaloff>../../resources/icons/film-timeline.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="go_to_serie_data_button">
-         <property name="text">
-          <string>Fiche de la série</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../../resources/icons/films.png</normaloff>../../resources/icons/films.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_4">
-         <property name="text">
-          <string>N'afficher que les séries en cours</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </item>
    <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_45">
      <item>
@@ -368,6 +368,17 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="watched_table_show_view_history_button">
+       <property name="text">
+        <string>Historique de visionnage</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../resources/icons/film-timeline.png</normaloff>../../resources/icons/film-timeline.png</iconset>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="change_date_button">
@@ -401,6 +412,13 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item row="2" column="0">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

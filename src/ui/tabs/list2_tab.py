@@ -108,17 +108,6 @@ class List2(QWidget):
                     item = QTableWidgetItem(value)
                     item.setToolTip(item.text())
 
-                # Icone
-                if col_index == 1 and len(season.serie.name) > 0:
-                    first_letter = season.serie.name[0].lower()
-                    icon_path = os.path.join(os.path.dirname(__file__), "../../resources/icons/blue-document-attribute-{}.png".format(first_letter))
-                    item.setIcon(QIcon(icon_path))
-
-                if col_index == 3 and len(season.name) > 0:
-                    first_letter = season.name[0].lower()
-                    icon_path = os.path.join(os.path.dirname(__file__), "../../resources/icons/blue-document-attribute-{}.png".format(first_letter))
-                    item.setIcon(QIcon(icon_path))
-
                 item.setData(Qt.UserRole, season.id)
 
                 # Bandeau orangé pour les series avec un numéro temporaire

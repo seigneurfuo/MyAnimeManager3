@@ -74,13 +74,6 @@ class FullListTab(QWidget):
             # Autocomplétion
             completer_data.append(text)
 
-            # Icones
-            if len(serie.name) > 0:
-                first_letter = serie.name[0].lower()
-                pixmap_path = os.path.join(os.path.dirname(__file__),
-                                           "../../resources/icons/blue-document-attribute-{}.png".format(first_letter))
-                self.comboBox.setItemData(index, QPixmap(pixmap_path), Qt.DecorationRole)
-
         completer = QCompleter(completer_data)
         completer.setFilterMode(Qt.MatchContains)
         completer.setCaseSensitivity(Qt.CaseInsensitive)

@@ -183,7 +183,7 @@
      <normaloff>../resources/icons/question.png</normaloff>../resources/icons/question.png</iconset>
    </property>
    <property name="text">
-    <string>A propos ...</string>
+    <string>À propos</string>
    </property>
   </action>
   <action name="open_profile_action">
@@ -246,7 +246,7 @@
      <normaloff>../resources/icons/gear.png</normaloff>../resources/icons/gear.png</iconset>
    </property>
    <property name="text">
-    <string>Options...</string>
+    <string>Options</string>
    </property>
   </action>
   <action name="manage_friends_action">

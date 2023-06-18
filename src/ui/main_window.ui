@@ -234,7 +234,7 @@
   <action name="manage_profiles_action">
    <property name="icon">
     <iconset>
-     <normaloff>../resources/icons/users.png</normaloff>../resources/icons/users.png</iconset>
+     <normaloff>../resources/icons/user-silhouette.png</normaloff>../resources/icons/user-silhouette.png</iconset>
    </property>
    <property name="text">
     <string>Gérer les profils</string>
@@ -250,6 +250,10 @@
    </property>
   </action>
   <action name="manage_friends_action">
+   <property name="icon">
+    <iconset>
+     <normaloff>../resources/icons/users.png</normaloff>../resources/icons/users.png</iconset>
+   </property>
    <property name="text">
     <string>Gérer la liste d'amis</string>
    </property>

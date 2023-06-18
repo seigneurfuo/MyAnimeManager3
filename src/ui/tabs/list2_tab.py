@@ -136,6 +136,7 @@ class List2(QWidget):
             pixmap_path = os.path.join(os.path.dirname(__file__), "../../resources/icons", rating["icon"])
             # TODO: Ratio à conserver
 
+            # Favoris
             favorite_qlabel = QLabel()
             favorite_qlabel.setPixmap(QPixmap(pixmap_path))
 

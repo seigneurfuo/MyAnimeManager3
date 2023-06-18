@@ -35,22 +35,30 @@ class PlanningTab(QWidget):
         self.verticalLayout.insertWidget(1, self.planning_calendar)
 
     def init_events(self):
-        self.tableWidget_6.currentCellChanged.connect(self.when_to_watch_table_current_cell_changed)
-        self.tableWidget_6.cellDoubleClicked.connect(self.when_to_watch_table_current_cell_double_clicked)
-
-        self.tableWidget_7.currentCellChanged.connect(self.when_watched_table_current_cell_changed)
-
+        # Commun
         self.today_button.clicked.connect(self.when_today_button_clicked)
         self.planning_calendar.selectionChanged.connect(self.when_planning_calender_date_changed)
         self.checkBox_4.clicked.connect(self.when_checkBox_4_clicked)
+        self.date_edit.dateChanged.connect(self.when_date_edit_date_changed)
+
+        # Tableau des épisodes vus
+        self.tableWidget_7.currentCellChanged.connect(self.when_watched_table_current_cell_changed)
+
+        self.delete_button.clicked.connect(self.when_delete_button_clicked)
+        self.change_date_button.clicked.connect(self.when_change_date_button_clicked)
+
+        self.watched_table_show_view_history_button.clicked.connect(self.when_watched_table_show_view_history_button_clicked)
+        self.watched_table_go_to_serie_data_button.clicked.connect(self.watched_table_go_to_serie_data_button_clicked)
+
+        # Tableau des épisodes à voir
+        self.tableWidget_6.currentCellChanged.connect(self.when_to_watch_table_current_cell_changed)
+        self.tableWidget_6.cellDoubleClicked.connect(self.when_to_watch_table_current_cell_double_clicked)
+
         self.add_to_watched_list_button.clicked.connect(self.when_add_to_watched_list_button_clicked)
         self.open_folder_button.clicked.connect(self.when_open_folder_button_clicked)
+
         self.to_watch_table_show_view_history_button.clicked.connect(self.when_to_watch_table_show_view_history_button_clicked)
-        self.watched_table_show_view_history_button.clicked.connect(self.when_watched_table_show_view_history_button_clicked)
-        self.date_edit.dateChanged.connect(self.when_date_edit_date_changed)
-        self.delete_button.clicked.connect(self.when_delete_button_clicked)
-        self.go_to_serie_data_button.clicked.connect(self.when_go_to_serie_data_button_clicked)
-        self.change_date_button.clicked.connect(self.when_change_date_button_clicked)
+        self.to_watch_table_go_to_serie_data_button.clicked.connect(self.when_go_to_serie_data_button_clicked)
 
     def when_visible(self):
         self.refresh_data()
@@ -100,6 +108,7 @@ class PlanningTab(QWidget):
         self.change_date_button.setEnabled(False)
         self.delete_button.setEnabled(False)
         self.watched_table_show_view_history_button.setEnabled(False)
+        self.watched_table_go_to_serie_data_button.setEnabled(False)
 
         # Nettoyage du nombre d'épisodes vus pour cette date
         self.label_82.clear()
@@ -249,6 +258,7 @@ class PlanningTab(QWidget):
         self.change_date_button.setEnabled(is_row_selected)
         self.delete_button.setEnabled(is_row_selected)
         self.watched_table_show_view_history_button.setEnabled(is_row_selected)
+        self.watched_table_go_to_serie_data_button.setEnabled(is_row_selected)
 
     def add_episode_to_planning(self, season_id):
         calendar_date = self.planning_calendar.selectedDate().toPyDate()
@@ -291,7 +301,7 @@ class PlanningTab(QWidget):
             self.to_watch_table_show_view_history_button.setEnabled(True)
 
             # On active le obutton pour aller à la fiche de l'animé
-            self.go_to_serie_data_button.setEnabled(True)
+            self.to_watch_table_go_to_serie_data_button.setEnabled(True)
 
             # Active ou désactive le bouton d'ouverture du dossier de la série
             season = Seasons().get(current_season_id)
@@ -302,7 +312,7 @@ class PlanningTab(QWidget):
             # On désactive les boutons qui ont une action avec une série selectionnée
             self.add_to_watched_list_button.setEnabled(False)
             self.to_watch_table_show_view_history_button.setEnabled(False)
-            self.go_to_serie_data_button.setEnabled(False)
+            self.to_watch_table_go_to_serie_data_button.setEnabled(False)
             self.open_folder_button.setEnabled(False)
 
     # TODO: Update watched table buttons
@@ -325,6 +335,15 @@ class PlanningTab(QWidget):
         planning = Planning.get(planning_id)
         if planning:
             display_view_history_dialog(self, planning.season_id)
+
+    def watched_table_go_to_serie_data_button_clicked(self):
+        current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)
+        planning_id = current_item.data(Qt.UserRole) if current_item else None
+        planning = Planning.get(planning_id)
+
+        if planning:
+            self.parent.tabWidget.setCurrentIndex(1)
+            self.parent.full_list_tab.set_series_combobox_current_selection(planning.serie_id)
 
     def when_delete_button_clicked(self):
         current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)

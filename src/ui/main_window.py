@@ -21,6 +21,7 @@ from ui.dialogs.collection_problems import CollectionProblemsDialog
 from ui.dialogs.database_history import DatabaseHistoryDialog
 from ui.dialogs.profiles_manage import ProfilesManageDialog
 from ui.dialogs.settings import SettingsDialog
+from ui.dialogs.friends_manage import FriendManageDialog
 
 from db_backups_manager import DBBackupsManager
 from exports import export_planning_to_csv
@@ -81,6 +82,7 @@ class MainWindow(QMainWindow):
         self.open_database_backups_action.triggered.connect(self.when_menu_action_open_database_backups_clicked)
         self.manage_profiles_action.triggered.connect(self.when_menu_action_manage_profiles_clicked)
         self.open_settings_action.triggered.connect(self.when_menu_action_settings_clicked)
+        self.manage_friends_action.triggered.connect(self.when_menu_action_manage_friends_clicked)
 
         # ----- Clic sur les onglets -----
         self.tabWidget.currentChanged.connect(self.when_current_tab_changed)
@@ -143,6 +145,10 @@ class MainWindow(QMainWindow):
     def when_menu_action_manage_profiles_clicked(self):
         profiles_manage = ProfilesManageDialog(ProfilesManageDialog.roles.manage, self.parent.profile)
         profiles_manage.exec()
+
+    def when_menu_action_manage_friends_clicked(self):
+        friends_manage = FriendManageDialog()
+        friends_manage.exec()
 
     def when_menu_action_settings_clicked(self):
         settings_dialog = SettingsDialog(self)

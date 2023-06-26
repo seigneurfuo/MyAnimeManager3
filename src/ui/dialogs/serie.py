@@ -3,12 +3,14 @@ import os
 from PyQt5.QtWidgets import QDialog, QFileDialog
 from PyQt5.uic import loadUi
 
+from common import file_to_blob
 
 class SerieDialog(QDialog):
     def __init__(self, serie):
         super().__init__()
 
         self.serie = serie
+        self.picture_filepath = None
 
         self.init_ui()
         self.init_events()
@@ -23,6 +25,7 @@ class SerieDialog(QDialog):
 
     def init_events(self):
         self.choose_path_button.clicked.connect(self.choose_path)
+        self.choose_picture_button.clicked.connect(self.choose_picture)
 
     def fill_data(self):
         self.spinBox.setValue(self.serie.sort_id)
@@ -39,10 +42,16 @@ class SerieDialog(QDialog):
             # Application du texte sur le widget line edit
             self.lineEdit_3.setText(folder_name)
 
+    def choose_picture(self):
+        self.picture_filepath, filter = QFileDialog.getOpenFileName(self, self.tr("Selectionner une image...")) # TODO: Filter
+
     def save_data(self):
         self.serie.sort_id = self.spinBox.value()
         self.serie.name = self.lineEdit_2.text().strip()
         self.serie.path = self.lineEdit_3.text()
+
+        if self.picture_filepath:
+            self.serie.picture = file_to_blob(self.picture_filepath)
 
         self.serie.save()
 

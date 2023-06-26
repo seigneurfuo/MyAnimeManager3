@@ -1,4 +1,5 @@
 #!/bin/env python3
+import io
 import json
 import os
 
@@ -72,5 +73,10 @@ def save_settings(data):
     with open(settings_filepath, "w") as settings_file:
         json.dump(data, settings_file)
 
-def display_friends_dialog():
-    pass
+def file_to_blob(filename):
+    if os.path.isfile(filename):
+        with open(filename, "rb") as f:
+            bytesio = io.BytesIO(f.read())
+            return bytesio.getvalue()
+    else:
+        return False

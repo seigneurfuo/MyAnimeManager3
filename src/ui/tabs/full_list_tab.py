@@ -1,5 +1,7 @@
 #!/bin/env python3
-from PyQt5.QtGui import QDesktopServices, QPixmap, QIcon
+import io
+
+from PyQt5.QtGui import QDesktopServices, QPixmap, QIcon, QImage
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QHeaderView, QCompleter, QComboBox, QTableWidget
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt, QUrl
@@ -105,11 +107,19 @@ class FullListTab(QWidget):
         for field, value in fields:
             field.setText(value)
 
+        # Image de la série
+        if serie.picture:
+            with io.BytesIO(serie.picture) as picture_data:
+                pixmap = QPixmap.fromImage(QImage.fromData(picture_data.read()))
+
+            self.label_6.setScaledContents(True)
+            self.label_6.setPixmap(pixmap)
+
         # On masque ou non le bouton pour parcourir le dossier de la série
         self.open_folder_button.setEnabled(os.path.exists(serie.path))
 
     def clear_serie_data(self):
-        fields = [self.label_3, self.label_2]
+        fields = [self.label_3, self.label_2, self.label_6]
 
         for field in fields:
             field.clear()

@@ -22,6 +22,7 @@ class Series(BaseModel):
     name = TextField()
     description = TextField(null=True)
     path = TextField(null=True)
+    picture = BlobField()
     is_deleted = IntegerField(constraints=[SQL("DEFAULT 0")])
 
     class Meta:
@@ -35,12 +36,12 @@ class Seasons(BaseModel):
     serie = ForeignKeyField(column_name='serie', field='id', model=Series, backref="seasons")
     type = ForeignKeyField(column_name='type', field='id', model=SeasonsTypes, null=True)
     studio = IntegerField(index=True, null=True)
-    episodes = IntegerField(constraints=[SQL("DEFAULT 0")])
-    watched_episodes = IntegerField(constraints=[SQL("DEFAULT 0")], null=True)
-    view_count = IntegerField(constraints=[SQL("DEFAULT 0")])
+    episodes = IntegerField()
+    watched_episodes = IntegerField()
+    view_count = IntegerField()
     state = IntegerField()
     rating = IntegerField(null=True)
-    description = TextField(null=True)
+    description = TextField()
     is_deleted = IntegerField(constraints=[SQL("DEFAULT 0")])
 
     class Meta:

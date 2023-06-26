@@ -43,7 +43,8 @@ class SerieDialog(QDialog):
             self.lineEdit_3.setText(folder_name)
 
     def choose_picture(self):
-        self.picture_filepath, filter = QFileDialog.getOpenFileName(self, self.tr("Selectionner une image...")) # TODO: Filter
+        self.picture_filepath, filter = QFileDialog.getOpenFileName(self, self.tr("Choisir une image"), "", "Fichiers images (*.jpg *.jpeg *.png *.gif);;Tous les fichiers (*)")
+
 
     def save_data(self):
         self.serie.sort_id = self.spinBox.value()

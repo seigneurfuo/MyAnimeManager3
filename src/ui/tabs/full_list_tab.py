@@ -50,6 +50,9 @@ class FullListTab(QWidget):
 
         self.open_folder_button.clicked.connect(self.when_open_folder_button_clicked)
         self.show_view_history_button.clicked.connect(self.when_show_view_history_button_clicked)
+
+        self.previous_serie_button.clicked.connect(self.when_previous_serie_button_clicked)
+        self.next_serie_button.clicked.connect(self.when_next_serie_button_clicked)
         # endregion
 
     def when_visible(self):
@@ -289,3 +292,11 @@ class FullListTab(QWidget):
             serie = Series().get(current_serie_id)
             if os.path.exists(serie.path):
                 QDesktopServices.openUrl(QUrl.fromLocalFile(serie.path))
+
+    def when_previous_serie_button_clicked(self):
+        if self.comboBox.currentIndex() > 0:
+            self.comboBox.setCurrentIndex(self.comboBox.currentIndex() - 1)
+
+    def when_next_serie_button_clicked(self):
+        if self.comboBox.currentIndex() < self.comboBox.count() - 1:
+            self.comboBox.setCurrentIndex(self.comboBox.currentIndex() + 1)

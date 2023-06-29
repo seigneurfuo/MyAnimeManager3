@@ -142,6 +142,11 @@ class List2(QWidget):
 
             self.tableWidget.setCellWidget(row_index, len(columns) + 2, favorite_qlabel)
 
+            # Image
+            picture_present_text = self.tr("Oui") if season.serie.picture else self.tr("Non")
+            picture_present = QTableWidgetItem(picture_present_text)
+            self.tableWidget.setItem(row_index, len(columns) + 3, picture_present)
+
             # Amis
             friends = [friend.name for friend in
                        Friends.select(Friends.name).where(Seasons.id == season.id).join(FriendsPlanning)
@@ -149,7 +154,7 @@ class List2(QWidget):
 
             item = QTableWidgetItem(", ".join(friends))
             item.setToolTip(item.text())
-            self.tableWidget.setItem(row_index, len(columns) + 3, item)
+            self.tableWidget.setItem(row_index, len(columns) + 4, item)
 
         self.tableWidget.clearSelection()
         self.tableWidget.resizeColumnsToContents()

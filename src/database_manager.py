@@ -12,9 +12,12 @@ def load_or_create_database(profile):
     # Génération des tables
     if not os.path.exists(database_path):
         database.database.init(database_path)
-        database.database.create_tables([database.Series, database.Seasons, database.Planning, database.SeasonsTypes])
+
+        tables = [database.Series, database.Seasons, database.SeasonsTypes, database.Planning, database.Friends,
+                  database.FriendsPlanning]
+        database.database.create_tables(tables)
+
         populate_tables()
-        database.database.commit()
 
     else:
         database.database.init(database_path)
@@ -26,10 +29,9 @@ def load_or_create_database(profile):
 def populate_tables():
     populate_seasons_types()
 
+    database.database.commit()
 
-database.database.atomic()
-
-
+# FIXME: Pas propre, trouver comment corrriger ça
 def populate_seasons_types():
     seasons_types = [
         {"sort_id": 1, "name": "Episodes"},
@@ -42,6 +44,7 @@ def populate_seasons_types():
         season_type_id = index + 1
         season_type = database.SeasonsTypes.get_or_none(database.SeasonsTypes.id == season_type_id)
 
+        # Si existe pas, on crée, sinon on fait une MAJ
         if not season_type:
             season_type = database.SeasonsTypes()
 

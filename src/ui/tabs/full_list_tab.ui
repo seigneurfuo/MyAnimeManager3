@@ -22,7 +22,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="arrow-right"/>
+        <iconset>
+         <normaloff>../../resources/icons/arrow.png</normaloff>../../resources/icons/arrow.png</iconset>
        </property>
       </widget>
      </item>
@@ -65,7 +66,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="arrow-left"/>
+        <iconset>
+         <normaloff>../../resources/icons/arrow-180.png</normaloff>../../resources/icons/arrow-180.png</iconset>
        </property>
       </widget>
      </item>

@@ -36,6 +36,7 @@ class FullListTab(QWidget):
     def init_events(self):
         self.comboBox.currentIndexChanged.connect(self.when_series_list_current_index_changed)
         self.tableWidget.currentItemChanged.connect(self.when_seasons_list_current_index_changed)
+        self.tableWidget.doubleClicked.connect(self.when_serie_double_clicked)
 
         # region ----- Boutons -----
         self.add_serie_button.clicked.connect(self.when_add_serie_button_clicked)
@@ -171,7 +172,7 @@ class FullListTab(QWidget):
                 self.refresh_data()
                 self.set_series_combobox_current_selection(serie.id)
 
-    def when_edit_season_button_clicked(self):
+    def edit_season(self):
         current_season_id = self.get_current_season_id()
         if current_season_id:
             season = Seasons().get(current_season_id)
@@ -180,6 +181,12 @@ class FullListTab(QWidget):
             if season_dialog.exec():
                 self.refresh_data()
                 self.set_series_combobox_current_selection(season.serie.id)
+
+    def when_edit_season_button_clicked(self):
+        self.edit_season()
+
+    def when_serie_double_clicked(self):
+        self.edit_season()
 
     def when_delete_season_button_clicked(self):
         current_serie_id = self.get_current_serie_id()

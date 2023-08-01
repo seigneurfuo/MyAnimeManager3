@@ -126,19 +126,16 @@ class List2(QWidget):
                 # Différence entre deux dates
                 release_year_datetime_object = datetime.strptime(str(season.year), "%Y")
                 age_diff = today_date_object.year - release_year_datetime_object.year
-                age = "{} ans".format(age_diff)
+                age = self.tr("{} ans").format(age_diff)
             else:
                 age = ""
 
-            # TODO: icone de l'état de visonnage
             season_state = SEASONS_STATES[season.state]
 
             columns = [ids, season.serie.name, season.type.name, season.name, str(season.episodes), year,
                        age, season_state['name']]
 
             for col_index, value in enumerate(columns):
-                # FIXME: Un peut crade
-
                 if col_index == 7:
                     item = QTableWidgetItem(season_state["name"])
                     icon = QIcon(os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"]))
@@ -175,26 +172,28 @@ class List2(QWidget):
             rating = next(rating for rating in core.RATING_LEVELS if rating["value"] == season.rating)
             pixmap_path = os.path.join(os.path.dirname(__file__), "../../resources/icons", rating["icon"])
             # TODO: Ratio à conserver
+            rating = QLabel()
+            rating.setPixmap(QPixmap(pixmap_path))
+            self.tableWidget.setCellWidget(row_index, len(columns) + 2, rating)
 
-            # Favoris
-            favorite_qlabel = QLabel()
-            favorite_qlabel.setPixmap(QPixmap(pixmap_path))
-
-            self.tableWidget.setCellWidget(row_index, len(columns) + 2, favorite_qlabel)
-
-            # Image
+            # Image présente ?
             picture_present_text = self.tr("Oui") if season.serie.picture else self.tr("Non")
             picture_present = QTableWidgetItem(picture_present_text)
             self.tableWidget.setItem(row_index, len(columns) + 3, picture_present)
 
             # Amis
-            friends = [friend.name for friend in
-                       Friends.select(Friends.name).where(Seasons.id == season.id).join(FriendsPlanning)
-                       .join(Planning).join(Seasons).group_by(Friends.name)]
+            if self.parent.parent.settings["friends_enabled"]:
+                friends = [friend.name for friend in
+                           Friends.select(Friends.name).where(Seasons.id == season.id).join(FriendsPlanning)
+                           .join(Planning).join(Seasons).group_by(Friends.name)]
 
-            item = QTableWidgetItem(", ".join(friends))
-            item.setToolTip(item.text())
-            self.tableWidget.setItem(row_index, len(columns) + 4, item)
+                item = QTableWidgetItem(", ".join(friends))
+                item.setToolTip(item.text())
+                self.tableWidget.setItem(row_index, len(columns) + 4, item)
+
+            # Sinon on masque la colonne:
+            else:
+                self.tableWidget.horizontalHeader().hideSection(len(columns) + 4)
 
         self.tableWidget.clearSelection()
         self.tableWidget.resizeColumnsToContents()

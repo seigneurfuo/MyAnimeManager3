@@ -236,14 +236,22 @@ class FullListTab(QWidget):
         self.tableWidget.setRowCount(row_count)
 
         for row_index, season in enumerate(seasons):
-            friends = [friend.name for friend in
-                       Friends.select(Friends.name).where(Seasons.id == season.id).join(FriendsPlanning)
-                       .join(Planning).join(Seasons).group_by(Friends.name)]
-
             columns = [season.sort_id, season.name, season.type.name,
                        season.year if season.year and str(season.year) != "None" else "",
                        season.episodes, season.watched_episodes, season.view_count, SEASONS_STATES[season.state],
-                       season.rating, ", ".join(friends)]
+                       season.rating]
+
+            # Si on à activé la gestion des amis:
+            if self.parent.parent.settings["friends_enabled"]:
+                friends = [friend.name for friend in
+                           Friends.select(Friends.name).where(Seasons.id == season.id).join(FriendsPlanning)
+                           .join(Planning).join(Seasons).group_by(Friends.name)]
+
+                columns.append(", ".join(friends))
+
+            # Sinon on masque la colonne:
+            else:
+                self.tableWidget.horizontalHeader().hideSection(len(columns))
 
             for col_index, value in enumerate(columns):
                 if col_index == 7:

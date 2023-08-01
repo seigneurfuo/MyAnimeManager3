@@ -32,7 +32,7 @@ class SettingsDialog(QDialog):
         themes = get_themes_list()
 
         for theme in themes:
-            self.comboBox.addItem(theme.path, userData=theme.path)
+            self.comboBox.addItem(theme.name, userData=theme.path)
 
         # Choix du thême sélectionné
         current_theme = self.settings["application_stylesheet"]
@@ -44,12 +44,16 @@ class SettingsDialog(QDialog):
         self.spinBox.setValue(self.settings["backups_limit"])
         self.checkBox.setChecked(self.settings["updates_check"])
 
+        # Gestion de visionnages avec amis
+        self.checkBox_2.setChecked(self.settings["friends_enabled"])
+
     def save_settings_to_file(self):
         self.settings["application_stylesheet"] = self.comboBox.currentData()
         self.settings["backups_limit"] = self.spinBox.value()
         self.settings["updates_check"] = self.checkBox.isChecked()
+        self.settings["friends_enabled"] = self.checkBox_2.isChecked()
 
-        # Application des paramètres à toute l'application
+        # Passage des paramètres à toute l'application
         self.parent.parent.settings = self.settings
 
         # Sauvegarde des paramètres

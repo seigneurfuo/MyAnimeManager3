@@ -33,13 +33,6 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Nombre de sauvegardes automatiques à garder:</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="1">
       <widget class="QComboBox" name="comboBox"/>
      </item>
@@ -47,6 +40,13 @@
       <widget class="QLabel" name="label">
        <property name="text">
         <string>Thême de l'application:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Nombre de sauvegardes automatiques à garder:</string>
        </property>
       </widget>
      </item>
@@ -59,6 +59,20 @@
      </item>
      <item row="2" column="1">
       <widget class="QCheckBox" name="checkBox">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Activer la gestion des visionnages avec des amis</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QCheckBox" name="checkBox_2">
        <property name="text">
         <string/>
        </property>

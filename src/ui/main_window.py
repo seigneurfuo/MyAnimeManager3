@@ -40,12 +40,12 @@ class MainWindow(QMainWindow):
         self.init_ui()
         self.init_events()
 
-        # On met à jour les informations sur l'onglet charger en premier
         self.update_tab_content(self.tabWidget.currentIndex())
 
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "main_window.ui"), self)
 
+        # On grise le menu car on ne gÃ¨re pas les amis (mais on laisse quand mÃªme l'option affichÃ©e
         # Onglet 1 - Planning
         self.planning_tab = PlanningTab(self)
         self.planning_tab_layout.addWidget(self.planning_tab)
@@ -69,7 +69,7 @@ class MainWindow(QMainWindow):
         # Remplissage de la liste des onglets
         self.tabs = (self.planning_tab, self.full_list_tab, self.list2_tab, self.tools_tab, self.stats_tab)
 
-        # Onglet par défaut
+        # Onglet par dÃ©faut
         self.tabWidget.setCurrentIndex(0)  # TODO: Configuration
 
     def init_events(self):

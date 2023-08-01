@@ -40,13 +40,20 @@ class ViewHistoryDialog(QDialog):
         self.serie_table.setRowCount(row_count)
 
         for row_index, row in enumerate(self.serie_episodes):
-            # Pas très propre mais fonctionnel
-            friends = [friend.name for friend in
-                       Friends.select(Friends.name).where(Seasons.id == row.season.id).where(Planning.date == row.date) \
-                           .join(FriendsPlanning).join(Planning).join(Seasons).group_by(Friends.name)]
+            columns = [row.date.strftime("%d/%m/%Y"), str(row.season.sort_id), row.season.name, self.season.type.name, row.episodes]
 
-            columns = [row.date.strftime("%d/%m/%Y"), str(row.season.sort_id), row.season.name, self.season.type.name, row.episodes,
-                       ", ".join(friends)]
+            # Si on à activé la gestion des amis:
+            if self.parent.parent.parent.settings["friends_enabled"]:
+                friends = [friend.name for friend in
+                           Friends.select(Friends.name).where(Seasons.id == row.season.id).where(
+                               Planning.date == row.date) \
+                               .join(FriendsPlanning).join(Planning).join(Seasons).group_by(Friends.name)]
+
+                columns.append(", ".join(friends))
+
+            # Sinon on masque la colonne:
+            else:
+                self.serie_table.horizontalHeader().hideSection(len(columns))
 
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
@@ -64,12 +71,19 @@ class ViewHistoryDialog(QDialog):
         self.season_table.setRowCount(row_count)
 
         for row_index, row in enumerate(self.season_episodes):
-            friends = [friend.name for friend in
-                       Friends.select(Friends.name).where(Seasons.id == row.season.id).where(Planning.date == row.date) \
-                           .join(FriendsPlanning).join(Planning).join(Seasons).group_by(Friends.name)]
+            columns = [row.date.strftime("%d/%m/%Y"), str(row.season.sort_id), row.season.name, self.season.type.name, row.episodes]
 
-            columns = [row.date.strftime("%d/%m/%Y"), str(row.season.sort_id), row.season.name, self.season.type.name, row.episodes,
-                       ", ".join(friends)]
+            # Si on à activé la gestion des amis:
+            if self.parent.parent.parent.settings["friends_enabled"]:
+                friends = [friend.name for friend in
+                           Friends.select(Friends.name).where(Seasons.id == row.season.id).where(Planning.date == row.date) \
+                               .join(FriendsPlanning).join(Planning).join(Seasons).group_by(Friends.name)]
+
+                columns.append(", ".join(friends))
+
+            # Sinon on masque la colonne:
+            else:
+                self.season_table.horizontalHeader().hideSection(len(columns))
 
             # FIXME: Ne fonctionne pas quand il y à plusieurs épisodes
             for col_index, value in enumerate(columns):

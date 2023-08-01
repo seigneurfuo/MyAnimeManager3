@@ -43,17 +43,16 @@ def load_settings():
         default_config_keys = DEFAULT_CONFIG_DATA.keys()
         user_config_keys = user_config.keys()
 
-        if len(user_config_keys) != len(default_config_keys):
-            for default_config_key in default_config_keys:
-                if default_config_key not in user_config_keys:
-                    msg = "Ajout de la cléf manquante dans la configuration de l'utilisateur: {}".format(default_config_key)
-                    print(msg)
+        for default_config_key in default_config_keys:
+            if default_config_key not in user_config_keys:
+                msg = "Ajout de la cléf manquante dans la configuration de l'utilisateur: {}".format(default_config_key)
+                print(msg)
 
-                    # Application de la nouvelle valeur
-                    user_config[default_config_key] = DEFAULT_CONFIG_DATA[default_config_key]
+                # Application de la nouvelle valeur
+                user_config[default_config_key] = DEFAULT_CONFIG_DATA[default_config_key]
 
-            # Sauvegarde des paramètres
-            save_settings(user_config)
+        # Sauvegarde des paramètres
+        save_settings(user_config)
 
     else:
         print("Chargement de la configuration par défaut")

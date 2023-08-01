@@ -26,13 +26,13 @@ class Application(QApplication):
         self.setApplicationDisplayName(core.app_name_and_version)
         self.setApplicationVersion(core.app_version)
 
+        self.profile = None
+        self.database_path = None
+
         self.settings = load_settings()
 
         if core.app_version != "DEV" and self.settings['updates_check']:
             updater.check_for_update()
-
-        self.profile = None
-        self.database_path = None
 
         # Définition du thême
         set_theme_to(self, self.settings["application_stylesheet"])

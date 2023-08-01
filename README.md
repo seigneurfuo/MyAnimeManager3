@@ -16,7 +16,7 @@ Commencé en 2018.
 Après avoir cloné le dépot: on peut lancer la commande suivant pour disposer de thêmes supplémentaires. Elle n'est pas obligatoire:
 
 ```sh
-git submodule update
+git submodule update --init
 ```
 
 Installer les dépendances suivantes:

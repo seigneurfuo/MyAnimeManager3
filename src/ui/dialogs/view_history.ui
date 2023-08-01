@@ -55,6 +55,11 @@
          </column>
          <column>
           <property name="text">
+           <string>Id</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
            <string>Saison</string>
           </property>
          </column>
@@ -110,6 +115,11 @@
          </column>
          <column>
           <property name="text">
+           <string>Id</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
            <string>Saison</string>
           </property>
          </column>
@@ -146,7 +156,7 @@
      <item>
       <widget class="QPushButton" name="pushButton">
        <property name="text">
-        <string>Aller à la date</string>
+        <string>Afficher sur le planning</string>
        </property>
        <property name="icon">
         <iconset>

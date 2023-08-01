@@ -24,7 +24,7 @@ class SeasonDialog(QDialog):
         # Remplissage de l'état des saisons
         for index, season_state in enumerate(core.SEASONS_STATES):
             state_icon = os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"])
-            self.combobox_1.addItem(QIcon(state_icon), season_state["name"], userData=index + 1)
+            self.combobox_1.addItem(QIcon(state_icon), season_state["name"], userData=index)
 
         # Remplissage des types
         for seasons_type in self.seasons_types:
@@ -81,7 +81,7 @@ class SeasonDialog(QDialog):
 
         self.season.year = None if self.spinBox_5.value() == 0 or len(str(self.spinBox_5.value())) != 4 else self.spinBox_5.value()
 
-        self.season.state = self.combobox_1.currentIndex()
+        self.season.state = self.combobox_1.currentData()
         self.season.episodes = self.spinBox_4.value()
         self.season.watched_episodes = self.spinBox_3.value()
         self.season.view_count = self.spinBox_2.value()

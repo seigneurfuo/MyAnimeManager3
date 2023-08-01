@@ -8,8 +8,8 @@
 
 ### En priorité
 - Améliorer le responsive
-- Unifier les "IDS" dans les tableaux et autres. Une colonne avec ID sur chiffres (voir planning de visionnage)
-
+- Modifier la colonne id dans la liste des élements vus
+- Déplacer le code qui récupère la liste des épisodes vus dans le code de la fenetre
 ### Conventions des programmation
 - Déplacer le chargement des données dans fill_data au lieu de les metre dans init_ui()
 
@@ -18,22 +18,10 @@
 - Tags
 - Voir si dans la table Planning, on peut enlever la colonne serie comme on à déja la saison, on peut faire un season.serie pour récupérer les infos de la série.
 - Passer les isdeleted en boolean ?
-
 - Combiner des refresh et autre dans une fonction fait pour.
-
 - Dialogue About + Licences logiciels + icones
-
 - Afficher le titre de la série quand le nom de la saison est vide ?
 - Liste des séries et saisons supprimées:
   - Restaurer / supprimer définitivement
 
 - Icones sur chaque modale (ui + manuellement crées)
-
-## Faits 
-- ~~Retirer la date vue du planning~~
-- ~~Utiliser Serie.seasons pour récupérer toutes les saison d'une série au lieu de faire: seasons.serie_id == XXX~~
-- ~~Système de notification de MAJ~~
-- ~~Fichier de paramétrage json~~
-- ~~Thême sombre windows~~
-- ~~Passer tout les get en unique. Remplacer par exemple **Series().get(Series.id == current_season_id)** **par Series().get(current_season_id)**~~
-- ~~Supprimer les self.current_serie_id et self.current_season_id~~

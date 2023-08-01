@@ -26,11 +26,10 @@ class StatsTab(QWidget):
 
         # Remplissage la liste des extractions
         queries_list = [self.tr("Nombre de saisons par année de sortie"), self.tr("Saisons les plus revisionnées"),
-                         self.tr("Saison avec le plus d'épisodes"), self.tr("Nombre d'épisodes vus par année"),
-                         self.tr("Séries avec le plus d'épisodes")]
+                        self.tr("Saisons avec le plus d'épisodes"), self.tr("Séries avec le plus d'épisodes"),
+                        self.tr("Nombre d'épisodes vus par année")]
         for index, name in enumerate(queries_list):
             self.comboBox.addItem(name, userData=index)
-
 
     def init_events(self):
         self.comboBox.currentIndexChanged.connect(self.when_stats_list_current_index_changed)
@@ -96,18 +95,18 @@ class StatsTab(QWidget):
             query = Seasons.select(Series.name.alias("serie_name"), Seasons.name, Seasons.episodes).join(Series)\
                 .where(Seasons.is_deleted == 0).order_by(Seasons.episodes.desc()).dicts()
 
-        #
-        elif query_index == 3:
-            headers = ["Année", "Nombre"]
-            query = Planning.select(Planning.date.year, peewee.fn.COUNT(Planning.id))\
-                .group_by(Planning.date.year).order_by(Planning.date.year).dicts()
-
         # Séries avec le plus d'épisodes
-        elif query_index == 4:
+        elif query_index == 3:
             headers = ["Série", "Nombre saisons", "Nombre épisodes"]
             query = Seasons.select(Series.name.alias("serie_name"), peewee.fn.COUNT(Seasons.id),
                                      peewee.fn.SUM(Seasons.episodes)).join(Series)\
                 .where(Seasons.is_deleted == 0).group_by(Series.id)\
                 .order_by(peewee.fn.SUM(Seasons.episodes).desc()).dicts()
+
+        # Nombre d'épisodes vus par année
+        elif query_index == 4:
+            headers = ["Année", "Nombre"]
+            query = Planning.select(Planning.date.year, peewee.fn.COUNT(Planning.id))\
+                .group_by(Planning.date.year).order_by(Planning.date.year).dicts()
 
         return headers, query

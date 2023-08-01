@@ -186,7 +186,7 @@ class PlanningTab(QWidget):
             item.setToolTip(item.text())
             self.tableWidget_6.setItem(col_index, 3, item)
 
-            # Etat
+            # État
             season_state = SEASONS_STATES[row_data.state]
             item = QTableWidgetItem(season_state["name"])
             item.setIcon(QIcon(os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"])))

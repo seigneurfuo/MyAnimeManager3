@@ -320,7 +320,7 @@
         </column>
         <column>
          <property name="text">
-          <string>Etat</string>
+          <string>État</string>
          </property>
         </column>
         <column>

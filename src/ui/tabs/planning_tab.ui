@@ -25,7 +25,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Episodes à voir:</string>
+        <string>Épisodes à voir:</string>
        </property>
       </widget>
      </item>
@@ -98,7 +98,7 @@
        </column>
        <column>
         <property name="text">
-         <string>Etat</string>
+         <string>État</string>
         </property>
        </column>
        <column>
@@ -108,7 +108,7 @@
        </column>
        <column>
         <property name="text">
-         <string>Episode</string>
+         <string>Épisode</string>
         </property>
        </column>
        <column>
@@ -237,7 +237,7 @@
             </font>
            </property>
            <property name="text">
-            <string>Episodes vus pour cette date:</string>
+            <string>Épisodes vus pour cette date:</string>
            </property>
           </widget>
          </item>

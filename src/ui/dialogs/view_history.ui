@@ -65,7 +65,7 @@
          </column>
          <column>
           <property name="text">
-           <string>Episode(s)</string>
+           <string>Épisode(s)</string>
           </property>
          </column>
          <column>
@@ -120,7 +120,7 @@
          </column>
          <column>
           <property name="text">
-           <string>Episode(s)</string>
+           <string>Épisode(s)</string>
           </property>
          </column>
          <column>

@@ -13,10 +13,9 @@ import utils
 
 from core import SEASONS_STATES, RATING_LEVELS
 from common import display_view_history_dialog
-from database import Series, Seasons, Friends, Planning, FriendsPlanning
+from database import Series, Seasons, Friends, Planning, FriendsPlanning, SeasonsTypes
 
 import core
-
 
 class List2(QWidget):
     def __init__(self, parent):
@@ -30,11 +29,21 @@ class List2(QWidget):
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "list2_tab.ui"), self)
 
+        # Remplissage de l'état des saisons
+        for index, season_state in enumerate(core.SEASONS_STATES):
+            state_icon = os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"])
+            self.comboBox.addItem(QIcon(state_icon), season_state["name"], userData=index)
+
+        # Remplissage des types
+        for seasons_type in SeasonsTypes().select():
+            self.comboBox_2.addItem(seasons_type.name, userData=seasons_type.id)
+
     def init_events(self):
         self.pushButton.clicked.connect(self.when_export_button_clicked)
         self.pushButton_2.clicked.connect(self.when_show_view_history_button_clicked)
         self.go_to_serie_data_button.clicked.connect(self.when_go_to_serie_data_button_clicked)
         self.tableWidget.currentCellChanged.connect(self.when_current_cell_changed)
+        self.refresh_button.clicked.connect(self.refresh_data)
 
     def when_visible(self):
         self.refresh_data()
@@ -66,12 +75,43 @@ class List2(QWidget):
             self.parent.tabWidget.setCurrentIndex(1)
             self.parent.full_list_tab.set_series_combobox_current_selection(season.serie.id)
 
+    def get_request_with_filters(self):
+        request = Seasons().select().where(Seasons.is_deleted == 0)
+
+        start_year = self.start_year_spinbox.value()
+        stop_year = self.stop_year_spinbox.value()
+        season_state = self.comboBox.currentData()
+        season_type = self.comboBox_2.currentData()
+
+        # Filtrage: année de début
+        if start_year != 0:
+            request = request.where(Seasons.year >= start_year)
+
+        # Filtrae: année de fin
+        if stop_year != 0:
+            request = request.where(Seasons.year <= stop_year)
+
+        # Filtrage: En cours de diffusion
+        if self.airing_checkbox.isChecked():
+            request = request.where(Seasons.airing)
+
+        # Filtrage par état
+        if season_state:
+            request = request.where(Seasons.state == season_state)
+
+        # Filtrage par type
+        if season_type:
+            request = request.where(Seasons.type == season_type)
+
+        request = request.join(Series) \
+            .order_by(Seasons.serie.sort_id, Seasons.serie.name, Seasons.sort_id, Seasons.name)
+
+        return request
+
     def fill_data(self):
         today_date_object = datetime.now()
 
-        data = Seasons().select().where(Seasons.is_deleted == 0).join(Series) \
-            .order_by(Seasons.serie.sort_id, Seasons.serie.name, Seasons.sort_id, Seasons.name)
-
+        data = self.get_request_with_filters()
         row_count = len(data)
 
         self.label.setText(self.tr("Nombre d'éléments: ") + str(row_count))

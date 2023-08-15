@@ -43,6 +43,7 @@ class PlanningTab(QWidget):
 
         # Tableau des épisodes vus
         self.tableWidget_7.currentCellChanged.connect(self.when_watched_table_current_cell_changed)
+        self.tableWidget_7.cellDoubleClicked.connect(self.when_change_date_button_clicked)
 
         self.delete_button.clicked.connect(self.when_delete_button_clicked)
         self.change_date_button.clicked.connect(self.when_change_date_button_clicked)

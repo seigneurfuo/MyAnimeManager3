@@ -8,7 +8,10 @@ from core import app_version, release_url
 
 def check_for_update():
     try:
-        req = urllib.request.urlopen(release_url)
+        req = urllib.request.urlopen(release_url, timeout=5)
+        if not req:
+            return
+
         data = req.read()
         encoding = req.info().get_content_charset('utf-8')
         json_data = json.loads(data.decode(encoding))

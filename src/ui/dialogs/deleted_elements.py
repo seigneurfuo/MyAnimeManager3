@@ -1,8 +1,8 @@
 import os
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QTableWidgetItem, QHeaderView, QCheckBox
-from PyQt5.uic import loadUi
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView, QCheckBox
+from PyQt6.uic import loadUi
 
 
 class DeletedElementsDialog(QDialog):
@@ -49,12 +49,12 @@ class DeletedElementsDialog(QDialog):
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
                 item.setToolTip(item.text())
-                item.setData(Qt.UserRole, season.id)
+                item.setData(Qt.ItemDataRole.UserRole, season.id)
                 self.tableWidget_2.setItem(row_index, col_index + 1, item)
 
         self.tableWidget_2.resizeColumnsToContents()
         self.tableWidget_2.horizontalHeader().setSectionResizeMode(self.tableWidget_2.columnCount() - 1,
-                                                                 QHeaderView.ResizeToContents)
+                                                                 QHeaderView.ResizeMode.ResizeToContents)
 
     def fill_series_table(self):
         row_count = len(self.deleted_series)
@@ -72,25 +72,25 @@ class DeletedElementsDialog(QDialog):
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
                 item.setToolTip(item.text())
-                item.setData(Qt.UserRole, serie.id)
+                item.setData(Qt.ItemDataRole.UserRole, serie.id)
                 self.tableWidget_1.setItem(row_index, col_index + 1, item)
 
         self.tableWidget_1.resizeColumnsToContents()
         self.tableWidget_1.horizontalHeader().setSectionResizeMode(self.tableWidget_1.columnCount() - 1,
-                                                                 QHeaderView.ResizeToContents)
+                                                                 QHeaderView.ResizeMode.ResizeToContents)
 
 
     def get_checked_for_restoration(self):
         # Séries
         for row_index in range(self.tableWidget_1.rowCount()):
             if self.tableWidget_1.cellWidget(row_index, 0).isChecked():
-                serie_id = self.tableWidget_1.item(row_index, 1).data(Qt.UserRole)
+                serie_id = self.tableWidget_1.item(row_index, 1).data(Qt.ItemDataRole.UserRole)
                 self.series_to_restore.append(serie_id)
 
         # Saisons
         for row_index in range(self.tableWidget_2.rowCount()):
             if self.tableWidget_2.cellWidget(row_index, 0).isChecked():
-                season_id = self.tableWidget_2.item(row_index, 1).data(Qt.UserRole)
+                season_id = self.tableWidget_2.item(row_index, 1).data(Qt.ItemDataRole.UserRole)
                 self.seasons_to_restore.append(season_id)
 
     def accept(self):

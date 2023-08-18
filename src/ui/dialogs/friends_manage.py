@@ -1,8 +1,8 @@
 import os
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QCalendarWidget, QTableWidgetItem, QHeaderView
-from PyQt5.uic import loadUi
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QDialog, QCalendarWidget, QTableWidgetItem, QHeaderView
+from PyQt6.uic import loadUi
 
 from database import Friends
 
@@ -38,11 +38,11 @@ class FriendManageDialog(QDialog):
         for row_index, friend in enumerate(self.friends_list):
             item = QTableWidgetItem(friend.name)
             item.setToolTip(item.text())
-            item.setData(Qt.UserRole, friend.id)
+            item.setData(Qt.ItemDataRole.UserRole, friend.id)
             self.tableWidget.setItem(row_index, 0, item)
 
         self.tableWidget.resizeColumnsToContents()
-        self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1, QHeaderView.ResizeToContents)
+        self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1, QHeaderView.ResizeMode.ResizeToContents)
 
     def reload_friends_list(self):
         self.friends_list = Friends.select()
@@ -66,7 +66,7 @@ class FriendManageDialog(QDialog):
     def when_friends_table_current_cell_changed(self):
         selected_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
         if selected_item:
-            selected_friend_id = selected_item.data(Qt.UserRole)
+            selected_friend_id = selected_item.data(Qt.ItemDataRole.UserRole)
             self.edited_friend_id = selected_friend_id
             friend = Friends.get(self.edited_friend_id)
 

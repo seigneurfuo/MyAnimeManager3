@@ -3,9 +3,9 @@ import csv
 import os
 from datetime import datetime, timedelta
 
-from PyQt5.QtCore import QT_TR_NOOP as tr
-from PyQt5.QtGui import QCursor
-from PyQt5.QtWidgets import QMessageBox
+from PyQt6.QtCore import QT_TR_NOOP as tr
+from PyQt6.QtGui import QCursor
+from PyQt6.QtWidgets import QMessageBox
 
 from database import Seasons, Series
 
@@ -79,6 +79,7 @@ def get_collection_problems():
     seasons_passed = []
     messages = []
 
+    # ----- Saisons -----
     seasons = Seasons().select().join(Series).where(Seasons.is_deleted == 0).order_by(
         Seasons.sort_id)
 
@@ -103,7 +104,7 @@ def get_collection_problems():
                                                                           season.sort_id)
                 messages.append(msg)
 
-
+    # ----- Séries -----
     series = Series.select(Series.sort_id).where(Series.is_deleted == 0).order_by(Series.sort_id)
 
     # Vérification des ids manquants pour les séries
@@ -121,7 +122,7 @@ def get_collection_problems():
 
 
         # TODO: Séries vides
-        # Séries avec le meme identifiant
+        # TODO: Séries avec le meme identifiant
 
     return messages
 
@@ -135,7 +136,7 @@ def tutorial(parent_widget):
 Ce tutoriel va brièvement présenter les différents écrans de l'application.
 """
 
-    QMessageBox.information(None, "Tutoriel", msg, QMessageBox.Ok)
+    QMessageBox.information(None, "Tutoriel", msg, QMessageBox.StandardButton.Ok)
 
     tabs = ((1, "Voici l'écran dans lequel vous aller définir les séries à voir"),
             2, "Ecran des outils")

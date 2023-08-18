@@ -1,9 +1,9 @@
 #!/bin/env python3
 import random
 
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QHeaderView
-from PyQt5.uic import loadUi
-from PyQt5.QtCore import QTime
+from PyQt6.QtWidgets import QWidget, QTableWidgetItem, QHeaderView
+from PyQt6.uic import loadUi
+from PyQt6.QtCore import QTime
 
 import os
 
@@ -66,7 +66,7 @@ class ToolsTab(QWidget):
         self.tableWidget_2.clearSelection()
         self.tableWidget_2.resizeColumnsToContents()
         self.tableWidget_2.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
-                                                                   QHeaderView.ResizeToContents)
+                                                                   QHeaderView.ResizeMode.ResizeToContents)
 
     # def when_spinboxes_values_changed(self):
     #     self.duration_calculation()
@@ -100,4 +100,4 @@ class ToolsTab(QWidget):
 
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
-                                                                 QHeaderView.ResizeToContents)
+                                                                 QHeaderView.ResizeMode.ResizeToContents)

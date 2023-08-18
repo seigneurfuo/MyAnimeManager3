@@ -1,8 +1,8 @@
 import os
 
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QDialog
-from PyQt5.uic import loadUi
+from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import QDialog
+from PyQt6.uic import loadUi
 
 import core
 

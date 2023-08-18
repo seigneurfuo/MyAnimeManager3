@@ -1,7 +1,7 @@
 import os
 
-from PyQt5.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
-from PyQt5.uic import loadUi
+from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
+from PyQt6.uic import loadUi
 
 from ui.themes import get_themes_list
 

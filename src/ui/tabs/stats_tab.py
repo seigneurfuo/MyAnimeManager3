@@ -1,8 +1,8 @@
 #!/bin/env python3
 import random
 
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QMessageBox
-from PyQt5.uic import loadUi
+from PyQt6.QtWidgets import QWidget, QTableWidgetItem, QMessageBox
+from PyQt6.uic import loadUi
 
 import os
 
@@ -62,7 +62,7 @@ class StatsTab(QWidget):
 
         self.stats_table.resizeColumnsToContents()
         # self.stats_table.horizontalHeader().setSectionResizeMode(self.stats_table.columnCount() - 1,
-        #                                                          QHeaderView.ResizeToContents)
+        #                                                          QHeaderView.ResizeMode.ResizeToContents)
 
 
     def when_export_button_clicked(self):
@@ -72,7 +72,7 @@ class StatsTab(QWidget):
         # TODO: Bouton pour ouvrir le dossier ?
         QMessageBox.information(self, self.tr("Export terminé"),
                                 self.tr("Le fichier a été généré ici:") + "\n    " + filepath,
-                                QMessageBox.Ok)
+                                QMessageBox.StandardButton.Ok)
 
     def execute_query(self):
         query_index = self.comboBox.currentData()

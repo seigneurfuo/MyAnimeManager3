@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QCalendarWidget
+from PyQt6.QtWidgets import QCalendarWidget
 
 
 class CustomCalendar(QCalendarWidget):

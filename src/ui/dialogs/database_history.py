@@ -1,10 +1,10 @@
 import datetime
 import os
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
-from PyQt5.uic import loadUi
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
+from PyQt6.uic import loadUi
 
 from db_backups_manager import DBBackupsManager
 
@@ -36,7 +36,7 @@ class DatabaseHistoryDialog(QDialog):
     def when_restore_button_clicked(self):
         selected_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
         if selected_item:
-            selected_backup = selected_item.data(Qt.UserRole) if selected_item else None
+            selected_backup = selected_item.data(Qt.ItemDataRole.UserRole) if selected_item else None
 
             db_backups_manager = DBBackupsManager(self.parent)
             db_backups_manager.restore_database_backup(selected_backup)
@@ -53,7 +53,7 @@ class DatabaseHistoryDialog(QDialog):
     def when_remove_button_clicked(self):
         current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
         if current_item:
-            database_backup_filename = current_item.data(Qt.UserRole)
+            database_backup_filename = current_item.data(Qt.ItemDataRole.UserRole)
             print(database_backup_filename)
 
             db_backups_manager = DBBackupsManager(self.parent)
@@ -79,7 +79,7 @@ class DatabaseHistoryDialog(QDialog):
             item = QTableWidgetItem(short_filename)
             item.setIcon(QIcon(os.path.join(self.folderpath, "resources/icons/blue-document-clock.png")))
             item.setToolTip(filepath)
-            item.setData(Qt.UserRole, filepath)
+            item.setData(Qt.ItemDataRole.UserRole, filepath)
             self.tableWidget.setItem(row_index, 0, item)
 
             # Icone
@@ -97,7 +97,7 @@ class DatabaseHistoryDialog(QDialog):
 
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
-                                                                 QHeaderView.ResizeToContents)
+                                                                 QHeaderView.ResizeMode.ResizeToContents)
 
     def reject(self):
         super().reject()

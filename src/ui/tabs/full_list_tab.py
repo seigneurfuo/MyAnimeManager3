@@ -1,10 +1,10 @@
 #!/bin/env python3
 import io
 
-from PyQt5.QtGui import QDesktopServices, QPixmap, QIcon, QImage
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QHeaderView, QCompleter, QComboBox, QTableWidget
-from PyQt5.uic import loadUi
-from PyQt5.QtCore import Qt, QUrl
+from PyQt6.QtGui import QDesktopServices, QPixmap, QIcon, QImage
+from PyQt6.QtWidgets import QWidget, QTableWidgetItem, QHeaderView, QCompleter
+from PyQt6.uic import loadUi
+from PyQt6.QtCore import Qt, QUrl
 
 import os
 
@@ -67,7 +67,7 @@ class FullListTab(QWidget):
 
     def get_current_season_id(self):
         current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
-        return current_item.data(Qt.UserRole) if current_item else None
+        return current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
 
     def fill_series_combobox(self):
         self.comboBox.clear()
@@ -81,8 +81,8 @@ class FullListTab(QWidget):
             completer_data.append(text)
 
         completer = QCompleter(completer_data)
-        completer.setFilterMode(Qt.MatchContains)
-        completer.setCaseSensitivity(Qt.CaseInsensitive)
+        completer.setFilterMode(Qt.MatchFlag.MatchContains)
+        completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
         self.comboBox.setCompleter(completer)
 
     def set_series_combobox_current_selection(self, serie_id):
@@ -268,14 +268,14 @@ class FullListTab(QWidget):
                 else:
                     item = QTableWidgetItem(str(value))
                     item.setToolTip(item.text())
-                    item.setData(Qt.UserRole, season.id)
+                    item.setData(Qt.ItemDataRole.UserRole, season.id)
 
                 self.tableWidget.setItem(row_index, col_index, item)
 
         self.tableWidget.clearSelection()
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
-                                                                 QHeaderView.ResizeToContents)
+                                                                 QHeaderView.ResizeMode.ResizeToContents)
 
     def fill_season_data(self, season):
         # Note

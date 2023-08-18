@@ -1,8 +1,8 @@
 import os
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
-from PyQt5.uic import loadUi
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
+from PyQt6.uic import loadUi
 
 from database import Planning, Friends, Seasons, FriendsPlanning
 
@@ -58,12 +58,12 @@ class ViewHistoryDialog(QDialog):
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
                 item.setToolTip(item.text())
-                item.setData(Qt.UserRole, row.date) # On ajoute la date en paramètre afin de pouvoir la récupérer sur la ligne
+                item.setData(Qt.ItemDataRole.UserRole, row.date) # On ajoute la date en paramètre afin de pouvoir la récupérer sur la ligne
                 self.serie_table.setItem(row_index, col_index, item)
 
         self.serie_table.resizeColumnsToContents()
         self.serie_table.horizontalHeader().setSectionResizeMode(self.serie_table.columnCount() - 1,
-                                                                 QHeaderView.ResizeToContents)
+                                                                 QHeaderView.ResizeMode.ResizeToContents)
 
     def fill_seasons_history(self):
         row_count = len(self.season_episodes)
@@ -89,12 +89,12 @@ class ViewHistoryDialog(QDialog):
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
                 item.setToolTip(item.text())
-                item.setData(Qt.UserRole, row.date) # On ajoute la date en paramètre afin de pouvoir la récupérer sur la ligne
+                item.setData(Qt.ItemDataRole.UserRole, row.date) # On ajoute la date en paramètre afin de pouvoir la récupérer sur la ligne
                 self.season_table.setItem(row_index, col_index, item)
 
         self.season_table.resizeColumnsToContents()
         self.season_table.horizontalHeader().setSectionResizeMode(self.season_table.columnCount() - 1,
-                                                                  QHeaderView.ResizeToContents)
+                                                                  QHeaderView.ResizeMode.ResizeToContents)
 
     def when_go_to_planning_date(self):
         # Série et saison
@@ -104,7 +104,7 @@ class ViewHistoryDialog(QDialog):
         current_item = table.item(table.currentRow(), 0)
         print(current_item)
         if current_item:
-            selected_date = current_item.data(Qt.UserRole)
+            selected_date = current_item.data(Qt.ItemDataRole.UserRole)
 
             self.parent.parent.tabWidget.setCurrentIndex(0) # Onglet "Planning"
             self.parent.parent.planning_tab.set_planning_date(selected_date)

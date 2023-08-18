@@ -1,8 +1,8 @@
 import os
 
-from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QDialogButtonBox, QLabel, QLineEdit, QPushButton, QGridLayout, QFileDialog, QDialog
+from PyQt6.QtCore import Qt, QSize
+from PyQt6.QtGui import QPixmap
+from PyQt6.QtWidgets import QDialogButtonBox, QLabel, QLineEdit, QPushButton, QGridLayout, QFileDialog, QDialog
 
 
 class ProfileEditDialog(QDialog):

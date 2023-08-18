@@ -1,8 +1,8 @@
 import os
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QCalendarWidget, QTableWidgetItem, QHeaderView
-from PyQt5.uic import loadUi
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QDialog, QCalendarWidget, QTableWidgetItem, QHeaderView
+from PyQt6.uic import loadUi
 
 from ui.dialogs.friends_manage import FriendManageDialog
 
@@ -61,7 +61,7 @@ class EditDateDialog(QDialog):
     def when_remove_friend_button_clicked(self):
         selected_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
         if selected_item:
-            selected_friend_id = selected_item.data(Qt.UserRole)
+            selected_friend_id = selected_item.data(Qt.ItemDataRole.UserRole)
 
             # Suppression de l'id de l'ami selectionné
             for index, friend in enumerate(self.friends):
@@ -80,12 +80,12 @@ class EditDateDialog(QDialog):
         for row_index, friend in enumerate(self.friends):
             item = QTableWidgetItem(friend.name)
             item.setToolTip(item.text())
-            item.setData(Qt.UserRole, friend.id)
+            item.setData(Qt.ItemDataRole.UserRole, friend.id)
             self.tableWidget.setItem(row_index, 0, item)
 
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
-                                                                 QHeaderView.ResizeToContents)
+                                                                 QHeaderView.ResizeMode.ResizeToContents)
 
     def update_friends_combobox(self):
         self.comboBox.clear()

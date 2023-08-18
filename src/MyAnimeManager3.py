@@ -1,9 +1,10 @@
 #!/bin/env python3
+import cgitb
 import json
 import sys
 import os
 
-from PyQt5.QtWidgets import QApplication
+from PyQt6.QtWidgets import QApplication
 import core
 import updater
 from ui.dialogs.profiles_manage import ProfilesManageDialog
@@ -44,9 +45,7 @@ class Application(QApplication):
         self.setApplicationDisplayName(display_name)
 
         mainwindow = MainWindow(self)
-
-        # Centrage de la fenêtre principale
-        mainwindow.move(self.desktop().screen().rect().center() - mainwindow.rect().center())
+        mainwindow.center()
         mainwindow.show()
 
     def load_profile(self):
@@ -76,5 +75,8 @@ class Application(QApplication):
         return load_or_create_database(self.profile)
 
 if __name__ == "__main__":
+    import cgitb
+    cgitb.enable(format='text')
+
     application = Application(sys.argv)
-    application.exec()
+    sys.exit(application.exec())

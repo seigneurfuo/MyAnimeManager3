@@ -2,11 +2,11 @@ pkgname="myanimemanager3"
 pkgver=2022.10.11
 pkgrel=1
 pkgdesc="Un logiciel de gestion de séries et d'animés."
-url="https://seigneurfuo.com"
+url="https://github.com/seigneurfuo/myanimemanager3"
 arch=('any')
 license=('')
 groups=("★ seigneurfuo: Paquets persos")
-depends=("python" "python-pyqt5" "python-peewee")
+depends=("python" "python-pyqt6" "python-peewee")
 source=("${pkgname}.desktop" "git+file:///home/$USER/Projets/MyAnimeManager/MyAnimeManager3#branch=master")
 md5sums=('SKIP'
          'SKIP')

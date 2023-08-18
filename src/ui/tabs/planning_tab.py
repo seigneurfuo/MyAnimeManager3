@@ -3,10 +3,10 @@
 import platform
 import os
 
-from PyQt5.QtCore import Qt, QDate, QUrl
-from PyQt5.QtGui import QColor, QDesktopServices, QIcon
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QProgressBar, QHeaderView, QCalendarWidget
-from PyQt5.uic import loadUi
+from PyQt6.QtCore import Qt, QDate, QUrl
+from PyQt6.QtGui import QColor, QDesktopServices, QIcon
+from PyQt6.QtWidgets import QWidget, QTableWidgetItem, QProgressBar, QHeaderView
+from PyQt6.uic import loadUi
 
 from ui.dialogs.edit_date import EditDateDialog
 from ui.widgets.custom_calendar import CustomCalendar
@@ -30,7 +30,7 @@ class PlanningTab(QWidget):
 
         self.planning_calendar = CustomCalendar()
         self.planning_calendar.setGridVisible(True)
-        self.planning_calendar.setVerticalHeaderFormat(QCalendarWidget.NoVerticalHeader)
+        # self.planning_calendar.setVerticalHeaderFormat(QCalendarWidget.NoVerticalHeader) # FIXME: QT6
         self.planning_calendar.set_cells_background_color(QColor(115, 210, 22, 50))
         self.verticalLayout.insertWidget(1, self.planning_calendar)
 
@@ -77,7 +77,7 @@ class PlanningTab(QWidget):
 
     def get_current_season_id(self):
         current_item = self.tableWidget_6.item(self.tableWidget_6.currentRow(), 0)
-        return current_item.data(Qt.UserRole) if current_item else None
+        return current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
 
     def when_planning_calender_date_changed(self):
         # Change aussi la date sur le selecteur de date
@@ -139,13 +139,13 @@ class PlanningTab(QWidget):
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
                 item.setToolTip(item.text())
-                item.setData(Qt.UserRole, planning_data.id)
+                item.setData(Qt.ItemDataRole.UserRole, planning_data.id)
                 self.tableWidget_7.setItem(row_index, col_index, item)
 
         self.tableWidget_7.clearSelection()
         self.tableWidget_7.resizeColumnsToContents()
         self.tableWidget_7.horizontalHeader().setSectionResizeMode(self.tableWidget_7.columnCount() - 1,
-                                                                   QHeaderView.ResizeToContents)
+                                                                   QHeaderView.ResizeMode.ResizeToContents)
 
     def fill_to_watch_table(self):
         """
@@ -168,13 +168,13 @@ class PlanningTab(QWidget):
             ids = "{:03d} - {}".format(row_data.serie.sort_id, row_data.sort_id)
             item = QTableWidgetItem(ids)
             item.setToolTip(item.text())
-            item.setData(Qt.UserRole, row_data.id)
+            item.setData(Qt.ItemDataRole.UserRole, row_data.id)
             self.tableWidget_6.setItem(col_index, 0, item)
 
             # Série
             item = QTableWidgetItem(row_data.serie.name)
             item.setToolTip(item.text())
-            item.setData(Qt.UserRole, row_data.id)
+            item.setData(Qt.ItemDataRole.UserRole, row_data.id)
             self.tableWidget_6.setItem(col_index, 1, item)
 
             # Saison
@@ -229,7 +229,7 @@ class PlanningTab(QWidget):
         # self.tableWidget_6.clearSelection() # On ne le laisse pas car ça peut etre utile pour valider plusieurs fois des épisodes d'une même saison à la suite
         self.tableWidget_6.resizeColumnsToContents()
         self.tableWidget_6.horizontalHeader().setSectionResizeMode(self.tableWidget_6.columnCount() - 1,
-                                                                   QHeaderView.ResizeToContents)
+                                                                   QHeaderView.ResizeMode.ResizeToContents)
 
     def when_today_button_clicked(self):
         """Fonction qui ramène le calendrier à la date actuelle"""
@@ -332,14 +332,14 @@ class PlanningTab(QWidget):
 
     def when_watched_table_show_view_history_button_clicked(self):
         current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)
-        planning_id = current_item.data(Qt.UserRole) if current_item else None
+        planning_id = current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
         planning = Planning.get(planning_id)
         if planning:
             display_view_history_dialog(self, planning.season_id)
 
     def watched_table_go_to_serie_data_button_clicked(self):
         current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)
-        planning_id = current_item.data(Qt.UserRole) if current_item else None
+        planning_id = current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
         planning = Planning.get(planning_id)
 
         if planning:
@@ -348,7 +348,7 @@ class PlanningTab(QWidget):
 
     def when_delete_button_clicked(self):
         current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)
-        planning_id = current_item.data(Qt.UserRole) if current_item else None
+        planning_id = current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
 
         if planning_id:
             planning_data = Planning.get(planning_id)
@@ -361,7 +361,7 @@ class PlanningTab(QWidget):
 
     def when_change_date_button_clicked(self):
         current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)
-        planning_id = current_item.data(Qt.UserRole) if current_item else None
+        planning_id = current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
 
         if planning_id:
             planning_data = Planning.get(planning_id)

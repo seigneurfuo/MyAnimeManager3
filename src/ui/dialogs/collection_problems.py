@@ -1,7 +1,7 @@
 import os
 
-from PyQt5.QtWidgets import QDialog, QTableWidgetItem
-from PyQt5.uic import loadUi
+from PyQt6.QtWidgets import QDialog, QTableWidgetItem
+from PyQt6.uic import loadUi
 
 
 class CollectionProblemsDialog(QDialog):

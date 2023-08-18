@@ -1,10 +1,10 @@
 import os
 from platform import python_version
 
-from PyQt5.QtCore import QT_VERSION_STR, PYQT_VERSION_STR
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QDialog
-from PyQt5.uic import loadUi
+from PyQt6.QtCore import QT_VERSION_STR, PYQT_VERSION_STR
+from PyQt6.QtGui import QPixmap
+from PyQt6.QtWidgets import QDialog
+from PyQt6.uic import loadUi
 
 from peewee import __version__ as peewee_version
 

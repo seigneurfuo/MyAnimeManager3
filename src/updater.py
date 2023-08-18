@@ -2,7 +2,7 @@ import urllib.request
 import json
 import webbrowser
 
-from PyQt5.QtWidgets import QMessageBox
+from PyQt6.QtWidgets import QMessageBox
 
 from core import app_version, release_url
 
@@ -22,10 +22,10 @@ def check_for_update():
 
         if app_version < remote_version:
             choice = QMessageBox.information(None, "Nouvelle version disponible",
-                "Une nouvelle version est disponible: {}.\nSouhaitez-vous télécharger la mise à jour sur la plage du projet ?".format(remote_version),
-                QMessageBox.Yes | QMessageBox.No)
+                "Une nouvelle version est disponible: {}.\nSouhaitez-vous télécharger la mise à jour sur la page du projet ?".format(remote_version),
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
-            if choice == QMessageBox.Yes:
+            if choice == QMessageBox.StandardButton.Yes:
                 webbrowser.open(release_page_url, 2)
 
     except:

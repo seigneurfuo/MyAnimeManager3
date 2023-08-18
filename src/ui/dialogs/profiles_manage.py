@@ -1,9 +1,9 @@
 import os
 
-from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QDialog, QToolButton, QMessageBox
-from PyQt5.uic import loadUi
+from PyQt6.QtCore import QSize, Qt
+from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import QDialog, QToolButton, QMessageBox, QStyleOptionToolButton
+from PyQt6.uic import loadUi
 
 from profiles import Profiles
 from ui.dialogs.profile_edit import ProfileEditDialog
@@ -75,7 +75,7 @@ class ProfilesManageDialog(QDialog):
 
         for index, profile in enumerate(self.profiles_list):
             btn = QToolButton()
-            btn.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+            #btn.setToolButtonStyle(Qt.ToolButtonTextUnderIcon) # FIXME: QT6
             btn.setText(profile.name)
             btn.setFixedSize(128, 128)
             btn.setIcon(QIcon(profile.get_picture()))
@@ -169,8 +169,8 @@ class ProfilesManageDialog(QDialog):
         choice = QMessageBox.information(self, self.tr("Supression d'un profil"),
                                          self.tr("Etes vous sûr de vouloir supprimer le profil: {} ?".format(
                                              self.selected_profile.name)),
-                                         QMessageBox.Yes | QMessageBox.Cancel)
+                                         QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.Cancel)
 
-        if choice == QMessageBox.Yes:
+        if choice == QMessageBox.StandardButton.Yes:
             self.selected_profile.delete()
             self.update_all()

@@ -3,11 +3,11 @@
 import os
 from datetime import datetime
 
-from PyQt5.QtGui import QIcon, QColor, QPixmap
+from PyQt6.QtGui import QIcon, QColor, QPixmap
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QCheckBox, QHeaderView, QMessageBox, QLabel
-from PyQt5.uic import loadUi
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QWidget, QTableWidgetItem, QCheckBox, QHeaderView, QMessageBox, QLabel
+from PyQt6.uic import loadUi
 
 import utils
 
@@ -60,14 +60,14 @@ class List2(QWidget):
 
     def when_show_view_history_button_clicked(self):
         current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
-        current_season_id = current_item.data(Qt.UserRole) if current_item else None
+        current_season_id = current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
 
         if current_season_id:
             display_view_history_dialog(self, current_season_id)
 
     def when_go_to_serie_data_button_clicked(self):
         current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
-        current_season_id = current_item.data(Qt.UserRole) if current_item else None
+        current_season_id = current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
 
         if current_season_id:
             season = Seasons().get(current_season_id)
@@ -145,7 +145,7 @@ class List2(QWidget):
                     item = QTableWidgetItem(value)
                     item.setToolTip(item.text())
 
-                item.setData(Qt.UserRole, season.id)
+                item.setData(Qt.ItemDataRole.UserRole, season.id)
 
                 # Bandeau orangé pour les series avec un numéro temporaire
                 if col_index == 0 and season.serie.sort_id == 0:
@@ -198,11 +198,11 @@ class List2(QWidget):
         self.tableWidget.clearSelection()
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
-                                                                 QHeaderView.ResizeToContents)
+                                                                 QHeaderView.ResizeMode.ResizeToContents)
 
     def when_export_button_clicked(self):
         filepath = utils.export_qtablewidget(self.tableWidget, self.parent.parent.profile.path, "liste")
         # Bouton pour ouvrir le dossier ?
         QMessageBox.information(self, self.tr("Export terminé"),
                                 self.tr("Le fichier a été généré ici:") + "\n    " + filepath,
-                                QMessageBox.Ok)
+                                QMessageBox.StandardButton.Ok)

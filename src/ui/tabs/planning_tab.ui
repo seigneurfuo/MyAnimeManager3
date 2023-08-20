@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>870</width>
+    <width>876</width>
     <height>546</height>
    </rect>
   </property>
@@ -18,12 +18,6 @@
     <layout class="QVBoxLayout" name="verticalLayout_16">
      <item>
       <widget class="QLabel" name="label_80">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
        <property name="text">
         <string>Épisodes à voir:</string>
        </property>
@@ -36,12 +30,6 @@
          <width>497</width>
          <height>164</height>
         </size>
-       </property>
-       <property name="font">
-        <font>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
        </property>
        <property name="layoutDirection">
         <enum>Qt::LeftToRight</enum>
@@ -79,6 +67,12 @@
        <column>
         <property name="text">
          <string>Ids</string>
+        </property>
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
         </property>
        </column>
        <column>
@@ -230,12 +224,6 @@
         <layout class="QHBoxLayout" name="horizontalLayout_44">
          <item>
           <widget class="QLabel" name="label_81">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
            <property name="text">
             <string>Épisodes vus pour cette date:</string>
            </property>
@@ -282,12 +270,6 @@
            <width>499</width>
            <height>126</height>
           </size>
-         </property>
-         <property name="font">
-          <font>
-           <weight>50</weight>
-           <bold>false</bold>
-          </font>
          </property>
          <property name="layoutDirection">
           <enum>Qt::LeftToRight</enum>

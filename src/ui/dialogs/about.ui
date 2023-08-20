@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>393</width>
+    <width>549</width>
     <height>464</height>
    </rect>
   </property>
@@ -54,12 +54,6 @@
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_76">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
            <property name="text">
             <string>Python:</string>
            </property>
@@ -79,12 +73,6 @@
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_71">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
            <property name="text">
             <string>Qt:</string>
            </property>
@@ -104,12 +92,6 @@
          </item>
          <item row="3" column="0">
           <widget class="QLabel" name="label_73">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
            <property name="text">
             <string>PyQt:</string>
            </property>
@@ -129,12 +111,6 @@
          </item>
          <item row="4" column="0">
           <widget class="QLabel" name="label_74">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
            <property name="text">
             <string>Peewee:</string>
            </property>
@@ -155,12 +131,6 @@
          </item>
          <item row="0" column="0">
           <widget class="QLabel" name="application_name">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
            <property name="text">
             <string>application_name</string>
            </property>

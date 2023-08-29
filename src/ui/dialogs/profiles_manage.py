@@ -75,7 +75,7 @@ class ProfilesManageDialog(QDialog):
 
         for index, profile in enumerate(self.profiles_list):
             btn = QToolButton()
-            #btn.setToolButtonStyle(Qt.ToolButtonTextUnderIcon) # FIXME: QT6
+            btn.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
             btn.setText(profile.name)
             btn.setFixedSize(128, 128)
             btn.setIcon(QIcon(profile.get_picture()))

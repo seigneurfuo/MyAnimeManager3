@@ -5,7 +5,7 @@ import os
 
 from PyQt6.QtCore import Qt, QDate, QUrl
 from PyQt6.QtGui import QColor, QDesktopServices, QIcon
-from PyQt6.QtWidgets import QWidget, QTableWidgetItem, QProgressBar, QHeaderView
+from PyQt6.QtWidgets import QWidget, QTableWidgetItem, QProgressBar, QHeaderView, QCalendarWidget
 from PyQt6.uic import loadUi
 
 from ui.dialogs.edit_date import EditDateDialog
@@ -30,7 +30,7 @@ class PlanningTab(QWidget):
 
         self.planning_calendar = CustomCalendar()
         self.planning_calendar.setGridVisible(True)
-        # self.planning_calendar.setVerticalHeaderFormat(QCalendarWidget.NoVerticalHeader) # FIXME: QT6
+        self.planning_calendar.setVerticalHeaderFormat(QCalendarWidget.VerticalHeaderFormat.NoVerticalHeader)
         self.planning_calendar.set_cells_background_color(QColor(115, 210, 22, 50))
         self.verticalLayout.insertWidget(1, self.planning_calendar)
 

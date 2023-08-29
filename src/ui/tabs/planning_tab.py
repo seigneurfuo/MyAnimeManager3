@@ -222,7 +222,7 @@ class PlanningTab(QWidget):
             # Style différent si on est sous Windows
             if platform.system() == "Windows":
                 progress_bar.setStyleSheet("QProgressBar::chunk ""{""background-color: #2B65EC;""}")
-                progress_bar.setAlignment(Qt.AlignCenter)
+                progress_bar.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
             self.tableWidget_6.setCellWidget(col_index, 7, progress_bar)
 

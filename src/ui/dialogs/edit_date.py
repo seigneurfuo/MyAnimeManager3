@@ -27,7 +27,7 @@ class EditDateDialog(QDialog):
 
         self.calendar = QCalendarWidget()
         self.calendar.setGridVisible(True)
-        self.calendar.setVerticalHeaderFormat(QCalendarWidget.NoVerticalHeader)
+        self.calendar.setVerticalHeaderFormat(QCalendarWidget.VerticalHeaderFormat.NoVerticalHeader)
         self.calendar.setSelectedDate(self.planning_data.date)
 
         self.verticalLayout_2.insertWidget(0, self.calendar)

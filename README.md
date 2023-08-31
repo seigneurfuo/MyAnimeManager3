@@ -2,16 +2,16 @@
 
 La continuation de MyAnimeManager1 et MyAnimeManager2.
 
-![](docs/imgs/2022-10-28-01-43-43.png)
+![](docs/imgs/2023-08-31-23-07-39.png)
 
-Commencé en 2018.
+Le projet en version 3 à été commencé en 2018.
 
-## Dépendences
-- python
-- python-qt5
+## Dépendances
+- python3
+- python-qt6
 - peewee
 
-## Lancement simple sans instalation
+## Lancement simple sans installation
 
 Après avoir cloné le dépot: on peut lancer la commande suivant pour disposer de thêmes supplémentaires. Elle n'est pas obligatoire:
 

@@ -22,7 +22,7 @@ git submodule update --init
 Installer les dépendances suivantes:
 
 - python
-- python-qt5
+- python-qt6
 - python-peewee
 
 ```sh

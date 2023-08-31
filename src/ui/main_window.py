@@ -131,7 +131,7 @@ class MainWindow(QMainWindow):
 
     def when_menu_action_check_collection_clicked(self):
         messages = utils.get_collection_problems()
-        dialog = CollectionProblemsDialog(messages)
+        dialog = CollectionProblemsDialog(self, messages)
         dialog.exec()
 
     def when_menu_action_about_clicked(self):
@@ -154,11 +154,11 @@ class MainWindow(QMainWindow):
             self.close()
 
     def when_menu_action_manage_profiles_clicked(self):
-        profiles_manage = ProfilesManageDialog(ProfilesManageDialog.roles.manage, self.parent.profile)
+        profiles_manage = ProfilesManageDialog(self, ProfilesManageDialog.roles.manage, self.parent.profile)
         profiles_manage.exec()
 
     def when_menu_action_manage_friends_clicked(self):
-        friends_manage = FriendManageDialog()
+        friends_manage = FriendManageDialog(self)
         friends_manage.exec()
 
     def when_menu_action_settings_clicked(self):

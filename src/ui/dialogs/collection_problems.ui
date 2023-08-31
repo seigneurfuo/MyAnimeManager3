@@ -18,7 +18,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../resources/icons/bandaid.png</normaloff>../../resources/icons/bandaid.png</iconset>
+    <normaloff>../../resources/icons/magnifier-exclamation.png</normaloff>../../resources/icons/magnifier-exclamation.png</iconset>
   </property>
   <property name="modal">
    <bool>true</bool>

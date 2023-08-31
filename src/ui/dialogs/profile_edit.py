@@ -32,7 +32,7 @@ class ProfileEditDialog(QDialog):
 
         self.profile_picture = QLabel()
         self.profile_picture.setFixedSize(QSize(128, 128))
-        self.profile_picture.setAlignment(Qt.AlignCenter)
+        self.profile_picture.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.profile_picture.setStyleSheet("border: 1px solid black;")
         pixmap = os.path.join(os.path.dirname(__file__), "../../resources/icons", "user.png")
         self.profile_picture.setPixmap(QPixmap(pixmap))
@@ -41,7 +41,7 @@ class ProfileEditDialog(QDialog):
         self.profile_name_entry = QLineEdit()
         self.profile_picture_browse_button = QPushButton("Choisir une image pour le profil")
 
-        self.button_box = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        self.button_box = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
 
         layout.addWidget(self.profile_picture, 0, 0)
         layout.addWidget(self.profile_name_label, 0, 1)

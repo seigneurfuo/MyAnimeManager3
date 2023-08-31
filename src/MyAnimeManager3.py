@@ -57,7 +57,7 @@ class Application(QApplication):
 
         # Si pas de profil ou bien plusieurs, on ouvre l'assistant
         if len(profiles_list) != 1:
-            profiles_manage = ProfilesManageDialog(ProfilesManageDialog.roles.choose, None)
+            profiles_manage = ProfilesManageDialog(None, ProfilesManageDialog.roles.choose, None)
             profiles_manage.exec()
 
             if profiles_manage.selected_profile == None:

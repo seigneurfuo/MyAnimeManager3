@@ -8,8 +8,8 @@ import core
 
 
 class SeasonDialog(QDialog):
-    def __init__(self, season, serie, seasons_types):
-        super().__init__()
+    def __init__(self, parent, season, serie, seasons_types):
+        super().__init__(parent=parent)
 
         self.season = season
         self.serie = serie

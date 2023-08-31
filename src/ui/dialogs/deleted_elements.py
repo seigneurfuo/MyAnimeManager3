@@ -6,8 +6,8 @@ from PyQt6.uic import loadUi
 
 
 class DeletedElementsDialog(QDialog):
-    def __init__(self, deleted_series, deleted_seasons):
-        super().__init__()
+    def __init__(self, parent, deleted_series, deleted_seasons):
+        super().__init__(parent=parent)
 
         self.deleted_seasons = deleted_seasons
         self.deleted_series = deleted_series

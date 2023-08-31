@@ -366,7 +366,7 @@ class PlanningTab(QWidget):
         if planning_id:
             planning_data = Planning.get(planning_id)
             full_friends_list = Friends.select().order_by(Friends.name)
-            dialog = EditDateDialog(planning_data, full_friends_list)
+            dialog = EditDateDialog(self, planning_data, full_friends_list)
 
             if dialog.exec():
 

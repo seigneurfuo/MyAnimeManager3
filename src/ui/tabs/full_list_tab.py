@@ -133,7 +133,7 @@ class FullListTab(QWidget):
 
     def when_add_serie_button_clicked(self):
         serie = Series()
-        series_dialog = SerieDialog(serie)
+        series_dialog = SerieDialog(self, serie)
 
         if series_dialog.exec():
             self.refresh_data()
@@ -144,7 +144,7 @@ class FullListTab(QWidget):
         if current_serie_id:
             serie = Series().get(current_serie_id)
 
-            series_dialog = SerieDialog(serie)
+            series_dialog = SerieDialog(self, serie)
             if series_dialog.exec():
                 self.refresh_data()
                 self.set_series_combobox_current_selection(serie.id)
@@ -166,7 +166,7 @@ class FullListTab(QWidget):
             season = Seasons()
             serie = Series().get(current_serie_id)
             seasons_types = SeasonsTypes().select()
-            season_dialog = SeasonDialog(season, serie, seasons_types)
+            season_dialog = SeasonDialog(self, season, serie, seasons_types)
 
             if season_dialog.exec():
                 self.refresh_data()
@@ -177,7 +177,7 @@ class FullListTab(QWidget):
         if current_season_id:
             season = Seasons().get(current_season_id)
             seasons_types = SeasonsTypes().select()
-            season_dialog = SeasonDialog(season, serie=None, seasons_types=seasons_types)
+            season_dialog = SeasonDialog(self, season, serie=None, seasons_types=seasons_types)
             if season_dialog.exec():
                 self.refresh_data()
                 self.set_series_combobox_current_selection(season.serie.id)
@@ -204,7 +204,7 @@ class FullListTab(QWidget):
     def when_view_deleted_elements_button_clicked(self):
         deleted_series = Series().select().where(Series.is_deleted == 1).order_by(Series.sort_id)
         deleted_seasons = Seasons().select().where(Seasons.is_deleted == 1).join(Series).order_by(Seasons.sort_id)
-        dialog = DeletedElementsDialog(deleted_series, deleted_seasons)
+        dialog = DeletedElementsDialog(self, deleted_series, deleted_seasons)
 
         # FIXME: Ne veut pas changer la valeur ...
         if dialog.exec():

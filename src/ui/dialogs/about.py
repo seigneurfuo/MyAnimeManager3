@@ -13,7 +13,8 @@ from core import app_name, app_version
 
 class AboutDialog(QDialog):
     def __init__(self, parent):
-        super().__init__()
+        super().__init__(parent=parent)
+
         self.parent = parent
 
         self.logo_clicks = 0

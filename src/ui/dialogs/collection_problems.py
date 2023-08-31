@@ -5,8 +5,8 @@ from PyQt6.uic import loadUi
 
 
 class CollectionProblemsDialog(QDialog):
-    def __init__(self, messages):
-        super().__init__()
+    def __init__(self, parent, messages):
+        super().__init__(parent=parent)
 
         self.messages = messages
 

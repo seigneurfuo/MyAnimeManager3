@@ -8,8 +8,8 @@ from database import Friends
 
 
 class FriendManageDialog(QDialog):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent):
+        super().__init__(parent=parent)
 
         self.friends_list = []
         self.edited_friend_id = None

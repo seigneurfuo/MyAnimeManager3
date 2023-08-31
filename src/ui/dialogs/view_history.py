@@ -9,7 +9,7 @@ from database import Planning, Friends, Seasons, FriendsPlanning
 
 class ViewHistoryDialog(QDialog):
     def __init__(self, parent, season, serie_episodes, season_episodes):
-        super().__init__()
+        super().__init__(parent=parent)
 
         self.parent = parent
         self.season = season

@@ -6,8 +6,8 @@ from PyQt6.QtWidgets import QDialogButtonBox, QLabel, QLineEdit, QPushButton, QG
 
 
 class ProfileEditDialog(QDialog):
-    def __init__(self, profile=None):
-        super().__init__()
+    def __init__(self, parent, profile=None):
+        super().__init__(parent=parent)
 
         self.profile = profile
         self.profile_name = None

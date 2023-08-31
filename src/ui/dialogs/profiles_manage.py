@@ -14,8 +14,8 @@ class ProfilesManageDialog(QDialog):
         manage = 0
         choose = 1
 
-    def __init__(self, role, current_profile):
-        super().__init__()
+    def __init__(self, parent, role, current_profile):
+        super().__init__(parent=parent)
 
         self.role = role
         self.current_profile = current_profile
@@ -130,7 +130,7 @@ class ProfilesManageDialog(QDialog):
             self.pushButton_3.setEnabled(True)
 
     def when_create_profile_button_clicked(self):
-        profile_edit_dialog = ProfileEditDialog()
+        profile_edit_dialog = ProfileEditDialog(self)
 
         if profile_edit_dialog.exec():
             new_profile_name = profile_edit_dialog.profile_name
@@ -147,7 +147,7 @@ class ProfilesManageDialog(QDialog):
     def when_edit_profile_button_clicked(self):
         profile = self.selected_profile
 
-        profile_edit_dialog = ProfileEditDialog(self.selected_profile)
+        profile_edit_dialog = ProfileEditDialog(self, profile)
 
         if profile_edit_dialog.exec():
             new_profile_name = profile_edit_dialog.profile_name

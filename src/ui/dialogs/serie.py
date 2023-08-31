@@ -6,8 +6,8 @@ from PyQt6.uic import loadUi
 from common import file_to_blob
 
 class SerieDialog(QDialog):
-    def __init__(self, serie):
-        super().__init__()
+    def __init__(self, parent, serie):
+        super().__init__(parent=parent)
 
         self.serie = serie
         self.picture_filepath = None

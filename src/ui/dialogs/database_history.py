@@ -11,7 +11,7 @@ from db_backups_manager import DBBackupsManager
 
 class DatabaseHistoryDialog(QDialog):
     def __init__(self, parent):
-        super().__init__()
+        super().__init__(parent=parent)
         self.parent = parent
 
         self.db_backups = []

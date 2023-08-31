@@ -8,8 +8,8 @@ from ui.dialogs.friends_manage import FriendManageDialog
 
 
 class EditDateDialog(QDialog):
-    def __init__(self, planning_data, full_friends_list):
-        super().__init__()
+    def __init__(self, parent, planning_data, full_friends_list):
+        super().__init__(parent=parent)
 
         self.planning_data = planning_data
         self.full_friends_list = full_friends_list
@@ -99,7 +99,7 @@ class EditDateDialog(QDialog):
         self.new_date_label.setText(date_string)
 
     def open_friends_list(self):
-        dialog = FriendManageDialog()
+        dialog = FriendManageDialog(self)
         if dialog.exec():
             self.full_friends_list = dialog.friends_list
             self.update_friends_combobox()

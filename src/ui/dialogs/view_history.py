@@ -40,7 +40,7 @@ class ViewHistoryDialog(QDialog):
         self.serie_table.setRowCount(row_count)
 
         for row_index, row in enumerate(self.serie_episodes):
-            columns = [row.date.strftime("%d/%m/%Y"), str(row.season.sort_id), row.season.name, self.season.type.name, row.episodes]
+            columns = [row.date.strftime("%d/%m/%Y"), str(row.season.sort_id), row.season.name, row.season.type.name, row.episodes]
 
             # Si on à activé la gestion des amis:
             if self.parent.parent.parent.settings["friends_enabled"]:
@@ -71,7 +71,7 @@ class ViewHistoryDialog(QDialog):
         self.season_table.setRowCount(row_count)
 
         for row_index, row in enumerate(self.season_episodes):
-            columns = [row.date.strftime("%d/%m/%Y"), str(row.season.sort_id), row.season.name, self.season.type.name, row.episodes]
+            columns = [row.date.strftime("%d/%m/%Y"), str(row.season.sort_id), row.season.name, row.season.type.name, row.episodes]
 
             # Si on à activé la gestion des amis:
             if self.parent.parent.parent.settings["friends_enabled"]:

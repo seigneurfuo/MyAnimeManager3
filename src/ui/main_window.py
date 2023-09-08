@@ -1,9 +1,10 @@
 import os
 import webbrowser
 
+from PyQt6 import QtGui
 from PyQt6.QtWidgets import QMainWindow, QMessageBox
 from PyQt6.uic import loadUi
-from PyQt6.QtGui import QDesktopServices
+from PyQt6.QtGui import QDesktopServices, QCursor
 from PyQt6.QtCore import QUrl
 
 import database
@@ -96,7 +97,9 @@ class MainWindow(QMainWindow):
     # print(self.parent_qapplication.profile.get_series())
 
     def center(self):
-        screen_geometry = self.screen().availableGeometry().center()
+        cursor_position = QCursor.pos()
+        screen = QtGui.QGuiApplication.screenAt(cursor_position)
+        screen_geometry = screen.availableGeometry().center()
         frame_geometry = self.frameGeometry()
 
         frame_geometry.moveCenter(screen_geometry)

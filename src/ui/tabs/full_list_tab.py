@@ -278,19 +278,12 @@ class FullListTab(QWidget):
                                                                  QHeaderView.ResizeMode.ResizeToContents)
 
     def fill_season_data(self, season):
-        # Note
-        rating = next(rating for rating in core.RATING_LEVELS if rating["value"] == season.rating)
-        pixmap_path = os.path.join(os.path.dirname(__file__), "../../resources/icons", rating["icon"])
-        # TODO: Ratio à conserver
-        self.label_4.setPixmap(QPixmap(pixmap_path))
-
         self.plainTextEdit.setPlainText(season.description)
         self.show_view_history_button.setEnabled(True)
 
     def clear_season_data(self):
         self.plainTextEdit.clear()
         self.show_view_history_button.setEnabled(False)
-        self.label_4.setPixmap(QPixmap())
         self.plainTextEdit.clear()
 
     def when_seasons_list_current_index_changed(self):

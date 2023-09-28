@@ -58,9 +58,8 @@ class Profiles:
 
     @staticmethod
     def get_profiles_list():
-        profiles_list = [Profiles(name=profile) for profile in os.listdir(PROFILES_PATH)
+        profiles_list = [Profiles(name=profile) for profile in sorted(os.listdir(PROFILES_PATH))
                          if os.path.isdir(os.path.join(PROFILES_PATH, profile))
                          and os.path.isfile(os.path.join(PROFILES_PATH, profile, DATABASE_NAME))]
 
-        # TODO: Tri de la liste ?
         return profiles_list

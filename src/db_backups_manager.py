@@ -22,7 +22,7 @@ class DBBackupsManager:
 
         databases_backups = [
             os.path.join(self.backups_folderpath, filename)
-            for filename in os.listdir(self.backups_folderpath)
+            for filename in sorted(os.listdir(self.backups_folderpath))
             if os.path.isfile(os.path.join(self.backups_folderpath, filename))
                and os.path.join(self.backups_folderpath, filename).endswith(self.database_pattern)
                and "-manual-" in filename or "-auto-" in filename

@@ -130,7 +130,7 @@ class PlanningTab(QWidget):
             if planning_data.episode == planning_data.season.episodes and planning_data.season.episodes > 1:
                 episode_number += self.tr(" (Fin)")
             elif planning_data.episode == planning_data.season.episodes and planning_data.season.episodes == 1:
-                episode_number += self.tr(" (unique)")
+                episode_number = self.tr(" (unique)")
 
             columns = ["{:03d} - {}".format(planning_data.serie.sort_id, planning_data.season.sort_id),
                        planning_data.season.serie.name, planning_data.season.name, planning_data.season.type.name,

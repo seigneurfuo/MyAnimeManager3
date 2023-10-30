@@ -27,7 +27,8 @@ class StatsTab(QWidget):
         # Remplissage la liste des extractions
         queries_list = [self.tr("Nombre de saisons par année de sortie"), self.tr("Saisons les plus revisionnées"),
                         self.tr("Saisons avec le plus d'épisodes"), self.tr("Séries avec le plus d'épisodes"),
-                        self.tr("Nombre d'épisodes vus par année")]
+                        self.tr("Nombre d'épisodes vus par année"), self.tr("Jounal de visionnage détaillé")]
+
         for index, name in enumerate(queries_list):
             self.comboBox.addItem(name, userData=index)
 
@@ -108,5 +109,11 @@ class StatsTab(QWidget):
             headers = ["Année", "Nombre"]
             query = Planning.select(Planning.date.year, peewee.fn.COUNT(Planning.id))\
                 .group_by(Planning.date.year).order_by(Planning.date.year).dicts()
+
+        elif query_index == 5:
+            headers = ["Date", "Ids", "Série", "Saison", "Episode"]
+            query = Planning.select(Planning.date, Series.sort_id.concat(" - ").concat(Seasons.sort_id),
+                                    Series.name.alias("serie_name"), Seasons.name, Planning.episode) \
+                .join(Series).join(Seasons).group_by(Planning.id).order_by(Planning.date.desc(), Planning.id.desc()).dicts()
 
         return headers, query

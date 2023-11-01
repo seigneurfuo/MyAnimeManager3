@@ -53,7 +53,7 @@
         <bool>true</bool>
        </attribute>
        <attribute name="verticalHeaderVisible">
-        <bool>false</bool>
+        <bool>true</bool>
        </attribute>
        <attribute name="verticalHeaderMinimumSectionSize">
         <number>20</number>
@@ -71,6 +71,7 @@
         <property name="font">
          <font>
           <weight>50</weight>
+          <bold>false</bold>
          </font>
         </property>
        </column>
@@ -304,7 +305,7 @@
           <bool>true</bool>
          </attribute>
          <attribute name="verticalHeaderVisible">
-          <bool>false</bool>
+          <bool>true</bool>
          </attribute>
          <attribute name="verticalHeaderMinimumSectionSize">
           <number>20</number>

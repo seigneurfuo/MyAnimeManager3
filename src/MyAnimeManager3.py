@@ -14,7 +14,7 @@ from database_manager import load_or_create_database
 from profiles import Profiles
 
 from common import load_settings
-from ui.themes import set_theme_to
+from ui.themes import set_theme
 
 
 class Application(QApplication):
@@ -36,7 +36,7 @@ class Application(QApplication):
             updater.check_for_update()
 
         # Définition du thême
-        set_theme_to(self, self.settings["application_stylesheet"])
+        set_theme(self, self.settings["application_stylesheet"])
 
         self.profile = self.load_profile()
         self.database_path =  self.load_database()

@@ -22,7 +22,7 @@ class StatsTab(QWidget):
         self.init_events()
 
     def init_ui(self):
-        loadUi(os.path.join(os.path.dirname(__file__), "stats.ui"), self)
+        loadUi(os.path.join(os.path.dirname(__file__), "stats_tab.ui"), self)
 
         # Remplissage la liste des extractions
         queries_list = [self.tr("Nombre de saisons par année de sortie"), self.tr("Saisons les plus revisionnées"),

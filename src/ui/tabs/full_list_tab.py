@@ -116,14 +116,14 @@ class FullListTab(QWidget):
             with io.BytesIO(serie.picture) as picture_data:
                 pixmap = QPixmap.fromImage(QImage.fromData(picture_data.read()))
 
-            self.label_6.setScaledContents(True)
-            self.label_6.setPixmap(pixmap)
+            #self.label_6.setScaledContents(True)
+            #self.label_6.setPixmap(pixmap)
 
         # On masque ou non le bouton pour parcourir le dossier de la série
         self.open_folder_button.setEnabled(os.path.exists(serie.path))
 
     def clear_serie_data(self):
-        fields = [self.label_3, self.label_2, self.label_6]
+        fields = [self.label_3, self.label_2]#, self.label_6]
 
         for field in fields:
             field.clear()

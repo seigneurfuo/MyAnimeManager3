@@ -46,7 +46,7 @@ class Application(QApplication):
 
         mainwindow = MainWindow(self)
         mainwindow.center()
-        mainwindow.show()
+        mainwindow.showMaximized()
 
     def load_profile(self):
         # Creation des dossiers de l'applications

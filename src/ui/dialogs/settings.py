@@ -1,9 +1,9 @@
 import os
 
-from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
+from PyQt6.QtWidgets import QDialog, QStyleFactory
 from PyQt6.uic import loadUi
 
-from ui.themes import get_themes_list
+#from ui.themes import get_themes_list
 
 import core
 from common import save_settings
@@ -22,6 +22,11 @@ class SettingsDialog(QDialog):
 
         self.setWindowTitle(self.tr("Options"))
 
+        # Masquage de l'option pour changer de thême si on est pas sous Windows
+        if "Fusion" not in QStyleFactory.keys():
+            self.label.setEnabled(False)
+            self.checkBox_3.setEnabled(False)
+
         self.fill_data()
 
     def init_events(self):
@@ -29,16 +34,19 @@ class SettingsDialog(QDialog):
 
     def fill_data(self):
         # Liste des thêmes
-        themes = get_themes_list()
+        #themes = get_themes_list()
 
-        for theme in themes:
-            self.comboBox.addItem(theme.name, userData=theme.path)
+        # for theme in themes:
+        #     self.comboBox.addItem(theme.name, userData=theme.path)
+        #
+        # # Choix du thême sélectionné
+        # current_theme = self.settings["application_stylesheet"]
+        # print("Theme:", current_theme)
+        # index = self.comboBox.findData(current_theme)
+        # self.comboBox.setCurrentIndex(index)
 
-        # Choix du thême sélectionné
-        current_theme = self.settings["application_stylesheet"]
-        print("Theme:", current_theme)
-        index = self.comboBox.findData(current_theme)
-        self.comboBox.setCurrentIndex(index)
+        # Thême sombre pour Windows
+        self.checkBox_3.setChecked(self.settings["fusion_theme"])
 
         # Conservation des sauvegardes
         self.spinBox.setValue(self.settings["backups_limit"])
@@ -48,7 +56,8 @@ class SettingsDialog(QDialog):
         self.checkBox_2.setChecked(self.settings["friends_enabled"])
 
     def save_settings_to_file(self):
-        self.settings["application_stylesheet"] = self.comboBox.currentData()
+        #self.settings["application_stylesheet"] = self.comboBox.currentData()
+        self.settings["fusion_theme"] = self.checkBox_3.isChecked()
         self.settings["backups_limit"] = self.spinBox.value()
         self.settings["updates_check"] = self.checkBox.isChecked()
         self.settings["friends_enabled"] = self.checkBox_2.isChecked()

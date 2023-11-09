@@ -14,7 +14,7 @@ from database_manager import load_or_create_database
 from profiles import Profiles
 
 from common import load_settings
-from ui.themes import set_theme
+#from ui.themes import set_theme
 
 
 class Application(QApplication):
@@ -42,8 +42,10 @@ class Application(QApplication):
         if core.app_version != "DEV" and self.settings['updates_check']:
             updater.check_for_update()
 
-        # Définition du thême
-        set_theme(self, self.settings["application_stylesheet"])
+        # Définition du mode sombre (j'ai décidé pour le moment de ne plus supporter les thêmes tiers
+        if self.settings["fusion_theme"]:
+            self.setStyle("fusion")
+        #set_theme(self, self.settings["application_stylesheet"])
 
         self.profile = self.load_profile()
         self.database_path =  self.load_database()

@@ -13,6 +13,7 @@ PROFILES_PATH = os.path.join(APPLICATION_DATA_PATH, "profiles")
 
 DEFAULT_CONFIG_DATA = {
     "application_stylesheet": None,
+    "fusion_theme": True,
     "backups_limit": 10,
     "updates_check": True,
     "friends_enabled": False

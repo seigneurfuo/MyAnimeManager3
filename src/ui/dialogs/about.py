@@ -48,7 +48,7 @@ class AboutDialog(QDialog):
 
     def when_logo_clicked(self, event):
         pixmap = os.path.join(os.path.dirname(__file__), self.icons_path, self.logo_data[self.logo_clicks])
-        self.logo.setPixmap(QPixmap(pixmap))
+        self.logo.setPixmap(QPixmap(pixmap).scaled(128, 128))
 
         if self.logo_clicks == len(self.logo_data) - 1:
             self.logo_clicks = 0

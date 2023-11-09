@@ -31,7 +31,6 @@ def display_view_history_dialog(parent, season_id):
 
 def load_settings():
     settings_filepath = os.path.join(APPLICATION_DATA_PATH, "settings.json")
-    user_config = {}
 
     if os.path.isfile(settings_filepath):
         with open(settings_filepath, "r") as settings_file:

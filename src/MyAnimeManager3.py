@@ -3,6 +3,7 @@ import cgitb
 import json
 import sys
 import os
+import platform
 
 from PyQt6.QtWidgets import QApplication
 import core
@@ -26,6 +27,13 @@ class Application(QApplication):
         self.setApplicationName(core.app_name)
         self.setApplicationDisplayName(core.app_name_and_version)
         self.setApplicationVersion(core.app_version)
+
+        # Patch pour avoir l'icone de la barre des tâches sous Windows
+        # https://stackoverflow.com/questions/1551605/how-to-set-applications-taskbar-icon-in-windows-7/1552105#1552105
+        if platform.system() == "Windows":
+            import ctypes
+            app_id = f'{core.app_name}.{core.app_version}'  # arbitrary string
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(app_id)
 
         self.profile = None
         self.database_path = None

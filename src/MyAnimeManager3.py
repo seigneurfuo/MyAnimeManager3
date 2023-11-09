@@ -1,5 +1,5 @@
 #!/bin/env python3
-import cgitb
+
 import json
 import sys
 import os
@@ -83,8 +83,5 @@ class Application(QApplication):
         return load_or_create_database(self.profile)
 
 if __name__ == "__main__":
-    import cgitb
-    cgitb.enable(format='text')
-
     application = Application(sys.argv)
     sys.exit(application.exec())

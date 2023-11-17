@@ -62,14 +62,14 @@ class SeasonDialog(QDialog):
 
         if self.season.rating is not None:
             index = self.comboBox.findData(self.season.rating)
-            self.comboBox.setCurrentIndex(index)
+            self.comboBox.setCurrentIndex(index) # FIXME: Utiliser plutot DATA ?
 
         self.checkBox_2.setChecked(self.season.airing)
         self.textEdit.setPlainText(self.season.description)
 
         # Changement de l'index
         index = self.comboBox_2.findData(self.season.type.id)
-        self.comboBox_2.setCurrentIndex(index)
+        self.comboBox_2.setCurrentIndex(index) # FIXME: Utiliser plutot DATA ?
 
     def save_data(self):
         # Si création

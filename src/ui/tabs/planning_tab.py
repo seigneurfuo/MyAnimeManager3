@@ -14,6 +14,8 @@ from database import Planning, Seasons, Friends, FriendsPlanning
 from core import SEASONS_STATES
 from common import display_view_history_dialog
 
+from database import Series
+
 
 class PlanningTab(QWidget):
     def __init__(self, parent):
@@ -21,6 +23,7 @@ class PlanningTab(QWidget):
 
         self.parent = parent
         self.planning_calendar = QWidget()
+        self.to_watch_table_text_filter = ""
 
         self.init_ui()
         self.init_events()
@@ -60,6 +63,8 @@ class PlanningTab(QWidget):
 
         self.to_watch_table_show_view_history_button.clicked.connect(self.when_to_watch_table_show_view_history_button_clicked)
         self.to_watch_table_go_to_serie_data_button.clicked.connect(self.when_go_to_serie_data_button_clicked)
+
+        self.lineEdit.textChanged.connect(self.when_lineEdit_text_changed)
 
     def when_visible(self):
         self.refresh_data()
@@ -156,8 +161,12 @@ class PlanningTab(QWidget):
         states = [2] if self.checkBox_4.isChecked() else [1, 2]
         # https://docs.peewee-orm.com/en/latest/peewee/query_operators.html 1 or 2
         episodes_to_watch = Seasons.select() \
-            .where(Seasons.state.in_(states), Seasons.watched_episodes < Seasons.episodes, Seasons.is_deleted == 0) \
-            .order_by(Seasons.id)
+            .where(Seasons.state.in_(states), Seasons.watched_episodes < Seasons.episodes, Seasons.is_deleted == 0)
+
+        if(self.to_watch_table_text_filter):
+            episodes_to_watch = episodes_to_watch.where(Seasons.name.contains(self.to_watch_table_text_filter) | Series.name.contains(self.to_watch_table_text_filter)).join(Series)
+
+        episodes_to_watch.order_by(Seasons.id)
 
         # Nettoyage de la liste
         row_count = len(episodes_to_watch)
@@ -393,3 +402,7 @@ class PlanningTab(QWidget):
 
             self.parent.tabWidget.setCurrentIndex(1)
             self.parent.full_list_tab.set_series_combobox_current_selection(season.serie.id)
+
+    def when_lineEdit_text_changed(self):
+        self.to_watch_table_text_filter = self.lineEdit.text()
+        self.fill_to_watch_table()

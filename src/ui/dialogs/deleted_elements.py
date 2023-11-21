@@ -21,7 +21,7 @@ class DeletedElementsDialog(QDialog):
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "deleted_elements.ui"), self)
 
-        self.setWindowTitle(self.tr("Elements supprimés")) #TODO: accent
+        self.setWindowTitle(self.tr("Eléments supprimés"))
         self.tabWidget.setCurrentIndex(0)
 
         self.fill_data()

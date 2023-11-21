@@ -72,6 +72,7 @@ class PlanningTab(QWidget):
     def refresh_data(self):
         self.update_date_on_widgets()
         self.fill_data()
+        self.lineEdit.clear()
 
     def fill_data(self):
         self.fill_calendar_dates()

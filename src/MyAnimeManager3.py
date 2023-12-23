@@ -1,5 +1,5 @@
 #!/bin/env python3
-
+import argparse
 import sys
 import os
 import platform
@@ -18,8 +18,8 @@ from common import load_settings
 
 
 class Application(QApplication):
-    def __init__(self, args):
-        super().__init__(args)
+    def __init__(self, argv, args):
+        super().__init__(argv)
 
         self.app_dir = os.path.abspath(os.path.dirname(__file__))
 
@@ -34,9 +34,6 @@ class Application(QApplication):
             app_id = f'{core.app_name}.{core.app_version}'  # arbitrary string
             ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(app_id)
 
-        self.profile = None
-        self.database_path = None
-
         self.settings = load_settings()
 
         if core.app_version != "DEV" and self.settings['updates_check']:
@@ -47,8 +44,8 @@ class Application(QApplication):
             self.setStyle("fusion")
         #set_theme(self, self.settings["application_stylesheet"])
 
-        self.profile = self.load_profile()
-        self.database_path =  self.load_database()
+        self.profile = self.load_profile(args.profile_name)
+        self.database_path = self.load_database()
 
         display_name = self.tr("{} - Profil: {}").format(core.app_name_and_version, self.profile.name)
         self.setApplicationDisplayName(display_name)
@@ -57,15 +54,19 @@ class Application(QApplication):
         mainwindow.center()
         mainwindow.showMaximized()
 
-    def load_profile(self):
+    def load_profile(self, profile_name=None):
         # Creation des dossiers de l'applications
         if not os.path.isdir(core.PROFILES_PATH):
             os.makedirs(core.PROFILES_PATH)
 
         profiles_list = Profiles.get_profiles_list()
+        profiles_names = [profile.name for profile in profiles_list]
+
+        if profile_name and profile_name in profiles_names:
+            profile = Profiles(profile_name)
 
         # Si pas de profil ou bien plusieurs, on ouvre l'assistant
-        if len(profiles_list) != 1:
+        elif len(profiles_list) != 1:
             profiles_manage = ProfilesManageDialog(None, ProfilesManageDialog.roles.choose, None)
             profiles_manage.exec()
 
@@ -84,5 +85,9 @@ class Application(QApplication):
         return load_or_create_database(self.profile)
 
 if __name__ == "__main__":
-    application = Application(sys.argv)
+    argument_parser = argparse.ArgumentParser()
+    argument_parser.add_argument("--profile-name", required=False)
+    args = argument_parser.parse_args()
+
+    application = Application(sys.argv, args)
     sys.exit(application.exec())

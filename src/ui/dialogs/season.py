@@ -21,6 +21,10 @@ class SeasonDialog(QDialog):
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "season.ui"), self)
 
+        # On rempli par vide si il n'y à pas d'année définie
+        if not self.season.id:
+            self.spinBox_5.clear()
+
         # Remplissage de l'état des saisons
         for index, season_state in enumerate(core.SEASONS_STATES):
             state_icon = os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"])

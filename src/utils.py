@@ -86,22 +86,24 @@ def get_collection_problems():
     for season in seasons:
         if season.serie.id not in seasons_passed and season.state != 4:
 
+            # Identifiant à 0
             if season.serie.sort_id == 0 and (season.view_count > 0 or season.watched_episodes > 0):
                 seasons_passed.append(season.serie.id)
                 msg = tr("Série: {}. L'identifiant est toujours \"{}\" alors que des épisodes on déja étés vus.").format(
                     season.serie.name, season.serie.sort_id)
                 messages.append(msg)
 
-            elif season.episodes == 0:
+            # Aucune nombre d'épisodes défini
+            if season.episodes == 0:
                 msg = tr("Série: {}. La saison \"{}\" n'a aucun nombre d'épisodes définis.").format(
                     season.serie.name,
                     season.name)
                 messages.append(msg)
 
+            # Titres de la série vide
             # On supprime tout les espaces. S'il ne reste rien, alors c'est que le tire de la saison est vide.
-            elif season.name.replace(" ", "") == "":
-                msg = tr("Série: {}. La saison \"{}\" à un nom vide.").format(season.serie.name,
-                                                                          season.sort_id)
+            if season.name.replace(" ", "") == "":
+                msg = tr("Série: {}. La saison \"{}\" à un nom vide.").format(season.serie.name,                                            season.sort_id)
                 messages.append(msg)
 
     # ----- Séries -----
@@ -120,9 +122,14 @@ def get_collection_problems():
             msg = tr("Pas de série pour l'id {}. Est-ce normal ?").format(missing_id)
             messages.append(msg)
 
-
         # TODO: Séries vides
         # TODO: Séries avec le meme identifiant
+
+    for serie in series:
+        # Vérification du chemin
+        if serie.path and not os.path.isdir(serie.path):
+            msg = tr("Le chemin pour la série {} n'existe pas").format(missing_id)
+            messages.append(msg)
 
     return messages
 

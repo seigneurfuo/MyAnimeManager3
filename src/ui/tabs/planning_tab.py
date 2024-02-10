@@ -1,5 +1,5 @@
 #!/bin/env python3
-
+import datetime
 import platform
 import os
 
@@ -41,6 +41,7 @@ class PlanningTab(QWidget):
         # Commun
         self.today_button.clicked.connect(self.when_today_button_clicked)
         self.planning_calendar.selectionChanged.connect(self.when_planning_calender_date_changed)
+        self.planning_calendar.currentPageChanged.connect(self.when_planning_current_page_changed)
         self.checkBox_4.clicked.connect(self.when_checkBox_4_clicked)
         self.date_edit.dateChanged.connect(self.when_date_edit_date_changed)
 
@@ -64,7 +65,7 @@ class PlanningTab(QWidget):
         self.to_watch_table_show_view_history_button.clicked.connect(self.when_to_watch_table_show_view_history_button_clicked)
         self.to_watch_table_go_to_serie_data_button.clicked.connect(self.when_go_to_serie_data_button_clicked)
 
-        self.lineEdit.textChanged.connect(self.when_lineEdit_text_changed)
+        self.lineEdit.textChanged.connect(self.when_search_text_changed)
 
     def when_visible(self):
         self.refresh_data()
@@ -101,9 +102,19 @@ class PlanningTab(QWidget):
         self.when_date_edit_date_changed()
 
     def fill_calendar_dates(self):
+        month = self.planning_calendar.monthShown()
+        year = self.planning_calendar.yearShown()
+
+        first_mounth_date = datetime.datetime.strptime(f"{year}-{month}-01", "%Y-%m-%d")
+        delta = datetime.timedelta(days=38)
+        start_date = first_mounth_date - delta
+        stop_date = first_mounth_date + delta
+
         # Coloration des jours sur le calendrier
-        self.planning_calendar.dates = [record.date for record in
-                                        Planning().select().group_by(Planning.date).order_by(Planning.date)]
+        dates = [record.date for record in Planning().select().where(Planning.date.between(start_date, stop_date))\
+                    .group_by(Planning.date).order_by(Planning.date)]
+
+        self.planning_calendar.set_dates(dates)
 
     def fill_watched_table(self):
         """
@@ -404,6 +415,9 @@ class PlanningTab(QWidget):
             self.parent.tabWidget.setCurrentIndex(1)
             self.parent.full_list_tab.set_series_combobox_current_selection(season.serie.id)
 
-    def when_lineEdit_text_changed(self):
+    def when_search_text_changed(self):
         self.to_watch_table_text_filter = self.lineEdit.text()
         self.fill_to_watch_table()
+
+    def when_planning_current_page_changed(self):
+        self.fill_calendar_dates()

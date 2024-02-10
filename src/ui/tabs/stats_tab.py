@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/usr/bin/python3
 
 from PyQt6.QtWidgets import QWidget, QTableWidgetItem, QMessageBox
 from PyQt6.uic import loadUi

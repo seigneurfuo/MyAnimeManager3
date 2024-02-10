@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/usr/bin/python3
 import io
 
 from PyQt6.QtGui import QDesktopServices, QPixmap, QIcon, QImage

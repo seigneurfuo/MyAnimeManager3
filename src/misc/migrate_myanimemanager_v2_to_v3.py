@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/usr/bin/python3
 
 # python pwiz.py --preserve-order --engine sqlite "/home/seigneurfuo/.myanimemanager2/database.sqlite3" > database_myanimemanager_2.py
 import os

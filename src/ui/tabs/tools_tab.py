@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/usr/bin/python3
 import random
 
 from PyQt6.QtWidgets import QWidget, QTableWidgetItem, QHeaderView

@@ -113,6 +113,6 @@ class StatsTab(QWidget):
             headers = ["Date", "Ids", "Série", "Saison", "Episode"]
             query = Planning.select(Planning.date, Series.sort_id.concat(" - ").concat(Seasons.sort_id),
                                     Series.name.alias("serie_name"), Seasons.name, Planning.episode) \
-                .join(Series).join(Seasons).group_by(Planning.id).order_by(Planning.date.desc(), Planning.id.desc()).dicts()
+                .join(Series).switch(Planning).join(Seasons).group_by(Planning.id).order_by(Planning.date.desc(), Planning.id.desc()).dicts()
 
         return headers, query

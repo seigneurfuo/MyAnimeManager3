@@ -26,7 +26,8 @@ class StatsTab(QWidget):
         # Remplissage la liste des extractions
         queries_list = [self.tr("Nombre de saisons par année de sortie"), self.tr("Saisons les plus revisionnées"),
                         self.tr("Saisons avec le plus d'épisodes"), self.tr("Séries avec le plus d'épisodes"),
-                        self.tr("Nombre d'épisodes vus par année"), self.tr("Jounal de visionnage détaillé")]
+                        self.tr("Nombre d'épisodes vus par année"), self.tr("Jounal de visionnage détaillé"),
+                        self.tr("Liste des séries pour lequelles il reste des saisons à voir")]
 
         for index, name in enumerate(queries_list):
             self.comboBox.addItem(name, userData=index)
@@ -113,6 +114,13 @@ class StatsTab(QWidget):
             headers = ["Date", "Ids", "Série", "Saison", "Episode"]
             query = Planning.select(Planning.date, Series.sort_id.concat(" - ").concat(Seasons.sort_id),
                                     Series.name.alias("serie_name"), Seasons.name, Planning.episode) \
-                .join(Series).switch(Planning).join(Seasons).group_by(Planning.id).order_by(Planning.date.desc(), Planning.id.desc()).dicts()
+                .join(Series).switch(Planning).join(Seasons).order_by(Planning.date.desc(), Planning.id.desc()).dicts()
+
+        elif query_index == 6:
+            headers = ["Ids", "Série", "Saison", "Episodes vus"]
+            query = Seasons.select(Series.sort_id.concat(" - ").concat(Seasons.sort_id), Series.name.alias("serie_name"),
+                                   Seasons.name, Seasons.watched_episodes.concat("/").concat(Seasons.episodes))\
+                .join(Series).where(Seasons.is_deleted == 0).where(Seasons.state.in_([0, 1, 2, 5]))\
+                .order_by(Series.name.asc(), Seasons.name.asc()).dicts()
 
         return headers, query

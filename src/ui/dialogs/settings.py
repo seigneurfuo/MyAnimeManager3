@@ -55,7 +55,7 @@ class SettingsDialog(QDialog):
         # Gestion de visionnages avec amis
         self.checkBox_2.setChecked(self.settings["friends_enabled"])
 
-        # Gestion de temps supplémentaires
+        # Gestion des champs supplémentaires
         self.checkBox_4.setChecked(self.settings["custom_data_enabled"])
 
 

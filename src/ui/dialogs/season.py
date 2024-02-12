@@ -15,6 +15,7 @@ class SeasonDialog(QDialog):
         self.season = season
         self.serie = serie
         self.seasons_types = seasons_types
+        self.parent = parent
 
         self.init_ui()
         self.init_events()
@@ -48,6 +49,11 @@ class SeasonDialog(QDialog):
             self.setWindowTitle(self.season.name)
             self.fill_data()
 
+        if not self.parent.parent.parent.settings["custom_data_enabled"]:
+            self.tabWidget.setVisible(False)
+            self.pushButton.setVisible(False)
+            self.pushButton_2.setVisible(False)
+
     def init_events(self):
         self.pushButton.clicked.connect(self.add_row)
 
@@ -76,6 +82,10 @@ class SeasonDialog(QDialog):
         index = self.comboBox_2.findData(self.season.type.id)
         self.comboBox_2.setCurrentIndex(index) # FIXME: Utiliser plutot DATA ?
 
+        if self.parent.parent.parent.settings["custom_data_enabled"]:
+            self.fill_custom_data()
+
+    def fill_custom_data(self):
         # Chargement des champs supplémentaires + Affichage dans le tableau
         custom_data = json.loads(self.season.custom_data) if self.season.custom_data else []
         row_count = len(custom_data)

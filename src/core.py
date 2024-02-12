@@ -16,7 +16,8 @@ DEFAULT_CONFIG_DATA = {
     "fusion_theme": True,
     "backups_limit": 10,
     "updates_check": True,
-    "friends_enabled": False
+    "friends_enabled": False,
+    "custom_data_enabled": False
 }
 
 SEASONS_STATES = [

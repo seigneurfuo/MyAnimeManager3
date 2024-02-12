@@ -55,12 +55,17 @@ class SettingsDialog(QDialog):
         # Gestion de visionnages avec amis
         self.checkBox_2.setChecked(self.settings["friends_enabled"])
 
+        # Gestion de temps supplémentaires
+        self.checkBox_4.setChecked(self.settings["custom_data_enabled"])
+
+
     def save_settings_to_file(self):
         #self.settings["application_stylesheet"] = self.comboBox.currentData()
         self.settings["fusion_theme"] = self.checkBox_3.isChecked()
         self.settings["backups_limit"] = self.spinBox.value()
         self.settings["updates_check"] = self.checkBox.isChecked()
         self.settings["friends_enabled"] = self.checkBox_2.isChecked()
+        self.settings["custom_data_enabled"] = self.checkBox_4.isChecked()
 
         # Passage des paramètres à toute l'application
         self.parent.parent.settings = self.settings

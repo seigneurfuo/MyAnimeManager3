@@ -50,6 +50,7 @@ class SeasonDialog(QDialog):
             self.fill_data()
 
         if not self.parent.parent.parent.settings["custom_data_enabled"]:
+            self.label_11.setVisible(False)
             self.tabWidget.setVisible(False)
             self.pushButton.setVisible(False)
             self.pushButton_2.setVisible(False)
@@ -82,6 +83,7 @@ class SeasonDialog(QDialog):
         index = self.comboBox_2.findData(self.season.type.id)
         self.comboBox_2.setCurrentIndex(index) # FIXME: Utiliser plutot DATA ?
 
+        # Champs supplémentaires
         if self.parent.parent.parent.settings["custom_data_enabled"]:
             self.fill_custom_data()
 
@@ -103,6 +105,10 @@ class SeasonDialog(QDialog):
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
                                                                  QHeaderView.ResizeMode.ResizeToContents)
+
+        # Onglet RAW
+        pretty_json = json.dumps(self.season.custom_data, indent=4)
+        self.plainTextEdit.setPlainText(pretty_json)
 
     def add_row(self):
         self.tableWidget.insertRow(0)

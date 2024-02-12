@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>624</width>
-    <height>638</height>
+    <height>666</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -155,7 +155,7 @@ p, li { white-space: pre-wrap; }
      <item row="9" column="0">
       <widget class="QLabel" name="label_7">
        <property name="text">
-        <string>Appréciation</string>
+        <string>Appréciation:</string>
        </property>
       </widget>
      </item>
@@ -183,6 +183,13 @@ p, li { white-space: pre-wrap; }
     </layout>
    </item>
    <item>
+    <widget class="QLabel" name="label_11">
+     <property name="text">
+      <string>Informations supplémentaires:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QTabWidget" name="tabWidget">
@@ -190,6 +197,10 @@ p, li { white-space: pre-wrap; }
         <number>0</number>
        </property>
        <widget class="QWidget" name="tab">
+        <attribute name="icon">
+         <iconset>
+          <normaloff>../../resources/icons/edit-list.png</normaloff>../../resources/icons/edit-list.png</iconset>
+        </attribute>
         <attribute name="title">
          <string>Détails</string>
         </attribute>
@@ -223,9 +234,25 @@ p, li { white-space: pre-wrap; }
         </layout>
        </widget>
        <widget class="QWidget" name="tab_2">
+        <attribute name="icon">
+         <iconset>
+          <normaloff>../../resources/icons/json.png</normaloff>../../resources/icons/json.png</iconset>
+        </attribute>
         <attribute name="title">
          <string>Brûtes</string>
         </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QPlainTextEdit" name="plainTextEdit">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+           <property name="plainText">
+            <string notr="true"/>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
      </item>
@@ -249,12 +276,20 @@ p, li { white-space: pre-wrap; }
          <property name="text">
           <string>Ajouter</string>
          </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../resources/icons/tag-plus.png</normaloff>../../resources/icons/tag-plus.png</iconset>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_2">
          <property name="text">
           <string>Supprimer</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../resources/icons/tag-minus.png</normaloff>../../resources/icons/tag-minus.png</iconset>
          </property>
         </widget>
        </item>

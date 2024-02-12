@@ -42,6 +42,7 @@ class Seasons(BaseModel):
     state = IntegerField()
     rating = IntegerField(null=True)
     description = TextField()
+    custom_data = TextField()
     is_deleted = IntegerField(constraints=[SQL("DEFAULT 0")])
 
     class Meta:

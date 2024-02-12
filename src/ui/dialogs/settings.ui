@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>424</width>
-    <height>152</height>
+    <height>174</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,7 +43,7 @@
      <item row="3" column="0">
       <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>Activer la gestion des visionnages avec des amis</string>
+        <string>Activer la gestion des visionnages avec des amis:</string>
        </property>
       </widget>
      </item>
@@ -85,7 +85,7 @@
      <item row="4" column="0">
       <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>Activer les champs &quot;personalisés&quot;</string>
+        <string>Activer les champs &quot;personalisés&quot;:</string>
        </property>
       </widget>
      </item>

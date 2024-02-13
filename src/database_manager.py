@@ -27,6 +27,8 @@ def load_or_create_database(profile):
 
 
 def migrations():
+    # http://docs.peewee-orm.com/en/latest/peewee/playhouse.html#schema-migrations
+
     migrator = SqliteMigrator(database.database)
     seasons_fields = [field.name for field in database.database.get_columns("Seasons")]
 

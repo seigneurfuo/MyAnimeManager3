@@ -2,6 +2,8 @@ import os
 
 import database
 
+from playhouse.migrate import *
+
 DATABASE_NAME = "database.sqlite3"
 
 
@@ -10,21 +12,27 @@ def load_or_create_database(profile):
     print("Database path:", database_path)
 
     # Génération des tables
-    if not os.path.exists(database_path):
-        database.database.init(database_path)
+    database.database.init(database_path)
 
-        tables = [database.Series, database.Seasons, database.SeasonsTypes, database.Planning, database.Friends,
-                  database.FriendsPlanning]
-        database.database.create_tables(tables)
+    tables = [database.Series, database.Seasons, database.SeasonsTypes, database.Planning, database.Friends,
+              database.FriendsPlanning]
+    database.database.create_tables(tables)
 
-        populate_tables()
+    populate_tables()
 
-    else:
-        database.database.init(database_path)
-        populate_tables()  # On laisse ça si MAJ
+    # Migrations
+    migrations()
 
     return database_path
 
+
+def migrations():
+    migrator = SqliteMigrator(database.database)
+    seasons_fields = [field.name for field in database.database.get_columns("Seasons")]
+
+    # Migration 1
+    if not "custom_data" in seasons_fields:
+        migrate(migrator.add_column("Seasons", "custom_data", TextField(default="")))
 
 def populate_tables():
     populate_seasons_types()

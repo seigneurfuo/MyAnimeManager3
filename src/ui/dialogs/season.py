@@ -57,6 +57,7 @@ class SeasonDialog(QDialog):
 
     def init_events(self):
         self.pushButton.clicked.connect(self.add_row)
+        self.pushButton_2.clicked.connect(self.remove_row)
 
     def fill_data(self):
         self.spinBox.setValue(self.season.sort_id)
@@ -114,7 +115,8 @@ class SeasonDialog(QDialog):
         self.tableWidget.insertRow(0)
 
     def remove_row(self):
-        pass
+        current_row = self.tableWidget.currentRow()
+        self.tableWidget.removeRow(current_row)
 
     def save_data(self):
         # Si création

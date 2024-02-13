@@ -22,7 +22,7 @@ class Series(BaseModel):
     name = TextField()
     description = TextField(null=True)
     path = TextField(null=True)
-    picture = BlobField()
+    picture = BlobField(null=True)
     is_deleted = IntegerField(constraints=[SQL("DEFAULT 0")])
 
     class Meta:
@@ -42,6 +42,7 @@ class Seasons(BaseModel):
     state = IntegerField()
     rating = IntegerField(null=True)
     description = TextField()
+    custom_data = TextField(null=True)
     is_deleted = IntegerField(constraints=[SQL("DEFAULT 0")])
 
     class Meta:

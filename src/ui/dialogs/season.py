@@ -1,7 +1,8 @@
+import json
 import os
 
 from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import QDialog
+from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
 from PyQt6.uic import loadUi
 
 import core
@@ -14,6 +15,7 @@ class SeasonDialog(QDialog):
         self.season = season
         self.serie = serie
         self.seasons_types = seasons_types
+        self.parent = parent
 
         self.init_ui()
         self.init_events()
@@ -47,8 +49,15 @@ class SeasonDialog(QDialog):
             self.setWindowTitle(self.season.name)
             self.fill_data()
 
+        if not self.parent.parent.parent.settings["custom_data_enabled"]:
+            self.label_11.setVisible(False)
+            self.tabWidget.setVisible(False)
+            self.pushButton.setVisible(False)
+            self.pushButton_2.setVisible(False)
+
     def init_events(self):
-        pass
+        self.pushButton.clicked.connect(self.add_row)
+        self.pushButton_2.clicked.connect(self.remove_row)
 
     def fill_data(self):
         self.spinBox.setValue(self.season.sort_id)
@@ -75,6 +84,40 @@ class SeasonDialog(QDialog):
         index = self.comboBox_2.findData(self.season.type.id)
         self.comboBox_2.setCurrentIndex(index) # FIXME: Utiliser plutot DATA ?
 
+        # Champs supplémentaires
+        if self.parent.parent.parent.settings["custom_data_enabled"]:
+            self.fill_custom_data()
+
+    def fill_custom_data(self):
+        # Chargement des champs supplémentaires + Affichage dans le tableau
+        custom_data = json.loads(self.season.custom_data) if self.season.custom_data else []
+        row_count = len(custom_data)
+        self.tableWidget.setRowCount(row_count + 1)
+
+        for row_index, key in enumerate(custom_data):
+
+            columns = [key, custom_data[key]]
+            for col_index, value in enumerate(columns):
+                item = QTableWidgetItem(value)
+                item.setToolTip(item.text())
+                #item.setData(Qt.ItemDataRole.UserRole, )
+                self.tableWidget.setItem(row_index, col_index, item)
+
+        self.tableWidget.resizeColumnsToContents()
+        self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
+                                                                 QHeaderView.ResizeMode.ResizeToContents)
+
+        # Onglet RAW
+        pretty_json = json.dumps(self.season.custom_data, indent=4)
+        self.plainTextEdit.setPlainText(pretty_json)
+
+    def add_row(self):
+        self.tableWidget.insertRow(0)
+
+    def remove_row(self):
+        current_row = self.tableWidget.currentRow()
+        self.tableWidget.removeRow(current_row)
+
     def save_data(self):
         # Si création
         if not self.season.id:
@@ -94,7 +137,27 @@ class SeasonDialog(QDialog):
         self.season.description = self.textEdit.toPlainText()
         self.season.type = self.comboBox_2.currentData()
 
+        self.save_custom_data()
+
         self.season.save()
+
+    def save_custom_data(self):
+        data = {}
+
+        for row_index in range(self.tableWidget.rowCount()):
+
+            key_item = self.tableWidget.item(row_index, 0)
+            key = key_item.text() if "text" in key_item.__dir__() else ""
+
+            value_item = self.tableWidget.item(row_index, 1)
+            value = value_item.text() if "text" in value_item.__dir__() else ""
+
+            if not key:
+                continue
+
+            data[key] = value
+
+        self.season.custom_data = json.dumps(data) if data else None
 
     def accept(self):
         self.save_data()

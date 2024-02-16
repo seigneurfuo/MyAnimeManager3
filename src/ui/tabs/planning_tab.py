@@ -150,7 +150,7 @@ class PlanningTab(QWidget):
             elif planning_data.episode == planning_data.season.episodes and planning_data.season.episodes == 1:
                 episode_number = self.tr(" (unique)")
 
-            columns = ["{:03d} - {}".format(planning_data.serie.sort_id, planning_data.season.sort_id),
+            columns = [f"{planning_data.serie.sort_id:03d} - {planning_data.season.sort_id}",
                        planning_data.season.serie.name, planning_data.season.name, planning_data.season.type.name,
                        episode_number, ", ".join(friends)]
 
@@ -187,7 +187,7 @@ class PlanningTab(QWidget):
 
         for col_index, row_data in enumerate(episodes_to_watch):
             # Id
-            ids = "{:03d} - {}".format(row_data.serie.sort_id, row_data.sort_id)
+            ids = f"{row_data.serie.sort_id:03d} - {row_data.sort_id}"
             item = QTableWidgetItem(ids)
             item.setToolTip(item.text())
             item.setData(Qt.ItemDataRole.UserRole, row_data.id)
@@ -228,7 +228,7 @@ class PlanningTab(QWidget):
 
             # Episode
             next_episode_index = int(row_data.watched_episodes) + 1
-            next_episode_text = "{} / {}".format(next_episode_index, row_data.episodes)
+            next_episode_text = f"{next_episode_index} / {row_data.episodes}"
             item = QTableWidgetItem(next_episode_text)
 
             item.setToolTip(item.text())

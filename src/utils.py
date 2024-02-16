@@ -19,8 +19,8 @@ def get_duration_list(episodes_count, duration, pause_every, pause_duration, sta
 
     for episode_num in range(episodes_count):
         end = start + timedelta(minutes=duration)
-        row = ["Visionnage #{}".format(episode_num + 1), "{:02d}:{:02d}".format(start.hour, start.minute),
-               "{:02d}:{:02d}".format(end.hour, end.minute)]
+        row = ["Visionnage #{}".format(episode_num + 1), f"{start.hour:02d}:{start.minute:02d}",
+               f"{end.hour:02d}:{end.minute:02d}"]
 
         ret_list.append(row)
 
@@ -31,8 +31,8 @@ def get_duration_list(episodes_count, duration, pause_every, pause_duration, sta
         if is_pause and (episode_num + 1) % pause_every == 0:
             pause_count += 1
             end = start + timedelta(minutes=pause_duration)
-            row = ["Pause #{}".format(pause_count), "{:02d}:{:02d}".format(start.hour, start.minute),
-                   "{:02d}:{:02d}".format(end.hour, end.minute)]
+            row = ["Pause #{}".format(pause_count), f"{start.hour:02d}:{start.minute:02d}",
+                   f"{end.hour:02d}:{end.minute:02d}"]
             ret_list.append(row)
 
             # Décale la plage
@@ -49,7 +49,7 @@ def export_qtablewidget(qtablewidget, app_data_folder, output_filename):
         os.makedirs(output_directory)
 
     date = datetime.now().strftime("%Y-%m-%d-%H%M%S")
-    output_filepath = os.path.join(output_directory, "export-{}-{}.csv".format(output_filename, date))
+    output_filepath = os.path.join(output_directory, "export-{output_filename}-{date}.csv")
 
     with open(output_filepath, "w", newline="") as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=";")
@@ -89,21 +89,18 @@ def get_collection_problems():
             # Identifiant à 0
             if season.serie.sort_id == 0 and (season.view_count > 0 or season.watched_episodes > 0):
                 seasons_passed.append(season.serie.id)
-                msg = tr("Série: {}. L'identifiant est toujours \"{}\" alors que des épisodes on déja étés vus.").format(
-                    season.serie.name, season.serie.sort_id)
+                msg = tr(f"Série: {season.serie.name}. L'identifiant est toujours \"{season.serie.sort_id}\" alors que des épisodes on déja étés vus.")
                 messages.append(msg)
 
             # Aucune nombre d'épisodes défini
             if season.episodes == 0:
-                msg = tr("Série: {}. La saison \"{}\" n'a aucun nombre d'épisodes définis.").format(
-                    season.serie.name,
-                    season.name)
+                msg = tr(f"Série: {season.serie.name}. La saison \"{season.name}\" n'a aucun nombre d'épisodes définis.")
                 messages.append(msg)
 
             # Titres de la série vide
             # On supprime tout les espaces. S'il ne reste rien, alors c'est que le tire de la saison est vide.
             if season.name.replace(" ", "") == "":
-                msg = tr("Série: {}. La saison \"{}\" à un nom vide.").format(season.serie.name,                                            season.sort_id)
+                msg = tr(f"Série: {season.serie.name}. La saison \"{season.sort_id}\" à un nom vide.")
                 messages.append(msg)
 
     # ----- Séries -----
@@ -119,7 +116,7 @@ def get_collection_problems():
 
         missing_ids = sorted(list(set(range_ids_list) - set(series_sort_ids)))
         for missing_id in missing_ids:
-            msg = tr("Pas de série pour l'id {}. Est-ce normal ?").format(missing_id)
+            msg = tr(f"Pas de série pour l'id {missing_id}. Est-ce normal ?")
             messages.append(msg)
 
         # TODO: Séries vides
@@ -128,7 +125,7 @@ def get_collection_problems():
     for serie in series:
         # Vérification du chemin
         if serie.path and not os.path.isdir(serie.path):
-            msg = tr("Le chemin pour la série {} n'existe pas").format(missing_id)
+            msg = tr(f"Le chemin pour la série {serie.name} n'existe pas")
             messages.append(msg)
 
     return messages

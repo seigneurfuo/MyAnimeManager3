@@ -84,7 +84,7 @@ class ProfilesManageDialog(QDialog):
 
             # Si le profil actuel correpond au bouton en cours
             if self.current_profile and profile.path == self.current_profile.path:
-                name = self.tr("{} (Profil actuel)").format(profile.name)
+                name = self.tr(f"{profile.name} (Profil actuel)")
                 btn.setText(name)
 
             # Ligne suivante si maximal attends
@@ -115,7 +115,7 @@ class ProfilesManageDialog(QDialog):
         if self.role == ProfilesManageDialog.roles.choose:
             self.close()
 
-        msg = self.tr("Profil selectionné: {}").format(self.selected_profile.name)
+        msg = self.tr(f"Profil selectionné: {self.selected_profile.name}")
         if self.current_profile and profile.path == self.current_profile.path:
             msg = "{} {}".format(msg, self.tr("(profil actuel)"))
 
@@ -167,8 +167,7 @@ class ProfilesManageDialog(QDialog):
 
     def when_delete_profile_button_clicked(self):
         choice = QMessageBox.information(self, self.tr("Supression d'un profil"),
-                                         self.tr("Etes vous sûr de vouloir supprimer le profil: {} ?".format(
-                                             self.selected_profile.name)),
+                                         self.tr(f"Etes vous sûr de vouloir supprimer le profil: {self.selected_profile.name} ?"),
                                          QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.Cancel)
 
         if choice == QMessageBox.StandardButton.Yes:

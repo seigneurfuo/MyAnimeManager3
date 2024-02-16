@@ -22,7 +22,7 @@ def check_for_update():
 
         if app_version < remote_version:
             choice = QMessageBox.information(None, "Nouvelle version disponible",
-                "Une nouvelle version est disponible: {}.\nSouhaitez-vous télécharger la mise à jour sur la page du projet ?".format(remote_version),
+                f"Une nouvelle version est disponible: {remote_version}.\nSouhaitez-vous télécharger la mise à jour sur la page du projet ?",
                 QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
             if choice == QMessageBox.StandardButton.Yes:

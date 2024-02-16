@@ -118,7 +118,7 @@ class List2(QWidget):
         self.tableWidget.setRowCount(row_count)
 
         for row_index, season in enumerate(data):
-            ids = "{:03d} - {}".format(season.serie.sort_id, season.sort_id)
+            ids = f"{season.serie.sort_id:03d} - {season.sort_id}"
             year = str(season.year) if season.year and str(season.year) != "None" else ""
 
             # Calcul de l'age
@@ -126,7 +126,7 @@ class List2(QWidget):
                 # Différence entre deux dates
                 release_year_datetime_object = datetime.strptime(str(season.year), "%Y")
                 age_diff = today_date_object.year - release_year_datetime_object.year
-                age = self.tr("{} ans").format(age_diff)
+                age = self.tr(f"{age_diff} ans")
             else:
                 age = ""
 

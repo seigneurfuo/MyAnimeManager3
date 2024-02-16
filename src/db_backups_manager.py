@@ -9,7 +9,7 @@ class DBBackupsManager:
     def __init__(self, parent):
         self.parent = parent
         self.backups_limit = self.parent.parent.settings["backups_limit"]
-        self.database_pattern = "-{}".format(DATABASE_NAME)
+        self.database_pattern = f"-{DATABASE_NAME}"
         self.backups_foldername = "db-backups"
         self.backups_folderpath = os.path.join(self.parent.parent.profile.path, self.backups_foldername)
 
@@ -47,7 +47,7 @@ class DBBackupsManager:
         src = self.parent.parent.database_path
         database_backups_folderpath = os.path.join(self.parent.parent.profile.path, "db-backups")
         backup_type = "auto" if automatic else "manual"
-        dst = os.path.join(database_backups_folderpath, "{}-{}{}".format(date, backup_type, self.database_pattern))
+        dst = os.path.join(database_backups_folderpath, f"{date}-{backup_type}{self.database_pattern}")
 
         print("Base de donnée copiée:", src, "->", dst)
         shutil.copy(src, dst)

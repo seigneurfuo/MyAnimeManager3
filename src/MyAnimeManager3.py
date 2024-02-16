@@ -47,7 +47,7 @@ class Application(QApplication):
         self.profile = self.load_profile(args.profile_name)
         self.database_path = self.load_database()
 
-        display_name = self.tr("{} - Profil: {}").format(core.app_name_and_version, self.profile.name)
+        display_name = self.tr(f"{core.app_name_and_version} - Profil: {self.profile.name}")
         self.setApplicationDisplayName(display_name)
 
         mainwindow = MainWindow(self)

@@ -16,7 +16,7 @@ def export_planning_to_csv(app_data_folder):
         os.makedirs(output_directory)
 
     date = datetime.now().strftime("%Y-%m-%d-%H%M%S")
-    output_filepath = os.path.join(output_directory, "{}-planning.csv".format(date))
+    output_filepath = os.path.join(output_directory, f"{date}-planning.csv")
 
     with open(output_filepath, "w", newline="") as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=";")
@@ -28,6 +28,6 @@ def export_planning_to_csv(app_data_folder):
         for row in rows:
             csv_writer.writerow([row.date, row.serie.name, row.season.name, row.episode])
 
-        print("Fichier: {}".format(output_filepath))
+        print(f"Fichier: {output_filepath}")
 
     return output_filepath

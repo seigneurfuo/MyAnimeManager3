@@ -44,7 +44,7 @@ def load_settings():
 
         for default_config_key in default_config_keys:
             if default_config_key not in user_config_keys:
-                msg = "Ajout de la cléf manquante dans la configuration de l'utilisateur: {}".format(default_config_key)
+                msg = f"Ajout de la cléf manquante dans la configuration de l'utilisateur: {default_config_key}"
                 print(msg)
 
                 # Application de la nouvelle valeur

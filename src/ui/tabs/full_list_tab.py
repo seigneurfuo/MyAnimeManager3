@@ -74,7 +74,7 @@ class FullListTab(QWidget):
         completer_data = []
         series = Series().select().where(Series.is_deleted == 0).order_by(Series.sort_id)
         for index, serie in enumerate(series):
-            text = "{:03d} - {}".format(serie.sort_id, serie.name)
+            text = f"{serie.sort_id:03d} - {serie.name}"
             self.comboBox.addItem(text, userData=serie.id)
 
             # Autocomplétion

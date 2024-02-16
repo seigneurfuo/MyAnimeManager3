@@ -4,7 +4,7 @@ from pathlib import Path
 app_name = "MyAnimeManager 3"
 app_version = "DEV"
 app_description = "Un gestionnaire de séries multiplateforme écrit en Python3 et Qt5"
-app_name_and_version = "{} - {}".format(app_name, app_version)
+app_name_and_version = f"{app_name} - {app_version}"
 release_url = "https://api.github.com/repos/seigneurfuo/MyAnimeManager3/releases/latest"
 bugtracker_url = "https://github.com/seigneurfuo/MyAnimeManager3/issues/new"
 

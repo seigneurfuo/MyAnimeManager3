@@ -90,7 +90,7 @@ class SeasonDialog(QDialog):
 
     def fill_custom_data(self):
         # Chargement des champs supplémentaires + Affichage dans le tableau
-        custom_data = json.loads(self.season.custom_data) if self.season.custom_data else []
+        custom_data = self.season.custom_data
         row_count = len(custom_data)
         self.tableWidget.setRowCount(row_count + 1)
 
@@ -157,7 +157,7 @@ class SeasonDialog(QDialog):
 
             data[key] = value
 
-        self.season.custom_data = json.dumps(data) if data else None
+        self.season.custom_data = data
 
     def accept(self):
         self.save_data()

@@ -1,6 +1,6 @@
-from peewee import *
+from playhouse.sqlite_ext import *
 
-database = SqliteDatabase(None)
+database = SqliteExtDatabase(None)
 
 class UnknownField(object):
     def __init__(self, *_, **__): pass
@@ -42,7 +42,7 @@ class Seasons(BaseModel):
     state = IntegerField()
     rating = IntegerField(null=True)
     description = TextField()
-    custom_data = TextField(null=True)
+    custom_data = JSONField(null=True)
     is_deleted = IntegerField(constraints=[SQL("DEFAULT 0")])
 
     class Meta:

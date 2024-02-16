@@ -2,7 +2,8 @@ import os
 
 import database
 
-from playhouse.migrate import *
+from playhouse.migrate import SqliteMigrator, migrate
+from playhouse.sqlite_ext import JSONField
 
 DATABASE_NAME = "database.sqlite3"
 
@@ -34,7 +35,7 @@ def migrations():
 
     # Migration 1
     if not "custom_data" in seasons_fields:
-        migrate(migrator.add_column("Seasons", "custom_data", TextField(default="")))
+        migrate(migrator.add_column("Seasons", "custom_data", JSONField(default="")))
 
 def populate_tables():
     populate_seasons_types()

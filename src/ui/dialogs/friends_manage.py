@@ -31,6 +31,8 @@ class FriendManageDialog(QDialog):
         self.fill_friends_table()
 
     def fill_friends_table(self):
+        self.tableWidget.clearContents()
+
         row_count = len(self.friends_list)
         # self.label_82.setText(str(row_count))
         self.tableWidget.setRowCount(row_count)

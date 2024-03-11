@@ -101,6 +101,7 @@ class FullListTab(QWidget):
 
         else:
             #self.current_season_id = 0 # FIXME
+            self.tableWidget.clearContents()
             self.tableWidget.setRowCount(0)
 
         self.clear_season_data()
@@ -230,6 +231,8 @@ class FullListTab(QWidget):
             display_view_history_dialog(self, current_season_id)
 
     def fill_season_list(self, serie):
+        self.tableWidget.clearContents()
+
         seasons = serie.seasons.where(Seasons.is_deleted == 0).order_by(Seasons.sort_id)
         row_count = len(seasons)
         self.label_2.setText(str(row_count))

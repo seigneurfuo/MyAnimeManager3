@@ -111,6 +111,8 @@ class List2(QWidget):
     def fill_data(self):
         today_date_object = datetime.now()
 
+        self.tableWidget.clearContents()
+
         data = self.get_request_with_filters()
         row_count = len(data)
 

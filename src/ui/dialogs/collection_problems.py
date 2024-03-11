@@ -23,6 +23,8 @@ class CollectionProblemsDialog(QDialog):
         pass
 
     def fill_data(self):
+        self.tableWidget.clearContents()
+
         row_count = len(self.messages)
         self.label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
         self.tableWidget.setRowCount(row_count)

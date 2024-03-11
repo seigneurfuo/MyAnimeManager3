@@ -35,6 +35,8 @@ class ViewHistoryDialog(QDialog):
         self.fill_series_history()
 
     def fill_series_history(self):
+        self.serie_table.clearContents()
+
         row_count = len(self.serie_episodes)
         self.serie_label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
         self.serie_table.setRowCount(row_count)
@@ -66,6 +68,8 @@ class ViewHistoryDialog(QDialog):
                                                                  QHeaderView.ResizeMode.ResizeToContents)
 
     def fill_seasons_history(self):
+        self.season_table.clearContents()
+
         row_count = len(self.season_episodes)
         self.season_label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
         self.season_table.setRowCount(row_count)

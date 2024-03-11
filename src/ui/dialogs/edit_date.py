@@ -73,6 +73,8 @@ class EditDateDialog(QDialog):
             self.update_friends_combobox()
 
     def fill_friends_table(self):
+        self.tableWidget.clearContents()
+
         row_count = len(self.friends)
         # self.label_82.setText(str(row_count))
         self.tableWidget.setRowCount(row_count)

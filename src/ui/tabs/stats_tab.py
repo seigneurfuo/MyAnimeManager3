@@ -49,6 +49,7 @@ class StatsTab(QWidget):
     def fill_stats_table(self, headers, data):
         row_count = len(data)
         self.label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
+        self.stats_table.clearContents()
         self.stats_table.setRowCount(row_count)
         self.stats_table.setColumnCount(len(headers))
 

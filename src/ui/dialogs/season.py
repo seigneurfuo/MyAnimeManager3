@@ -89,6 +89,8 @@ class SeasonDialog(QDialog):
             self.fill_custom_data()
 
     def fill_custom_data(self):
+        self.tableWidget.clearContents()
+
         # Chargement des champs supplémentaires + Affichage dans le tableau
         custom_data = self.season.custom_data
         row_count = len(custom_data)

@@ -65,6 +65,8 @@ class DatabaseHistoryDialog(QDialog):
         db_backups_manager = DBBackupsManager(self.parent)
         db_backups = db_backups_manager.get_dbs_list()
 
+        self.tableWidget.clearContents()
+
         row_count = len(db_backups)
         self.tableWidget.setRowCount(row_count)
 

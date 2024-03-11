@@ -53,6 +53,8 @@ class ToolsTab(QWidget):
 
         rows = get_duration_list(episodes_count, episodes_duration, pause_every, pause_duration, start_time_string)
 
+        self.tableWidget_2.clearContents()
+
         row_count = len(rows)
         self.tableWidget_2.setRowCount(row_count)
 
@@ -86,6 +88,8 @@ class ToolsTab(QWidget):
 
         MAX_ELEMENTS = 10
         random_seasons_indexes = [random.randint(0, len(seasons) - 1) for _ in range(MAX_ELEMENTS)]
+
+        self.tableWidget_2.clearContents()
 
         self.tableWidget.setRowCount(MAX_ELEMENTS)
 

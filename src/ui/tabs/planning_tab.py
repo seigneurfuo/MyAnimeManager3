@@ -136,6 +136,8 @@ class PlanningTab(QWidget):
 
         planning_data_list = Planning().select().where(Planning.date == calendar_date).order_by(Planning.id)
 
+        self.tableWidget_7.clearContents()
+
         row_count = len(planning_data_list)
         self.label_82.setText(str(row_count))
         self.tableWidget_7.setRowCount(row_count)
@@ -180,6 +182,8 @@ class PlanningTab(QWidget):
             episodes_to_watch = episodes_to_watch.where(Seasons.name.contains(self.to_watch_table_text_filter) | Series.name.contains(self.to_watch_table_text_filter)).join(Series)
 
         episodes_to_watch.order_by(Seasons.id)
+
+        self.tableWidget_6.clearContents()
 
         # Nettoyage de la liste
         row_count = len(episodes_to_watch)

@@ -34,6 +34,8 @@ class DeletedElementsDialog(QDialog):
         self.fill_series_table()
 
     def fill_seasons_table(self):
+        self.tableWidget_2.clearContents()
+
         row_count = len(self.deleted_seasons)
         self.label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
         self.tableWidget_2.setRowCount(row_count)
@@ -57,6 +59,8 @@ class DeletedElementsDialog(QDialog):
                                                                  QHeaderView.ResizeMode.ResizeToContents)
 
     def fill_series_table(self):
+        self.tableWidget_1.clearContents()
+
         row_count = len(self.deleted_series)
         self.label_3.setText(self.tr("Nombre d'éléments: ") + str(row_count))
         self.tableWidget_1.setRowCount(row_count)

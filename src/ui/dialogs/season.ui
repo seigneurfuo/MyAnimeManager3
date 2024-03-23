@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>624</width>
-    <height>666</height>
+    <height>698</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -231,6 +231,45 @@ p, li { white-space: pre-wrap; }
            </column>
           </widget>
          </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QPushButton" name="pushButton">
+             <property name="text">
+              <string>Ajouter</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../resources/icons/tag-plus.png</normaloff>../../resources/icons/tag-plus.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_2">
+             <property name="text">
+              <string>Supprimer</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../resources/icons/tag-minus.png</normaloff>../../resources/icons/tag-minus.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="tab_2">
@@ -270,28 +309,6 @@ p, li { white-space: pre-wrap; }
           </size>
          </property>
         </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Ajouter</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../../resources/icons/tag-plus.png</normaloff>../../resources/icons/tag-plus.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="text">
-          <string>Supprimer</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../../resources/icons/tag-minus.png</normaloff>../../resources/icons/tag-minus.png</iconset>
-         </property>
-        </widget>
        </item>
       </layout>
      </item>

@@ -4,6 +4,7 @@ import sys
 import os
 import platform
 
+from PyQt6.QtCore import QLibraryInfo, QTranslator, QLocale
 from PyQt6.QtWidgets import QApplication
 import core
 import updater
@@ -90,4 +91,12 @@ if __name__ == "__main__":
     args = argument_parser.parse_args()
 
     application = Application(sys.argv, args)
+
+    # Correction des boutons dans les fenetres de dialogues qui n'étaient pas traduites
+    # https://doc.qt.io/qtforpython-6/tutorials/basictutorial/translations.html
+    path = QLibraryInfo.path(QLibraryInfo.LibraryPath.TranslationsPath)
+    translator = QTranslator(application)
+    if translator.load(QLocale.system(), 'qtbase', '_', path):
+        application.installTranslator(translator)
+
     sys.exit(application.exec())

@@ -38,6 +38,13 @@ make archlinux-build
 make archlinux-install
 ```
 
+### Fedora
+
+```sh
+make fedora-build
+make fedora-install
+```
+
 ### Windows
 
 Installer: git, nsis, Python3, PyInstaller (```pip install pyinstaller```)

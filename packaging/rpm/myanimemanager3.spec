@@ -47,7 +47,7 @@ cp ../../src/ui/tabs/*.ui %{buildroot}/opt/%{name}/ui/tabs/
 
 # ./ui/widgets/
 mkdir -p %{buildroot}/opt/%{name}/ui/widgets
-cp ../../src/ui/tabs/*.py %{buildroot}/opt/%{name}/ui/widgets/
+cp ../../src/ui/widgets/*.py %{buildroot}/opt/%{name}/ui/widgets/
 
 # Permitions
 

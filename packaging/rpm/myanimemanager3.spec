@@ -2,7 +2,7 @@
 # fedpkg --release f37 mockbuild --no-clean-all
 
 Name:           myanimemanager3
-Version:        2023.04.14
+Version:        2024.04.07
 Release:        %autorelease
 BuildArch:      noarch
 Summary:        Un logiciel de gestion de séries et d'animés.
@@ -10,7 +10,7 @@ Summary:        Un logiciel de gestion de séries et d'animés.
 License:        None
 URL:            https://seigneurfuo.com
 
-Requires:       python3-PyQt5
+Requires:       python3-PyQt6
 Requires:       python3-peewee
 
 %description

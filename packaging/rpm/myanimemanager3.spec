@@ -49,7 +49,11 @@ cp ../../src/ui/tabs/*.ui %{buildroot}/opt/%{name}/ui/tabs/
 mkdir -p %{buildroot}/opt/%{name}/ui/widgets
 cp ../../src/ui/widgets/*.py %{buildroot}/opt/%{name}/ui/widgets/
 
-# Permitions
+# Racourcis d'applciation
+mkdir -p %{buildroot}/usr/share/applications/
+cp myanimemanager3.desktop %{buildroot}/usr/share/applications/myanimemanager3.desktop
+
+# Permissions
 
 %files
 # ./
@@ -75,3 +79,6 @@ cp ../../src/ui/widgets/*.py %{buildroot}/opt/%{name}/ui/widgets/
 
 # ./ui/widgets/
 /opt/%{name}/ui/widgets/*.py
+
+# ./usr/share/applicationss
+/usr/share/applications/myanimemanager3.desktop

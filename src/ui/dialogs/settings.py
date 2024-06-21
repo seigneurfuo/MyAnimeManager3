@@ -58,6 +58,9 @@ class SettingsDialog(QDialog):
         # Gestion des champs supplémentaires
         self.checkBox_4.setChecked(self.settings["custom_data_enabled"])
 
+        # Gestion de la complétion automatique
+        self.checkBox_5.setChecked(self.settings["anime_titles_autocomplete"])
+
 
     def save_settings_to_file(self):
         #self.settings["application_stylesheet"] = self.comboBox.currentData()
@@ -66,6 +69,7 @@ class SettingsDialog(QDialog):
         self.settings["updates_check"] = self.checkBox.isChecked()
         self.settings["friends_enabled"] = self.checkBox_2.isChecked()
         self.settings["custom_data_enabled"] = self.checkBox_4.isChecked()
+        self.settings["anime_titles_autocomplete"] = self.checkBox_5.isChecked()
 
         # Passage des paramètres à toute l'application
         self.parent.parent.settings = self.settings

@@ -17,7 +17,8 @@ DEFAULT_CONFIG_DATA = {
     "backups_limit": 10,
     "updates_check": True,
     "friends_enabled": False,
-    "custom_data_enabled": False
+    "custom_data_enabled": False,
+    "anime_titles_autocomplete": False
 }
 
 SEASONS_STATES = [

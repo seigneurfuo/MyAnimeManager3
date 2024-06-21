@@ -1,12 +1,14 @@
 #!/usr/bin/python3
 import csv
+import json
 import os
 from datetime import datetime, timedelta
 
-from PyQt6.QtCore import QT_TR_NOOP as tr
+from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QCursor
-from PyQt6.QtWidgets import QMessageBox
+from PyQt6.QtWidgets import QMessageBox, QCompleter
 
+import core
 from database import Seasons, Series
 
 
@@ -151,3 +153,22 @@ Ce tutoriel va brièvement présenter les différents écrans de l'application.
         set_cursor_on_center(parent_widget.tabWidget)
         # btn = parent_widget.tab2
         # btn.setStyleSheet("border: 0.5em solid red;")
+
+def anime_titles_autocomplete(object):
+    # Chargement des complétions automatiques depuis le fichier json
+    json_filepath = os.path.join(core.APPLICATION_DATA_PATH, "anime-offline-database-minified.json")
+    if not os.path.isfile(json_filepath):
+        return
+
+    with open(json_filepath, "r") as json_file:
+        data = json.load(json_file)
+
+    # Animés
+    animes_titles = [anime["title"] for anime in data["data"]]
+
+    # Application des complétions automatique
+    completer = QCompleter(animes_titles)
+    del animes_titles # Permet de limiter l'usage de RAM pour l'autocompete
+    completer.setFilterMode(Qt.MatchFlag.MatchStartsWith)
+    completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
+    object.setCompleter(completer)

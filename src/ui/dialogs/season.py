@@ -6,16 +6,18 @@ from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
 from PyQt6.uic import loadUi
 
 import core
-
+from utils import anime_titles_autocomplete
 
 class SeasonDialog(QDialog):
     def __init__(self, parent, season, serie, seasons_types):
         super().__init__(parent=parent)
+        self.parent = parent
 
         self.season = season
         self.serie = serie
         self.seasons_types = seasons_types
-        self.parent = parent
+
+        self.autocomplete_loaded = False
 
         self.init_ui()
         self.init_events()
@@ -59,6 +61,10 @@ class SeasonDialog(QDialog):
         self.pushButton.clicked.connect(self.add_row)
         self.pushButton_2.clicked.connect(self.remove_row)
 
+        if(self.parent.parent.parent.settings["anime_titles_autocomplete"]):
+            self.lineEdit_2.cursorPositionChanged.connect(self.fill_autocomplete)
+
+
     def fill_data(self):
         self.spinBox.setValue(self.season.sort_id)
         self.lineEdit_2.setText(self.season.name)
@@ -87,6 +93,14 @@ class SeasonDialog(QDialog):
         # Champs supplémentaires
         if self.parent.parent.parent.settings["custom_data_enabled"]:
             self.fill_custom_data()
+
+    def fill_autocomplete(self):
+        # Complétion automatique
+        if self.autocomplete_loaded:
+            return
+
+        anime_titles_autocomplete(self.lineEdit_2)
+        self.autocomplete_loaded = True
 
     def fill_custom_data(self):
         self.tableWidget.clearContents()

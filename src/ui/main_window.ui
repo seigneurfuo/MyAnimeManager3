@@ -190,7 +190,8 @@
     <property name="title">
      <string>Fichier</string>
     </property>
-    <addaction name="open_profile_action"/>
+    <addaction name="open_application_config_action"/>
+    <addaction name="open_profiles_action"/>
     <addaction name="separator"/>
     <addaction name="quit_action"/>
    </widget>
@@ -258,7 +259,7 @@
     <string>À propos</string>
    </property>
   </action>
-  <action name="open_profile_action">
+  <action name="open_profiles_action">
    <property name="icon">
     <iconset>
      <normaloff>../resources/icons/folder-horizontal-open.png</normaloff>../resources/icons/folder-horizontal-open.png</iconset>
@@ -328,6 +329,15 @@
    </property>
    <property name="text">
     <string>Gérer la liste d'amis</string>
+   </property>
+  </action>
+  <action name="open_application_config_action">
+   <property name="icon">
+    <iconset>
+     <normaloff>../resources/icons/folder-horizontal-open.png</normaloff>../resources/icons/folder-horizontal-open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Ouvrir le dossier de configuration</string>
    </property>
   </action>
  </widget>

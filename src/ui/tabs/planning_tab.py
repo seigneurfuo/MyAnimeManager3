@@ -53,7 +53,8 @@ class PlanningTab(QWidget):
         self.delete_button.clicked.connect(self.when_delete_button_clicked)
         self.change_date_button.clicked.connect(self.when_change_date_button_clicked)
 
-        self.watched_table_show_view_history_button.clicked.connect(self.when_watched_table_show_view_history_button_clicked)
+        self.watched_table_show_view_history_button.clicked.connect(
+            self.when_watched_table_show_view_history_button_clicked)
         self.watched_table_go_to_serie_data_button.clicked.connect(self.watched_table_go_to_serie_data_button_clicked)
 
         # Tableau des épisodes à voir
@@ -63,7 +64,8 @@ class PlanningTab(QWidget):
         self.add_to_watched_list_button.clicked.connect(self.when_add_to_watched_list_button_clicked)
         self.open_folder_button.clicked.connect(self.when_open_folder_button_clicked)
 
-        self.to_watch_table_show_view_history_button.clicked.connect(self.when_to_watch_table_show_view_history_button_clicked)
+        self.to_watch_table_show_view_history_button.clicked.connect(
+            self.when_to_watch_table_show_view_history_button_clicked)
         self.to_watch_table_go_to_serie_data_button.clicked.connect(self.when_go_to_serie_data_button_clicked)
 
         self.lineEdit.textChanged.connect(self.when_search_text_changed)
@@ -112,8 +114,8 @@ class PlanningTab(QWidget):
         stop_date = first_mounth_date + delta
 
         # Coloration des jours sur le calendrier
-        dates = [record.date for record in Planning().select().where(Planning.date.between(start_date, stop_date))\
-                    .group_by(Planning.date).order_by(Planning.date)]
+        dates = [record.date for record in Planning().select().where(Planning.date.between(start_date, stop_date)) \
+            .group_by(Planning.date).order_by(Planning.date)]
 
         self.planning_calendar.set_dates(dates)
 
@@ -178,8 +180,10 @@ class PlanningTab(QWidget):
         episodes_to_watch = Seasons.select() \
             .where(Seasons.state.in_(states), Seasons.watched_episodes < Seasons.episodes, Seasons.is_deleted == 0)
 
-        if(self.to_watch_table_text_filter):
-            episodes_to_watch = episodes_to_watch.where(Seasons.name.contains(self.to_watch_table_text_filter) | Series.name.contains(self.to_watch_table_text_filter)).join(Series)
+        if (self.to_watch_table_text_filter):
+            episodes_to_watch = episodes_to_watch.where(
+                Seasons.name.contains(self.to_watch_table_text_filter) | Series.name.contains(
+                    self.to_watch_table_text_filter)).join(Series)
 
         episodes_to_watch.order_by(Seasons.id)
 
@@ -303,10 +307,10 @@ class PlanningTab(QWidget):
 
         # Si on arrive au dernier épisode:
         if new_watched_episodes_value == current_season.episodes:
-            current_season.watched_episodes = 0 # RAZ du nombre d'épisodes à voir
-            current_season.view_count += 1 # Incrémentation dyu nombre de visionnages
+            current_season.watched_episodes = 0  # RAZ du nombre d'épisodes à voir
+            current_season.view_count += 1  # Incrémentation dyu nombre de visionnages
             current_season.state = 3  # Changement d'état de la saiso en terminé
-            current_season.airing = False # Remise à zero de l'état si la saison était cochée en: en cours de diffuision
+            current_season.airing = False  # Remise à zero de l'état si la saison était cochée en: en cours de diffuision
         else:
             current_season.watched_episodes = new_watched_episodes_value
 

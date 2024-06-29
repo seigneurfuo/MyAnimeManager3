@@ -62,6 +62,7 @@ def load_settings():
 
     return user_config
 
+
 def save_settings(data):
     if not os.path.isdir(APPLICATION_DATA_PATH):
         os.makedirs(APPLICATION_DATA_PATH)
@@ -70,6 +71,7 @@ def save_settings(data):
 
     with open(settings_filepath, "w") as settings_file:
         json.dump(data, settings_file)
+
 
 def file_to_blob(filename):
     if os.path.isfile(filename):

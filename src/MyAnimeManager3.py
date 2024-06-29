@@ -15,7 +15,9 @@ from database_manager import load_or_create_database
 from profiles import Profiles
 
 from common import load_settings
-#from ui.themes import set_theme
+
+
+# from ui.themes import set_theme
 
 
 class Application(QApplication):
@@ -43,7 +45,7 @@ class Application(QApplication):
         # Définition du mode sombre (j'ai décidé pour le moment de ne plus supporter les thêmes tiers
         if self.settings["fusion_theme"]:
             self.setStyle("fusion")
-        #set_theme(self, self.settings["application_stylesheet"])
+        # set_theme(self, self.settings["application_stylesheet"])
 
         self.profile = self.load_profile(args.profile_name)
         self.database_path = self.load_database()
@@ -84,6 +86,7 @@ class Application(QApplication):
 
     def load_database(self):
         return load_or_create_database(self.profile)
+
 
 if __name__ == "__main__":
     argument_parser = argparse.ArgumentParser()

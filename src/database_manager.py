@@ -37,10 +37,12 @@ def migrations():
     if not "custom_data" in seasons_fields:
         migrate(migrator.add_column("Seasons", "custom_data", JSONField(default="")))
 
+
 def populate_tables():
     populate_seasons_types()
 
     database.database.commit()
+
 
 # FIXME: Pas propre, trouver comment corrriger ça
 def populate_seasons_types():

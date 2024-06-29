@@ -17,6 +17,7 @@ from database import Series, Seasons, Friends, Planning, FriendsPlanning, Season
 
 import core
 
+
 class List2(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
@@ -140,7 +141,8 @@ class List2(QWidget):
             for col_index, value in enumerate(columns):
                 if col_index == 7:
                     item = QTableWidgetItem(season_state["name"])
-                    icon = QIcon(os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"]))
+                    icon = QIcon(
+                        os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"]))
                     item.setIcon(icon)
 
                 else:

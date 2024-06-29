@@ -42,7 +42,8 @@ class ViewHistoryDialog(QDialog):
         self.serie_table.setRowCount(row_count)
 
         for row_index, row in enumerate(self.serie_episodes):
-            columns = [row.date.strftime("%d/%m/%Y"), str(row.season.sort_id), row.season.name, row.season.type.name, row.episodes]
+            columns = [row.date.strftime("%d/%m/%Y"), str(row.season.sort_id), row.season.name, row.season.type.name,
+                       row.episodes]
 
             # Si on à activé la gestion des amis:
             if self.parent.parent.parent.settings["friends_enabled"]:
@@ -60,7 +61,8 @@ class ViewHistoryDialog(QDialog):
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
                 item.setToolTip(item.text())
-                item.setData(Qt.ItemDataRole.UserRole, row.date) # On ajoute la date en paramètre afin de pouvoir la récupérer sur la ligne
+                item.setData(Qt.ItemDataRole.UserRole,
+                             row.date)  # On ajoute la date en paramètre afin de pouvoir la récupérer sur la ligne
                 self.serie_table.setItem(row_index, col_index, item)
 
         self.serie_table.resizeColumnsToContents()
@@ -75,12 +77,14 @@ class ViewHistoryDialog(QDialog):
         self.season_table.setRowCount(row_count)
 
         for row_index, row in enumerate(self.season_episodes):
-            columns = [row.date.strftime("%d/%m/%Y"), str(row.season.sort_id), row.season.name, row.season.type.name, row.episodes]
+            columns = [row.date.strftime("%d/%m/%Y"), str(row.season.sort_id), row.season.name, row.season.type.name,
+                       row.episodes]
 
             # Si on à activé la gestion des amis:
             if self.parent.parent.parent.settings["friends_enabled"]:
                 friends = [friend.name for friend in
-                           Friends.select(Friends.name).where(Seasons.id == row.season.id).where(Planning.date == row.date) \
+                           Friends.select(Friends.name).where(Seasons.id == row.season.id).where(
+                               Planning.date == row.date) \
                                .join(FriendsPlanning).join(Planning).join(Seasons).group_by(Friends.name)]
 
                 columns.append(", ".join(friends))
@@ -93,7 +97,8 @@ class ViewHistoryDialog(QDialog):
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
                 item.setToolTip(item.text())
-                item.setData(Qt.ItemDataRole.UserRole, row.date) # On ajoute la date en paramètre afin de pouvoir la récupérer sur la ligne
+                item.setData(Qt.ItemDataRole.UserRole,
+                             row.date)  # On ajoute la date en paramètre afin de pouvoir la récupérer sur la ligne
                 self.season_table.setItem(row_index, col_index, item)
 
         self.season_table.resizeColumnsToContents()
@@ -110,7 +115,7 @@ class ViewHistoryDialog(QDialog):
         if current_item:
             selected_date = current_item.data(Qt.ItemDataRole.UserRole)
 
-            self.parent.parent.tabWidget.setCurrentIndex(0) # Onglet "Planning"
+            self.parent.parent.tabWidget.setCurrentIndex(0)  # Onglet "Planning"
             self.parent.parent.planning_tab.set_planning_date(selected_date)
             self.close()
 

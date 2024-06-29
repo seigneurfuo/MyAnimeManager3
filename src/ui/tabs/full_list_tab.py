@@ -100,7 +100,7 @@ class FullListTab(QWidget):
             self.fill_season_list(serie)
 
         else:
-            #self.current_season_id = 0 # FIXME
+            # self.current_season_id = 0 # FIXME
             self.tableWidget.clearContents()
             self.tableWidget.setRowCount(0)
 
@@ -117,14 +117,14 @@ class FullListTab(QWidget):
             with io.BytesIO(serie.picture) as picture_data:
                 pixmap = QPixmap.fromImage(QImage.fromData(picture_data.read()))
 
-            #self.label_6.setScaledContents(True)
-            #self.label_6.setPixmap(pixmap)
+            # self.label_6.setScaledContents(True)
+            # self.label_6.setPixmap(pixmap)
 
         # On masque ou non le bouton pour parcourir le dossier de la série
         self.open_folder_button.setEnabled(os.path.exists(serie.path))
 
     def clear_serie_data(self):
-        fields = [self.label_3, self.label_2]#, self.label_6]
+        fields = [self.label_3, self.label_2]  # , self.label_6]
 
         for field in fields:
             field.clear()
@@ -224,7 +224,6 @@ class FullListTab(QWidget):
             if dialog.series_to_restore or dialog.seasons_to_restore:
                 self.refresh_data()
 
-
     def when_view_history_button_clicked(self):
         current_season_id = self.get_current_season_id()
         if current_season_id:
@@ -259,7 +258,8 @@ class FullListTab(QWidget):
             for col_index, value in enumerate(columns):
                 if col_index == 7:
                     item = QTableWidgetItem(value["name"])
-                    item.setIcon(QIcon(os.path.join(os.path.dirname(__file__), "../../resources/icons/", value["icon"])))
+                    item.setIcon(
+                        QIcon(os.path.join(os.path.dirname(__file__), "../../resources/icons/", value["icon"])))
                     item.setToolTip(item.text())
 
                 elif col_index == 8:

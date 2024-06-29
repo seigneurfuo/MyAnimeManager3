@@ -91,12 +91,14 @@ def get_collection_problems():
             # Identifiant à 0
             if season.serie.sort_id == 0 and (season.view_count > 0 or season.watched_episodes > 0):
                 seasons_passed.append(season.serie.id)
-                msg = tr(f"Série: {season.serie.name}. L'identifiant est toujours \"{season.serie.sort_id}\" alors que des épisodes on déja étés vus.")
+                msg = tr(
+                    f"Série: {season.serie.name}. L'identifiant est toujours \"{season.serie.sort_id}\" alors que des épisodes on déja étés vus.")
                 messages.append(msg)
 
             # Aucune nombre d'épisodes défini
             if season.episodes == 0:
-                msg = tr(f"Série: {season.serie.name}. La saison \"{season.name}\" n'a aucun nombre d'épisodes définis.")
+                msg = tr(
+                    f"Série: {season.serie.name}. La saison \"{season.name}\" n'a aucun nombre d'épisodes définis.")
                 messages.append(msg)
 
             # Titres de la série vide
@@ -111,9 +113,9 @@ def get_collection_problems():
     # Vérification des ids manquants pour les séries
     # On vérifie que les ids entre le plus petit et le plus grand existant
     series_sort_ids = [x.sort_id for x in series]
-    if len(series_sort_ids) > 1: # Il faut au moins avoir deux ids
-        min_id = series_sort_ids[0] # Id le plus bas
-        max_id = series_sort_ids[-1] + 1 # Id le plus haut
+    if len(series_sort_ids) > 1:  # Il faut au moins avoir deux ids
+        min_id = series_sort_ids[0]  # Id le plus bas
+        max_id = series_sort_ids[-1] + 1  # Id le plus haut
         range_ids_list = range(min_id, max_id)
 
         missing_ids = sorted(list(set(range_ids_list) - set(series_sort_ids)))
@@ -154,6 +156,7 @@ Ce tutoriel va brièvement présenter les différents écrans de l'application.
         # btn = parent_widget.tab2
         # btn.setStyleSheet("border: 0.5em solid red;")
 
+
 def anime_titles_autocomplete(object):
     # Chargement des complétions automatiques depuis le fichier json
     json_filepath = os.path.join(core.APPLICATION_DATA_PATH, "anime-offline-database-minified.json")
@@ -168,7 +171,7 @@ def anime_titles_autocomplete(object):
 
     # Application des complétions automatique
     completer = QCompleter(animes_titles)
-    del animes_titles # Permet de limiter l'usage de RAM pour l'autocompete
+    del animes_titles  # Permet de limiter l'usage de RAM pour l'autocompete
     completer.setFilterMode(Qt.MatchFlag.MatchStartsWith)
     completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
     object.setCompleter(completer)

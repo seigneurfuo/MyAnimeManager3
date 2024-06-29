@@ -36,6 +36,7 @@ def get_themes_list():
 
     return themes
 
+
 def set_theme(qapplication, theme_filename):
     if theme_filename:
         theme = Theme(theme_filename)

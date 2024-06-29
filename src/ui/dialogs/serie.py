@@ -6,6 +6,8 @@ from PyQt6.uic import loadUi
 
 from common import file_to_blob
 from utils import anime_titles_autocomplete
+
+
 class SerieDialog(QDialog):
     def __init__(self, parent, serie):
         super().__init__(parent=parent)
@@ -31,7 +33,7 @@ class SerieDialog(QDialog):
         self.choose_path_button.clicked.connect(self.choose_path)
         self.choose_picture_button.clicked.connect(self.choose_picture)
 
-        if(self.parent.parent.parent.settings["anime_titles_autocomplete"]):
+        if (self.parent.parent.parent.settings["anime_titles_autocomplete"]):
             self.lineEdit_2.cursorPositionChanged.connect(self.fill_autocomplete)
 
     def fill_data(self):
@@ -47,7 +49,6 @@ class SerieDialog(QDialog):
         anime_titles_autocomplete(self.lineEdit_2)
         self.autocomplete_loaded = True
 
-
     def choose_path(self):
         """Fonction qui permet à l'utilisateur de choisir le dossier de la série"""
 
@@ -59,8 +60,8 @@ class SerieDialog(QDialog):
             self.lineEdit_3.setText(folder_name)
 
     def choose_picture(self):
-        self.picture_filepath, filter = QFileDialog.getOpenFileName(self, self.tr("Choisir une image"), "", "Fichiers images (*.jpg *.jpeg *.png *.gif);;Tous les fichiers (*)")
-
+        self.picture_filepath, filter = QFileDialog.getOpenFileName(self, self.tr("Choisir une image"), "",
+                                                                    "Fichiers images (*.jpg *.jpeg *.png *.gif);;Tous les fichiers (*)")
 
     def save_data(self):
         self.serie.sort_id = self.spinBox.value()

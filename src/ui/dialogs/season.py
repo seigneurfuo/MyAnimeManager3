@@ -8,6 +8,7 @@ from PyQt6.uic import loadUi
 import core
 from utils import anime_titles_autocomplete
 
+
 class SeasonDialog(QDialog):
     def __init__(self, parent, season, serie, seasons_types):
         super().__init__(parent=parent)
@@ -61,9 +62,8 @@ class SeasonDialog(QDialog):
         self.pushButton.clicked.connect(self.add_row)
         self.pushButton_2.clicked.connect(self.remove_row)
 
-        if(self.parent.parent.parent.settings["anime_titles_autocomplete"]):
+        if (self.parent.parent.parent.settings["anime_titles_autocomplete"]):
             self.lineEdit_2.cursorPositionChanged.connect(self.fill_autocomplete)
-
 
     def fill_data(self):
         self.spinBox.setValue(self.season.sort_id)
@@ -81,14 +81,14 @@ class SeasonDialog(QDialog):
 
         if self.season.rating is not None:
             index = self.comboBox.findData(self.season.rating)
-            self.comboBox.setCurrentIndex(index) # FIXME: Utiliser plutot DATA ?
+            self.comboBox.setCurrentIndex(index)  # FIXME: Utiliser plutot DATA ?
 
         self.checkBox_2.setChecked(self.season.airing)
         self.textEdit.setPlainText(self.season.description)
 
         # Changement de l'index
         index = self.comboBox_2.findData(self.season.type.id)
-        self.comboBox_2.setCurrentIndex(index) # FIXME: Utiliser plutot DATA ?
+        self.comboBox_2.setCurrentIndex(index)  # FIXME: Utiliser plutot DATA ?
 
         # Champs supplémentaires
         if self.parent.parent.parent.settings["custom_data_enabled"]:
@@ -116,7 +116,7 @@ class SeasonDialog(QDialog):
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
                 item.setToolTip(item.text())
-                #item.setData(Qt.ItemDataRole.UserRole, )
+                # item.setData(Qt.ItemDataRole.UserRole, )
                 self.tableWidget.setItem(row_index, col_index, item)
 
         self.tableWidget.resizeColumnsToContents()
@@ -142,7 +142,8 @@ class SeasonDialog(QDialog):
         self.season.sort_id = self.spinBox.value()
         self.season.name = self.lineEdit_2.text().strip()
 
-        self.season.year = None if self.spinBox_5.value() == 0 or len(str(self.spinBox_5.value())) != 4 else self.spinBox_5.value()
+        self.season.year = None if self.spinBox_5.value() == 0 or len(
+            str(self.spinBox_5.value())) != 4 else self.spinBox_5.value()
 
         self.season.state = self.combobox_1.currentData()
         self.season.episodes = self.spinBox_4.value()

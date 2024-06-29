@@ -30,6 +30,7 @@ from exports import export_planning_to_csv
 import core
 import utils
 
+
 class MainWindow(QMainWindow):
     def __init__(self, parent):
         super().__init__(parent=None)
@@ -49,7 +50,7 @@ class MainWindow(QMainWindow):
 
         # On grise le menu car on ne gère pas les amis (mais on laisse quand même l'option affichée
         if not self.parent.settings["friends_enabled"]:
-           self.manage_friends_action.setEnabled(False)
+            self.manage_friends_action.setEnabled(False)
 
         # Onglet 1 - Planning
         self.planning_tab = PlanningTab(self)
@@ -80,7 +81,8 @@ class MainWindow(QMainWindow):
     def init_events(self):
         # Menus
         self.open_profiles_action.triggered.connect(self.when_menu_action_open_profiles_clicked)
-        self.open_application_config_action.triggered.connect(self.when_menu_action_open_application_config_action_clicked)
+        self.open_application_config_action.triggered.connect(
+            self.when_menu_action_open_application_config_action_clicked)
         self.planning_export_action.triggered.connect(self.when_menu_action_planning_export_clicked)
         self.about_action.triggered.connect(self.when_menu_action_about_clicked)
         self.bug_report_action.triggered.connect(self.when_menu_action_bug_report_clicked)

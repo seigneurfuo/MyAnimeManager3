@@ -3,10 +3,11 @@ import os
 from PyQt6.QtWidgets import QDialog, QStyleFactory
 from PyQt6.uic import loadUi
 
-#from ui.themes import get_themes_list
+# from ui.themes import get_themes_list
 
 import core
 from common import save_settings
+
 
 class SettingsDialog(QDialog):
     def __init__(self, parent):
@@ -34,7 +35,7 @@ class SettingsDialog(QDialog):
 
     def fill_data(self):
         # Liste des thêmes
-        #themes = get_themes_list()
+        # themes = get_themes_list()
 
         # for theme in themes:
         #     self.comboBox.addItem(theme.name, userData=theme.path)
@@ -61,9 +62,8 @@ class SettingsDialog(QDialog):
         # Gestion de la complétion automatique
         self.checkBox_5.setChecked(self.settings["anime_titles_autocomplete"])
 
-
     def save_settings_to_file(self):
-        #self.settings["application_stylesheet"] = self.comboBox.currentData()
+        # self.settings["application_stylesheet"] = self.comboBox.currentData()
         self.settings["fusion_theme"] = self.checkBox_3.isChecked()
         self.settings["backups_limit"] = self.spinBox.value()
         self.settings["updates_check"] = self.checkBox.isChecked()

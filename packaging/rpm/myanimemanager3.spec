@@ -1,6 +1,3 @@
-# fedpkg --release f37 local
-# fedpkg --release f37 mockbuild --no-clean-all
-
 Name:           myanimemanager3
 Version:        2024.04.07
 Release:        %autorelease
@@ -21,6 +18,10 @@ Un logiciel de gestion de séries et d'animés.
 # ./
 mkdir -p %{buildroot}/opt/%{name}
 cp ../../src/*.py %{buildroot}/opt/%{name}/
+
+# Patching Version
+version="$(git show -s --format=%cd --date=format:"%Y.%m.%d")"
+sed -i "s/\"DEV\"/\"${version}\"/g" "%{buildroot}/opt/%{name}/core.py"
 
 # ./resources/
 mkdir -p %{buildroot}/opt/%{name}/resources

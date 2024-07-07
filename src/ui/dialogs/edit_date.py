@@ -11,6 +11,8 @@ class EditDateDialog(QDialog):
     def __init__(self, parent, planning_data, full_friends_list):
         super().__init__(parent=parent)
 
+        self.parent = parent
+
         self.planning_data = planning_data
         self.full_friends_list = full_friends_list
         self.friends = [friend_planning.friend for friend_planning in planning_data.friends]
@@ -31,6 +33,15 @@ class EditDateDialog(QDialog):
         self.calendar.setSelectedDate(self.planning_data.date)
 
         self.verticalLayout_2.insertWidget(0, self.calendar)
+
+        # Si on n'a pas activé la gestion des amis, on masque divers éléments
+        if not self.parent.parent.parent.settings["friends_enabled"]:
+            self.tableWidget.hide()
+            self.comboBox.hide()
+            self.pushButton.hide()
+            self.pushButton_2.hide()
+            self.pushButton_3.hide()
+
 
     def init_events(self):
         self.calendar.selectionChanged.connect(self.update_date_label)

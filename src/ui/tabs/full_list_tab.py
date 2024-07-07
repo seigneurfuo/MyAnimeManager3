@@ -232,6 +232,10 @@ class FullListTab(QWidget):
     def fill_season_list(self, serie):
         self.tableWidget.clearContents()
 
+        # On masque la colonne si les amis sont désactivés
+        if not self.parent.parent.settings["friends_enabled"]:
+            self.tableWidget.hideColumn(self.tableWidget.columnCount() - 1)
+
         seasons = serie.seasons.where(Seasons.is_deleted == 0).order_by(Seasons.sort_id)
         row_count = len(seasons)
         self.label_2.setText(str(row_count))
@@ -250,10 +254,6 @@ class FullListTab(QWidget):
                            .join(Planning).join(Seasons).group_by(Friends.name)]
 
                 columns.append(", ".join(friends))
-
-            # Sinon on masque la colonne:
-            else:
-                self.tableWidget.horizontalHeader().hideSection(len(columns))
 
             for col_index, value in enumerate(columns):
                 if col_index == 7:

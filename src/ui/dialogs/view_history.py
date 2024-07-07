@@ -37,6 +37,10 @@ class ViewHistoryDialog(QDialog):
     def fill_series_history(self):
         self.serie_table.clearContents()
 
+        # On masque la colonne si les amis sont désactivés
+        if not self.parent.parent.settings["friends_enabled"]:
+            self.serie_table.hideColumn(self.serie_table.columnCount() - 1)
+
         row_count = len(self.serie_episodes)
         self.serie_label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
         self.serie_table.setRowCount(row_count)
@@ -53,10 +57,6 @@ class ViewHistoryDialog(QDialog):
                                .join(FriendsPlanning).join(Planning).join(Seasons).group_by(Friends.name)]
 
                 columns.append(", ".join(friends))
-
-            # Sinon on masque la colonne:
-            else:
-                self.serie_table.horizontalHeader().hideSection(len(columns))
 
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)

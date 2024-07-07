@@ -140,6 +140,10 @@ class PlanningTab(QWidget):
 
         self.tableWidget_7.clearContents()
 
+        # On masque la colonne si les amis sont désactivés
+        if not self.parent.parent.settings["friends_enabled"]:
+            self.tableWidget_7.hideColumn(self.tableWidget_7.columnCount() - 1)
+
         row_count = len(planning_data_list)
         self.label_82.setText(str(row_count))
         self.tableWidget_7.setRowCount(row_count)

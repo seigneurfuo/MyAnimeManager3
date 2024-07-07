@@ -77,7 +77,7 @@ def export_qtablewidget(qtablewidget, app_data_folder, output_filename):
     return output_filepath
 
 
-def get_collection_problems():
+def get_collection_problems(parent):
     seasons_passed = []
     messages = []
 
@@ -91,20 +91,20 @@ def get_collection_problems():
             # Identifiant à 0
             if season.serie.sort_id == 0 and (season.view_count > 0 or season.watched_episodes > 0):
                 seasons_passed.append(season.serie.id)
-                msg = tr(
+                msg = parent.tr(
                     f"Série: {season.serie.name}. L'identifiant est toujours \"{season.serie.sort_id}\" alors que des épisodes on déja étés vus.")
                 messages.append(msg)
 
             # Aucune nombre d'épisodes défini
             if season.episodes == 0:
-                msg = tr(
+                msg = parent.tr(
                     f"Série: {season.serie.name}. La saison \"{season.name}\" n'a aucun nombre d'épisodes définis.")
                 messages.append(msg)
 
             # Titres de la série vide
             # On supprime tout les espaces. S'il ne reste rien, alors c'est que le tire de la saison est vide.
             if season.name.replace(" ", "") == "":
-                msg = tr(f"Série: {season.serie.name}. La saison \"{season.sort_id}\" à un nom vide.")
+                msg = parent.tr(f"Série: {season.serie.name}. La saison \"{season.sort_id}\" à un nom vide.")
                 messages.append(msg)
 
     # ----- Séries -----
@@ -120,7 +120,7 @@ def get_collection_problems():
 
         missing_ids = sorted(list(set(range_ids_list) - set(series_sort_ids)))
         for missing_id in missing_ids:
-            msg = tr(f"Pas de série pour l'id {missing_id}. Est-ce normal ?")
+            msg = parent.tr(f"Pas de série pour l'id {missing_id}. Est-ce normal ?")
             messages.append(msg)
 
         # TODO: Séries vides
@@ -129,7 +129,7 @@ def get_collection_problems():
     for serie in series:
         # Vérification du chemin
         if serie.path and not os.path.isdir(serie.path):
-            msg = tr(f"Le chemin pour la série {serie.name} n'existe pas")
+            msg = parent.tr(f"Le chemin pour la série {serie.name} n'existe pas")
             messages.append(msg)
 
     return messages

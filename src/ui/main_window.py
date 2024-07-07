@@ -139,7 +139,7 @@ class MainWindow(QMainWindow):
                                 QMessageBox.StandardButton.Ok)
 
     def when_menu_action_check_collection_clicked(self):
-        messages = utils.get_collection_problems()
+        messages = utils.get_collection_problems(self)
         dialog = CollectionProblemsDialog(self, messages)
         dialog.exec()
 

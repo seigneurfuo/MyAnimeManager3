@@ -8,6 +8,7 @@ from core import app_version, release_url
 
 
 def check_for_update():
+    print("Recherche de mises à jour ...")
     try:
         req = urllib.request.urlopen(release_url, timeout=5)
         if not req:

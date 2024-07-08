@@ -15,6 +15,7 @@ from ui.tabs.full_list_tab import FullListTab
 from ui.tabs.list2_tab import List2
 from ui.tabs.tools_tab import ToolsTab
 from ui.tabs.stats_tab import StatsTab
+from ui.tabs.tiles_list_tab import TilesListTab
 
 # Dialogues
 from ui.dialogs.about import AboutDialog
@@ -64,6 +65,10 @@ class MainWindow(QMainWindow):
         self.list2_tab = List2(self)
         self.list2_tab_layout.addWidget(self.list2_tab)
 
+        # Nouvelle liste des tuiles
+        self.tileslist_tab = TilesListTab(self)
+        self.tileslist_tab_layout.addWidget(self.tileslist_tab)
+
         # Onglet 4 - Outils
         self.tools_tab = ToolsTab(self)
         self.tools_tab_layout.addWidget(self.tools_tab)
@@ -73,7 +78,7 @@ class MainWindow(QMainWindow):
         self.stats_tab_layout.addWidget(self.stats_tab)
 
         # Remplissage de la liste des onglets
-        self.tabs = (self.planning_tab, self.full_list_tab, self.list2_tab, self.tools_tab, self.stats_tab)
+        self.tabs = (self.planning_tab, self.full_list_tab, self.list2_tab, self.tileslist_tab, self.tools_tab, self.stats_tab)
 
         # Onglet par défaut
         self.tabWidget.setCurrentIndex(0)  # TODO: Configuration

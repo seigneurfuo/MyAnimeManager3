@@ -51,8 +51,8 @@ class SerieDialog(QDialog):
 
     def choose_path(self):
         """Fonction qui permet à l'utilisateur de choisir le dossier de la série"""
-
-        folder_name = QFileDialog.getExistingDirectory(self, self.tr("Choisir le dossier de la série"))
+        path = self.serie.path if os.path.isdir(self.serie.path) else ""
+        folder_name = QFileDialog.getExistingDirectory(self, self.tr("Choisir le dossier de la série"), path)
 
         # Si un dossier à été sélectionné
         if folder_name:
@@ -60,7 +60,8 @@ class SerieDialog(QDialog):
             self.lineEdit_3.setText(folder_name)
 
     def choose_picture(self):
-        self.picture_filepath, filter = QFileDialog.getOpenFileName(self, self.tr("Choisir une image"), "",
+        path = self.serie.path if os.path.isdir(self.serie.path) else ""
+        self.picture_filepath, filter = QFileDialog.getOpenFileName(self, self.tr("Choisir une image"), path,
                                                                     "Fichiers images (*.jpg *.jpeg *.png *.gif);;Tous les fichiers (*)")
 
     def save_data(self):

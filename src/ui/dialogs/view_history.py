@@ -38,7 +38,7 @@ class ViewHistoryDialog(QDialog):
         self.serie_table.clearContents()
 
         # On masque la colonne si les amis sont désactivés
-        if not self.parent.parent.settings["friends_enabled"]:
+        if not self.parent.parent.parent.settings["friends_enabled"]:
             self.serie_table.hideColumn(self.serie_table.columnCount() - 1)
 
         row_count = len(self.serie_episodes)

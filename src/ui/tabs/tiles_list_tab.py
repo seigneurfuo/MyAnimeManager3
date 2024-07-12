@@ -73,3 +73,4 @@ class TilesListTab(QWidget):
             col_index += 1
 
     def open_serie(self):
+        pass

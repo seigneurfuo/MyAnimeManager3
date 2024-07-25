@@ -114,9 +114,13 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="tab5">
+       <attribute name="icon">
+        <iconset>
+         <normaloff>../resources/icons/categories.png</normaloff>../resources/icons/categories.png</iconset>
+       </attribute>
        <attribute name="title">
-        <string>Page</string>
+        <string>Tiles</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_8">
         <item row="0" column="0">
@@ -150,7 +154,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="tab0">
        <attribute name="icon">
         <iconset>
          <normaloff>../resources/icons/chart.png</normaloff>../resources/icons/chart.png</iconset>
@@ -186,7 +190,7 @@
      <x>0</x>
      <y>0</y>
      <width>1014</width>
-     <height>25</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="about_menu">

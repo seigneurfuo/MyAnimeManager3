@@ -20,6 +20,7 @@ class TilesListTab(QWidget):
         self.parent = parent
 
         self.max_btn_on_row = 3
+        self.icon_size = 256
 
         self.init_ui()
         self.init_events()
@@ -27,11 +28,20 @@ class TilesListTab(QWidget):
     def init_ui(self):
         loadUi(os.path.join(os.path.dirname(__file__), "tiles_list_tab.ui"), self)
 
+        self.comboBox.setCurrentText(str(self.max_btn_on_row))
+        self.comboBox_2.setCurrentText(str(self.icon_size))
+
     def init_events(self):
         self.comboBox.currentIndexChanged.connect(self.when_combobox_current_index_changed)
+        self.comboBox_2.currentIndexChanged.connect(self.when_combobox2_current_index_changed)
+        self.checkBox.checkStateChanged.connect(self.fill_data)
 
     def when_combobox_current_index_changed(self):
         self.max_btn_on_row = int(self.comboBox.currentText())
+        self.fill_data()
+
+    def when_combobox2_current_index_changed(self):
+        self.icon_size = int(self.comboBox_2.currentText())
         self.fill_data()
 
     def when_visible(self):
@@ -48,12 +58,15 @@ class TilesListTab(QWidget):
         series = Series().select().where(Series.is_deleted == 0).order_by(Series.sort_id)
 
         for index, serie in enumerate(series):
+            if self.checkBox.isChecked() and not serie.picture:
+                continue
+
             text = f"{serie.sort_id:03d} - {serie.name}"
 
             btn = QToolButton()
             btn.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
             btn.setText(text)
-            btn.setFixedSize(128, 128)
+            btn.setFixedSize(self.icon_size, self.icon_size)
             btn.setToolTip(btn.text())
 
             if serie.picture:

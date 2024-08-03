@@ -47,6 +47,7 @@ class List2(QWidget):
         self.refresh_button.clicked.connect(self.refresh_data)
 
     def when_visible(self):
+        self.fill_custom_tags_combobox()
         self.refresh_data()
 
     def refresh_data(self):
@@ -103,6 +104,10 @@ class List2(QWidget):
         # Filtrage par type
         if season_type:
             request = request.where(Seasons.type == season_type)
+
+        custom_data_filter = self.comboBox_3.currentText()
+        if custom_data_filter and custom_data_filter != self.tr("Vide"):
+            request = request.where(Seasons.custom_data.contains(custom_data_filter))
 
         request = request.join(Series) \
             .order_by(Seasons.serie.sort_id, Seasons.serie.name, Seasons.sort_id, Seasons.name)
@@ -203,6 +208,24 @@ class List2(QWidget):
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
                                                                  QHeaderView.ResizeMode.ResizeToContents)
+
+    def fill_custom_tags_combobox(self):
+        no_filter_value = self.tr("Vide")
+        custom_fields = {no_filter_value: ""}
+
+        # Récupération de la liste des champs supplémentaires
+        series = Seasons.select(Seasons.custom_data).where(Seasons.is_deleted == 0)
+        for serie in series:
+            if serie.custom_data:
+                custom_fields = custom_fields | serie.custom_data.keys()
+
+        self.comboBox_3.clear()
+
+        # Remplisssage de la liste déroulannte avec divers tags
+        for custom_field in custom_fields:
+            self.comboBox_3.addItem(custom_field, userData=custom_field) #seasons_type.name, userData=seasons_type.id
+
+        self.comboBox_3.findData(no_filter_value)
 
     def when_export_button_clicked(self):
         filepath = utils.export_qtablewidget(self.tableWidget, self.parent.parent.profile.path, "liste")

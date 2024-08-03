@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>424</width>
-    <height>196</height>
+    <width>400</width>
+    <height>234</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,8 +26,8 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="4" column="1">
-      <widget class="QCheckBox" name="checkBox_4">
+     <item row="3" column="1">
+      <widget class="QCheckBox" name="checkBox_2">
        <property name="text">
         <string/>
        </property>
@@ -40,17 +40,24 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
-      <widget class="QCheckBox" name="checkBox_2">
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Activer la complétion automatique des titres</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QCheckBox" name="checkBox_3">
        <property name="text">
         <string/>
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>Thême sombre activé:</string>
+        <string>Activer les champs &quot;personalisés&quot;:</string>
        </property>
       </widget>
      </item>
@@ -68,24 +75,24 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>Activer les champs &quot;personalisés&quot;:</string>
+     <item row="1" column="1">
+      <widget class="QSpinBox" name="spinBox">
+       <property name="minimum">
+        <number>1</number>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QCheckBox" name="checkBox_3">
+     <item row="4" column="1">
+      <widget class="QCheckBox" name="checkBox_4">
        <property name="text">
         <string/>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QSpinBox" name="spinBox">
-       <property name="minimum">
-        <number>1</number>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Thême sombre activé:</string>
        </property>
       </widget>
      </item>
@@ -96,15 +103,23 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_6">
+     <item row="5" column="1">
+      <widget class="QCheckBox" name="checkBox_5">
        <property name="text">
-        <string>Activer la complétion automatique des titres</string>
+        <string/>
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
-      <widget class="QCheckBox" name="checkBox_5">
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>Dans le planning, les séries sont triées par
+épisode le plus récemment vus</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QCheckBox" name="checkBox_6">
        <property name="text">
         <string/>
        </property>

@@ -15,6 +15,8 @@ from database import Planning, Seasons, Friends, FriendsPlanning
 from core import SEASONS_STATES
 from common import display_view_history_dialog
 
+import peewee
+
 from database import Series
 
 
@@ -184,12 +186,14 @@ class PlanningTab(QWidget):
         episodes_to_watch = Seasons.select() \
             .where(Seasons.state.in_(states), Seasons.watched_episodes < Seasons.episodes, Seasons.is_deleted == 0)
 
-        if (self.to_watch_table_text_filter):
+        if self.to_watch_table_text_filter:
             episodes_to_watch = episodes_to_watch.where(
                 Seasons.name.contains(self.to_watch_table_text_filter) | Series.name.contains(
                     self.to_watch_table_text_filter)).join(Series)
 
-        episodes_to_watch.order_by(Seasons.id)
+        # Tri par la dernière saison vue
+        if self.parent.parent.settings["planning_to_watched_alternative_order"]:
+            episodes_to_watch = episodes_to_watch.join(Planning).group_by(Seasons.id).order_by(peewee.fn.MAX(Planning.date).desc())
 
         self.tableWidget_6.clearContents()
 

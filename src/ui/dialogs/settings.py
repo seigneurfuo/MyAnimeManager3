@@ -62,6 +62,9 @@ class SettingsDialog(QDialog):
         # Gestion de la complétion automatique
         self.checkBox_5.setChecked(self.settings["anime_titles_autocomplete"])
 
+        # Affichage alternatif dans la liste des épisodes à voir (tri par épisodes dernièrement vus)
+        self.checkBox_6.setChecked(self.settings["planning_to_watched_alternative_order"])
+
     def save_settings_to_file(self):
         # self.settings["application_stylesheet"] = self.comboBox.currentData()
         self.settings["fusion_theme"] = self.checkBox_3.isChecked()
@@ -70,6 +73,7 @@ class SettingsDialog(QDialog):
         self.settings["friends_enabled"] = self.checkBox_2.isChecked()
         self.settings["custom_data_enabled"] = self.checkBox_4.isChecked()
         self.settings["anime_titles_autocomplete"] = self.checkBox_5.isChecked()
+        self.settings["planning_to_watched_alternative_order"] = self.checkBox_6.isChecked()
 
         # Passage des paramètres à toute l'application
         self.parent.parent.settings = self.settings

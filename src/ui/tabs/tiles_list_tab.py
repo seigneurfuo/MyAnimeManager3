@@ -12,6 +12,8 @@ from database import Series, Seasons, Planning
 
 import utils
 
+from ui.dialogs.serie import SerieDialog
+
 
 class TilesListTab(QWidget):
     def __init__(self, parent):
@@ -54,6 +56,7 @@ class TilesListTab(QWidget):
 
         row_index = 0
         col_index = 0
+        total_bytes = 0
 
         series = Series().select().where(Series.is_deleted == 0).order_by(Series.sort_id)
         if self.checkBox.isChecked():
@@ -67,9 +70,11 @@ class TilesListTab(QWidget):
             btn.setText(text)
             btn.setFixedSize(self.icon_size, self.icon_size)
             btn.setToolTip(btn.text())
+            btn.clicked.connect(lambda lamdba, serie=serie: self.open_serie(serie))
 
             if serie.picture:
                 with io.BytesIO(serie.picture) as picture_data:
+                    total_bytes += picture_data.getbuffer().nbytes
                     pixmap = QPixmap.fromImage(QImage.fromData(picture_data.read()))
                 btn.setIcon(QIcon(pixmap))
 
@@ -84,5 +89,13 @@ class TilesListTab(QWidget):
             self.gridLayout_2.addWidget(btn, row_index, col_index)
             col_index += 1
 
-    def open_serie(self):
-        pass
+        # Total du nombre d'éléments
+        total_megabytes = int(total_bytes / 1024 / 1024)
+        self.label.setText(self.tr(f"Nombre d'éléments: {len(series)}: Taille totale de {total_megabytes}Mo"))
+
+
+    def open_serie(self, serie):
+        series_dialog = SerieDialog(self, serie)
+
+        if series_dialog.exec():
+            self.fill_data()

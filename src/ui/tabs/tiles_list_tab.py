@@ -56,11 +56,10 @@ class TilesListTab(QWidget):
         col_index = 0
 
         series = Series().select().where(Series.is_deleted == 0).order_by(Series.sort_id)
+        if self.checkBox.isChecked():
+            series = series.where(Series.picture != None)
 
         for index, serie in enumerate(series):
-            if self.checkBox.isChecked() and not serie.picture:
-                continue
-
             text = f"{serie.sort_id:03d} - {serie.name}"
 
             btn = QToolButton()

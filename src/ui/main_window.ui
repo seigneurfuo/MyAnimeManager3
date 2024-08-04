@@ -120,7 +120,7 @@
          <normaloff>../resources/icons/categories.png</normaloff>../resources/icons/categories.png</iconset>
        </attribute>
        <attribute name="title">
-        <string>Tiles</string>
+        <string>Tuiles</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_8">
         <item row="0" column="0">

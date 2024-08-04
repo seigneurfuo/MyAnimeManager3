@@ -4,7 +4,7 @@
 - Ajouter un bouton de supression de l'image d'une série
 - Déplacer le code pour calcul l'age d'un animé dans utils
 - Déplacer toutes les images dans une table à part ?
-- Renommer le nom tiles pour l'onglet qui affiche les images
+- ~~Renommer le nom tiles pour l'onglet qui affiche les images~~
 - Remplacer les .where().where()... en mes combinant ? .where(xx and yyy)
 
 ### Bugs

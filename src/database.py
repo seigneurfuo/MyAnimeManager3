@@ -64,29 +64,6 @@ class Planning(BaseModel):
         table_name = 'Planning'
 
 
-class Studios(BaseModel):
-    name = TextField(null=True)
-
-    class Meta:
-        table_name = 'Studios'
-
-
-class TagsGroups(BaseModel):
-    name = TextField(null=True)
-    color = TextField(null=True)
-
-    class Meta:
-        table_name = 'TagsGroups'
-
-
-class Tags(BaseModel):
-    name = TextField(null=True)
-    tags_group = ForeignKeyField(column_name='tags_group', field='id', model=TagsGroups, null=True)
-
-    class Meta:
-        table_name = 'Tags'
-
-
 class Friends(BaseModel):
     name = TextField()
 

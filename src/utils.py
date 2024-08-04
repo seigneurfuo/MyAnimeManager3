@@ -51,7 +51,7 @@ def export_qtablewidget(qtablewidget, app_data_folder, output_filename):
         os.makedirs(output_directory)
 
     date = datetime.now().strftime("%Y-%m-%d-%H%M%S")
-    output_filepath = os.path.join(output_directory, "export-{output_filename}-{date}.csv")
+    output_filepath = os.path.join(output_directory, f"export-{output_filename}-{date}.csv")
 
     with open(output_filepath, "w", newline="") as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=";")

@@ -175,3 +175,17 @@ def anime_titles_autocomplete(object):
     completer.setFilterMode(Qt.MatchFlag.MatchStartsWith)
     completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
     object.setCompleter(completer)
+
+def get_season_age(season):
+    year = str(season.year) if season.year and str(season.year) != "None" else ""
+
+    # Calcul de l'age
+    if year and len(year) == 4:
+        # Différence entre deux dates
+        release_year_datetime_object = datetime.strptime(year, "%Y")
+        age_diff = datetime.now().year - release_year_datetime_object.year
+        age = f"{age_diff} ans"
+    else:
+        age = ""
+
+    return age

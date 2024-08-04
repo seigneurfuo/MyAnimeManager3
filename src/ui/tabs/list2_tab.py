@@ -110,8 +110,6 @@ class List2(QWidget):
         return request
 
     def fill_data(self):
-        today_date_object = datetime.now()
-
         self.tableWidget.clearContents()
 
         data = self.get_request_with_filters()
@@ -125,14 +123,8 @@ class List2(QWidget):
             year = str(season.year) if season.year and str(season.year) != "None" else ""
 
             # Calcul de l'age
-            if year and len(year) == 4:
-                # Différence entre deux dates
-                release_year_datetime_object = datetime.strptime(str(season.year), "%Y")
-                age_diff = today_date_object.year - release_year_datetime_object.year
-                age = self.tr(f"{age_diff} ans")
-            else:
-                age = ""
-
+            age = utils.get_season_age(season)
+            # Etat de la saison
             season_state = SEASONS_STATES[season.state]
 
             columns = [ids, season.serie.name, season.type.name, season.name, str(season.episodes), year,

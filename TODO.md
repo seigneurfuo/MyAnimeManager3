@@ -1,6 +1,11 @@
 # TODO
 
 ## A faire
+- Ajouter un bouton de supression de l'image d'une série
+- Déplacer le code pour calcul l'age d'un animé dans utils
+- Déplacer toutes les images dans une table à part ?
+- Renommer le nom tiles pour l'onglet qui affiche les images
+- Remplacer les .where().where()... en mes combinant ? .where(xx and yyy)
 
 ### Bugs
 - Boutons supprimer et modifier d'une saison non grisés quand aucune n'est sélectionnée
@@ -14,8 +19,9 @@
 - Déplacer le chargement des données dans fill_data au lieu de les metre dans init_ui()
 
 ### Améliorations
-- Studios ?
-- Tags
+- ~~Studios ?~~
+- ~~Tags~~
+- Rechercher par valeur de champ personalisé dans l'onglet list2
 - Voir si dans la table Planning, on peut enlever la colonne serie comme on à déja la saison, on peut faire un season.serie pour récupérer les infos de la série.
 - Passer les isdeleted en boolean ?
 - Combiner des refresh et autre dans une fonction fait pour.

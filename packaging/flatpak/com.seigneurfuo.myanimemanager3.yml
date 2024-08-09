@@ -1,0 +1,55 @@
+id: com.seigneurfuo.myanimemanager3
+runtime: org.kde.Platform
+runtime-version: '6.7'
+sdk: org.kde.Sdk
+
+base: com.riverbankcomputing.PyQt.BaseApp
+base-version: '6.7'
+
+build-options:
+  env:
+    - BASEAPP_REMOVE_WEBENGINE=1
+
+add-extensions:
+  org.freedesktop.Platform.ffmpeg-full:
+    directory: lib/ffmpeg
+    add-ld-path: .
+    version: '21.08'
+
+cleanup-commands:
+  - /app/cleanup-BaseApp.sh
+
+build-options:
+  env:
+    BASEAPP_REMOVE_WEBENGINE: '1'
+
+command: myanimemanager3
+finish-args:
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --filesystem=home
+
+modules:
+  - peewee.yml
+
+  - name: myanimemanager3
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/opt/myanimemanager3
+      - cp -r ./src/* /app/opt/myanimemanager3
+      - install -Dm755 myanimemanager3.sh /app/bin/myanimemanager3
+    sources:
+      - type: git
+        url: https://github.com/seigneurfuo/MyAnimeManager3.git
+        #tag: 0.1.2
+        commit: 2cc543882da235154b9a86f41124856cffc623c5
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/seigneurfuo/myanimemanager3/tags
+          tag-query: first | .name
+          version-query: $tag
+      - type: script
+        commands:
+          - python3 /app/opt/myanimemanager3/MyAnimeManager3.py
+        dest-filename: myanimemanager3.sh

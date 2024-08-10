@@ -1,6 +1,7 @@
 .idea/
 venv/
 pwiz.py
+test*
 
 # Appimage
 packaging/appimage/myanimemanager3.AppDir

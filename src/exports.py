@@ -16,7 +16,7 @@ def export_planning_to_csv(app_data_folder):
         os.makedirs(output_directory)
 
     date = datetime.now().strftime("%Y-%m-%d-%H%M%S")
-    output_filepath = os.path.join(output_directory, f"{date}-planning.csv")
+    output_filepath = os.path.join(output_directory, f"planning-{date}.csv")
 
     with open(output_filepath, "w", newline="") as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=";")

@@ -2,22 +2,28 @@
 venv/
 pwiz.py
 
+# Appimage
 packaging/appimage/myanimemanager3.AppDir
 packaging/appimage/**/*.AppImage
 
+# PKGBUILD
 packaging/PKGBUILD/dist/*.pkg.*
 packaging/PKGBUILD/MyAnimeManager3/
 packaging/PKGBUILD/pkg/
 packaging/PKGBUILD/src/
 
+# Flatpak
 packaging/flatpak/builddir/
 packaging/flatpak/repo/
+packaging/flatpak/.flatpak-builder/
 
+# RPM
 packaging/rpm/*.rpm
 packaging/rpm/noarch/
 packaging/rpm/results_*/
 packaging/rpm/.build-*
 
+# Windows
 packaging/windows/dist/
 packaging/windows/*.exe
 packaging/windows/src/
@@ -32,6 +38,7 @@ Tests/
 
 MyAnimeManager3.spec
 
+# Themes
 src/resources/themes/Alexhuszagh
 src/resources/themes/EClaesson-QTDark
 src/resources/themes/Lumyo-darkorange

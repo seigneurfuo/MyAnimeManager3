@@ -193,7 +193,7 @@ class PlanningTab(QWidget):
 
         # Tri par la dernière saison vue
         if self.parent.parent.settings["planning_to_watched_alternative_order"]:
-            episodes_to_watch = episodes_to_watch.join(Planning).group_by(Seasons.id).order_by(peewee.fn.MAX(Planning.date).desc())
+            episodes_to_watch = episodes_to_watch.join(Planning, peewee.JOIN.LEFT_OUTER).group_by(Seasons.id).order_by(peewee.fn.MAX(Planning.date).desc())
 
         self.tableWidget_6.clearContents()
 

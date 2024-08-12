@@ -1,5 +1,7 @@
+%define version %(git show -s --format=%cd --date=format:"%Y.%m.%d")
+
 Name:           myanimemanager3
-Version:        2024.04.07
+Version:        %{version}
 Release:        %autorelease
 BuildArch:      noarch
 Summary:        Un logiciel de gestion de séries et d'animés.
@@ -20,8 +22,7 @@ mkdir -p %{buildroot}/opt/%{name}
 cp ../../src/*.py %{buildroot}/opt/%{name}/
 
 # Patching Version
-version="$(git show -s --format=%cd --date=format:"%Y.%m.%d")"
-sed -i "s/\"DEV\"/\"${version}\"/g" "%{buildroot}/opt/%{name}/core.py"
+sed -i "s/\"DEV\"/\"%{version}\"/g" "%{buildroot}/opt/%{name}/core.py"
 
 # ./resources/
 mkdir -p %{buildroot}/opt/%{name}/resources

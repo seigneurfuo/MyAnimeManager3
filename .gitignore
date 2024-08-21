@@ -34,6 +34,8 @@ src/venv/
 src/**/*.pyc
 src/database2.sqlite3
 src/**/__pycache__/
+src/.myanimemanager3/
+src/.portable
 
 Tests/
 

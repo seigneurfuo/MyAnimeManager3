@@ -3,12 +3,13 @@ import io
 import json
 import os
 
+from pathlib import Path
+
 from database import Planning, Seasons
 import peewee
 
 from core import DEFAULT_CONFIG_DATA, APPLICATION_DATA_PATH
 from ui.dialogs.view_history import ViewHistoryDialog
-
 
 def display_view_history_dialog(parent, season_id):
     season = Seasons.get(season_id)

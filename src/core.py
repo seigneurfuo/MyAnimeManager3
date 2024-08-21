@@ -1,5 +1,4 @@
-import os
-from pathlib import Path
+from utils import get_paths
 
 app_name = "MyAnimeManager 3"
 app_version = "DEV"
@@ -8,8 +7,7 @@ app_name_and_version = f"{app_name} - {app_version}"
 release_url = "https://api.github.com/repos/seigneurfuo/MyAnimeManager3/releases/latest"
 bugtracker_url = "https://github.com/seigneurfuo/MyAnimeManager3/issues/new"
 
-APPLICATION_DATA_PATH = os.path.join(Path.home(), ".myanimemanager3")
-PROFILES_PATH = os.path.join(APPLICATION_DATA_PATH, "profiles")
+APPLICATION_DATA_PATH, PROFILES_PATH = get_paths()
 
 DEFAULT_CONFIG_DATA = {
     "application_stylesheet": None,

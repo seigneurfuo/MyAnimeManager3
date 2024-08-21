@@ -11,6 +11,19 @@ from PyQt6.QtWidgets import QMessageBox, QCompleter
 import core
 from database import Seasons, Series
 
+# Pour Nyelson ^._.^
+def get_paths():
+    PORTABLE_PATH = os.path.join(os.path.dirname(__file__))
+    is_portable = os.path.isfile(os.path.join(PORTABLE_PATH, ".portable"))
+    if is_portable:
+        application_data_path = os.path.join(PORTABLE_PATH, ".myanimemanager3")
+    else:
+        application_data_path = os.path.join(Path.home(), ".myanimemanager3")
+
+    profiles_path = os.path.join(application_data_path, "profiles")
+
+    return application_data_path, profiles_path
+
 
 def get_duration_list(episodes_count, duration, pause_every, pause_duration, start):
     ret_list = []

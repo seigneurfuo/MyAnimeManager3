@@ -7,6 +7,10 @@
 - ~~Renommer le nom tiles pour l'onglet qui affiche les images~~
 - Remplacer les .where().where()... en mes combinant ? .where(xx and yyy)
 
+- Correction autocomplete des animés sous Windows en .exe
+- ~~Correction du choix image pour une série pas encore crée~~
+- ~~Correction du choix de la selection du dossier pour une série pas encore crée~~
+
 ### Bugs
 - Boutons supprimer et modifier d'une saison non grisés quand aucune n'est sélectionnée
 - Pareil pour les séries ?

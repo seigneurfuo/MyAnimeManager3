@@ -14,7 +14,7 @@ class ProfilesManageDialog(QDialog):
         manage = 0
         choose = 1
 
-    def __init__(self, parent, role, current_profile):
+    def __init__(self, parent, role, current_profile) -> None:
         super().__init__(parent=parent)
 
         self.role = role
@@ -30,7 +30,7 @@ class ProfilesManageDialog(QDialog):
         self.fill_data()
         self.init_events()
 
-    def init_ui(self):
+    def init_ui(self) -> None:
         loadUi(os.path.join(os.path.dirname(__file__), "profiles_manage.ui"), self)
 
         if self.profiles_list:
@@ -49,22 +49,22 @@ class ProfilesManageDialog(QDialog):
 
         self.setWindowTitle(title)
 
-    def init_events(self):
+    def init_events(self) -> None:
         self.pushButton.clicked.connect(self.when_create_profile_button_clicked)
         self.pushButton_2.clicked.connect(self.when_delete_profile_button_clicked)
         self.pushButton_3.clicked.connect(self.when_edit_profile_button_clicked)
 
-    def update_profiles_list(self):
+    def update_profiles_list(self) -> None:
         self.selected_profile = None
         self.profiles_list = Profiles.get_profiles_list()
 
-    def remove_buttons_from_grid(self):
+    def remove_buttons_from_grid(self) -> None:
         # Pour le refresh
         # https://stackoverflow.com/a/13103617
         for i in reversed(range(self.gridLayout.count())):
             self.gridLayout.itemAt(i).widget().setParent(None)
 
-    def fill_data(self):
+    def fill_data(self) -> None:
         row_index = 0
         col_index = 0
 
@@ -95,14 +95,14 @@ class ProfilesManageDialog(QDialog):
             self.gridLayout.addWidget(btn, row_index, col_index)
             col_index += 1
 
-    def update_all(self):
+    def update_all(self) -> None:
         self.selected_profile = None
 
         self.update_profiles_list()
         self.remove_buttons_from_grid()
         self.fill_data()
 
-    def set_profile(self, profile):
+    def set_profile(self, profile) -> None:
         # Si le profil à été supprimé
         if not profile.exists():
             self.update_profiles_list()
@@ -129,7 +129,7 @@ class ProfilesManageDialog(QDialog):
             self.pushButton_2.setEnabled(True)
             self.pushButton_3.setEnabled(True)
 
-    def when_create_profile_button_clicked(self):
+    def when_create_profile_button_clicked(self) -> None:
         profile_edit_dialog = ProfileEditDialog(self)
 
         if profile_edit_dialog.exec():
@@ -144,7 +144,7 @@ class ProfilesManageDialog(QDialog):
 
                 self.update_all()
 
-    def when_edit_profile_button_clicked(self):
+    def when_edit_profile_button_clicked(self) -> None:
         profile = self.selected_profile
 
         profile_edit_dialog = ProfileEditDialog(self, profile)
@@ -165,7 +165,7 @@ class ProfilesManageDialog(QDialog):
 
                 self.update_all()
 
-    def when_delete_profile_button_clicked(self):
+    def when_delete_profile_button_clicked(self) -> None:
         choice = QMessageBox.information(self, self.tr("Supression d'un profil"),
                                          self.tr(f"Etes vous sûr de vouloir supprimer le profil: {self.selected_profile.name} ?"),
                                          QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.Cancel)

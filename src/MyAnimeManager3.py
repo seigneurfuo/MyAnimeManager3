@@ -57,7 +57,7 @@ class Application(QApplication):
         self.mainwindow.center()
         self.mainwindow.showMaximized()
 
-    def load_profile(self, profile_name=None):
+    def load_profile(self, profile_name=None) -> Profiles:
         # Creation des dossiers de l'applications
         if not os.path.isdir(core.PROFILES_PATH):
             os.makedirs(core.PROFILES_PATH)
@@ -84,7 +84,7 @@ class Application(QApplication):
 
         return profile
 
-    def load_database(self):
+    def load_database(self) -> str:
         return load_or_create_database(self.profile)
 
 

@@ -11,7 +11,7 @@ import peewee
 from core import DEFAULT_CONFIG_DATA, APPLICATION_DATA_PATH
 from ui.dialogs.view_history import ViewHistoryDialog
 
-def display_view_history_dialog(parent, season_id):
+def display_view_history_dialog(parent, season_id) -> None:
     season = Seasons.get(season_id)
 
     # Utilisé pour faire un group concat...
@@ -30,7 +30,7 @@ def display_view_history_dialog(parent, season_id):
     dialog.exec()
 
 
-def load_settings():
+def load_settings() -> dict:
     settings_filepath = os.path.join(APPLICATION_DATA_PATH, "settings.json")
 
     if os.path.isfile(settings_filepath):
@@ -64,7 +64,7 @@ def load_settings():
     return user_config
 
 
-def save_settings(data):
+def save_settings(data) -> None:
     if not os.path.isdir(APPLICATION_DATA_PATH):
         os.makedirs(APPLICATION_DATA_PATH)
 
@@ -74,10 +74,10 @@ def save_settings(data):
         json.dump(data, settings_file)
 
 
-def file_to_blob(filename):
+def file_to_blob(filename) -> bytes | None:
     if os.path.isfile(filename):
         with open(filename, "rb") as f:
             bytesio = io.BytesIO(f.read())
             return bytesio.getvalue()
     else:
-        return False
+        return None

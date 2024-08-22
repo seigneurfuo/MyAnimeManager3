@@ -18,7 +18,7 @@ def export_planning_to_csv(app_data_folder):
     date = datetime.now().strftime("%Y-%m-%d-%H%M%S")
     output_filepath = os.path.join(output_directory, f"planning-{date}.csv")
 
-    with open(output_filepath, "w", newline="") as csv_file:
+    with open(output_filepath, "w", newline="", encoding="utf-8") as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=";")
 
         # Entetes

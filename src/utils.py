@@ -176,7 +176,7 @@ def anime_titles_autocomplete(object):
     if not os.path.isfile(json_filepath):
         return
 
-    with open(json_filepath, "r") as json_file:
+    with open(json_filepath, "r", encoding="utf-8") as json_file:
         data = json.load(json_file)
 
     # Animés

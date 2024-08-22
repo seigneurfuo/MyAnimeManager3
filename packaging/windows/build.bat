@@ -55,5 +55,5 @@ REM xcopy /s /e %ROOTDIR%\%PRODUCT%\src\resources\ %DISTDIR%\resources\
 REM xcopy /s /e %ROOTDIR%\%PRODUCT%\src\ui\ %DISTDIR%\ui\
 
 REM Si export dossier
-xcopy /s /e %SRCDIR%\src\resources\ %DISTDIR%\%PRODUCT%\resources\
-xcopy /s /e %SRCDIR%\src\ui\ %DISTDIR%\%PRODUCT%\ui\
+xcopy /s /e %SRCDIR%\src\resources\ %DISTDIR%\%PRODUCT%\_internal\resources\
+xcopy /s /e %SRCDIR%\src\ui\ %DISTDIR%\%PRODUCT%\_internal\ui\

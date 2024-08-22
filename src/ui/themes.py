@@ -3,14 +3,14 @@ import os.path
 
 
 class Theme:
-    def __init__(self, path):
+    def __init__(self, path) -> None:
         self.path = path
         self.name, extension = os.path.splitext(os.path.basename(self.path))
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.path
 
-    def load(self):
+    def load(self) -> str:
         if os.path.isfile(self.path):
             with open(self.path, "r") as theme_file:
                 return theme_file.read()
@@ -18,7 +18,7 @@ class Theme:
             return ""
 
 
-def get_themes_list():
+def get_themes_list() -> list[Theme]:
     # Theme par défaut du système
     default_theme = Theme("")
     default_theme.name = "Thême par défaut du système"
@@ -37,7 +37,7 @@ def get_themes_list():
     return themes
 
 
-def set_theme(qapplication, theme_filename):
+def set_theme(qapplication, theme_filename) -> None:
     if theme_filename:
         theme = Theme(theme_filename)
         qapplication.setStyleSheet(theme.load())

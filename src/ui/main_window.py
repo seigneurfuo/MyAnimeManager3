@@ -33,7 +33,7 @@ import utils
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, parent):
+    def __init__(self, parent) -> None:
         super().__init__(parent=None)
         self.parent = parent
         self.app_dir = parent.app_dir
@@ -46,7 +46,7 @@ class MainWindow(QMainWindow):
         # On met à jour les informations sur l'onglet chargé en premier
         self.update_tab_content(self.tabWidget.currentIndex())
 
-    def init_ui(self):
+    def init_ui(self) -> None:
         loadUi(os.path.join(os.path.dirname(__file__), "main_window.ui"), self)
 
         # On grise le menu car on ne gère pas les amis (mais on laisse quand même l'option affichée
@@ -83,7 +83,7 @@ class MainWindow(QMainWindow):
         # Onglet par défaut
         self.tabWidget.setCurrentIndex(0)  # TODO: Configuration
 
-    def init_events(self):
+    def init_events(self) -> None:
         # Menus
         self.open_profiles_action.triggered.connect(self.when_menu_action_open_profiles_clicked)
         self.open_application_config_action.triggered.connect(
@@ -104,7 +104,7 @@ class MainWindow(QMainWindow):
 
     # print(self.parent_qapplication.profile.get_series())
 
-    def center(self):
+    def center(self) -> None:
         cursor_position = QCursor.pos()
         screen = QtGui.QGuiApplication.screenAt(cursor_position)
         screen_geometry = screen.availableGeometry().center()
@@ -113,7 +113,7 @@ class MainWindow(QMainWindow):
         frame_geometry.moveCenter(screen_geometry)
         self.move(frame_geometry.topLeft())
 
-    def when_current_tab_changed(self, tab_index):
+    def when_current_tab_changed(self, tab_index) -> None:
         """
         Fonction qui est appelée lorsqu'un onglet est cliqué
         Il permet de lancer la fonction when_visible qui déclanche divers actions (MAJ de l'affichage, ...)
@@ -125,17 +125,17 @@ class MainWindow(QMainWindow):
 
         self.update_tab_content(tab_index)
 
-    def update_tab_content(self, tab_index):
+    def update_tab_content(self, tab_index) -> None:
         if tab_index != -1 and tab_index < len(self.tabs) and self.tabs[tab_index] is not None:
             self.tabs[tab_index].when_visible()
 
-    def when_menu_action_open_application_config_action_clicked(self):
+    def when_menu_action_open_application_config_action_clicked(self) -> None:
         QDesktopServices.openUrl(QUrl.fromLocalFile(core.APPLICATION_DATA_PATH))
 
-    def when_menu_action_open_profiles_clicked(self):
+    def when_menu_action_open_profiles_clicked(self) -> None:
         QDesktopServices.openUrl(QUrl.fromLocalFile(self.parent.profile.path))
 
-    def when_menu_action_planning_export_clicked(self):
+    def when_menu_action_planning_export_clicked(self) -> None:
         filepath = export_planning_to_csv(self.parent.profile.path)
 
         # Bouton pour ouvrir le dossier ?
@@ -143,19 +143,19 @@ class MainWindow(QMainWindow):
                                 self.tr("Le fichier a été généré ici:") + "\n    " + filepath,
                                 QMessageBox.StandardButton.Ok)
 
-    def when_menu_action_check_collection_clicked(self):
+    def when_menu_action_check_collection_clicked(self) -> None:
         messages = utils.get_collection_problems(self)
         dialog = CollectionProblemsDialog(self, messages)
         dialog.exec()
 
-    def when_menu_action_about_clicked(self):
+    def when_menu_action_about_clicked(self) -> None:
         dialog = AboutDialog(self)
         dialog.exec()
 
-    def when_menu_action_bug_report_clicked(self):
+    def when_menu_action_bug_report_clicked(self) -> None:
         webbrowser.open_new(core.bugtracker_url)
 
-    def when_menu_action_open_database_backups_clicked(self):
+    def when_menu_action_open_database_backups_clicked(self) -> None:
         dialog = DatabaseHistoryDialog(self)
         dialog.exec()
 
@@ -167,23 +167,23 @@ class MainWindow(QMainWindow):
                 QMessageBox.StandardButton.Ok)
             self.close()
 
-    def when_menu_action_manage_profiles_clicked(self):
+    def when_menu_action_manage_profiles_clicked(self) -> None:
         profiles_manage = ProfilesManageDialog(self, ProfilesManageDialog.roles.manage, self.parent.profile)
         profiles_manage.exec()
 
-    def when_menu_action_manage_friends_clicked(self):
+    def when_menu_action_manage_friends_clicked(self) -> None:
         friends_manage = FriendManageDialog(self)
         friends_manage.exec()
 
-    def when_menu_action_settings_clicked(self):
+    def when_menu_action_settings_clicked(self) -> None:
         settings_dialog = SettingsDialog(self)
         settings_dialog.exec()
 
-    def backup_database_before_quit(self):
+    def backup_database_before_quit(self) -> None:
         db_backups_manager = DBBackupsManager(self)
         db_backups_manager.backup_current_database()
 
-    def closeEvent(self, a0):
+    def closeEvent(self, a0) -> None:
         database.database.commit()
         self.backup_database_before_quit()
 

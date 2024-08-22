@@ -12,7 +12,7 @@ from utils import get_duration_list
 
 
 class ToolsTab(QWidget):
-    def __init__(self, parent):
+    def __init__(self, parent) -> None:
         super().__init__(parent)
 
         self.parent = parent
@@ -20,10 +20,10 @@ class ToolsTab(QWidget):
         self.init_ui()
         self.init_events()
 
-    def init_ui(self):
+    def init_ui(self) -> None:
         loadUi(os.path.join(os.path.dirname(__file__), "tools_tab.ui"), self)
 
-    def init_events(self):
+    def init_events(self) -> None:
         self.go_button.clicked.connect(self.when_duration_calculation_button_click)
         self.get_current_time_button.clicked.connect(self.when_get_current_time_button_click)
 
@@ -36,13 +36,13 @@ class ToolsTab(QWidget):
 
         self.select_random_season_button.clicked.connect(self.when_select_random_season_button_clicked)
 
-    def when_visible(self):
+    def when_visible(self) -> None:
         self.refresh_data()
 
-    def refresh_data(self):
+    def refresh_data(self) -> None:
         self.set_current_time()
 
-    def duration_calculation(self):
+    def duration_calculation(self) -> None:
         episodes_count = self.episodes_count_spinbox.value()
         episodes_duration = self.episodes_duration_spinbox.value()
 
@@ -73,16 +73,16 @@ class ToolsTab(QWidget):
     # def when_spinboxes_values_changed(self):
     #     self.duration_calculation()
 
-    def when_duration_calculation_button_click(self):
+    def when_duration_calculation_button_click(self) -> None:
         self.duration_calculation()
 
-    def set_current_time(self):
+    def set_current_time(self) -> None:
         self.timeEdit.setTime(QTime.currentTime())
 
-    def when_get_current_time_button_click(self):
+    def when_get_current_time_button_click(self) -> None:
         self.set_current_time()
 
-    def when_select_random_season_button_clicked(self):
+    def when_select_random_season_button_clicked(self) -> None:
         states = [0, 1, 2] if self.checkBox.isChecked() else [0, 1]
         seasons = Seasons.select().where(Seasons.state.in_(states), Seasons.is_deleted == 0).order_by(Seasons.id)
 

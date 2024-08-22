@@ -16,7 +16,7 @@ from ui.dialogs.serie import SerieDialog
 
 
 class TilesListTab(QWidget):
-    def __init__(self, parent):
+    def __init__(self, parent) -> None:
         super().__init__(parent)
 
         self.parent = parent
@@ -27,29 +27,29 @@ class TilesListTab(QWidget):
         self.init_ui()
         self.init_events()
 
-    def init_ui(self):
+    def init_ui(self) -> None:
         loadUi(os.path.join(os.path.dirname(__file__), "tiles_list_tab.ui"), self)
 
         self.comboBox.setCurrentText(str(self.max_btn_on_row))
         self.comboBox_2.setCurrentText(str(self.icon_size))
 
-    def init_events(self):
+    def init_events(self) -> None:
         self.comboBox.currentIndexChanged.connect(self.when_combobox_current_index_changed)
         self.comboBox_2.currentIndexChanged.connect(self.when_combobox2_current_index_changed)
         self.checkBox.checkStateChanged.connect(self.fill_data)
 
-    def when_combobox_current_index_changed(self):
+    def when_combobox_current_index_changed(self) -> None:
         self.max_btn_on_row = int(self.comboBox.currentText())
         self.fill_data()
 
-    def when_combobox2_current_index_changed(self):
+    def when_combobox2_current_index_changed(self) -> None:
         self.icon_size = int(self.comboBox_2.currentText())
         self.fill_data()
 
-    def when_visible(self):
+    def when_visible(self) -> None:
         self.fill_data()
 
-    def fill_data(self):
+    def fill_data(self) -> None:
         # Nettoyage des éléments existants
         for x in reversed(range(self.gridLayout_2.count())):
             self.gridLayout_2.itemAt(x).widget().deleteLater()
@@ -94,7 +94,7 @@ class TilesListTab(QWidget):
         self.label.setText(self.tr(f"Nombre d'éléments: {len(series)}: Taille totale de {total_megabytes}Mo"))
 
 
-    def open_serie(self, serie):
+    def open_serie(self, serie) -> None:
         series_dialog = SerieDialog(self, serie)
 
         if series_dialog.exec():

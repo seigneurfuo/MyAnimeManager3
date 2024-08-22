@@ -21,7 +21,7 @@ from database import Series
 
 
 class PlanningTab(QWidget):
-    def __init__(self, parent):
+    def __init__(self, parent) -> None:
         super().__init__(parent)
 
         self.parent = parent
@@ -31,7 +31,7 @@ class PlanningTab(QWidget):
         self.init_ui()
         self.init_events()
 
-    def init_ui(self):
+    def init_ui(self) -> None:
         loadUi(os.path.join(os.path.dirname(__file__), "planning_tab.ui"), self)
 
         self.planning_calendar = CustomCalendar()
@@ -40,7 +40,7 @@ class PlanningTab(QWidget):
         self.planning_calendar.set_cells_background_color(QColor(115, 210, 22, 50))
         self.verticalLayout.insertWidget(1, self.planning_calendar)
 
-    def init_events(self):
+    def init_events(self) -> None:
         # Commun
         self.today_button.clicked.connect(self.when_today_button_clicked)
         self.planning_calendar.selectionChanged.connect(self.when_planning_calender_date_changed)
@@ -72,15 +72,15 @@ class PlanningTab(QWidget):
 
         self.lineEdit.textChanged.connect(self.when_search_text_changed)
 
-    def when_visible(self):
+    def when_visible(self) -> None:
         self.refresh_data()
 
-    def refresh_data(self):
+    def refresh_data(self) -> None:
         self.update_date_on_widgets()
         self.fill_data()
         self.lineEdit.clear()
 
-    def fill_data(self):
+    def fill_data(self) -> None:
         self.fill_calendar_dates()
         self.fill_watched_table()
         self.fill_to_watch_table()
@@ -91,22 +91,22 @@ class PlanningTab(QWidget):
         current_item = self.tableWidget_6.item(self.tableWidget_6.currentRow(), 0)
         return current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
 
-    def when_planning_calender_date_changed(self):
+    def when_planning_calender_date_changed(self) -> None:
         # Change aussi la date sur le selecteur de date
         self.date_edit.setDate(self.planning_calendar.selectedDate())
 
         # Rempli le tableau
         self.fill_watched_table()
 
-    def when_date_edit_date_changed(self):
+    def when_date_edit_date_changed(self) -> None:
         self.planning_calendar.setSelectedDate(self.date_edit.date())
         self.fill_watched_table()
 
-    def set_planning_date(self, date):
+    def set_planning_date(self, date) -> None:
         self.date_edit.setDate(QDate(date))
         self.when_date_edit_date_changed()
 
-    def fill_calendar_dates(self):
+    def fill_calendar_dates(self) -> None:
         month = self.planning_calendar.monthShown()
         year = self.planning_calendar.yearShown()
 
@@ -121,7 +121,7 @@ class PlanningTab(QWidget):
 
         self.planning_calendar.set_dates(dates)
 
-    def fill_watched_table(self):
+    def fill_watched_table(self) -> None:
         """
         Fonction qui rempli la liste des épisodes vus
         :return:
@@ -175,7 +175,7 @@ class PlanningTab(QWidget):
         self.tableWidget_7.horizontalHeader().setSectionResizeMode(self.tableWidget_7.columnCount() - 1,
                                                                    QHeaderView.ResizeMode.ResizeToContents)
 
-    def fill_to_watch_table(self):
+    def fill_to_watch_table(self) -> None:
         """
         Fonction qui rempli la liste des épisodes à voir
         :return:
@@ -269,37 +269,37 @@ class PlanningTab(QWidget):
         self.tableWidget_6.horizontalHeader().setSectionResizeMode(self.tableWidget_6.columnCount() - 1,
                                                                    QHeaderView.ResizeMode.ResizeToContents)
 
-    def when_today_button_clicked(self):
+    def when_today_button_clicked(self) -> None:
         """Fonction qui ramène le calendrier à la date actuelle"""
 
         self.update_date_on_widgets()
         self.fill_watched_table()
 
-    def update_date_on_widgets(self):
+    def update_date_on_widgets(self) -> None:
         current_date = QDate.currentDate()
         self.planning_calendar.setSelectedDate(current_date)
         self.date_edit.setDate(current_date)
 
-    def add_to_watched_list(self):
+    def add_to_watched_list(self) -> None:
         current_season_id = self.get_current_season_id()
         if current_season_id:
             self.add_episode_to_planning(current_season_id)
             self.fill_data()
 
-    def when_add_to_watched_list_button_clicked(self):
+    def when_add_to_watched_list_button_clicked(self) -> None:
         self.add_to_watched_list()
 
-    def when_to_watch_table_current_cell_double_clicked(self):
+    def when_to_watch_table_current_cell_double_clicked(self) -> None:
         self.add_to_watched_list()
 
-    def when_watched_table_current_cell_changed(self):
+    def when_watched_table_current_cell_changed(self) -> None:
         is_row_selected = (self.tableWidget_7.item(self.tableWidget_6.currentRow(), 0) != -1)
         self.change_date_button.setEnabled(is_row_selected)
         self.delete_button.setEnabled(is_row_selected)
         self.watched_table_show_view_history_button.setEnabled(is_row_selected)
         self.watched_table_go_to_serie_data_button.setEnabled(is_row_selected)
 
-    def add_episode_to_planning(self, season_id):
+    def add_episode_to_planning(self, season_id) -> None:
         calendar_date = self.planning_calendar.selectedDate().toPyDate()
         current_season = Seasons().get(season_id)
 
@@ -324,13 +324,13 @@ class PlanningTab(QWidget):
 
         current_season.save()
 
-    def when_checkBox_4_clicked(self):
+    def when_checkBox_4_clicked(self) -> None:
         self.fill_to_watch_table()
 
-    def when_to_watch_table_current_cell_changed(self):
+    def when_to_watch_table_current_cell_changed(self) -> None:
         self.update_current_season_id()
 
-    def update_current_season_id(self):
+    def update_current_season_id(self) -> None:
         current_season_id = self.get_current_season_id()
 
         if current_season_id:
@@ -357,26 +357,26 @@ class PlanningTab(QWidget):
 
     # TODO: Update watched table buttons
 
-    def when_open_folder_button_clicked(self):
+    def when_open_folder_button_clicked(self) -> None:
         current_season_id = self.get_current_season_id()
         if current_season_id:
             season = Seasons().get(current_season_id)
             if os.path.exists(season.serie.path):
                 QDesktopServices.openUrl(QUrl.fromLocalFile(season.serie.path))
 
-    def when_to_watch_table_show_view_history_button_clicked(self):
+    def when_to_watch_table_show_view_history_button_clicked(self) -> None:
         current_season_id = self.get_current_season_id()
         if current_season_id:
             display_view_history_dialog(self, current_season_id)
 
-    def when_watched_table_show_view_history_button_clicked(self):
+    def when_watched_table_show_view_history_button_clicked(self) -> None:
         current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)
         planning_id = current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
         planning = Planning.get(planning_id)
         if planning:
             display_view_history_dialog(self, planning.season_id)
 
-    def watched_table_go_to_serie_data_button_clicked(self):
+    def watched_table_go_to_serie_data_button_clicked(self) -> None:
         current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)
         planning_id = current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
         planning = Planning.get(planning_id)
@@ -385,7 +385,7 @@ class PlanningTab(QWidget):
             self.parent.tabWidget.setCurrentIndex(1)
             self.parent.full_list_tab.set_series_combobox_current_selection(planning.serie_id)
 
-    def when_delete_button_clicked(self):
+    def when_delete_button_clicked(self) -> None:
         current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)
         planning_id = current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
 
@@ -398,7 +398,7 @@ class PlanningTab(QWidget):
 
             # self.show_delete_watched_episode_window(planning_data)
 
-    def when_change_date_button_clicked(self):
+    def when_change_date_button_clicked(self) -> None:
         current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)
         planning_id = current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
 
@@ -425,7 +425,7 @@ class PlanningTab(QWidget):
                 self.fill_calendar_dates()
                 self.fill_watched_table()
 
-    def when_go_to_serie_data_button_clicked(self):
+    def when_go_to_serie_data_button_clicked(self) -> None:
         current_season_id = self.get_current_season_id()
         if current_season_id:
             season = Seasons().get(current_season_id)
@@ -433,9 +433,9 @@ class PlanningTab(QWidget):
             self.parent.tabWidget.setCurrentIndex(1)
             self.parent.full_list_tab.set_series_combobox_current_selection(season.serie.id)
 
-    def when_search_text_changed(self):
+    def when_search_text_changed(self) -> None:
         self.to_watch_table_text_filter = self.lineEdit.text()
         self.fill_to_watch_table()
 
-    def when_planning_current_page_changed(self):
+    def when_planning_current_page_changed(self) -> None:
         self.fill_calendar_dates()

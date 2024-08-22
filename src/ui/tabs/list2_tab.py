@@ -19,7 +19,7 @@ import core
 
 
 class List2(QWidget):
-    def __init__(self, parent):
+    def __init__(self, parent) -> None:
         super().__init__(parent)
 
         self.parent = parent
@@ -27,7 +27,7 @@ class List2(QWidget):
         self.init_ui()
         self.init_events()
 
-    def init_ui(self):
+    def init_ui(self) -> None:
         loadUi(os.path.join(os.path.dirname(__file__), "list2_tab.ui"), self)
 
         # Remplissage de l'état des saisons
@@ -39,34 +39,34 @@ class List2(QWidget):
         for seasons_type in SeasonsTypes().select():
             self.comboBox_2.addItem(seasons_type.name, userData=seasons_type.id)
 
-    def init_events(self):
+    def init_events(self) -> None:
         self.pushButton.clicked.connect(self.when_export_button_clicked)
         self.pushButton_2.clicked.connect(self.when_show_view_history_button_clicked)
         self.go_to_serie_data_button.clicked.connect(self.when_go_to_serie_data_button_clicked)
         self.tableWidget.currentCellChanged.connect(self.when_current_cell_changed)
         self.refresh_button.clicked.connect(self.refresh_data)
 
-    def when_visible(self):
+    def when_visible(self) -> None:
         self.refresh_data()
 
-    def refresh_data(self):
+    def refresh_data(self) -> None:
         self.fill_data()
 
         self.pushButton_2.setEnabled(False)
         self.go_to_serie_data_button.setEnabled(False)
 
-    def when_current_cell_changed(self):
+    def when_current_cell_changed(self) -> None:
         self.pushButton_2.setEnabled(True)
         self.go_to_serie_data_button.setEnabled(True)
 
-    def when_show_view_history_button_clicked(self):
+    def when_show_view_history_button_clicked(self) -> None:
         current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
         current_season_id = current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
 
         if current_season_id:
             display_view_history_dialog(self, current_season_id)
 
-    def when_go_to_serie_data_button_clicked(self):
+    def when_go_to_serie_data_button_clicked(self) -> None:
         current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
         current_season_id = current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
 
@@ -109,7 +109,7 @@ class List2(QWidget):
 
         return request
 
-    def fill_data(self):
+    def fill_data(self) -> None:
         self.tableWidget.clearContents()
 
         data = self.get_request_with_filters()
@@ -196,7 +196,7 @@ class List2(QWidget):
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
                                                                  QHeaderView.ResizeMode.ResizeToContents)
 
-    def when_export_button_clicked(self):
+    def when_export_button_clicked(self) -> None:
         filepath = utils.export_qtablewidget(self.tableWidget, self.parent.parent.profile.path, "liste")
         # Bouton pour ouvrir le dossier ?
         QMessageBox.information(self, self.tr("Export terminé"),

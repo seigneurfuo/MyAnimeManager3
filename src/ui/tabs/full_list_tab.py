@@ -20,7 +20,7 @@ import core
 
 
 class FullListTab(QWidget):
-    def __init__(self, parent):
+    def __init__(self, parent) -> None:
         super().__init__(parent)
 
         self.parent = parent
@@ -30,10 +30,10 @@ class FullListTab(QWidget):
 
         self.clear_season_data()
 
-    def init_ui(self):
+    def init_ui(self) -> None:
         loadUi(os.path.join(os.path.dirname(__file__), "full_list_tab.ui"), self)
 
-    def init_events(self):
+    def init_events(self) -> None:
         self.comboBox.currentIndexChanged.connect(self.when_series_list_current_index_changed)
         self.tableWidget.currentItemChanged.connect(self.when_seasons_list_current_index_changed)
         self.tableWidget.doubleClicked.connect(self.when_serie_double_clicked)
@@ -56,20 +56,20 @@ class FullListTab(QWidget):
         self.next_serie_button.clicked.connect(self.when_next_serie_button_clicked)
         # endregion
 
-    def when_visible(self):
+    def when_visible(self) -> None:
         self.refresh_data()
 
-    def refresh_data(self):
+    def refresh_data(self) -> None:
         self.fill_series_combobox()
 
-    def get_current_serie_id(self):
+    def get_current_serie_id(self) -> None:
         return self.comboBox.currentData()
 
-    def get_current_season_id(self):
+    def get_current_season_id(self) -> None:
         current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
         return current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
 
-    def fill_series_combobox(self):
+    def fill_series_combobox(self) -> None:
         self.comboBox.clear()
         completer_data = []
         series = Series().select().where(Series.is_deleted == 0).order_by(Series.sort_id)
@@ -85,11 +85,11 @@ class FullListTab(QWidget):
         completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
         self.comboBox.setCompleter(completer)
 
-    def set_series_combobox_current_selection(self, serie_id):
+    def set_series_combobox_current_selection(self, serie_id) -> None:
         index = self.comboBox.findData(serie_id)
         self.comboBox.setCurrentIndex(index)
 
-    def when_series_list_current_index_changed(self):
+    def when_series_list_current_index_changed(self) -> None:
         self.clear_serie_data()
 
         current_serie_id = self.get_current_serie_id()
@@ -106,7 +106,7 @@ class FullListTab(QWidget):
 
         self.clear_season_data()
 
-    def fill_serie_data(self, serie):
+    def fill_serie_data(self, serie) -> None:
         fields = [(self.label_3, serie.name)]
 
         for field, value in fields:
@@ -123,7 +123,7 @@ class FullListTab(QWidget):
         # On masque ou non le bouton pour parcourir le dossier de la série
         self.open_folder_button.setEnabled(os.path.exists(serie.path))
 
-    def clear_serie_data(self):
+    def clear_serie_data(self) -> None:
         fields = [self.label_3, self.label_2]  # , self.label_6]
 
         for field in fields:
@@ -132,7 +132,7 @@ class FullListTab(QWidget):
         # On masque pour parcourir le dossier de la série
         self.open_folder_button.setEnabled(False)
 
-    def when_add_serie_button_clicked(self):
+    def when_add_serie_button_clicked(self) -> None:
         serie = Series()
         series_dialog = SerieDialog(self, serie)
 
@@ -140,7 +140,7 @@ class FullListTab(QWidget):
             self.refresh_data()
             self.set_series_combobox_current_selection(serie.id)
 
-    def when_edit_serie_button_clicked(self):
+    def when_edit_serie_button_clicked(self) -> None:
         current_serie_id = self.get_current_serie_id()
         if current_serie_id:
             serie = Series().get(current_serie_id)
@@ -150,7 +150,7 @@ class FullListTab(QWidget):
                 self.refresh_data()
                 self.set_series_combobox_current_selection(serie.id)
 
-    def when_delete_serie_button_clicked(self):
+    def when_delete_serie_button_clicked(self) -> None:
         current_serie_id = self.get_current_serie_id()
         if current_serie_id:
             # ----- Supression des saisons -----
@@ -160,7 +160,7 @@ class FullListTab(QWidget):
 
             self.refresh_data()
 
-    def when_add_season_button_clicked(self):
+    def when_add_season_button_clicked(self) -> None:
         current_serie_id = self.get_current_serie_id()
         if current_serie_id:
             # ----- Supression des saisons -----
@@ -173,7 +173,7 @@ class FullListTab(QWidget):
                 self.refresh_data()
                 self.set_series_combobox_current_selection(serie.id)
 
-    def edit_season(self):
+    def edit_season(self) -> None:
         current_season_id = self.get_current_season_id()
         if current_season_id:
             season = Seasons().get(current_season_id)
@@ -183,13 +183,13 @@ class FullListTab(QWidget):
                 self.refresh_data()
                 self.set_series_combobox_current_selection(season.serie.id)
 
-    def when_edit_season_button_clicked(self):
+    def when_edit_season_button_clicked(self) -> None:
         self.edit_season()
 
-    def when_serie_double_clicked(self):
+    def when_serie_double_clicked(self) -> None:
         self.edit_season()
 
-    def when_delete_season_button_clicked(self):
+    def when_delete_season_button_clicked(self) -> None:
         current_serie_id = self.get_current_serie_id()
         current_season_id = self.get_current_season_id()
         if current_season_id:
@@ -202,7 +202,7 @@ class FullListTab(QWidget):
             self.fill_serie_data(serie)
             self.fill_season_list(serie)
 
-    def when_view_deleted_elements_button_clicked(self):
+    def when_view_deleted_elements_button_clicked(self) -> None:
         deleted_series = Series().select().where(Series.is_deleted == 1).order_by(Series.sort_id)
         deleted_seasons = Seasons().select().where(Seasons.is_deleted == 1).join(Series).order_by(Seasons.sort_id)
         dialog = DeletedElementsDialog(self, deleted_series, deleted_seasons)
@@ -224,12 +224,12 @@ class FullListTab(QWidget):
             if dialog.series_to_restore or dialog.seasons_to_restore:
                 self.refresh_data()
 
-    def when_view_history_button_clicked(self):
+    def when_view_history_button_clicked(self) -> None:
         current_season_id = self.get_current_season_id()
         if current_season_id:
             display_view_history_dialog(self, current_season_id)
 
-    def fill_season_list(self, serie):
+    def fill_season_list(self, serie) -> None:
         self.tableWidget.clearContents()
 
         # On masque la colonne si les amis sont désactivés
@@ -280,16 +280,16 @@ class FullListTab(QWidget):
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
                                                                  QHeaderView.ResizeMode.ResizeToContents)
 
-    def fill_season_data(self, season):
+    def fill_season_data(self, season) -> None:
         self.plainTextEdit.setPlainText(season.description)
         self.show_view_history_button.setEnabled(True)
 
-    def clear_season_data(self):
+    def clear_season_data(self) -> None:
         self.plainTextEdit.clear()
         self.show_view_history_button.setEnabled(False)
         self.plainTextEdit.clear()
 
-    def when_seasons_list_current_index_changed(self):
+    def when_seasons_list_current_index_changed(self) -> None:
         current_season_id = self.get_current_season_id()
         if current_season_id:
             season = Seasons().get(current_season_id)
@@ -298,22 +298,22 @@ class FullListTab(QWidget):
         else:
             self.clear_season_data()
 
-    def when_show_view_history_button_clicked(self):
+    def when_show_view_history_button_clicked(self) -> None:
         current_season_id = self.get_current_season_id()
         if current_season_id:
             display_view_history_dialog(self, current_season_id)
 
-    def when_open_folder_button_clicked(self):
+    def when_open_folder_button_clicked(self) -> None:
         current_serie_id = self.get_current_serie_id()
         if current_serie_id:
             serie = Series().get(current_serie_id)
             if os.path.exists(serie.path):
                 QDesktopServices.openUrl(QUrl.fromLocalFile(serie.path))
 
-    def when_previous_serie_button_clicked(self):
+    def when_previous_serie_button_clicked(self) -> None:
         if self.comboBox.currentIndex() > 0:
             self.comboBox.setCurrentIndex(self.comboBox.currentIndex() - 1)
 
-    def when_next_serie_button_clicked(self):
+    def when_next_serie_button_clicked(self) -> None:
         if self.comboBox.currentIndex() < self.comboBox.count() - 1:
             self.comboBox.setCurrentIndex(self.comboBox.currentIndex() + 1)

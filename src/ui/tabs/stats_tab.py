@@ -12,7 +12,7 @@ import utils
 
 
 class StatsTab(QWidget):
-    def __init__(self, parent):
+    def __init__(self, parent) -> None:
         super().__init__(parent)
 
         self.parent = parent
@@ -20,7 +20,7 @@ class StatsTab(QWidget):
         self.init_ui()
         self.init_events()
 
-    def init_ui(self):
+    def init_ui(self) -> None:
         loadUi(os.path.join(os.path.dirname(__file__), "stats_tab.ui"), self)
 
         # Remplissage la liste des extractions
@@ -35,21 +35,21 @@ class StatsTab(QWidget):
         for index, name in enumerate(queries_list):
             self.comboBox.addItem(name, userData=index)
 
-    def init_events(self):
+    def init_events(self) -> None:
         self.comboBox.currentIndexChanged.connect(self.when_stats_list_current_index_changed)
         self.export_button.clicked.connect(self.when_export_button_clicked)
 
-    def when_visible(self):
+    def when_visible(self) -> None:
         self.fill_data()
 
-    def when_stats_list_current_index_changed(self):
+    def when_stats_list_current_index_changed(self) -> None:
         self.fill_data()
 
-    def fill_data(self):
+    def fill_data(self) -> None:
         headers, data = self.execute_query()
         self.fill_stats_table(headers, data)
 
-    def fill_stats_table(self, headers, data):
+    def fill_stats_table(self, headers, data) -> None:
         row_count = len(data)
         self.label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
         self.stats_table.clearContents()
@@ -69,7 +69,7 @@ class StatsTab(QWidget):
         # self.stats_table.horizontalHeader().setSectionResizeMode(self.stats_table.columnCount() - 1,
         #                                                          QHeaderView.ResizeMode.ResizeToContents)
 
-    def when_export_button_clicked(self):
+    def when_export_button_clicked(self) -> None:
         query_name = self.comboBox.currentText()
 
         filepath = utils.export_qtablewidget(self.stats_table, self.parent.parent.profile.path, query_name)

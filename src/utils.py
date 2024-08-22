@@ -13,7 +13,7 @@ import core
 from database import Seasons, Series
 
 # Pour Nyelson ^._.^
-def get_paths():
+def get_paths() -> tuple[str, str]:
     PORTABLE_PATH = os.path.join(os.path.dirname(__file__))
     is_portable = os.path.isfile(os.path.join(PORTABLE_PATH, ".portable"))
     if is_portable:
@@ -26,7 +26,7 @@ def get_paths():
     return application_data_path, profiles_path
 
 
-def get_duration_list(episodes_count, duration, pause_every, pause_duration, start):
+def get_duration_list(episodes_count, duration, pause_every, pause_duration, start) -> list[str]:
     ret_list = []
     is_pause = True if pause_every > 0 and pause_duration > 0 else False
     pause_count = 0
@@ -57,7 +57,7 @@ def get_duration_list(episodes_count, duration, pause_every, pause_duration, sta
     return ret_list
 
 
-def export_qtablewidget(qtablewidget, app_data_folder, output_filename):
+def export_qtablewidget(qtablewidget, app_data_folder, output_filename) -> str:
     # TODO: case à cocher
 
     output_directory = os.path.join(app_data_folder, "exports")
@@ -91,7 +91,7 @@ def export_qtablewidget(qtablewidget, app_data_folder, output_filename):
     return output_filepath
 
 
-def get_collection_problems(parent):
+def get_collection_problems(parent) -> list[str]:
     seasons_passed = []
     messages = []
 
@@ -149,11 +149,11 @@ def get_collection_problems(parent):
     return messages
 
 
-def set_cursor_on_center(qwidget):
+def set_cursor_on_center(qwidget) -> None:
     QCursor().setPos(qwidget.mapToGlobal(qwidget.rect().center()))
 
 
-def tutorial(parent_widget):
+def tutorial(parent_widget) -> None:
     msg = """Bienvenue dans ce tutoriel !
 Ce tutoriel va brièvement présenter les différents écrans de l'application.
 """
@@ -171,7 +171,7 @@ Ce tutoriel va brièvement présenter les différents écrans de l'application.
         # btn.setStyleSheet("border: 0.5em solid red;")
 
 
-def anime_titles_autocomplete(object):
+def anime_titles_autocomplete(object) -> None:
     # Chargement des complétions automatiques depuis le fichier json
     json_filepath = os.path.join(core.APPLICATION_DATA_PATH, "anime-offline-database-minified.json")
     if not os.path.isfile(json_filepath):
@@ -190,7 +190,7 @@ def anime_titles_autocomplete(object):
     completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
     object.setCompleter(completer)
 
-def get_season_age(season):
+def get_season_age(season) -> str:
     year = str(season.year) if season.year and str(season.year) != "None" else ""
 
     # Calcul de l'age

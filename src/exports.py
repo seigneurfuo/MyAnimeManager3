@@ -9,7 +9,7 @@ import database
 
 
 # TODO: Asynchrone QThread
-def export_planning_to_csv(app_data_folder):
+def export_planning_to_csv(app_data_folder) -> str:
     # Création du dossier exports
     output_directory = os.path.join(app_data_folder, "exports")
     if not os.path.isdir(output_directory):

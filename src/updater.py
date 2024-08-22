@@ -7,7 +7,7 @@ from PyQt6.QtWidgets import QMessageBox
 from core import app_version, release_url
 
 
-def check_for_update():
+def check_for_update() -> None:
     print("Recherche de mises à jour ...")
     try:
         req = urllib.request.urlopen(release_url, timeout=5)

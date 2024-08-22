@@ -6,18 +6,18 @@ from database_manager import DATABASE_NAME
 
 
 class DBBackupsManager:
-    def __init__(self, parent):
+    def __init__(self, parent) -> None:
         self.parent = parent
         self.backups_limit = self.parent.parent.settings["backups_limit"]
         self.database_pattern = f"-{DATABASE_NAME}"
         self.backups_foldername = "db-backups"
         self.backups_folderpath = os.path.join(self.parent.parent.profile.path, self.backups_foldername)
 
-    def _create_backup_folder(self):
+    def _create_backup_folder(self) -> None:
         if not os.path.isdir(self.backups_folderpath):
             os.makedirs(self.backups_folderpath)
 
-    def get_dbs_list(self):
+    def get_dbs_list(self) -> list[str]:
         self._create_backup_folder()
 
         databases_backups = [
@@ -30,7 +30,7 @@ class DBBackupsManager:
 
         return sorted(databases_backups)
 
-    def _remove_old_backups(self):
+    def _remove_old_backups(self) -> None:
         backups = self.get_dbs_list()
         if len(backups) >= self.backups_limit:
             nb_backups_to_delete = len(backups) - self.backups_limit
@@ -40,7 +40,7 @@ class DBBackupsManager:
                 if os.path.isfile(backup):
                     os.remove(backup)
 
-    def backup_current_database(self, automatic=True):
+    def backup_current_database(self, automatic=True) -> None:
         self._create_backup_folder()
 
         date = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
@@ -54,7 +54,7 @@ class DBBackupsManager:
 
         self._remove_old_backups()
 
-    def restore_database_backup(self, filename):
+    def restore_database_backup(self, filename) -> None:
         if not os.path.isfile(filename):
             # TODO: Erreur ?
             pass
@@ -65,6 +65,6 @@ class DBBackupsManager:
             print("Base de donnée restaurée:", filename, "->", dst)
             shutil.copy(filename, dst)
 
-    def remove_database_backup(self, filepath):
+    def remove_database_backup(self, filepath) -> None:
         if os.path.exists(filepath):
             os.remove(filepath)

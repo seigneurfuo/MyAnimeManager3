@@ -8,7 +8,7 @@ from playhouse.sqlite_ext import JSONField
 DATABASE_NAME = "database.sqlite3"
 
 
-def load_or_create_database(profile):
+def load_or_create_database(profile) -> str:
     database_path = os.path.join(profile.path, DATABASE_NAME)
     print("Database path:", database_path)
 
@@ -27,7 +27,7 @@ def load_or_create_database(profile):
     return database_path
 
 
-def migrations():
+def migrations() -> None:
     # http://docs.peewee-orm.com/en/latest/peewee/playhouse.html#schema-migrations
 
     migrator = SqliteMigrator(database.database)
@@ -38,14 +38,14 @@ def migrations():
         migrate(migrator.add_column("Seasons", "custom_data", JSONField(default="")))
 
 
-def populate_tables():
+def populate_tables() -> None:
     populate_seasons_types()
 
     database.database.commit()
 
 
 # FIXME: Pas propre, trouver comment corrriger ça
-def populate_seasons_types():
+def populate_seasons_types() -> None:
     seasons_types = [
         {"sort_id": 1, "name": "Episodes"},
         {"sort_id": 2, "name": "Film"},

@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import QDialogButtonBox, QLabel, QLineEdit, QPushButton, QG
 
 
 class ProfileEditDialog(QDialog):
-    def __init__(self, parent, profile=None):
+    def __init__(self, parent, profile=None) -> None:
         super().__init__(parent=parent)
 
         self.profile = profile
@@ -20,7 +20,7 @@ class ProfileEditDialog(QDialog):
         if self.profile:
             self.fill_data()
 
-    def init_ui(self):
+    def init_ui(self) -> None:
         if self.profile:
             title = self.tr("Modification d'un profil")
         else:
@@ -51,17 +51,17 @@ class ProfileEditDialog(QDialog):
 
         self.setLayout(layout)
 
-    def init_events(self):
+    def init_events(self) -> None:
         self.profile_picture_browse_button.clicked.connect(self.when_profile_picture_browse_clicked)
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
 
-    def fill_data(self):
+    def fill_data(self) -> None:
         self.profile_name_entry.setText(self.profile.name)
         self.picture_filepath = self.profile.get_picture()
         self.update_profile_picture()
 
-    def when_profile_picture_browse_clicked(self):
+    def when_profile_picture_browse_clicked(self) -> None:
         picture_file = QFileDialog.getOpenFileName(self, self.tr("Choisir une image pour la photo de profil..."), "",
                                                    "Images (*.png *.jpg)")  # FIXME: Dossier du user
 
@@ -70,12 +70,12 @@ class ProfileEditDialog(QDialog):
             self.profile_picture_edited = True
             self.update_profile_picture()
 
-    def update_profile_picture(self):
+    def update_profile_picture(self) -> None:
         pixmap = QPixmap(self.picture_filepath)
         resized_pixmap = pixmap.scaled(self.profile_picture.height(), self.profile_picture.width())
         self.profile_picture.setPixmap(resized_pixmap)
 
-    def accept(self):
+    def accept(self) -> None:
         super().accept()
 
         profile_name = self.profile_name_entry.text().strip()
@@ -87,5 +87,5 @@ class ProfileEditDialog(QDialog):
 
         self.profile_name = profile_name
 
-    def reject(self):
+    def reject(self) -> None:
         super().reject()

@@ -10,7 +10,7 @@ from common import save_settings
 
 
 class SettingsDialog(QDialog):
-    def __init__(self, parent):
+    def __init__(self, parent) -> None:
         super().__init__(parent=parent)
         self.parent = parent
         self.settings = self.parent.parent.settings
@@ -18,7 +18,7 @@ class SettingsDialog(QDialog):
         self.init_ui()
         self.init_events()
 
-    def init_ui(self):
+    def init_ui(self) -> None:
         loadUi(os.path.join(os.path.dirname(__file__), "settings.ui"), self)
 
         self.setWindowTitle(self.tr("Options"))
@@ -30,10 +30,10 @@ class SettingsDialog(QDialog):
 
         self.fill_data()
 
-    def init_events(self):
+    def init_events(self) -> None:
         pass
 
-    def fill_data(self):
+    def fill_data(self) -> None:
         # Liste des thêmes
         # themes = get_themes_list()
 
@@ -65,7 +65,7 @@ class SettingsDialog(QDialog):
         # Affichage alternatif dans la liste des épisodes à voir (tri par épisodes dernièrement vus)
         self.checkBox_6.setChecked(self.settings["planning_to_watched_alternative_order"])
 
-    def save_settings_to_file(self):
+    def save_settings_to_file(self) -> None:
         # self.settings["application_stylesheet"] = self.comboBox.currentData()
         self.settings["fusion_theme"] = self.checkBox_3.isChecked()
         self.settings["backups_limit"] = self.spinBox.value()
@@ -81,9 +81,9 @@ class SettingsDialog(QDialog):
         # Sauvegarde des paramètres
         save_settings(self.settings)
 
-    def accept(self):
+    def accept(self) -> None:
         self.save_settings_to_file()
         super().accept()
 
-    def reject(self):
+    def reject(self) -> None:
         super().reject()

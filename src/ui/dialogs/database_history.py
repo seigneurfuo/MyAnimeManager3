@@ -10,7 +10,7 @@ from db_backups_manager import DBBackupsManager
 
 
 class DatabaseHistoryDialog(QDialog):
-    def __init__(self, parent):
+    def __init__(self, parent) -> None:
         super().__init__(parent=parent)
         self.parent = parent
 
@@ -21,19 +21,19 @@ class DatabaseHistoryDialog(QDialog):
         self.init_ui()
         self.init_events()
 
-    def init_ui(self):
+    def init_ui(self) -> None:
         loadUi(os.path.join(self.folderpath, "database_history.ui"), self)
         self.setWindowTitle("Sauvegardes")
         self.label_2.setText("Nombre de sauvegardes automatiques à conserver: {}".format(self.parent.parent.settings["backups_limit"]))
 
         self.fill_data()
 
-    def init_events(self):
+    def init_events(self) -> None:
         self.pushButton.clicked.connect(self.when_restore_button_clicked)
         self.pushButton_2.clicked.connect(self.when_create_button_clicked)
         self.pushButton_3.clicked.connect(self.when_remove_button_clicked)
 
-    def when_restore_button_clicked(self):
+    def when_restore_button_clicked(self) -> None:
         selected_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
         if selected_item:
             selected_backup = selected_item.data(Qt.ItemDataRole.UserRole) if selected_item else None
@@ -44,13 +44,13 @@ class DatabaseHistoryDialog(QDialog):
             self.selected_backup = selected_backup
             self.close()
 
-    def when_create_button_clicked(self):
+    def when_create_button_clicked(self) -> None:
         db_backups_manager = DBBackupsManager(self.parent)
         db_backups_manager.backup_current_database(automatic=False)
 
         self.fill_data()
 
-    def when_remove_button_clicked(self):
+    def when_remove_button_clicked(self) -> None:
         current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
         if current_item:
             database_backup_filename = current_item.data(Qt.ItemDataRole.UserRole)
@@ -61,7 +61,7 @@ class DatabaseHistoryDialog(QDialog):
 
             self.fill_data()
 
-    def fill_data(self):
+    def fill_data(self) -> None:
         db_backups_manager = DBBackupsManager(self.parent)
         db_backups = db_backups_manager.get_dbs_list()
 
@@ -100,5 +100,5 @@ class DatabaseHistoryDialog(QDialog):
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
                                                                  QHeaderView.ResizeMode.ResizeToContents)
 
-    def reject(self):
+    def reject(self) -> None:
         super().reject()

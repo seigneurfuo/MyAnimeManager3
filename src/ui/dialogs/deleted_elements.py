@@ -6,7 +6,7 @@ from PyQt6.uic import loadUi
 
 
 class DeletedElementsDialog(QDialog):
-    def __init__(self, parent, deleted_series, deleted_seasons):
+    def __init__(self, parent, deleted_series, deleted_seasons) -> None:
         super().__init__(parent=parent)
 
         self.deleted_seasons = deleted_seasons
@@ -18,7 +18,7 @@ class DeletedElementsDialog(QDialog):
         self.init_ui()
         self.init_events()
 
-    def init_ui(self):
+    def init_ui(self) -> None:
         loadUi(os.path.join(os.path.dirname(__file__), "deleted_elements.ui"), self)
 
         self.setWindowTitle(self.tr("Eléments supprimés"))
@@ -26,14 +26,14 @@ class DeletedElementsDialog(QDialog):
 
         self.fill_data()
 
-    def init_events(self):
+    def init_events(self) -> None:
         pass
 
-    def fill_data(self):
+    def fill_data(self) -> None:
         self.fill_seasons_table()
         self.fill_series_table()
 
-    def fill_seasons_table(self):
+    def fill_seasons_table(self) -> None:
         self.tableWidget_2.clearContents()
 
         row_count = len(self.deleted_seasons)
@@ -58,7 +58,7 @@ class DeletedElementsDialog(QDialog):
         self.tableWidget_2.horizontalHeader().setSectionResizeMode(self.tableWidget_2.columnCount() - 1,
                                                                  QHeaderView.ResizeMode.ResizeToContents)
 
-    def fill_series_table(self):
+    def fill_series_table(self) -> None:
         self.tableWidget_1.clearContents()
 
         row_count = len(self.deleted_series)
@@ -84,7 +84,7 @@ class DeletedElementsDialog(QDialog):
                                                                  QHeaderView.ResizeMode.ResizeToContents)
 
 
-    def get_checked_for_restoration(self):
+    def get_checked_for_restoration(self) -> None:
         # Séries
         for row_index in range(self.tableWidget_1.rowCount()):
             if self.tableWidget_1.cellWidget(row_index, 0).isChecked():
@@ -97,9 +97,9 @@ class DeletedElementsDialog(QDialog):
                 season_id = self.tableWidget_2.item(row_index, 1).data(Qt.ItemDataRole.UserRole)
                 self.seasons_to_restore.append(season_id)
 
-    def accept(self):
+    def accept(self) -> None:
         self.get_checked_for_restoration()
         super().accept()
 
-    def reject(self):
+    def reject(self) -> None:
         super().reject()

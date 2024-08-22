@@ -10,7 +10,7 @@ from utils import anime_titles_autocomplete
 
 
 class SeasonDialog(QDialog):
-    def __init__(self, parent, season, serie, seasons_types):
+    def __init__(self, parent, season, serie, seasons_types) -> None:
         super().__init__(parent=parent)
         self.parent = parent
 
@@ -23,7 +23,7 @@ class SeasonDialog(QDialog):
         self.init_ui()
         self.init_events()
 
-    def init_ui(self):
+    def init_ui(self) -> None:
         loadUi(os.path.join(os.path.dirname(__file__), "season.ui"), self)
 
         # On rempli par vide si il n'y à pas d'année définie
@@ -58,14 +58,14 @@ class SeasonDialog(QDialog):
             self.pushButton.setVisible(False)
             self.pushButton_2.setVisible(False)
 
-    def init_events(self):
+    def init_events(self) -> None:
         self.pushButton.clicked.connect(self.add_row)
         self.pushButton_2.clicked.connect(self.remove_row)
 
         if (self.parent.parent.parent.settings["anime_titles_autocomplete"]):
             self.lineEdit_2.cursorPositionChanged.connect(self.fill_autocomplete)
 
-    def fill_data(self):
+    def fill_data(self) -> None:
         self.spinBox.setValue(self.season.sort_id)
         self.lineEdit_2.setText(self.season.name)
 
@@ -94,7 +94,7 @@ class SeasonDialog(QDialog):
         if self.parent.parent.parent.settings["custom_data_enabled"]:
             self.fill_custom_data()
 
-    def fill_autocomplete(self):
+    def fill_autocomplete(self) -> None:
         # Complétion automatique
         if self.autocomplete_loaded:
             return
@@ -102,7 +102,7 @@ class SeasonDialog(QDialog):
         anime_titles_autocomplete(self.lineEdit_2)
         self.autocomplete_loaded = True
 
-    def fill_custom_data(self):
+    def fill_custom_data(self) -> None:
         self.tableWidget.clearContents()
 
         # Chargement des champs supplémentaires + Affichage dans le tableau
@@ -127,14 +127,14 @@ class SeasonDialog(QDialog):
         pretty_json = json.dumps(self.season.custom_data, indent=4)
         self.plainTextEdit.setPlainText(pretty_json)
 
-    def add_row(self):
+    def add_row(self) -> None:
         self.tableWidget.insertRow(0)
 
-    def remove_row(self):
+    def remove_row(self) -> None:
         current_row = self.tableWidget.currentRow()
         self.tableWidget.removeRow(current_row)
 
-    def save_data(self):
+    def save_data(self) -> None:
         # Si création
         if not self.season.id:
             self.season.serie = self.serie
@@ -158,7 +158,7 @@ class SeasonDialog(QDialog):
 
         self.season.save()
 
-    def save_custom_data(self):
+    def save_custom_data(self) -> None:
         data = {}
 
         for row_index in range(self.tableWidget.rowCount()):
@@ -176,9 +176,9 @@ class SeasonDialog(QDialog):
 
         self.season.custom_data = data
 
-    def accept(self):
+    def accept(self) -> None:
         self.save_data()
         super().accept()
 
-    def reject(self):
+    def reject(self) -> None:
         super().reject()

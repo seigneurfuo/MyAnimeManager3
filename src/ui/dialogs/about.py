@@ -26,16 +26,16 @@ class AboutDialog(QDialog):
         self.init_ui()
         self.init_events()
 
-    def init_ui(self):
+    def init_ui(self) -> None:
         loadUi(os.path.join(os.path.dirname(__file__), "about.ui"), self)
         self.setWindowTitle(self.tr("A propos"))
 
         self.fill_data()
 
-    def init_events(self):
+    def init_events(self) -> None:
         self.logo.mousePressEvent = self.when_logo_clicked
 
-    def fill_data(self):
+    def fill_data(self) -> None:
         fields = [(self.application_name, app_name),
                   (self.application_version, app_version),
                   (self.python_version, python_version()),
@@ -46,7 +46,7 @@ class AboutDialog(QDialog):
         for field, value in fields:
             field.setText(value)
 
-    def when_logo_clicked(self, event):
+    def when_logo_clicked(self, event) -> None:
         pixmap = os.path.join(os.path.dirname(__file__), self.icons_path, self.logo_data[self.logo_clicks])
         self.logo.setPixmap(QPixmap(pixmap).scaled(128, 128))
 

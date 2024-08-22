@@ -8,7 +8,7 @@ from database import Planning, Friends, Seasons, FriendsPlanning
 
 
 class ViewHistoryDialog(QDialog):
-    def __init__(self, parent, season, serie_episodes, season_episodes):
+    def __init__(self, parent, season, serie_episodes, season_episodes) -> None:
         super().__init__(parent=parent)
 
         self.parent = parent
@@ -19,7 +19,7 @@ class ViewHistoryDialog(QDialog):
         self.init_ui()
         self.init_events()
 
-    def init_ui(self):
+    def init_ui(self) -> None:
         loadUi(os.path.join(os.path.dirname(__file__), "view_history.ui"), self)
 
         self.setWindowTitle(self.tr("Historique de visionnage") + ": " + self.season.serie.name)
@@ -27,14 +27,14 @@ class ViewHistoryDialog(QDialog):
 
         self.fill_data()
 
-    def init_events(self):
+    def init_events(self) -> None:
         self.pushButton.clicked.connect(self.when_go_to_planning_date)
 
-    def fill_data(self):
+    def fill_data(self) -> None:
         self.fill_seasons_history()
         self.fill_series_history()
 
-    def fill_series_history(self):
+    def fill_series_history(self) -> None:
         self.serie_table.clearContents()
 
         # On masque la colonne si les amis sont désactivés
@@ -69,7 +69,7 @@ class ViewHistoryDialog(QDialog):
         self.serie_table.horizontalHeader().setSectionResizeMode(self.serie_table.columnCount() - 1,
                                                                  QHeaderView.ResizeMode.ResizeToContents)
 
-    def fill_seasons_history(self):
+    def fill_seasons_history(self) -> None:
         self.season_table.clearContents()
 
         row_count = len(self.season_episodes)
@@ -105,7 +105,7 @@ class ViewHistoryDialog(QDialog):
         self.season_table.horizontalHeader().setSectionResizeMode(self.season_table.columnCount() - 1,
                                                                   QHeaderView.ResizeMode.ResizeToContents)
 
-    def when_go_to_planning_date(self):
+    def when_go_to_planning_date(self) -> None:
         # Série et saison
         # TODO:
 
@@ -119,5 +119,5 @@ class ViewHistoryDialog(QDialog):
             self.parent.parent.planning_tab.set_planning_date(selected_date)
             self.close()
 
-    def reject(self):
+    def reject(self) -> None:
         super().reject()

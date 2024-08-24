@@ -33,7 +33,7 @@ class SerieDialog(QDialog):
         self.choose_path_button.clicked.connect(self.choose_path)
         self.choose_picture_button.clicked.connect(self.choose_picture)
 
-        if (self.parent.parent.parent.settings["anime_titles_autocomplete"]):
+        if self.parent.parent.parent.settings["anime_titles_autocomplete"]:
             self.lineEdit_2.cursorPositionChanged.connect(self.fill_autocomplete)
 
     def fill_data(self) -> None:

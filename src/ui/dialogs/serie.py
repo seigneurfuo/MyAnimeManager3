@@ -74,9 +74,18 @@ class SerieDialog(QDialog):
 
         self.serie.save()
 
+    def unload_completer(self) -> None:
+        if self.parent.parent.parent.settings["anime_titles_autocomplete"]:
+            self.lineEdit_2.setCompleter(None)
+
+
     def accept(self) -> None:
         self.save_data()
+        self.unload_completer()
+
         super().accept()
 
     def reject(self) -> None:
+        self.unload_completer()
+
         super().reject()

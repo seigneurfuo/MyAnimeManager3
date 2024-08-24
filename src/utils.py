@@ -170,15 +170,17 @@ Ce tutoriel va brièvement présenter les différents écrans de l'application.
         # btn = parent_widget.tab2
         # btn.setStyleSheet("border: 0.5em solid red;")
 
-
-def anime_titles_autocomplete(object) -> None:
+def load_animes_json_data():
     # Chargement des complétions automatiques depuis le fichier json
     json_filepath = os.path.join(core.APPLICATION_DATA_PATH, "anime-offline-database-minified.json")
     if not os.path.isfile(json_filepath):
         return
 
     with open(json_filepath, "r", encoding="utf-8") as json_file:
-        data = json.load(json_file)
+        return json.load(json_file)
+
+def anime_titles_autocomplete(object) -> None:
+    data = load_animes_json_data()
 
     # Animés
     animes_titles = [anime["title"] for anime in data["data"]]

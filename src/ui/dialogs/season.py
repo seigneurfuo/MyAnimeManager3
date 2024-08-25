@@ -112,9 +112,14 @@ class SeasonDialog(QDialog):
 
             anime_data = {}
             for anime in data["data"]:
-                if anime["title"].startswith(text):
-                    anime_data = anime
-                    break
+
+                titles = anime["synonyms"]
+                titles.append(anime["title"])
+
+                for title in titles:
+                    if title.startswith(text):
+                        anime_data = anime
+                        break
 
             del data
 

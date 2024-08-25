@@ -182,8 +182,10 @@ def load_animes_json_data():
 def anime_titles_autocomplete(object) -> None:
     data = load_animes_json_data()
 
-    # Animés
-    animes_titles = [anime["title"] for anime in data["data"]]
+    animes_titles = []
+    for anime in data["data"]:
+        animes_titles.append(anime["title"])
+        animes_titles.extend(anime["synonyms"])
 
     # Application des complétions automatique
     completer = QCompleter(animes_titles)

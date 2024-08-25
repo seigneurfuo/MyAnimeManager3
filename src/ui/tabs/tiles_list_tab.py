@@ -59,10 +59,15 @@ class TilesListTab(QWidget):
         total_bytes = 0
 
         series = Series().select().where(Series.is_deleted == 0).order_by(Series.sort_id)
-        if self.checkBox.isChecked():
-            series = series.where(Series.picture != None)
+        series_with_covers = self.checkBox.isChecked()
 
         for index, serie in enumerate(series):
+            cover_path = utils.load_cover(self.parent.parent.profile.path, "serie", serie.id)
+
+            # Si on n'a pas de cover et qu'on n'affiche que les séries avec cover, alors on l'ignore
+            if not cover_path and series_with_covers:
+                continue
+
             text = f"{serie.sort_id:03d} - {serie.name}"
 
             btn = QToolButton()
@@ -72,11 +77,9 @@ class TilesListTab(QWidget):
             btn.setToolTip(btn.text())
             btn.clicked.connect(lambda lamdba, serie=serie: self.open_serie(serie))
 
-            cover_path = utils.load_cover(self.parent.parent.profile.path, "serie", serie.id)
             if cover_path:
                 pixmap = QPixmap.fromImage(QImage(cover_path))
                 btn.setIcon(QIcon(pixmap))
-
 
             btn.setIconSize(QSize(int(btn.height() - 32), int(btn.width() - 32)))
             #btn.clicked.connect(lambda lamdba, profile=profile: self.set_profile(profile))

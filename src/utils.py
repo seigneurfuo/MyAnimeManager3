@@ -2,6 +2,7 @@
 import csv
 import json
 import os
+import shutil
 from pathlib import Path
 from datetime import datetime, timedelta
 
@@ -207,3 +208,24 @@ def get_season_age(season) -> str:
         age = ""
 
     return age
+
+def load_cover(profile_path, type_, id_) -> str | None:
+    if type_ == "serie":
+        cover_path = os.path.join(profile_path, "covers/series/", str(id_))
+        return cover_path if os.path.isfile(cover_path) else None
+
+def save_cover(source_path, profile_path, type_, id_) -> bool:
+    if type_ == "serie":
+
+        if not os.path.isfile(source_path):
+            return False
+
+        src = source_path
+        dst = os.path.join(profile_path, "covers/series/", str(id_))
+
+        folderpath = os.path.dirname(dst)
+        if not os.path.isdir(folderpath):
+            os.makedirs(folderpath)
+
+        shutil.copy(src, dst)
+        return True

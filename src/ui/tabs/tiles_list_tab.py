@@ -72,11 +72,11 @@ class TilesListTab(QWidget):
             btn.setToolTip(btn.text())
             btn.clicked.connect(lambda lamdba, serie=serie: self.open_serie(serie))
 
-            if serie.picture:
-                with io.BytesIO(serie.picture) as picture_data:
-                    total_bytes += picture_data.getbuffer().nbytes
-                    pixmap = QPixmap.fromImage(QImage.fromData(picture_data.read()))
+            cover_path = utils.load_cover(self.parent.parent.profile.path, "serie", serie.id)
+            if cover_path:
+                pixmap = QPixmap.fromImage(QImage(cover_path))
                 btn.setIcon(QIcon(pixmap))
+
 
             btn.setIconSize(QSize(int(btn.height() - 32), int(btn.width() - 32)))
             #btn.clicked.connect(lambda lamdba, profile=profile: self.set_profile(profile))

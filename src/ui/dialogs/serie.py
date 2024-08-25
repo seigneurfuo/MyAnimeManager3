@@ -4,8 +4,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QDialog, QFileDialog, QCompleter
 from PyQt6.uic import loadUi
 
-from common import file_to_blob
-from utils import anime_titles_autocomplete
+from utils import anime_titles_autocomplete, save_cover
 
 
 class SerieDialog(QDialog):
@@ -69,10 +68,11 @@ class SerieDialog(QDialog):
         self.serie.name = self.lineEdit_2.text().strip()
         self.serie.path = self.lineEdit_3.text()
 
-        if self.picture_filepath:
-            self.serie.picture = file_to_blob(self.picture_filepath)
-
         self.serie.save()
+
+        if self.picture_filepath:
+            save_cover(self.picture_filepath, self.parent.parent.parent.profile.path, "serie", self.serie.id)
+
 
     def unload_completer(self) -> None:
         if self.parent.parent.parent.settings["anime_titles_autocomplete"]:

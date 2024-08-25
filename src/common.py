@@ -72,12 +72,3 @@ def save_settings(data) -> None:
 
     with open(settings_filepath, "w") as settings_file:
         json.dump(data, settings_file)
-
-
-def file_to_blob(filename) -> bytes | None:
-    if os.path.isfile(filename):
-        with open(filename, "rb") as f:
-            bytesio = io.BytesIO(f.read())
-            return bytesio.getvalue()
-    else:
-        return None

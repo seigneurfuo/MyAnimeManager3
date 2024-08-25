@@ -74,7 +74,7 @@ class Application(QApplication):
             profiles_manage.exec()
 
             if profiles_manage.selected_profile == None:
-                exit(0)
+                sys.exit(0)
             else:
                 profile = profiles_manage.selected_profile
 

@@ -60,3 +60,5 @@ Si vous souhaitez utiliser le programme en version portable (sur une cléf USB p
 
 - Créer un fichier ```.portable``` dans le dossier ```_internal```
 
+Les données portables se trouvent dans le dossier ```_internal\.myanimemanager3\profiles```
+

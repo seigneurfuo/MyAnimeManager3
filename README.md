@@ -47,8 +47,16 @@ make fedora-install
 
 ### Windows
 
-Installer: git, nsis, Python3, PyInstaller (```pip install pyinstaller```)
-Ensuite: ```pip install -r requirements.txt```
+- Installer: git, nsis, Python3, PyInstaller (```pip install pyinstaller```)
+- Ensuite: ```pip install -r requirements.txt```
+- Depuis la racine du projet: ```.\packaging\windows\build.bat```
+- Le fichier généré se trouve dans: ```packaging/dist/MyAnimeManager```
 
-Depuis la racine du projet:
-.\packaging\windows\build.bat
+#### Version portable
+
+Par défaut, les profiles sont stockés dans le dossier suivant: ```Dossier Utilisateur\.myanimemanager\profiles```
+
+Si vous souhaitez utiliser le programme en version portable (sur une cléf USB par exemple):
+
+- Créer un fichier ```.portable``` dans le dossier ```_internal```
+

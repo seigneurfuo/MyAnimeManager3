@@ -37,6 +37,10 @@ def migrations() -> None:
     if not "custom_data" in seasons_fields:
         migrate(migrator.add_column("Seasons", "custom_data", JSONField(default="")))
 
+    # Migration 2: Supression du champ picture pour les images des séries
+    #cursor = database.database.execute_sql("ALTER TABLE Series DROP COLUMN picture;")
+    #cursor.fetchone()
+
 
 def populate_tables() -> None:
     populate_seasons_types()

@@ -26,7 +26,6 @@ class Series(BaseModel):
     name = TextField()
     description = TextField(null=True)
     path = TextField(null=True)
-    picture = BlobField(null=True)
     is_deleted = IntegerField(constraints=[SQL("DEFAULT 0")])
 
     class Meta:

@@ -1,13 +1,13 @@
 # TODO
 
 ## A faire
-- Ajouter un bouton de supression de l'image d'une série
-- Déplacer le code pour calcul l'age d'un animé dans utils
+- Ajouter un bouton de suppression de l'image d'une série
+- Remplacer les .where().where()... en mes combinant ? .where(xx and yyy)
+- Ajouter la possibilité d'avoir des images sur les saisons
+- ~~Déplacer le code pour calcul l'age d'un animé dans utils~~
 - Déplacer toutes les images dans une table à part ?
 - ~~Renommer le nom tiles pour l'onglet qui affiche les images~~
-- Remplacer les .where().where()... en mes combinant ? .where(xx and yyy)
-
-- Correction autocomplete des animés sous Windows en .exe
+- ~~Correction autocomplete des animés sous Windows en .exe~~
 - ~~Correction du choix image pour une série pas encore crée~~
 - ~~Correction du choix de la selection du dossier pour une série pas encore crée~~
 
@@ -29,7 +29,7 @@
 - Voir si dans la table Planning, on peut enlever la colonne serie comme on à déja la saison, on peut faire un season.serie pour récupérer les infos de la série.
 - Passer les isdeleted en boolean ?
 - Combiner des refresh et autre dans une fonction fait pour.
-- Dialogue About + Licences logiciels + icones
+- Dialogue About + Licences logiciels + icônes
 - Afficher le titre de la série quand le nom de la saison est vide ?
 - Liste des séries et saisons supprimées:
   - Restaurer / supprimer définitivement

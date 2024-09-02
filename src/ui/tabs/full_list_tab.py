@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 import io
 
-from PyQt6.QtGui import QDesktopServices, QPixmap, QIcon, QImage
-from PyQt6.QtWidgets import QWidget, QTableWidgetItem, QHeaderView, QCompleter
+from PyQt6.QtGui import QDesktopServices, QPixmap, QIcon
+from PyQt6.QtWidgets import QWidget, QTableWidgetItem, QHeaderView, QCompleter, QLabel
 from PyQt6.uic import loadUi
 from PyQt6.QtCore import Qt, QUrl
 
@@ -10,6 +10,7 @@ import os
 
 from core import SEASONS_STATES
 from common import display_view_history_dialog
+from utils import load_cover
 from database import Series, Seasons, SeasonsTypes, FriendsPlanning, Friends, Planning
 
 from ui.dialogs.serie import SerieDialog
@@ -112,6 +113,12 @@ class FullListTab(QWidget):
         for field, value in fields:
             field.setText(value)
 
+        # Image
+        cover_path = load_cover(self.parent.parent.profile.path, "serie", serie.id)
+        if cover_path:
+            pixmap = QPixmap(cover_path).scaled(self.label_4.maximumWidth(), self.label_4.maximumHeight(), Qt.AspectRatioMode.KeepAspectRatio)
+            self.label_4.setPixmap(pixmap)
+
         # On masque ou non le bouton pour parcourir le dossier de la série
         self.open_folder_button.setEnabled(os.path.exists(serie.path))
 
@@ -120,6 +127,8 @@ class FullListTab(QWidget):
 
         for field in fields:
             field.clear()
+
+        self.label_4.setPixmap(QPixmap())
 
         # On masque pour parcourir le dossier de la série
         self.open_folder_button.setEnabled(False)

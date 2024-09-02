@@ -5,7 +5,6 @@
 - Remplacer les .where().where()... en mes combinant ? .where(xx and yyy)
 - Ajouter la possibilité d'avoir des images sur les saisons
 - ~~Déplacer le code pour calcul l'age d'un animé dans utils~~
-- Déplacer toutes les images dans une table à part ?
 - ~~Renommer le nom tiles pour l'onglet qui affiche les images~~
 - ~~Correction autocomplete des animés sous Windows en .exe~~
 - ~~Correction du choix image pour une série pas encore crée~~

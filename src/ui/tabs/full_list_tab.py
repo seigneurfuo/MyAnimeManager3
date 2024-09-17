@@ -38,6 +38,7 @@ class FullListTab(QWidget):
         self.comboBox.currentIndexChanged.connect(self.when_series_list_current_index_changed)
         self.tableWidget.currentItemChanged.connect(self.when_seasons_list_current_index_changed)
         self.tableWidget.doubleClicked.connect(self.when_season_double_clicked)
+        self.tableWidget.clicked.connect(self.when_season_clicked)
 
         # region ----- Boutons -----
         self.add_serie_button.clicked.connect(self.when_add_serie_button_clicked)
@@ -113,11 +114,8 @@ class FullListTab(QWidget):
         for field, value in fields:
             field.setText(value)
 
-        # Image
         cover_path = load_cover(self.parent.parent.profile.path, "serie", serie.id)
-        if cover_path:
-            pixmap = QPixmap(cover_path).scaled(self.label_4.maximumWidth(), self.label_4.maximumHeight(), Qt.AspectRatioMode.KeepAspectRatio)
-            self.label_4.setPixmap(pixmap)
+        self.set_cover_image(cover_path)
 
         # On masque ou non le bouton pour parcourir le dossier de la série
         self.open_folder_button.setEnabled(os.path.exists(serie.path))
@@ -186,6 +184,19 @@ class FullListTab(QWidget):
 
     def when_edit_season_button_clicked(self) -> None:
         self.edit_season()
+
+    def when_season_clicked(self):
+            # On change l'image affichée
+        current_season_id = self.get_current_season_id()
+        if current_season_id:
+            season = Seasons().get(current_season_id)
+            cover_path = load_cover(self.parent.parent.profile.path, "season", season.id)
+            self.set_cover_image(cover_path)
+
+    def set_cover_image(self, cover_path) -> None:
+        if cover_path:
+            pixmap = QPixmap(cover_path).scaled(self.label_4.maximumWidth(), self.label_4.maximumHeight(), Qt.AspectRatioMode.KeepAspectRatio)
+            self.label_4.setPixmap(pixmap)
 
     def when_season_double_clicked(self) -> None:
         self.edit_season()

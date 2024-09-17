@@ -214,6 +214,10 @@ def load_cover(profile_path, type_, id_) -> str | None:
         cover_path = os.path.join(profile_path, "covers/series/", str(id_))
         return cover_path if os.path.isfile(cover_path) else None
 
+    if type_ == "season":
+        cover_path = os.path.join(profile_path, "covers/seasons/", str(id_))
+        return cover_path if os.path.isfile(cover_path) else None
+
 def save_cover(source_path, profile_path, type_, id_) -> bool:
     if type_ == "serie":
 

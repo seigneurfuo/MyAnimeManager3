@@ -26,7 +26,14 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="3" column="0">
+   <item row="5" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Nombre d'éléments</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
     <widget class="QScrollArea" name="scrollArea">
      <property name="widgetResizable">
       <bool>true</bool>
@@ -37,7 +44,7 @@
         <x>0</x>
         <y>0</y>
         <width>651</width>
-        <height>281</height>
+        <height>247</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
@@ -60,35 +67,14 @@
      </widget>
     </widget>
    </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="label">
+   <item row="3" column="0">
+    <widget class="QCheckBox" name="checkBox">
      <property name="text">
-      <string>Nombre d'éléments</string>
+      <string>Filtrer les éléments n'ayant pas d'image</string>
      </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QComboBox" name="comboBox_2">
-     <item>
-      <property name="text">
-       <string>64</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>128</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>256</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>512</string>
-      </property>
-     </item>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item row="0" column="0">
@@ -125,14 +111,42 @@
      </item>
     </widget>
    </item>
+   <item row="1" column="0">
+    <widget class="QComboBox" name="comboBox_2">
+     <item>
+      <property name="text">
+       <string>64</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>128</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>256</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>512</string>
+      </property>
+     </item>
+    </widget>
+   </item>
    <item row="2" column="0">
-    <widget class="QCheckBox" name="checkBox">
-     <property name="text">
-      <string>Afficher seulement les séries avec une image</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
+    <widget class="QComboBox" name="comboBox_3">
+     <item>
+      <property name="text">
+       <string>Saisons</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Séries</string>
+      </property>
+     </item>
     </widget>
    </item>
   </layout>

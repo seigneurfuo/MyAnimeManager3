@@ -37,7 +37,7 @@ class FullListTab(QWidget):
     def init_events(self) -> None:
         self.comboBox.currentIndexChanged.connect(self.when_series_list_current_index_changed)
         self.tableWidget.currentItemChanged.connect(self.when_seasons_list_current_index_changed)
-        self.tableWidget.doubleClicked.connect(self.when_serie_double_clicked)
+        self.tableWidget.doubleClicked.connect(self.when_season_double_clicked)
 
         # region ----- Boutons -----
         self.add_serie_button.clicked.connect(self.when_add_serie_button_clicked)
@@ -187,7 +187,7 @@ class FullListTab(QWidget):
     def when_edit_season_button_clicked(self) -> None:
         self.edit_season()
 
-    def when_serie_double_clicked(self) -> None:
+    def when_season_double_clicked(self) -> None:
         self.edit_season()
 
     def when_delete_season_button_clicked(self) -> None:

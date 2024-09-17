@@ -2,11 +2,11 @@ import json
 import os
 
 from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
+from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView, QFileDialog
 from PyQt6.uic import loadUi
 
 import core
-from utils import anime_titles_autocomplete, load_animes_json_data
+from utils import anime_titles_autocomplete, load_animes_json_data, save_cover
 
 
 class SeasonDialog(QDialog):
@@ -17,6 +17,7 @@ class SeasonDialog(QDialog):
             self.season = season
             self.serie = serie
             self.seasons_types = seasons_types
+            self.picture_filepath = None
 
             self.autocomplete_loaded = False
 
@@ -62,6 +63,7 @@ class SeasonDialog(QDialog):
             self.pushButton_3.clicked.connect(self.fill_data_with_autocomplete)
             self.pushButton.clicked.connect(self.add_row)
             self.pushButton_2.clicked.connect(self.remove_row)
+            self.choose_picture_button.clicked.connect(self.choose_picture)
 
             if self.parent.parent.parent.settings["anime_titles_autocomplete"]:
                 self.lineEdit_2.cursorPositionChanged.connect(self.fill_autocomplete)
@@ -174,6 +176,11 @@ class SeasonDialog(QDialog):
             current_row = self.tableWidget.currentRow()
             self.tableWidget.removeRow(current_row)
 
+        def choose_picture(self) -> None:
+            path = "" #self.season.path if self.season.path and os.path.isdir(self.season.path) else ""
+            self.picture_filepath, filter = QFileDialog.getOpenFileName(self, self.tr("Choisir une image"), path,
+                                                                        "Fichiers images (*.jpg *.jpeg *.png *.gif);;Tous les fichiers (*)")
+
         def save_data(self) -> None:
             # Si création
             if not self.season.id:
@@ -195,6 +202,9 @@ class SeasonDialog(QDialog):
             self.season.type = self.comboBox_2.currentData()
 
             self.save_custom_data()
+
+            if self.picture_filepath:
+                save_cover(self.picture_filepath, self.parent.parent.parent.profile.path, "season", self.season.id)
 
             self.season.save()
 

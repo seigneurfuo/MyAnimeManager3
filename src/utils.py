@@ -171,6 +171,7 @@ Ce tutoriel va brièvement présenter les différents écrans de l'application.
         # btn = parent_widget.tab2
         # btn.setStyleSheet("border: 0.5em solid red;")
 
+
 def load_animes_json_data():
     # Chargement des complétions automatiques depuis le fichier json
     json_filepath = os.path.join(core.APPLICATION_DATA_PATH, "anime-offline-database-minified.json")
@@ -179,6 +180,7 @@ def load_animes_json_data():
 
     with open(json_filepath, "r", encoding="utf-8") as json_file:
         return json.load(json_file)
+
 
 def anime_titles_autocomplete(object) -> None:
     data = load_animes_json_data()
@@ -195,6 +197,7 @@ def anime_titles_autocomplete(object) -> None:
     completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
     object.setCompleter(completer)
 
+
 def get_season_age(season) -> str:
     year = str(season.year) if season.year and str(season.year) != "None" else ""
 
@@ -209,6 +212,7 @@ def get_season_age(season) -> str:
 
     return age
 
+
 def load_cover(profile_path, type_, id_) -> str | None:
     if type_ == "serie":
         cover_path = os.path.join(profile_path, "covers/series/", str(id_))
@@ -218,15 +222,15 @@ def load_cover(profile_path, type_, id_) -> str | None:
         cover_path = os.path.join(profile_path, "covers/seasons/", str(id_))
         return cover_path if os.path.isfile(cover_path) else None
 
+
 def save_cover(source_path, profile_path, type_, id_) -> bool:
-    if type_ == "serie":
+    if not os.path.isfile(source_path):
+        return False
 
-        if not os.path.isfile(source_path):
-            return False
+    src = source_path
+    dst = os.path.join(profile_path, f"covers/{type_}s/", str(id_))
 
-        src = source_path
-        dst = os.path.join(profile_path, "covers/series/", str(id_))
-
+    if type_ in ("serie", "season"):
         folderpath = os.path.dirname(dst)
         if not os.path.isdir(folderpath):
             os.makedirs(folderpath)

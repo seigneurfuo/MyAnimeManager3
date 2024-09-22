@@ -173,7 +173,7 @@ class List2(QWidget):
             self.tableWidget.setCellWidget(row_index, len(columns) + 2, rating)
 
             # Image présente ?
-            cover_path = utils.load_cover(self.parent.parent.profile.path, "serie", season.serie.id)
+            cover_path = utils.load_cover(self.parent.parent.profile.path, "season", season.id)
             picture_present_text = self.tr("Oui") if cover_path and os.path.isfile(cover_path) else self.tr("Non")
             picture_present = QTableWidgetItem(picture_present_text)
             self.tableWidget.setItem(row_index, len(columns) + 3, picture_present)

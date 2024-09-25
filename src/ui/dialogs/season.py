@@ -177,7 +177,7 @@ class SeasonDialog(QDialog):
             self.tableWidget.removeRow(current_row)
 
         def choose_picture(self) -> None:
-            path = "" #self.season.path if self.season.path and os.path.isdir(self.season.path) else ""
+            path = self.season.serie.path if self.season.serie.path and os.path.isdir(self.season.serie.path) else ""
             self.picture_filepath, filter = QFileDialog.getOpenFileName(self, self.tr("Choisir une image"), path,
                                                                         "Fichiers images (*.jpg *.jpeg *.png *.gif);;Tous les fichiers (*)")
 

@@ -74,7 +74,7 @@ class TilesListTab(QWidget):
         else:
             data = Series().select().where(Series.is_deleted == 0).order_by(Series.sort_id)
 
-        for index, row in enumerate(data):
+        for row in data:
             cover_path = utils.load_cover(self.parent.parent.profile.path, current_type_name, row.id)
 
             # Si on n'a pas de cover et qu'on n'affiche que les séries avec cover, alors on l'ignore
@@ -102,7 +102,7 @@ class TilesListTab(QWidget):
             #btn.clicked.connect(lambda lamdba, profile=profile: self.set_profile(profile))
 
             # Ligne suivante si maximal attends
-            if index != 0 and index % self.max_btn_on_row == 0:
+            if col_index != 0 and col_index % self.max_btn_on_row == 0:
                 col_index = 0
                 row_index += 1
 

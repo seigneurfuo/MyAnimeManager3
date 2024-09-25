@@ -49,6 +49,10 @@ class Application(QApplication):
             if updater.check_for_appliction_update():
                 self.exit()
 
+        # Recherche de MAj pour l'autocomplete
+        if self.settings["anime_titles_autocomplete"]:
+            updater.check_for_autocomplete_data_update()
+
         self.profile = self.load_profile(args.profile_name)
         self.database_path = self.load_database()
 

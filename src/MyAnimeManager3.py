@@ -39,13 +39,15 @@ class Application(QApplication):
 
         self.settings = load_settings()
 
-        if core.app_version != "DEV" and self.settings['updates_check']:
-            updater.check_for_update()
-
         # Définition du mode sombre (j'ai décidé pour le moment de ne plus supporter les thêmes tiers
         if self.settings["fusion_theme"]:
             self.setStyle("fusion")
         # set_theme(self, self.settings["application_stylesheet"])
+
+        # Recherche de MAJ
+        if core.app_version != "DEV" and self.settings["updates_check"]:
+            if updater.check_for_appliction_update():
+                self.exit()
 
         self.profile = self.load_profile(args.profile_name)
         self.database_path = self.load_database()

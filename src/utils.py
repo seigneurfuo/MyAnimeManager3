@@ -182,6 +182,16 @@ def load_animes_json_data():
         return json.load(json_file)
 
 
+def anime_json_data_version():
+    json_data = load_animes_json_data()
+    if json_data:
+        # Récupération de la version locale
+        version = json_data["lastUpdate"]
+        del json_data
+        return version
+
+    return None
+
 def anime_titles_autocomplete(object) -> None:
     data = load_animes_json_data()
 

@@ -9,6 +9,7 @@ from PyQt6.uic import loadUi
 from peewee import __version__ as peewee_version
 
 from core import app_name, app_version
+from utils import anime_json_data_version
 
 
 class AboutDialog(QDialog):
@@ -36,12 +37,20 @@ class AboutDialog(QDialog):
         self.logo.mousePressEvent = self.when_logo_clicked
 
     def fill_data(self) -> None:
+        if self.parent.parent.settings["anime_titles_autocomplete"]:
+            anime_offline_database_version = anime_json_data_version()
+
+        else:
+            anime_offline_database_version = self.tr("Inutilisé")
+
         fields = [(self.application_name, app_name),
                   (self.application_version, app_version),
                   (self.python_version, python_version()),
                   (self.qt_version, QT_VERSION_STR),
                   (self.pyqt_version, PYQT_VERSION_STR),
-                  (self.peewee_version, peewee_version)]
+                  (self.peewee_version, peewee_version),
+                  (self.anime_offline_database_version, anime_offline_database_version)
+              ]
 
         for field, value in fields:
             field.setText(value)

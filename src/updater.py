@@ -8,7 +8,7 @@ from datetime import datetime
 from PyQt6.QtWidgets import QMessageBox
 
 from core import app_version, APPLICATION_DATA_PATH, release_url, anime_offline_database_release_url, anime_offline_database_json_url
-from utils import load_animes_json_data
+from utils import load_animes_json_data, anime_json_data_version
 
 def _request_data(url):
     req = urllib.request.urlopen(url, timeout=5)
@@ -67,27 +67,29 @@ def check_for_appliction_update() -> bool:
 
 def check_for_autocomplete_data_update() -> bool:
     print("Recherche de mises à jour pour les complétions automatiques ...")
+    try:
+        anime_data_version = anime_json_data_version()
+        if anime_data_version:
+            # Récupération de la version locale
+            local_file_update_date = datetime.strptime(anime_data_version, "%Y-%m-%d")
+            local_version = local_file_update_date.strftime("%Y-%V")
 
-    json_data = load_animes_json_data()
-    if json_data:
-        # Récupération de la version locale
-        local_file_update_date = datetime.strptime(json_data["lastUpdate"], "%Y-%m-%d")
-        local_version = local_file_update_date.strftime("%Y-%V")
+            # Récupération de la version en ligne
+            json_data = _request_json(anime_offline_database_release_url)
+            req = urllib.request.urlopen(release_url, timeout=5)
 
-        # Récupération de la version en ligne
-        json_data = _request_json(anime_offline_database_release_url)
-        req = urllib.request.urlopen(release_url, timeout=5)
+            remote_version = json_data["tag_name"]
 
-        remote_version = json_data["tag_name"]
+        # Si on n'a pas le fichier ou bien qu'on à une MAJ
+        if not anime_data_version or local_version < remote_version:
+            print("   Mise à jour du fichier trouvée ! Récupération de la nouvelle version ...")
 
-    # Si on n'a pas le fichier ou bien qu'on à une MAJ
-    if not json_data or local_version < remote_version:
-        print(f"   Locale: {local_version}, Distante: {remote_version}")
-        print("   Mise à jour du fichier trouvée ! Récupération de la nouvelle version ...")
+            json_filepath = os.path.join(APPLICATION_DATA_PATH, "anime-offline-database-minified.json")
+            _download_file(anime_offline_database_json_url, json_filepath)
+            return True
 
-        json_filepath = os.path.join(APPLICATION_DATA_PATH, "anime-offline-database-minified.json")
-        _download_file(anime_offline_database_json_url, json_filepath)
-        return True
+        return False
 
-    return False
+    except:
+            return False
 

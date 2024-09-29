@@ -9,7 +9,7 @@ import database
 
 
 # TODO: Asynchrone QThread
-def export_planning_to_csv(app_data_folder) -> str:
+def export_planning_to_csv(app_data_folder, friends_enabled) -> str:
     # Création du dossier exports
     output_directory = os.path.join(app_data_folder, "exports")
     if not os.path.isdir(output_directory):
@@ -22,11 +22,24 @@ def export_planning_to_csv(app_data_folder) -> str:
         csv_writer = csv.writer(csv_file, delimiter=";")
 
         # Entetes
-        csv_writer.writerow(["Date", "(Saga / Série)", "Saison", "Episode"])
+        headers = ["Date", "(Saga / Série)", "Saison", "Episode"]
+        if friends_enabled:
+            headers.append("Amis")
+
+        csv_writer.writerow(headers)
 
         rows = database.Planning.select().order_by(database.Planning.date, database.Planning.id)
+
+        # TODO: Export des amis dans la liste du planning si activé
+
         for row in rows:
-            csv_writer.writerow([row.date, row.serie.name, row.season.name, row.episode])
+            data = [row.date, row.serie.name, row.season.name, row.episode]
+
+            if friends_enabled:
+                friends = [friend_planning.friend.name for friend_planning in row.friends]
+                data.append(", ".join(friends))
+
+            csv_writer.writerow(data)
 
         print(f"Fichier: {output_filepath}")
 

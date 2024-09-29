@@ -136,7 +136,7 @@ class MainWindow(QMainWindow):
         QDesktopServices.openUrl(QUrl.fromLocalFile(self.parent.profile.path))
 
     def when_menu_action_planning_export_clicked(self) -> None:
-        filepath = export_planning_to_csv(self.parent.profile.path)
+        filepath = export_planning_to_csv(self.parent.profile.path, self.parent.settings["friends_enabled"])
 
         # Bouton pour ouvrir le dossier ?
         QMessageBox.information(self, self.tr("Export terminé"),

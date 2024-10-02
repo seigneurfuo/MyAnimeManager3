@@ -7,6 +7,7 @@ from PyQt6.uic import loadUi
 from PyQt6.QtCore import Qt, QUrl
 
 import os
+import time
 
 from core import SEASONS_STATES
 from common import display_view_history_dialog
@@ -19,7 +20,7 @@ from ui.dialogs.deleted_elements import DeletedElementsDialog
 
 import core
 
-
+import inspect
 class FullListTab(QWidget):
     def __init__(self, parent) -> None:
         super().__init__(parent)
@@ -59,19 +60,28 @@ class FullListTab(QWidget):
         # endregion
 
     def when_visible(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         self.refresh_data()
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def refresh_data(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         self.fill_series_combobox()
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def get_current_serie_id(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         return self.comboBox.currentData()
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def get_current_season_id(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
         return current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def fill_series_combobox(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         self.comboBox.clear()
         completer_data = []
         series = Series().select().where(Series.is_deleted == 0).order_by(Series.sort_id)
@@ -86,12 +96,16 @@ class FullListTab(QWidget):
         completer.setFilterMode(Qt.MatchFlag.MatchContains)
         completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
         self.comboBox.setCompleter(completer)
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def set_series_combobox_current_selection(self, serie_id) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         index = self.comboBox.findData(serie_id)
         self.comboBox.setCurrentIndex(index)
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def when_series_list_current_index_changed(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         self.clear_serie_data()
 
         current_serie_id = self.get_current_serie_id()
@@ -107,8 +121,10 @@ class FullListTab(QWidget):
             self.tableWidget.setRowCount(0)
 
         self.clear_season_data()
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def fill_serie_data(self, serie) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         fields = [(self.label_3, serie.name)]
 
         for field, value in fields:
@@ -119,8 +135,10 @@ class FullListTab(QWidget):
 
         # On masque ou non le bouton pour parcourir le dossier de la série
         self.open_folder_button.setEnabled(os.path.exists(serie.path))
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def clear_serie_data(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         fields = [self.label_3, self.label_2]  # , self.label_6]
 
         for field in fields:
@@ -130,16 +148,20 @@ class FullListTab(QWidget):
 
         # On masque pour parcourir le dossier de la série
         self.open_folder_button.setEnabled(False)
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def when_add_serie_button_clicked(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         serie = Series()
         series_dialog = SerieDialog(self, serie)
 
         if series_dialog.exec():
             self.refresh_data()
             self.set_series_combobox_current_selection(serie.id)
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def when_edit_serie_button_clicked(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         current_serie_id = self.get_current_serie_id()
         if current_serie_id:
             serie = Series().get(current_serie_id)
@@ -148,8 +170,10 @@ class FullListTab(QWidget):
             if series_dialog.exec():
                 self.refresh_data()
                 self.set_series_combobox_current_selection(serie.id)
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def when_delete_serie_button_clicked(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         current_serie_id = self.get_current_serie_id()
         if current_serie_id:
             # ----- Supression des saisons -----
@@ -158,8 +182,10 @@ class FullListTab(QWidget):
             serie.save()
 
             self.refresh_data()
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def when_add_season_button_clicked(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         current_serie_id = self.get_current_serie_id()
         if current_serie_id:
             # ----- Supression des saisons -----
@@ -171,8 +197,10 @@ class FullListTab(QWidget):
             if season_dialog.exec():
                 self.refresh_data()
                 self.set_series_combobox_current_selection(serie.id)
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def edit_season(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         current_season_id = self.get_current_season_id()
         if current_season_id:
             season = Seasons().get(current_season_id)
@@ -181,27 +209,37 @@ class FullListTab(QWidget):
             if season_dialog.exec():
                 self.refresh_data()
                 self.set_series_combobox_current_selection(season.serie.id)
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def when_edit_season_button_clicked(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         self.edit_season()
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def when_season_clicked(self):
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
             # On change l'image affichée
         current_season_id = self.get_current_season_id()
         if current_season_id:
             season = Seasons().get(current_season_id)
             cover_path = load_cover(self.parent.parent.profile.path, "season", season.id)
             self.set_cover_image(cover_path)
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def set_cover_image(self, cover_path) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         if cover_path:
             pixmap = QPixmap(cover_path).scaled(self.label_4.maximumWidth(), self.label_4.maximumHeight(), Qt.AspectRatioMode.KeepAspectRatio)
             self.label_4.setPixmap(pixmap)
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def when_season_double_clicked(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         self.edit_season()
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def when_delete_season_button_clicked(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         current_serie_id = self.get_current_serie_id()
         current_season_id = self.get_current_season_id()
         if current_season_id:
@@ -213,8 +251,10 @@ class FullListTab(QWidget):
 
             self.fill_serie_data(serie)
             self.fill_season_list(serie)
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def when_view_deleted_elements_button_clicked(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         deleted_series = Series().select().where(Series.is_deleted == 1).order_by(Series.sort_id)
         deleted_seasons = Seasons().select().where(Seasons.is_deleted == 1).join(Series).order_by(Seasons.sort_id)
         dialog = DeletedElementsDialog(self, deleted_series, deleted_seasons)
@@ -235,13 +275,17 @@ class FullListTab(QWidget):
 
             if dialog.series_to_restore or dialog.seasons_to_restore:
                 self.refresh_data()
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def when_view_history_button_clicked(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         current_season_id = self.get_current_season_id()
         if current_season_id:
             display_view_history_dialog(self, current_season_id)
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def fill_season_list(self, serie) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         self.tableWidget.clearContents()
 
         # On masque la colonne si les amis sont désactivés
@@ -291,17 +335,23 @@ class FullListTab(QWidget):
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
                                                                  QHeaderView.ResizeMode.ResizeToContents)
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def fill_season_data(self, season) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         self.plainTextEdit.setPlainText(season.description)
         self.show_view_history_button.setEnabled(True)
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def clear_season_data(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         self.plainTextEdit.clear()
         self.show_view_history_button.setEnabled(False)
         self.plainTextEdit.clear()
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def when_seasons_list_current_index_changed(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         current_season_id = self.get_current_season_id()
         if current_season_id:
             season = Seasons().get(current_season_id)
@@ -310,22 +360,32 @@ class FullListTab(QWidget):
         else:
             self.clear_season_data()
 
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
+
     def when_show_view_history_button_clicked(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         current_season_id = self.get_current_season_id()
         if current_season_id:
             display_view_history_dialog(self, current_season_id)
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def when_open_folder_button_clicked(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         current_serie_id = self.get_current_serie_id()
         if current_serie_id:
             serie = Series().get(current_serie_id)
             if os.path.exists(serie.path):
                 QDesktopServices.openUrl(QUrl.fromLocalFile(serie.path))
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def when_previous_serie_button_clicked(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         if self.comboBox.currentIndex() > 0:
             self.comboBox.setCurrentIndex(self.comboBox.currentIndex() - 1)
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")
 
     def when_next_serie_button_clicked(self) -> None:
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> start")
         if self.comboBox.currentIndex() < self.comboBox.count() - 1:
             self.comboBox.setCurrentIndex(self.comboBox.currentIndex() + 1)
+        print(f"[{time.time()}] {inspect.currentframe().f_code.co_name} −> stop\n")

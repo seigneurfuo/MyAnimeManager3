@@ -2,6 +2,7 @@ import os
 import urllib.request
 import json
 import webbrowser
+import time
 
 from datetime import datetime
 
@@ -9,6 +10,8 @@ from PyQt6.QtWidgets import QMessageBox
 
 from core import app_version, APPLICATION_DATA_PATH, release_url, anime_offline_database_release_url, anime_offline_database_json_url
 from utils import load_animes_json_data, anime_json_data_version
+
+from ui.download_dialog import DownloadDialog
 
 def _request_data(url):
     req = urllib.request.urlopen(url, timeout=5)
@@ -37,7 +40,7 @@ def _request_json(url):
 
     return json_data
 
-def check_for_appliction_update() -> bool:
+def check_for_application_update() -> bool:
     print("Recherche de mises à jour ...")
     try:
         json_data = _request_json(release_url)
@@ -78,18 +81,22 @@ def check_for_autocomplete_data_update() -> bool:
             json_data = _request_json(anime_offline_database_release_url)
             req = urllib.request.urlopen(release_url, timeout=5)
 
-            remote_version = json_data["tag_name"]
+            remote_version = json_data["author"]["date"]
+            print(remote_version)
 
         # Si on n'a pas le fichier ou bien qu'on à une MAJ
         if not anime_data_version or local_version < remote_version:
             print("   Mise à jour du fichier trouvée ! Récupération de la nouvelle version ...")
 
             json_filepath = os.path.join(APPLICATION_DATA_PATH, "anime-offline-database-minified.json")
-            _download_file(anime_offline_database_json_url, json_filepath)
+
+            window = DownloadDialog(anime_offline_database_json_url, json_filepath)
+            window.exec()
+
             return True
 
         return False
 
     except:
-            return False
+        return False
 

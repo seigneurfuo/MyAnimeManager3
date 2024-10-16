@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView, QFileDialog
 from PyQt6.uic import loadUi
 
 import core
-from utils import anime_titles_autocomplete, load_animes_json_data, save_cover
+from utils import anime_titles_autocomplete, load_animes_json_data, save_cover, download_picture
 
 
 class SeasonDialog(QDialog):
@@ -20,6 +20,7 @@ class SeasonDialog(QDialog):
             self.picture_filepath = None
 
             self.autocomplete_loaded = False
+            self.picture_url = None
 
             self.init_ui()
             self.init_events()
@@ -67,6 +68,7 @@ class SeasonDialog(QDialog):
 
             if self.parent.parent.parent.settings["anime_titles_autocomplete"]:
                 self.lineEdit_2.cursorPositionChanged.connect(self.fill_autocomplete)
+                self.pushButton_4.clicked.connect(self.download_image)
 
         def fill_data(self) -> None:
             self.spinBox.setValue(self.season.sort_id)
@@ -144,6 +146,11 @@ class SeasonDialog(QDialog):
                 airing = anime_data["animeSeason"] == "ONGOING"
                 self.checkBox_2.setChecked(airing)
 
+            # Image
+            if "picture" in anime_data.keys() and anime_data["picture"].startswith("https://"):
+                self.picture_url = anime_data["picture"]
+                self.pushButton_4.setEnabled(True)
+
         def fill_custom_data(self) -> None:
             self.tableWidget.clearContents()
 
@@ -180,6 +187,9 @@ class SeasonDialog(QDialog):
             path = self.season.serie.path if self.season.serie.path and os.path.isdir(self.season.serie.path) else ""
             self.picture_filepath, filter = QFileDialog.getOpenFileName(self, self.tr("Choisir une image"), path,
                                                                         "Fichiers images (*.jpg *.jpeg *.png *.gif);;Tous les fichiers (*)")
+
+        def download_image(self):
+            download_picture(self.picture_url, self.parent.parent.parent.profile.path, "season", self.season.id)
 
         def save_data(self) -> None:
             # Si création
@@ -238,5 +248,7 @@ class SeasonDialog(QDialog):
 
         def reject(self) -> None:
             self.unload_completer()
+
+            # TODO: Si on à un fichier téléchargé, on essayer de le virer car on annule
 
             super().reject()

@@ -3,6 +3,9 @@ import csv
 import json
 import os
 import shutil
+import urllib.request
+import tempfile
+
 from pathlib import Path
 from datetime import datetime, timedelta
 
@@ -247,3 +250,15 @@ def save_cover(source_path, profile_path, type_, id_) -> bool:
 
         shutil.copy(src, dst)
         return True
+
+
+def download_picture(url, profile_path, type_, id_):
+    # On "spoof" le user agent sinon on peut tomber sur des erreurs 403 !
+    request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36"})
+    with urllib.request.urlopen(request) as http_response, tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+        tmp_file.write(http_response.read())
+
+    save_cover(tmp_file.name, profile_path, type_, id_)
+
+    if os.path.exists(tmp_file.name):
+        os.remove(tmp_file.name)

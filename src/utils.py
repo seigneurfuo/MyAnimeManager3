@@ -236,29 +236,27 @@ def load_cover(profile_path, type_, id_) -> str | None:
         return cover_path if os.path.isfile(cover_path) else None
 
 
-def save_cover(source_path, profile_path, type_, id_) -> bool:
+def save_cover(source_path, profile_path, type_, id_) -> None | str:
+    print(source_path, os.path.isfile(source_path))
     if not os.path.isfile(source_path):
         return False
 
     src = source_path
     dst = os.path.join(profile_path, f"covers/{type_}s/", str(id_))
-
+    print(src, "->", dst)
     if type_ in ("serie", "season"):
         folderpath = os.path.dirname(dst)
         if not os.path.isdir(folderpath):
             os.makedirs(folderpath)
 
         shutil.copy(src, dst)
-        return True
+        return dst
 
 
-def download_picture(url, profile_path, type_, id_):
+def download_picture(url, profile_path, type_, id_) -> None | str:
     # On "spoof" le user agent sinon on peut tomber sur des erreurs 403 !
     request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36"})
     with urllib.request.urlopen(request) as http_response, tempfile.NamedTemporaryFile(delete=False) as tmp_file:
         tmp_file.write(http_response.read())
 
-    save_cover(tmp_file.name, profile_path, type_, id_)
-
-    if os.path.exists(tmp_file.name):
-        os.remove(tmp_file.name)
+    return tmp_file.name

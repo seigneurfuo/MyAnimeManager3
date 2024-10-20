@@ -189,7 +189,7 @@ class SeasonDialog(QDialog):
                                                                         "Fichiers images (*.jpg *.jpeg *.png *.gif);;Tous les fichiers (*)")
 
         def download_image(self):
-            download_picture(self.picture_url, self.parent.parent.parent.profile.path, "season", self.season.id)
+            self.picture_filepath = download_picture(self.picture_url, self.parent.parent.parent.profile.path, "season", self.season.id)
 
         def save_data(self) -> None:
             # Si création
@@ -212,9 +212,6 @@ class SeasonDialog(QDialog):
             self.season.type = self.comboBox_2.currentData()
 
             self.save_custom_data()
-
-            if self.picture_filepath:
-                save_cover(self.picture_filepath, self.parent.parent.parent.profile.path, "season", self.season.id)
 
             self.season.save()
 
@@ -242,13 +239,15 @@ class SeasonDialog(QDialog):
 
         def accept(self) -> None:
             self.save_data()
+
+            if self.picture_filepath:
+                save_cover(self.picture_filepath, self.parent.parent.parent.profile.path, "season", self.season.id)
+
             self.unload_completer()
 
             super().accept()
 
         def reject(self) -> None:
             self.unload_completer()
-
-            # TODO: Si on à un fichier téléchargé, on essayer de le virer car on annule
 
             super().reject()

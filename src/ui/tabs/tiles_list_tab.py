@@ -70,7 +70,7 @@ class TilesListTab(QWidget):
 
         # Chargement des données depuis la BDD
         if current_type_index == 0:
-            data = Seasons().select().where(Seasons.is_deleted == 0).order_by(Seasons.sort_id)
+            data = Seasons().select().where(Seasons.is_deleted == 0).join(Series).order_by(Series.sort_id, Seasons.sort_id)
         else:
             data = Series().select().where(Series.is_deleted == 0).order_by(Series.sort_id)
 

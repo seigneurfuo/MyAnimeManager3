@@ -1,9 +1,8 @@
 # TODO
 
 ## A faire
-- Ajouter un bouton de suppression de l'image d'une série
 - Remplacer les .where().where()... en mes combinant ? .where(xx and yyy)
-- Ajouter la possibilité d'avoir des images sur les saisons
+- ~~Ajouter la possibilité d'avoir des images sur les saisons~~
 - ~~Déplacer le code pour calcul l'age d'un animé dans utils~~
 - ~~Renommer le nom tiles pour l'onglet qui affiche les images~~
 - ~~Correction autocomplete des animés sous Windows en .exe~~
@@ -16,8 +15,11 @@
 
 ### En priorité
 - Améliorer le responsive
-- Modifier la colonne id dans la liste des élements vus
-- Déplacer le code qui récupère la liste des épisodes vus dans le code de la fenetre
+- ~~Correction de l'odre saisons / séries dans la liste des tuiles~~
+- Ajouter un bouton de suppression de l'image d'une série
+- ~~Modifier la colonne id dans la liste des élements vus~~
+- Déplacer le code qui récupère la liste des épisodes vus dans le code de la fenêtre
+- Export du planning en asynchrone (qthread)
 ### Conventions des programmation
 - Déplacer le chargement des données dans fill_data au lieu de les metre dans init_ui()
 
@@ -28,9 +30,9 @@
 - Voir si dans la table Planning, on peut enlever la colonne serie comme on à déja la saison, on peut faire un season.serie pour récupérer les infos de la série.
 - Passer les isdeleted en boolean ?
 - Combiner des refresh et autre dans une fonction fait pour.
-- Dialogue About + Licences logiciels + icônes
+- ~~Dialogue About + Licences logiciels + icônes~~
 - Afficher le titre de la série quand le nom de la saison est vide ?
 - Liste des séries et saisons supprimées:
   - Restaurer / supprimer définitivement
 
-- Icones sur chaque modale (ui + manuellement crées)
+- Supprimer l’icône personnalisée sur chaque modale (ui + manuellement crées)

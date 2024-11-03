@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView, QFileDialog
 from PyQt6.uic import loadUi
 
 import core
-from utils import anime_titles_autocomplete, load_animes_json_data, save_cover, download_picture
+from utils import anime_titles_autocomplete, load_animes_json_data, save_cover, load_cover, download_picture
 
 
 class SeasonDialog(QDialog):
@@ -65,6 +65,7 @@ class SeasonDialog(QDialog):
         self.pushButton.clicked.connect(self.add_row)
         self.pushButton_2.clicked.connect(self.remove_row)
         self.choose_picture_button.clicked.connect(self.choose_picture)
+        self.pushButton_5.clicked.connect(self.delete_image)
 
         if self.parent.parent.parent.settings["anime_titles_autocomplete"]:
             self.lineEdit_2.cursorPositionChanged.connect(self.fill_autocomplete)
@@ -188,8 +189,13 @@ class SeasonDialog(QDialog):
         self.picture_filepath, filter = QFileDialog.getOpenFileName(self, self.tr("Choisir une image"), path,
                                                                     "Fichiers images (*.jpg *.jpeg *.png *.gif);;Tous les fichiers (*)")
 
-    def download_image(self):
+    def download_image(self) -> None:
         self.picture_filepath = download_picture(self.picture_url, self.parent.parent.parent.profile.path, "season", self.season.id)
+
+    def delete_image(self) -> None:
+        filepath = load_cover(self.parent.parent.parent.profile.path, "season", self.season.id)
+        if filepath:
+            os.remove(filepath)
 
     def save_data(self) -> None:
         # Si création

@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>624</width>
-    <height>760</height>
+    <width>501</width>
+    <height>752</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -249,11 +249,22 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>Télécharger l'image</string>
+          <string>Télécharger</string>
          </property>
          <property name="icon">
           <iconset>
            <normaloff>../../resources/icons/drive-download.png</normaloff>../../resources/icons/drive-download.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_5">
+         <property name="text">
+          <string>Supprimer</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../resources/icons/cross.png</normaloff>../../resources/icons/cross.png</iconset>
          </property>
         </widget>
        </item>

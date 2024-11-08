@@ -46,7 +46,7 @@ class Application(QApplication):
 
         # Recherche de MAJ
         if core.app_version != "DEV" and self.settings["updates_check"]:
-            if updater.check_for_appliction_update():
+            if updater.check_for_application_update():
                 self.exit()
 
         # Recherche de MAj pour l'autocomplete

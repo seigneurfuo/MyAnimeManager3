@@ -1,4 +1,5 @@
 %define version %(git show -s --format=%cd --date=format:"%Y.%m.%d")
+%define src_root %(realpath $PWD)
 
 Name:           myanimemanager3
 Version:        %{version}
@@ -19,41 +20,41 @@ Un logiciel de gestion de séries et d'animés.
 
 # ./
 mkdir -p %{buildroot}/opt/%{name}
-cp ../../src/*.py %{buildroot}/opt/%{name}/
+cp %{src_root}/../../src/*.py %{buildroot}/opt/%{name}/
 
 # Patching Version
 sed -i "s/\"DEV\"/\"%{version}\"/g" "%{buildroot}/opt/%{name}/core.py"
 
 # ./resources/
 mkdir -p %{buildroot}/opt/%{name}/resources
-cp ../../src/resources/icon.png %{buildroot}/opt/%{name}/resources/
+cp %{src_root}/../../src/resources/icon.png %{buildroot}/opt/%{name}/resources/
 
 # ./resources/icons/
 mkdir -p %{buildroot}/opt/%{name}/resources/icons
-cp ../../src/resources/icons/*.png %{buildroot}/opt/%{name}/resources/icons/
+cp %{src_root}/../../src/resources/icons/*.png %{buildroot}/opt/%{name}/resources/icons/
 
 # ./ui/
 mkdir -p %{buildroot}/opt/%{name}/ui/
-cp ../../src/ui/*.py %{buildroot}/opt/%{name}/ui/
-cp ../../src/ui/*.ui %{buildroot}/opt/%{name}/ui/
+cp %{src_root}/../../src/ui/*.py %{buildroot}/opt/%{name}/ui/
+cp %{src_root}/../../src/ui/*.ui %{buildroot}/opt/%{name}/ui/
 
 # ./ui/dialogs/
 mkdir -p %{buildroot}/opt/%{name}/ui/dialogs
-cp ../../src/ui/dialogs/*.py %{buildroot}/opt/%{name}/ui/dialogs/
-cp ../../src/ui/dialogs/*.ui %{buildroot}/opt/%{name}/ui/dialogs/
+cp %{src_root}/../../src/ui/dialogs/*.py %{buildroot}/opt/%{name}/ui/dialogs/
+cp %{src_root}/../../src/ui/dialogs/*.ui %{buildroot}/opt/%{name}/ui/dialogs/
 
 # ./ui/tabs/
 mkdir -p %{buildroot}/opt/%{name}/ui/tabs
-cp ../../src/ui/tabs/*.py %{buildroot}/opt/%{name}/ui/tabs/
-cp ../../src/ui/tabs/*.ui %{buildroot}/opt/%{name}/ui/tabs/
+cp %{src_root}/../../src/ui/tabs/*.py %{buildroot}/opt/%{name}/ui/tabs/
+cp %{src_root}/../../src/ui/tabs/*.ui %{buildroot}/opt/%{name}/ui/tabs/
 
 # ./ui/widgets/
 mkdir -p %{buildroot}/opt/%{name}/ui/widgets
-cp ../../src/ui/widgets/*.py %{buildroot}/opt/%{name}/ui/widgets/
+cp %{src_root}/../../src/ui/widgets/*.py %{buildroot}/opt/%{name}/ui/widgets/
 
 # Racourcis d'applciation
 mkdir -p %{buildroot}/usr/share/applications/
-cp myanimemanager3.desktop %{buildroot}/usr/share/applications/myanimemanager3.desktop
+cp %{src_root}/myanimemanager3.desktop %{buildroot}/usr/share/applications/myanimemanager3.desktop
 
 # Permissions
 

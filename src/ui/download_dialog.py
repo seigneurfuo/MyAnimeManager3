@@ -41,14 +41,16 @@ class DownloadDialog(QDialog):
         self.start_download()
 
     def init_ui(self):
-        self.setFixedSize(400, 200)  # Set the fixed width and height
+        #self.setFixedSize(self.size())  # Set the fixed width and height
 
-        self.setWindowTitle(self.tr("Téléchargement des données pour l'autocomplétion"))
+        title = self.tr("Téléchargement des données pour l'autocomplétion")
+
+        self.setWindowTitle(title)
 
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
 
-        self.label = QLabel(self.tr("Téléchargement des données pour l'autocomplétion:"))
+        self.label = QLabel(title)
         self.layout.addWidget(self.label)
 
         self.progress_bar = QProgressBar()

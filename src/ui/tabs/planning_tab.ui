@@ -343,7 +343,6 @@
       </property>
       <property name="font">
        <font>
-        <weight>50</weight>
         <bold>false</bold>
        </font>
       </property>
@@ -401,28 +400,6 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="add_to_watched_list_button">
-       <property name="text">
-        <string>Ajouter aux épisodes vus</string>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>../../resources/icons/eye-plus.png</normaloff>../../resources/icons/eye-plus.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="open_folder_button">
-       <property name="text">
-        <string>Ouvrir le dossier</string>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>../../resources/icons/folder-horizontal-open.png</normaloff>../../resources/icons/folder-horizontal-open.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="to_watch_table_show_view_history_button">
        <property name="enabled">
         <bool>true</bool>
@@ -444,6 +421,28 @@
        <property name="icon">
         <iconset>
          <normaloff>../../resources/icons/films.png</normaloff>../../resources/icons/films.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="add_to_watched_list_button">
+       <property name="text">
+        <string>Ajouter aux épisodes vus</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../resources/icons/eye-plus.png</normaloff>../../resources/icons/eye-plus.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="open_folder_button">
+       <property name="text">
+        <string>Ouvrir le dossier</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../resources/icons/folder-horizontal-open.png</normaloff>../../resources/icons/folder-horizontal-open.png</iconset>
        </property>
       </widget>
      </item>

@@ -190,7 +190,7 @@ class SeasonDialog(QDialog):
                                                                     "Fichiers images (*.jpg *.jpeg *.png *.gif);;Tous les fichiers (*)")
 
     def download_image(self) -> None:
-        self.picture_filepath = download_picture(self.picture_url, self.parent.parent.parent.profile.path, "season", self.season.id)
+        self.picture_filepath = download_picture(self.picture_url)
 
     def delete_image(self) -> None:
         filepath = load_cover(self.parent.parent.parent.profile.path, "season", self.season.id)

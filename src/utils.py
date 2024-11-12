@@ -10,8 +10,7 @@ from pathlib import Path
 from datetime import datetime, timedelta
 
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QCursor
-from PyQt6.QtWidgets import QMessageBox, QCompleter
+from PyQt6.QtWidgets import QCompleter
 
 import core
 from database import Seasons, Series
@@ -62,6 +61,7 @@ def get_duration_list(episodes_count, duration, pause_every, pause_duration, sta
 
 
 def export_qtablewidget(qtablewidget, app_data_folder, output_filename) -> str:
+    """Fonction qui exporte un tableau qtablewidget en fichier csv"""
     # TODO: case à cocher
 
     output_directory = os.path.join(app_data_folder, "exports")
@@ -153,28 +153,6 @@ def get_collection_problems(parent) -> list[str]:
     return messages
 
 
-def set_cursor_on_center(qwidget) -> None:
-    QCursor().setPos(qwidget.mapToGlobal(qwidget.rect().center()))
-
-
-def tutorial(parent_widget) -> None:
-    msg = """Bienvenue dans ce tutoriel !
-Ce tutoriel va brièvement présenter les différents écrans de l'application.
-"""
-
-    QMessageBox.information(None, "Tutoriel", msg, QMessageBox.StandardButton.Ok)
-
-    tabs = ((1, "Voici l'écran dans lequel vous aller définir les séries à voir"),
-            2, "Ecran des outils")
-    for tab in tabs:
-        # Message de bienvenue
-        parent_widget.tabWidget.setCurrentIndex(tab[0])  # Onglet de la liste des animé
-        parent_widget.tabWidget.setToolTip(tab[1])
-        set_cursor_on_center(parent_widget.tabWidget)
-        # btn = parent_widget.tab2
-        # btn.setStyleSheet("border: 0.5em solid red;")
-
-
 def load_animes_json_data():
     # Chargement des complétions automatiques depuis le fichier json
     json_filepath = os.path.join(core.APPLICATION_DATA_PATH, "anime-offline-database-minified.json")
@@ -236,7 +214,7 @@ def load_cover(profile_path, type_, id_) -> str | None:
         return cover_path if os.path.isfile(cover_path) else None
 
 
-def save_cover(source_path, profile_path, type_, id_) -> None | str:
+def save_cover(source_path, profile_path, type_, id_) -> bool | str:
     print(source_path, os.path.isfile(source_path))
     if not os.path.isfile(source_path):
         return False
@@ -253,7 +231,7 @@ def save_cover(source_path, profile_path, type_, id_) -> None | str:
         return dst
 
 
-def download_picture(url, profile_path, type_, id_) -> None | str:
+def download_picture(url) -> str:
     # On "spoof" le user agent sinon on peut tomber sur des erreurs 403 !
     request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36"})
     with urllib.request.urlopen(request) as http_response, tempfile.NamedTemporaryFile(delete=False) as tmp_file:

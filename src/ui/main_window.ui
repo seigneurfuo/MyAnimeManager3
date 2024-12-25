@@ -214,6 +214,7 @@
      <string>Exports</string>
     </property>
     <addaction name="planning_export_action"/>
+    <addaction name="series_list_export_action"/>
    </widget>
    <widget class="QMenu" name="menuOutils">
     <property name="title">
@@ -352,6 +353,15 @@
    </property>
    <property name="text">
     <string>Ouvrir le dossier de configuration</string>
+   </property>
+  </action>
+  <action name="series_list_export_action">
+   <property name="icon">
+    <iconset>
+     <normaloff>../resources/icons/document-export.png</normaloff>../resources/icons/document-export.png</iconset>
+   </property>
+   <property name="text">
+    <string>Exporter la liste des séries</string>
    </property>
   </action>
  </widget>

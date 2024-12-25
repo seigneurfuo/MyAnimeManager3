@@ -26,7 +26,7 @@ from ui.dialogs.settings import SettingsDialog
 from ui.dialogs.friends_manage import FriendManageDialog
 
 from db_backups_manager import DBBackupsManager
-from exports import export_planning_to_csv
+from exports import export_planning_to_csv, export_series_list
 
 import core
 import utils
@@ -86,9 +86,11 @@ class MainWindow(QMainWindow):
     def init_events(self) -> None:
         # Menus
         self.open_profiles_action.triggered.connect(self.when_menu_action_open_profiles_clicked)
-        self.open_application_config_action.triggered.connect(
-            self.when_menu_action_open_application_config_action_clicked)
+        self.open_application_config_action.triggered.connect(self.when_menu_action_open_application_config_action_clicked)
+        
         self.planning_export_action.triggered.connect(self.when_menu_action_planning_export_clicked)
+        self.series_list_export_action.triggered.connect(self.when_menu_action_series_list_export_clicked)
+       
         self.about_action.triggered.connect(self.when_menu_action_about_clicked)
         self.bug_report_action.triggered.connect(self.when_menu_action_bug_report_clicked)
         self.check_problems_action.triggered.connect(self.when_menu_action_check_collection_clicked)
@@ -137,6 +139,14 @@ class MainWindow(QMainWindow):
 
     def when_menu_action_planning_export_clicked(self) -> None:
         filepath = export_planning_to_csv(self.parent.profile.path, self.parent.settings["friends_enabled"])
+
+        # Bouton pour ouvrir le dossier ?
+        QMessageBox.information(self, self.tr("Export terminé"),
+                                self.tr("Le fichier a été généré ici:") + "\n    " + filepath,
+                                QMessageBox.StandardButton.Ok)
+
+    def when_menu_action_series_list_export_clicked(self) -> None:
+        filepath = export_series_list(self.parent.profile.path)
 
         # Bouton pour ouvrir le dossier ?
         QMessageBox.information(self, self.tr("Export terminé"),

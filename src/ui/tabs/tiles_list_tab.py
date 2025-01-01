@@ -65,6 +65,7 @@ class TilesListTab(QWidget):
         row_index = 0
         col_index = 0
         total_bytes = 0
+        tiles_count = 0
 
         filter_coverless = self.checkBox.isChecked()
 
@@ -74,7 +75,6 @@ class TilesListTab(QWidget):
         else:
             data = Series().select().where(Series.is_deleted == 0).order_by(Series.sort_id)
 
-        tiles_count = 0
         for row in data:
             cover_path = utils.load_cover(self.parent.parent.profile.path, current_type_name, row.id)
 
@@ -96,6 +96,7 @@ class TilesListTab(QWidget):
                 btn.clicked.connect(lambda lamdba, row=row: self.open_serie(row))
 
             if cover_path:
+                total_bytes += os.path.getsize(cover_path)
                 pixmap = QPixmap.fromImage(QImage(cover_path))
                 btn.setIcon(QIcon(pixmap))
 
@@ -112,8 +113,8 @@ class TilesListTab(QWidget):
             tiles_count += 1
 
         # Total du nombre d'éléments
-        total_megabytes = int(total_bytes / 1024 / 1024)
-        msg = self.tr(f"Nombre d'éléments: {tiles_count}: Taille totale de {total_megabytes}Mo")
+        total_megabytes = total_bytes / 1024 / 1024
+        msg = self.tr(f"Nombre d'éléments: {tiles_count}: Taille totale de {total_megabytes:.2f}Mo")
         self.label.setText(msg)
 
 

@@ -74,6 +74,7 @@ class TilesListTab(QWidget):
         else:
             data = Series().select().where(Series.is_deleted == 0).order_by(Series.sort_id)
 
+        tiles_count = 0
         for row in data:
             cover_path = utils.load_cover(self.parent.parent.profile.path, current_type_name, row.id)
 
@@ -108,10 +109,12 @@ class TilesListTab(QWidget):
 
             self.gridLayout_2.addWidget(btn, row_index, col_index)
             col_index += 1
+            tiles_count += 1
 
         # Total du nombre d'éléments
         total_megabytes = int(total_bytes / 1024 / 1024)
-        self.label.setText(self.tr(f"Nombre d'éléments: {len(data)}: Taille totale de {total_megabytes}Mo"))
+        msg = self.tr(f"Nombre d'éléments: {tiles_count}: Taille totale de {total_megabytes}Mo")
+        self.label.setText(msg)
 
 
     def open_serie(self, serie) -> None:

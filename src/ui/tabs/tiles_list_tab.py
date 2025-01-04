@@ -114,7 +114,7 @@ class TilesListTab(QWidget):
 
         # Total du nombre d'éléments
         total_megabytes = total_bytes / 1024 / 1024
-        msg = self.tr(f"Nombre d'éléments: {tiles_count}: Taille totale de {total_megabytes:.2f}Mo")
+        msg = self.tr(f"Nombre d'éléments: {tiles_count}. Taille totale de {total_megabytes:.2f}Mo")
         self.label.setText(msg)
 
 

@@ -9,11 +9,10 @@ import tempfile
 from pathlib import Path
 from datetime import datetime, timedelta
 
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QCompleter
-
 import core
 from database import Seasons, Series
+
+import peewee
 
 # Pour Nyelson ^._.^
 def get_paths() -> tuple[str, str]:
@@ -150,6 +149,15 @@ def get_collection_problems(parent) -> list[str]:
             msg = parent.tr(f"Le chemin pour la série {serie.name} n'existe pas")
             messages.append(msg)
 
+    # Vérification des saisons avec le même numéro
+    series = Series().select(Series.sort_id, peewee.fn.COUNT(Series.id)) \
+        .where(Series.is_deleted == 0).having(peewee.fn.COUNT(Series.id) > 1) \
+        .group_by(Series.sort_id).order_by(Series.sort_id)
+
+    for serie in series:
+        msg = parent.tr(f"L'identifiant {serie.sort_id} est utilisé sur plusieurs séries !")
+        messages.append(msg)
+
     return messages
 
 
@@ -173,7 +181,7 @@ def anime_json_data_version():
 
     return None
 
-def anime_titles_autocomplete(object) -> None:
+def anime_titles_autocomplete() -> None:
     data = load_animes_json_data()
 
     animes_titles = []
@@ -181,12 +189,7 @@ def anime_titles_autocomplete(object) -> None:
         animes_titles.append(anime["title"])
         animes_titles.extend(anime["synonyms"])
 
-    # Application des complétions automatique
-    completer = QCompleter(animes_titles)
-    del animes_titles  # Permet de limiter l'usage de RAM pour l'autocompete
-    completer.setFilterMode(Qt.MatchFlag.MatchStartsWith)
-    completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
-    object.setCompleter(completer)
+    return animes_titles
 
 
 def get_season_age(season) -> str:

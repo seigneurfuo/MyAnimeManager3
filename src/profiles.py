@@ -14,16 +14,16 @@ class Profiles:
     def __repr__(self) -> str:
         return self.path
 
-    def create(self) -> None:
+    def create(self) -> bool:
         # TODO: Sanitize (déplacer le contenu de la vérificaiton de la fenetre des profils ici ?
 
         # Existe déja
         if os.path.isdir(self.path):
             return False
         else:
-            # Create folder
             os.makedirs(self.path)
             load_or_create_database(self)
+            return True
 
     def set_picture(self, picture_path) -> None:
         if picture_path and os.path.isfile(picture_path):
@@ -56,8 +56,11 @@ class Profiles:
 
     @staticmethod
     def get_profiles_list() -> list:
-        profiles_list = [Profiles(name=profile) for profile in sorted(os.listdir(PROFILES_PATH))
-                         if os.path.isdir(os.path.join(PROFILES_PATH, profile))
-                         and os.path.isfile(os.path.join(PROFILES_PATH, profile, DATABASE_NAME))]
+        profiles_list = [
+            Profiles(name=profile)
+            for profile in sorted(os.listdir(PROFILES_PATH))
+            if os.path.isdir(os.path.join(PROFILES_PATH, profile))
+            and os.path.isfile(os.path.join(PROFILES_PATH, profile, DATABASE_NAME))
+        ]
 
         return profiles_list

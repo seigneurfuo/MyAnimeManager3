@@ -8,6 +8,7 @@
 - ~~Correction autocomplete des animés sous Windows en .exe~~
 - ~~Correction du choix image pour une série pas encore crée~~
 - ~~Correction du choix de la selection du dossier pour une série pas encore crée~~
+- Tri des données personnalisées par ordre alphabétique
 
 ### Bugs
 - Boutons supprimer et modifier d'une saison non grisés quand aucune n'est sélectionnée

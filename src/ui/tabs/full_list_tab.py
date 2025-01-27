@@ -91,6 +91,13 @@ class FullListTab(QWidget):
         index = self.comboBox.findData(serie_id)
         self.comboBox.setCurrentIndex(index)
 
+    def set_seasons_table_current_selection(self, season_id):
+        for row_index in range(self.tableWidget.rowCount()):
+            item = self.tableWidget.item(row_index, 0)
+            if item and item.data(Qt.ItemDataRole.UserRole) == season_id:
+                self.tableWidget.selectRow(row_index)
+                break
+
     def when_series_list_current_index_changed(self) -> None:
         self.clear_serie_data()
 

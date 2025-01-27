@@ -96,6 +96,7 @@ class FullListTab(QWidget):
             item = self.tableWidget.item(row_index, 0)
             if item and item.data(Qt.ItemDataRole.UserRole) == season_id:
                 self.tableWidget.selectRow(row_index)
+                self.tableWidget.scrollToItem(item)
                 break
 
     def when_series_list_current_index_changed(self) -> None:

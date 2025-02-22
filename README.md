@@ -13,18 +13,13 @@ Le projet en version 3 à été commencé en 2018.
 
 ## Lancement simple sans installation
 
-Après avoir cloné le dépot: on peut lancer la commande suivant pour disposer de thêmes supplémentaires. Elle n'est pas obligatoire:
-
-```sh
-git submodule update --init
-```
-
-Installer les dépendances suivantes:
+Clonez le dépot et installez les dépendances suivantes:
 
 - python
 - python-qt6
 - python-peewee
 
+Lancement: 
 ```sh
 python3 src/MyAnimeManager3.py
 ```

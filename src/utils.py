@@ -13,6 +13,8 @@ import core
 from database import Seasons, Series
 
 import peewee
+from PyQt6.QtWidgets import QCompleter
+from PyQt6.QtCore import Qt
 
 # Pour Nyelson ^._.^
 def get_paths() -> tuple[str, str]:
@@ -181,7 +183,7 @@ def anime_json_data_version():
 
     return None
 
-def anime_titles_autocomplete() -> None:
+def get_anime_titles_autocomplete_data() -> None:
     data = load_animes_json_data()
 
     animes_titles = []
@@ -191,6 +193,15 @@ def anime_titles_autocomplete() -> None:
 
     return animes_titles
 
+def anime_titles_autocomplete(widget):
+    data = get_anime_titles_autocomplete_data()
+
+    # Application des complétions automatique
+    completer = QCompleter(data)
+    del data  # Permet de limiter l'usage de RAM pour l'autocompete
+    completer.setFilterMode(Qt.MatchFlag.MatchStartsWith)
+    completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
+    widget.setCompleter(completer)
 
 def get_season_age(season) -> str:
     year = str(season.year) if season.year and str(season.year) != "None" else ""

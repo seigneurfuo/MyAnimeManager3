@@ -1,7 +1,7 @@
 import os
 
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QDialog, QFileDialog, QCompleter
+from PyQt6.QtWidgets import QDialog, QFileDialog
 from PyQt6.uic import loadUi
 
 from utils import anime_titles_autocomplete, save_cover

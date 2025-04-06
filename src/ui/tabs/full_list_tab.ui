@@ -305,7 +305,7 @@
         </column>
         <column>
          <property name="text">
-          <string>Note</string>
+          <string>Appréciation</string>
          </property>
         </column>
         <column>

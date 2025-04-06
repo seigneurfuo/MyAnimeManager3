@@ -27,7 +27,7 @@ class StatsTab(QWidget):
         queries_list = [
             self.tr("Nombre de saisons par année de sortie"), self.tr("Saisons les plus revisionnées"),
             self.tr("Saisons avec le plus d'épisodes"), self.tr("Séries avec le plus d'épisodes"),
-            self.tr("Nombre d'épisodes vus par année"), self.tr("Jounal de visionnage détaillé"),
+            self.tr("Nombre d'épisodes vus par année"), self.tr("Journal de visionnage détaillé"),
             self.tr("Liste des séries pour lequelles il reste des saisons à voir"),
             self.tr("Date du dernier épisode vu par séries")
         ]

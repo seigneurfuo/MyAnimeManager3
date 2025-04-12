@@ -39,7 +39,7 @@
       <widget class="QWidget" name="tab1">
        <attribute name="icon">
         <iconset>
-         <normaloff>../resources/icons/calendar-list.png</normaloff>../resources/icons/calendar-list.png</iconset>
+         <normaloff>../resources/icons/calendar-medium.png</normaloff>../resources/icons/calendar-medium.png</iconset>
        </attribute>
        <attribute name="title">
         <string>Planning</string>

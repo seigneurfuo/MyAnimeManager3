@@ -30,6 +30,10 @@
       <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
+      <attribute name="icon">
+       <iconset>
+        <normaloff>../../resources/icons/target.png</normaloff>../../resources/icons/target.png</iconset>
+      </attribute>
       <attribute name="title">
        <string>Saison sélectionnée</string>
       </attribute>
@@ -93,6 +97,10 @@
       </layout>
      </widget>
      <widget class="QWidget" name="tab_2">
+      <attribute name="icon">
+       <iconset>
+        <normaloff>../../resources/icons/folder-open-film.png</normaloff>../../resources/icons/folder-open-film.png</iconset>
+      </attribute>
       <attribute name="title">
        <string>Série</string>
       </attribute>
@@ -163,7 +171,7 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../resources/icons/film-timeline.png</normaloff>../../resources/icons/film-timeline.png</iconset>
+         <normaloff>../../resources/icons/calendar-medium.png</normaloff>../../resources/icons/calendar-medium.png</iconset>
        </property>
       </widget>
      </item>

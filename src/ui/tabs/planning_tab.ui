@@ -36,7 +36,7 @@
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>../../resources/icons/calendar.png</normaloff>../../resources/icons/calendar.png</iconset>
+             <normaloff>../../resources/icons/calendar-medium.png</normaloff>../../resources/icons/calendar-medium.png</iconset>
            </property>
           </widget>
          </item>

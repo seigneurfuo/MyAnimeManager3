@@ -16,10 +16,6 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>../../resources/icons/pencil.png</normaloff>../../resources/icons/pencil.png</iconset>
-  </property>
   <property name="modal">
    <bool>true</bool>
   </property>

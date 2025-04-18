@@ -16,10 +16,6 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>../../resources/icons/minus.png</normaloff>../../resources/icons/minus.png</iconset>
-  </property>
   <property name="modal">
    <bool>true</bool>
   </property>

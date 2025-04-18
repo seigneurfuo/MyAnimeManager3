@@ -16,10 +16,6 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>../../resources/icons/clock-history.png</normaloff>../../resources/icons/clock-history.png</iconset>
-  </property>
   <property name="modal">
    <bool>true</bool>
   </property>

@@ -5,7 +5,6 @@ from PyQt6.uic import loadUi
 
 # from ui.themes import get_themes_list
 
-import core
 from common import save_settings
 
 

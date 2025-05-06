@@ -1,9 +1,6 @@
 #!/usr/bin/python3
-import io
 import json
 import os
-
-from pathlib import Path
 
 from database import Planning, Seasons
 import peewee

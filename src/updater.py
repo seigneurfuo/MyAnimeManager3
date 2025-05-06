@@ -2,14 +2,13 @@ import os
 import urllib.request
 import json
 import webbrowser
-import time
 
 from datetime import datetime
 
 from PyQt6.QtWidgets import QMessageBox
 
 from core import app_version, APPLICATION_DATA_PATH, release_url, anime_offline_database_release_url, anime_offline_database_json_url
-from utils import load_animes_json_data, anime_json_data_version
+from utils import anime_json_data_version
 
 from ui.download_dialog import DownloadDialog
 

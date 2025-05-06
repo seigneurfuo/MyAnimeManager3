@@ -3,8 +3,8 @@ import time
 
 import urllib.request
 
-from PyQt6.QtWidgets import QApplication, QDialog, QVBoxLayout, QPushButton, QProgressBar, QLabel
-from PyQt6.QtCore import Qt, QThread, pyqtSignal
+from PyQt6.QtWidgets import QApplication, QDialog, QVBoxLayout, QProgressBar, QLabel
+from PyQt6.QtCore import QThread, pyqtSignal
 
 class DownloadThread(QThread):
     progress = pyqtSignal(int)

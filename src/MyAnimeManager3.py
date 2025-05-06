@@ -45,12 +45,12 @@ class Application(QApplication):
         # set_theme(self, self.settings["application_stylesheet"])
 
         # Recherche de MAJ
-        if core.app_version != "DEV" and self.settings["updates_check"]:
+        if not args.offline or (core.app_version != "DEV" and self.settings["updates_check"]):
             if updater.check_for_application_update():
                 self.exit()
 
         # Recherche de MAj pour l'autocomplete
-        if self.settings["anime_titles_autocomplete"]:
+        if self.settings["anime_titles_autocomplete"] and not args.offline:
             updater.check_for_autocomplete_data_update()
 
         self.profile = self.load_profile(args.profile_name)
@@ -96,7 +96,8 @@ class Application(QApplication):
 
 if __name__ == "__main__":
     argument_parser = argparse.ArgumentParser()
-    argument_parser.add_argument("--profile-name", required=False)
+    argument_parser.add_argument("--profile-name", required=False, help="Charger directement un profil via son nom")
+    argument_parser.add_argument("--offline", required=False, action="store_true", help="Mode en hors ligne: désactive la recherche de mise à jour de l'application et des complétions automatiques")
     args = argument_parser.parse_args()
 
     application = Application(sys.argv, args)

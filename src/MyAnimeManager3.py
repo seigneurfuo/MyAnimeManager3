@@ -45,7 +45,7 @@ class Application(QApplication):
         # set_theme(self, self.settings["application_stylesheet"])
 
         # Recherche de MAJ
-        if not args.offline or (core.app_version != "DEV" and self.settings["updates_check"]):
+        if not args.offline and (core.app_version != "DEV" and self.settings["updates_check"]):
             if updater.check_for_application_update():
                 self.exit()
 

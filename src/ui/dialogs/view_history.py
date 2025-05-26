@@ -29,6 +29,11 @@ class ViewHistoryDialog(QDialog):
 
     def init_events(self) -> None:
         self.pushButton.clicked.connect(self.when_go_to_planning_date)
+        self.season_table.currentCellChanged.connect(self.when_table_current_cell_changed)
+        self.serie_table.currentCellChanged.connect(self.when_table_current_cell_changed)
+
+    def when_table_current_cell_changed(self) -> None:
+        self.pushButton.setEnabled(True)
 
     def fill_data(self) -> None:
         self.fill_seasons_history()
@@ -97,8 +102,7 @@ class ViewHistoryDialog(QDialog):
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
                 item.setToolTip(item.text())
-                item.setData(Qt.ItemDataRole.UserRole,
-                             row.date)  # On ajoute la date en paramètre afin de pouvoir la récupérer sur la ligne
+                item.setData(Qt.ItemDataRole.UserRole, row.date)  # On ajoute la date en paramètre afin de pouvoir la récupérer sur la ligne
                 self.season_table.setItem(row_index, col_index, item)
 
         self.season_table.resizeColumnsToContents()
@@ -111,7 +115,7 @@ class ViewHistoryDialog(QDialog):
 
         table = self.season_table if self.tabWidget.currentIndex() == 0 else self.serie_table
         current_item = table.item(table.currentRow(), 0)
-        print(current_item)
+
         if current_item:
             selected_date = current_item.data(Qt.ItemDataRole.UserRole)
 

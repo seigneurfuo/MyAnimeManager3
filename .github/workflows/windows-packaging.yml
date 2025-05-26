@@ -1,0 +1,36 @@
+name: Package Application with Pyinstaller
+
+on:
+  push:
+    branches: [ pyinstaller-with-github-actions ]
+  pull_request:
+    branches: [ pyinstaller-with-github-actions ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Package Application
+      uses: JackMcKew/pyinstaller-action-windows@main
+      with:
+        path: .
+        requirements: requirements.txt
+        spec: .pyinstaller.spec
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ github.event.repository.name }}-${{ github.ref_name }}-windows
+        path: dist/windows
+
+    - name: Create an empty file for the portable artifact
+      run: touch dist/windows/.portable
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ github.event.repository.name }}-${{ github.ref_name }}-windows-portable
+        path: | 
+          dist/windows
+          .portable

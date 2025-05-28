@@ -13,6 +13,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Changing DEV version to current tag
+      run: sed -i "s/\"DEV\"/\"2025.05.29\"/g" "src/MyAnimeManager3/src/core.py"
+
     - name: Package Application
       uses: JackMcKew/pyinstaller-action-windows@main
       with:

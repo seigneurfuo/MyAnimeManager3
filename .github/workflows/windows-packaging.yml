@@ -27,6 +27,8 @@ jobs:
       with:
         name: ${{ github.event.repository.name }}-${{ github.ref_name }}-windows
         path: dist/windows
+        compression-level: 9
+        include-hidden-files: true
 
     - name: Create an empty file for the portable artifact
       run: touch dist/windows/.portable
@@ -34,6 +36,6 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: ${{ github.event.repository.name }}-${{ github.ref_name }}-windows-portable
-        path: | 
-          dist/windows
-          .portable
+        path: dist/windows
+        compression-level: 9
+        include-hidden-files: true

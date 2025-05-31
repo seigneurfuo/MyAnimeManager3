@@ -7,7 +7,7 @@ from PyQt6.uic import loadUi
 
 import core
 from ui.dialogs.autocomplete import AutocompleteDialog
-from utils import anime_titles_autocomplete, load_animes_json_data, save_cover, load_cover, download_picture
+from utils import save_cover, load_cover
 
 
 class SeasonDialog(QDialog):
@@ -20,7 +20,6 @@ class SeasonDialog(QDialog):
         self.seasons_types = seasons_types
         self.picture_filepath = None
 
-        self.autocomplete_loaded = False
         self.picture_url = None
 
         self.init_ui()
@@ -97,9 +96,6 @@ class SeasonDialog(QDialog):
         if self.parent.parent.parent.settings["custom_data_enabled"]:
             self.fill_custom_data()
 
-    def fill_autocomplete(self) -> None:
-        pass
-
     def open_autocomplete_dialog(self):
         dialog = AutocompleteDialog(self)
         dialog.exec()
@@ -108,13 +104,21 @@ class SeasonDialog(QDialog):
         del dialog
 
         if not anime_data:
-            return 
+            return
 
-        self.season.name = anime_data["title"]
-        self.season.year = anime_data["year"]
-        self.season.episodes = anime_data["episodes"]
-        self.season.airing = (anime_data["status"] == "ONGOING") 
+        if anime_data["picture_tmp_filepath"]:
+            self.picture_filepath = anime_data["picture_tmp_filepath"]
 
+        if not anime_data["picture_only"]:
+            self.season.name = anime_data["title"]
+            self.season.year = anime_data["year"]
+            self.season.episodes = anime_data["episodes"]
+            self.season.airing = (anime_data["status"] == "ONGOING") 
+        else:
+            self.season.name = ""
+            self.season.episodes = 0
+            self.season.airing = False
+   
         # Valeurs par défaut
         self.season.sort_id = 1
         self.season.watched_episodes = 0
@@ -122,9 +126,6 @@ class SeasonDialog(QDialog):
         self.season.state = 0
         self.season.type = 1
         self.season.custom_data = []
-
-        if anime_data["picture_tmp_filepath"]:
-            self.picture_filepath = anime_data["picture_tmp_filepath"]
     
         self.fill_data()
 
@@ -211,10 +212,6 @@ class SeasonDialog(QDialog):
             data[key] = value
 
         self.season.custom_data = data
-
-    def unload_completer(self):
-        if self.parent.parent.parent.settings["anime_titles_autocomplete"]:
-            self.lineEdit_2.setCompleter(None)
 
     def accept(self) -> None:
         self.save_data()

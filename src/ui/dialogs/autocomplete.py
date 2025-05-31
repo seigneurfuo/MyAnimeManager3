@@ -7,7 +7,7 @@ from utils import load_animes_json_data, save_cover, download_picture
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap, QImage
-from PyQt6.QtWidgets import QDialog, QTableWidgetItem
+from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
 from PyQt6.uic import loadUi
 
 
@@ -79,6 +79,10 @@ class AutocompleteDialog(QDialog):
                 item.setData(Qt.ItemDataRole.UserRole, row_index)
                 self.tableWidget.setItem(row_index, col_index, item)
 
+        #self.tableWidget.resizeColumnsToContents()
+        #self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
+        #                                                            QHeaderView.ResizeMode.ResizeToContents)
+
     def when_current_index_changed(self):
         # TODO récupérer l'index
         current_item = self.tableWidget.item(self.tableWidget.currentRow(), 0)
@@ -117,7 +121,10 @@ class AutocompleteDialog(QDialog):
 
     def accept(self) -> None:
         del self.animes_data
+
         self.anime_data["picture_tmp_filepath"] = self.picture_tmp_filepath
+        self.anime_data["picture_only"] = self.checkBox.isChecked()
+        
         super().accept()
 
     def reject(self) -> None:

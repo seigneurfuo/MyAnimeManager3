@@ -6,6 +6,7 @@ from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView, QFileDialog
 from PyQt6.uic import loadUi
 
 import core
+from ui.dialogs.autocomplete import AutocompleteDialog
 from utils import anime_titles_autocomplete, load_animes_json_data, save_cover, load_cover, download_picture
 
 
@@ -61,15 +62,11 @@ class SeasonDialog(QDialog):
             self.pushButton_2.setVisible(False)
 
     def init_events(self) -> None:
-        self.pushButton_3.clicked.connect(self.fill_data_with_autocomplete)
+        self.pushButton_3.clicked.connect(self.open_autocomplete_dialog)
         self.pushButton.clicked.connect(self.add_row)
         self.pushButton_2.clicked.connect(self.remove_row)
         self.choose_picture_button.clicked.connect(self.choose_picture)
         self.pushButton_5.clicked.connect(self.delete_image)
-
-        if self.parent.parent.parent.settings["anime_titles_autocomplete"]:
-            self.lineEdit_2.cursorPositionChanged.connect(self.fill_autocomplete)
-            self.pushButton_4.clicked.connect(self.download_image)
 
     def fill_data(self) -> None:
         self.spinBox.setValue(self.season.sort_id)
@@ -101,56 +98,35 @@ class SeasonDialog(QDialog):
             self.fill_custom_data()
 
     def fill_autocomplete(self) -> None:
-        # Complétion automatique
-        if self.autocomplete_loaded:
-            return
+        pass
 
-        anime_titles_autocomplete(self.lineEdit_2)
-        self.autocomplete_loaded = True
+    def open_autocomplete_dialog(self):
+        dialog = AutocompleteDialog(self)
+        dialog.exec()
 
-    def fill_data_with_autocomplete(self):
-        text = self.lineEdit_2.text().strip()
-        if not text:
-            return
-
-        data = load_animes_json_data()
-
-        anime_data = {}
-        for anime in data["data"]:
-
-            titles = anime["synonyms"]
-            titles.append(anime["title"])
-
-            for title in titles:
-                if title.startswith(text):
-                    anime_data = anime
-                    break
-
-        del data
+        anime_data = dialog.anime_data
+        del dialog
 
         if not anime_data:
-            return
+            return 
 
-        # Application des valeurs
-        # Nombre d'épisodes
-        if "episodes" in anime_data.keys():
-            episodes = anime_data["episodes"]
-            self.spinBox_4.setValue(episodes)
+        self.season.name = anime_data["title"]
+        self.season.year = anime_data["year"]
+        self.season.episodes = anime_data["episodes"]
+        self.season.airing = (anime_data["status"] == "ONGOING") 
 
-        # Année
-        if "animeSeason" in anime_data.keys() and "year" in anime_data["animeSeason"]:
-            year = anime_data["animeSeason"]["year"]
-            self.spinBox_5.setValue(year)
+        # Valeurs par défaut
+        self.season.sort_id = 1
+        self.season.watched_episodes = 0
+        self.season.view_count = 0
+        self.season.state = 0
+        self.season.type = 1
+        self.season.custom_data = []
 
-        # En cours de diffusion
-        if "status" in anime_data.keys():
-            airing = anime_data["animeSeason"] == "ONGOING"
-            self.checkBox_2.setChecked(airing)
-
-        # Image
-        if "picture" in anime_data.keys() and anime_data["picture"].startswith("https://"):
-            self.picture_url = anime_data["picture"]
-            self.pushButton_4.setEnabled(True)
+        if anime_data["picture_tmp_filepath"]:
+            self.picture_filepath = anime_data["picture_tmp_filepath"]
+    
+        self.fill_data()
 
     def fill_custom_data(self) -> None:
         self.tableWidget.clearContents()
@@ -188,9 +164,6 @@ class SeasonDialog(QDialog):
         path = self.season.serie.path if self.season.serie.path and os.path.isdir(self.season.serie.path) else ""
         self.picture_filepath, filter = QFileDialog.getOpenFileName(self, self.tr("Choisir une image"), path,
                                                                     "Fichiers images (*.jpg *.jpeg *.png *.gif);;Tous les fichiers (*)")
-
-    def download_image(self) -> None:
-        self.picture_filepath = download_picture(self.picture_url)
 
     def delete_image(self) -> None:
         filepath = load_cover(self.parent.parent.parent.profile.path, "season", self.season.id)
@@ -249,11 +222,7 @@ class SeasonDialog(QDialog):
         if self.picture_filepath:
             save_cover(self.picture_filepath, self.parent.parent.parent.profile.path, "season", self.season.id)
 
-        self.unload_completer()
-
         super().accept()
 
     def reject(self) -> None:
-        self.unload_completer()
-
         super().reject()

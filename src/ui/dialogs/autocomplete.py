@@ -12,8 +12,10 @@ from PyQt6.uic import loadUi
 
 
 class AutocompleteDialog(QDialog):
-    def __init__(self, parent) -> None:
+    def __init__(self, parent, season_name) -> None:
         super().__init__(parent=parent)
+
+        self.anime_title = season_name
 
         self.anime_data = None
         self.animes_data = load_animes_json_data()
@@ -25,6 +27,8 @@ class AutocompleteDialog(QDialog):
     def init_ui(self) -> None:
         loadUi(os.path.join(os.path.dirname(__file__), "autocomplete.ui"), self)
         self.setWindowTitle(self.tr("Recherche des complétions automatiques"))
+
+        self.lineEdit.setText(self.anime_title)
 
         self.fill_table_data()
 

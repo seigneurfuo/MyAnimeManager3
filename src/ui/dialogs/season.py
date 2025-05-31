@@ -97,7 +97,7 @@ class SeasonDialog(QDialog):
             self.fill_custom_data()
 
     def open_autocomplete_dialog(self):
-        dialog = AutocompleteDialog(self)
+        dialog = AutocompleteDialog(self, self.season.name)
         dialog.exec()
 
         anime_data = dialog.anime_data
@@ -105,28 +105,30 @@ class SeasonDialog(QDialog):
 
         if not anime_data:
             return
+   
+        # Valeurs par défaut si nouvelle série
+        if not self.season.id:
+            self.season.name = ""
+            self.season.episodes = 0
+            self.season.airing = False
+            self.season.sort_id = 1
+            self.season.watched_episodes = 0
+            self.season.view_count = 0
+            self.season.state = 0
+            self.season.type = 1
+            self.season.custom_data = []
 
+        # Images
         if anime_data["picture_tmp_filepath"]:
             self.picture_filepath = anime_data["picture_tmp_filepath"]
 
+        # Données
         if not anime_data["picture_only"]:
             self.season.name = anime_data["title"]
             self.season.year = anime_data["year"]
             self.season.episodes = anime_data["episodes"]
             self.season.airing = (anime_data["status"] == "ONGOING") 
-        else:
-            self.season.name = ""
-            self.season.episodes = 0
-            self.season.airing = False
-   
-        # Valeurs par défaut
-        self.season.sort_id = 1
-        self.season.watched_episodes = 0
-        self.season.view_count = 0
-        self.season.state = 0
-        self.season.type = 1
-        self.season.custom_data = []
-    
+
         self.fill_data()
 
     def fill_custom_data(self) -> None:

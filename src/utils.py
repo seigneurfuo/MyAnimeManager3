@@ -3,6 +3,7 @@ import csv
 import json
 import os
 import shutil
+from tkinter import NO
 import urllib.request
 import tempfile
 
@@ -251,7 +252,9 @@ def save_cover(source_path, profile_path, type_, id_) -> bool | str:
 def download_picture(url) -> str:
     # On "spoof" le user agent sinon on peut tomber sur des erreurs 403 !
     request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36"})
-    with urllib.request.urlopen(request) as http_response, tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-        tmp_file.write(http_response.read())
-
-    return tmp_file.name
+    try:
+        with urllib.request.urlopen(request) as http_response, tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+            tmp_file.write(http_response.read())
+            return tmp_file.name
+    except:
+        return None

@@ -233,13 +233,11 @@ def load_cover(profile_path, type_, id_) -> str | None:
 
 
 def save_cover(source_path, profile_path, type_, id_) -> bool | str:
-    print(source_path, os.path.isfile(source_path))
     if not os.path.isfile(source_path):
         return False
 
     src = source_path
     dst = os.path.join(profile_path, f"covers/{type_}s/", str(id_))
-    print(src, "->", dst)
     if type_ in ("serie", "season"):
         folderpath = os.path.dirname(dst)
         if not os.path.isdir(folderpath):

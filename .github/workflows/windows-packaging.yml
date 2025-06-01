@@ -23,8 +23,10 @@ jobs:
     - name: Changing DEV version to current tag
       run: sed -i "s/\"DEV\"/\"$LATEST_COMMIT_DATE\"/g" "src/core.py"
 
-    - name: Instaling Pillow to convert png to ico for Application icon
-      run: pip install pillow
+    - name: Converting png icon to ico
+      run: | 
+        apt install imagemagick -y
+        magick convert "src/resources/icon.png" -define icon:auto-resize="256,128,96,64,48,32,16" "icon.ico"
      
     - name: Packaging application
       uses: JackMcKew/pyinstaller-action-windows@main

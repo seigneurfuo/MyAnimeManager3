@@ -1,0 +1,51 @@
+name: Package Application with Pyinstaller
+
+on:
+  push:
+    branches: [ pyinstaller-with-github-actions ]
+  pull_request:
+    branches: [ pyinstaller-with-github-actions ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Fetch tags
+      run: git fetch --tags
+
+    - name: Get latest tag on branch
+      run: |
+        # Get the latest tag on the current branch
+        LATEST_TAG=$(git tag --sort=-creatordate --contains HEAD | head -n 1)
+        echo "LATEST_TAG=${LATEST_TAG}" >> $GITHUB_ENV
+        echo "Tag: ${LATEST_TAG}"
+
+    - name: Changing DEV version to current tag
+      run: sed -i "s/\"DEV\"/\"$LATEST_TAG\"/g" "src/core.py"
+
+    - name: Package Application
+      uses: JackMcKew/pyinstaller-action-windows@main
+      with:
+        path: .
+        requirements: requirements.txt
+        spec: .pyinstaller.spec
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ github.event.repository.name }}-${{ env.LATEST_TAG }}-windows
+        path: dist/windows
+        compression-level: 9
+        include-hidden-files: true
+
+    - name: Create an empty file for the portable artifact
+      run: touch dist/windows/MyAnimeManager3/_internal/.portable
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ github.event.repository.name }}-${{ env.LATEST_TAG }}-windows-portable
+        path: dist/windows
+        compression-level: 9
+        include-hidden-files: true

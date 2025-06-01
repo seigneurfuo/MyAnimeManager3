@@ -13,6 +13,7 @@
 ### Bugs
 - Boutons supprimer et modifier d'une saison non grisés quand aucune n'est sélectionnée
 - Pareil pour les séries ?
+- Le bouton supprimer de l'image sur une saison doit etre grisé si aucune image n'existe
 
 ### En priorité
 - Améliorer le responsive

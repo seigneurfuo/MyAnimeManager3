@@ -24,7 +24,7 @@ jobs:
       run: sed -i "s/\"DEV\"/\"$LATEST_COMMIT_DATE\"/g" "src/core.py"
 
     - name: Instaling Pillow to convert png to ico for Application icon
-      run: pip install -U pillow
+      run: pip install pillow
      
     - name: Packaging application
       uses: JackMcKew/pyinstaller-action-windows@main

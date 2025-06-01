@@ -19,9 +19,9 @@ jobs:
     - name: Get latest tag on branch
       run: |
         # Get the latest tag on the current branch
-        LATEST_TAG=$(git tag --sort=-creatordate --contains HEAD | head -n 1)
-        echo "LATEST_TAG=${LATEST_TAG}" >> $GITHUB_ENV
-        echo "Tag: ${LATEST_TAG}"
+        LATEST_COMMIT_DATE=$(git show -s --format=%cd --date=format:"%Y.%m.%d")
+        echo "LATEST_COMMIT_DATE=${LATEST_COMMIT_DATE}" >> $GITHUB_ENV
+        echo "Latest commit date: ${LATEST_COMMIT_DATE}"
 
     - name: Changing DEV version to current tag
       run: sed -i "s/\"DEV\"/\"$LATEST_TAG\"/g" "src/core.py"

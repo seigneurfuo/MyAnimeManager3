@@ -13,12 +13,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Fetch tags
-      run: git fetch --tags
-
-    - name: Get latest tag on branch
+    - name: Get latest commit date on branch
       run: |
-        # Get the latest tag on the current branch
+        # Get the commit date on the current branch
         LATEST_COMMIT_DATE=$(git show -s --format=%cd --date=format:"%Y.%m.%d")
         echo "LATEST_COMMIT_DATE=${LATEST_COMMIT_DATE}" >> $GITHUB_ENV
         echo "Latest commit date: ${LATEST_COMMIT_DATE}"
@@ -26,6 +23,9 @@ jobs:
     - name: Changing DEV version to current tag
       run: sed -i "s/\"DEV\"/\"$LATEST_COMMIT_DATE\"/g" "src/core.py"
 
+    - name: Instaling Pillow to convert png to ico for Application icon
+      run: pip install -U pillow
+     
     - name: Packaging application
       uses: JackMcKew/pyinstaller-action-windows@main
       with:

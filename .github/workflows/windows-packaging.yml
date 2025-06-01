@@ -1,4 +1,4 @@
-name: Package Application with Pyinstaller
+name: Package application with Pyinstaller
 
 on:
   push:
@@ -24,9 +24,9 @@ jobs:
         echo "Latest commit date: ${LATEST_COMMIT_DATE}"
 
     - name: Changing DEV version to current tag
-      run: sed -i "s/\"DEV\"/\"$LATEST_TAG\"/g" "src/core.py"
+      run: sed -i "s/\"DEV\"/\"$LATEST_COMMIT_DATE\"/g" "src/core.py"
 
-    - name: Package Application
+    - name: Packaging application
       uses: JackMcKew/pyinstaller-action-windows@main
       with:
         path: .
@@ -35,7 +35,7 @@ jobs:
 
     - uses: actions/upload-artifact@v4
       with:
-        name: ${{ github.event.repository.name }}-${{ env.LATEST_TAG }}-windows
+        name: ${{ github.event.repository.name }}-${{ env.LATEST_COMMIT_DATE }}-windows
         path: dist/windows
         compression-level: 9
         include-hidden-files: true
@@ -45,7 +45,7 @@ jobs:
 
     - uses: actions/upload-artifact@v4
       with:
-        name: ${{ github.event.repository.name }}-${{ env.LATEST_TAG }}-windows-portable
+        name: ${{ github.event.repository.name }}-${{ env.LATEST_COMMIT_DATE }}-windows-portable
         path: dist/windows
         compression-level: 9
         include-hidden-files: true

@@ -25,7 +25,7 @@ jobs:
 
     - name: Converting png icon to ico
       run: | 
-        apt install imagemagick -y
+        sudo apt install imagemagick -y
         magick convert "src/resources/icon.png" -define icon:auto-resize="256,128,96,64,48,32,16" "icon.ico"
      
     - name: Packaging application

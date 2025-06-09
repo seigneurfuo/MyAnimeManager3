@@ -1,4 +1,4 @@
-name: Package Application with Pyinstaller
+name: Package application with Pyinstaller
 
 on:
   push:
@@ -13,20 +13,22 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Fetch tags
-      run: git fetch --tags
-
-    - name: Get latest tag on branch
+    - name: Get latest commit date on branch
       run: |
-        # Get the latest tag on the current branch
-        LATEST_TAG=$(git tag --sort=-creatordate --contains HEAD | head -n 1)
-        echo "LATEST_TAG=${LATEST_TAG}" >> $GITHUB_ENV
-        echo "Tag: ${LATEST_TAG}"
+        # Get the commit date on the current branch
+        LATEST_COMMIT_DATE=$(git show -s --format=%cd --date=format:"%Y.%m.%d")
+        echo "LATEST_COMMIT_DATE=${LATEST_COMMIT_DATE}" >> $GITHUB_ENV
+        echo "Latest commit date: ${LATEST_COMMIT_DATE}"
 
     - name: Changing DEV version to current tag
-      run: sed -i "s/\"DEV\"/\"$LATEST_TAG\"/g" "src/core.py"
+      run: sed -i "s/\"DEV\"/\"$LATEST_COMMIT_DATE\"/g" "src/core.py"
 
-    - name: Package Application
+    - name: Converting png icon to ico
+      run: | 
+        sudo apt install imagemagick -y
+        convert "src/resources/icon.png" -define icon:auto-resize="256,128,96,64,48,32,16" "src/resources/icon.ico"
+     
+    - name: Packaging application
       uses: JackMcKew/pyinstaller-action-windows@main
       with:
         path: .
@@ -35,7 +37,7 @@ jobs:
 
     - uses: actions/upload-artifact@v4
       with:
-        name: ${{ github.event.repository.name }}-${{ env.LATEST_TAG }}-windows
+        name: ${{ github.event.repository.name }}-${{ env.LATEST_COMMIT_DATE }}-windows
         path: dist/windows
         compression-level: 9
         include-hidden-files: true
@@ -45,7 +47,7 @@ jobs:
 
     - uses: actions/upload-artifact@v4
       with:
-        name: ${{ github.event.repository.name }}-${{ env.LATEST_TAG }}-windows-portable
+        name: ${{ github.event.repository.name }}-${{ env.LATEST_COMMIT_DATE }}-windows-portable
         path: dist/windows
         compression-level: 9
         include-hidden-files: true

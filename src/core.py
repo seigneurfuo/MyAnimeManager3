@@ -21,7 +21,8 @@ DEFAULT_CONFIG_DATA = {
     "friends_enabled": False,
     "custom_data_enabled": False,
     "anime_titles_autocomplete": False,
-    "planning_to_watched_alternative_order": False
+    "planning_to_watched_alternative_order": False,
+    "order_by_alternative_order": False
 }
 
 SEASONS_STATES = [

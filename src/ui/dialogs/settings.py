@@ -64,6 +64,9 @@ class SettingsDialog(QDialog):
         # Affichage alternatif dans la liste des épisodes à voir (tri par épisodes dernièrement vus)
         self.checkBox_6.setChecked(self.settings["planning_to_watched_alternative_order"])
 
+        # Affichage alternatif pour le tri ses séries
+        self.checkBox_7.setChecked(self.settings["order_by_alternative_order"])
+
     def save_settings_to_file(self) -> None:
         # self.settings["application_stylesheet"] = self.comboBox.currentData()
         self.settings["fusion_theme"] = self.checkBox_3.isChecked()
@@ -73,6 +76,7 @@ class SettingsDialog(QDialog):
         self.settings["custom_data_enabled"] = self.checkBox_4.isChecked()
         self.settings["anime_titles_autocomplete"] = self.checkBox_5.isChecked()
         self.settings["planning_to_watched_alternative_order"] = self.checkBox_6.isChecked()
+        self.settings["order_by_alternative_order"] = self.checkBox_7.isChecked()
 
         # Passage des paramètres à toute l'application
         self.parent.parent.settings = self.settings

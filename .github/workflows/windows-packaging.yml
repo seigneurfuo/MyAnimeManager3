@@ -2,9 +2,9 @@ name: Package application with Pyinstaller
 
 on:
   push:
-    branches: [ pyinstaller-with-github-actions ]
-  pull_request:
-    branches: [ pyinstaller-with-github-actions ]
+    branches: [ master, main ]
+  #pull_request:
+  #  branches: [ pyinstaller-with-github-actions ]
 
 jobs:
   build:
@@ -37,7 +37,7 @@ jobs:
 
     - uses: actions/upload-artifact@v4
       with:
-        name: ${{ github.event.repository.name }}-${{ env.LATEST_COMMIT_DATE }}-windows
+        name: ${{ github.event.repository.name }}-${{ env.LATEST_COMMIT_DATE }}-windows.zip
         path: dist/windows
         compression-level: 9
         include-hidden-files: true
@@ -47,7 +47,7 @@ jobs:
 
     - uses: actions/upload-artifact@v4
       with:
-        name: ${{ github.event.repository.name }}-${{ env.LATEST_COMMIT_DATE }}-windows-portable
+        name: ${{ github.event.repository.name }}-${{ env.LATEST_COMMIT_DATE }}-windows-portable.zip
         path: dist/windows
         compression-level: 9
         include-hidden-files: true

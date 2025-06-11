@@ -9,13 +9,10 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QWidget, QTableWidgetItem, QCheckBox, QHeaderView, QMessageBox, QLabel
 from PyQt6.uic import loadUi
 
-import utils
-
 from core import SEASONS_STATES, RATING_LEVELS
 from common import display_view_history_dialog
 from database import Series, Seasons, Friends, Planning, FriendsPlanning, SeasonsTypes
-
-import core
+from utils import load_cover, get_season_age, export_qtablewidget, order_by
 
 
 class List2(QWidget):
@@ -31,7 +28,7 @@ class List2(QWidget):
         loadUi(os.path.join(os.path.dirname(__file__), "list2_tab.ui"), self)
 
         # Remplissage de l'état des saisons
-        for index, season_state in enumerate(core.SEASONS_STATES):
+        for index, season_state in enumerate(SEASONS_STATES):
             state_icon = os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"])
             self.comboBox.addItem(QIcon(state_icon), season_state["name"], userData=index)
 
@@ -105,7 +102,7 @@ class List2(QWidget):
             request = request.where(Seasons.type == season_type)
 
         request = request.join(Series) \
-            .order_by(Seasons.serie.sort_id, Seasons.serie.name, Seasons.sort_id, Seasons.name)
+            .order_by(order_by(self.parent.parent.settings, Series), Seasons.sort_id)
 
         return request
 
@@ -123,7 +120,7 @@ class List2(QWidget):
             year = str(season.year) if season.year and str(season.year) != "None" else ""
 
             # Calcul de l'age
-            age = utils.get_season_age(season)
+            age = get_season_age(season)
             # Etat de la saison
             season_state = SEASONS_STATES[season.state]
 
@@ -165,7 +162,7 @@ class List2(QWidget):
             self.tableWidget.setItem(row_index, len(columns) + 1, item)
 
             # Note
-            rating = next(rating for rating in core.RATING_LEVELS if rating["value"] == season.rating)
+            rating = next(rating for rating in RATING_LEVELS if rating["value"] == season.rating)
             pixmap_path = os.path.join(os.path.dirname(__file__), "../../resources/icons", rating["icon"])
             # TODO: Ratio à conserver
             rating = QLabel()
@@ -173,7 +170,7 @@ class List2(QWidget):
             self.tableWidget.setCellWidget(row_index, len(columns) + 2, rating)
 
             # Image présente ?
-            cover_path = utils.load_cover(self.parent.parent.profile.path, "season", season.id)
+            cover_path = load_cover(self.parent.parent.profile.path, "season", season.id)
             picture_present_text = self.tr("Oui") if cover_path and os.path.isfile(cover_path) else self.tr("Non")
             picture_present = QTableWidgetItem(picture_present_text)
             self.tableWidget.setItem(row_index, len(columns) + 3, picture_present)
@@ -198,7 +195,7 @@ class List2(QWidget):
                                                                  QHeaderView.ResizeMode.ResizeToContents)
 
     def when_export_button_clicked(self) -> None:
-        filepath = utils.export_qtablewidget(self.tableWidget, self.parent.parent.profile.path, "liste")
+        filepath = export_qtablewidget(self.tableWidget, self.parent.parent.profile.path, "liste")
         # Bouton pour ouvrir le dossier ?
         QMessageBox.information(self, self.tr("Export terminé"),
                                 self.tr("Le fichier a été généré ici:") + "\n    " + filepath,

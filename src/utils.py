@@ -128,7 +128,7 @@ def get_collection_problems(parent) -> list[str]:
                 messages.append(msg)
 
     # ----- Séries -----
-    series = Series.select(Series.sort_id).where(Series.is_deleted == 0).order_by(Series.sort_id)
+    series = Series.select(Series.sort_id).where(Series.is_deleted == 0).order_by(order_by(parent.parent.settings, Series))
 
     # Vérification des ids manquants pour les séries
     # On vérifie que les ids entre le plus petit et le plus grand existant
@@ -155,7 +155,7 @@ def get_collection_problems(parent) -> list[str]:
     # Vérification des saisons avec le même numéro
     series = Series().select(Series.sort_id, peewee.fn.COUNT(Series.id)) \
         .where(Series.is_deleted == 0).having(peewee.fn.COUNT(Series.id) > 1) \
-        .group_by(Series.sort_id).order_by(Series.sort_id)
+        .group_by(Series.sort_id).order_by(order_by(parent.parent.settings, Series))
 
     for serie in series:
         msg = parent.tr(f"L'identifiant {serie.sort_id} est utilisé sur plusieurs séries !")
@@ -256,3 +256,6 @@ def download_picture(url) -> str:
             return tmp_file.name
     except:
         return None
+
+def order_by(settings, table):
+    return peewee.fn.Lower(table.name) if settings["order_by_alternative_order"] else table.sort_id

@@ -2,7 +2,7 @@
 
 import os
 
-import utils
+from utils import load_cover, order_by
 
 from database import Series, Seasons, Planning, SeasonsTypes
 
@@ -71,12 +71,12 @@ class TilesListTab(QWidget):
 
         # Chargement des données depuis la BDD
         if current_type_index == 0:
-            data = Seasons().select().where(Seasons.is_deleted == 0).join(Series).order_by(Series.sort_id, Seasons.sort_id)
+            data = Seasons().select().where(Seasons.is_deleted == 0).join(Series).order_by(order_by(self.parent.parent.settings, Series), Seasons.sort_id)
         else:
-            data = Series().select().where(Series.is_deleted == 0).order_by(Series.sort_id)
+            data = Series().select().where(Series.is_deleted == 0).order_by(order_by(Series))
 
         for row in data:
-            cover_path = utils.load_cover(self.parent.parent.profile.path, current_type_name, row.id)
+            cover_path = load_cover(self.parent.parent.profile.path, current_type_name, row.id)
 
             # Si on n'a pas de cover et qu'on n'affiche que les séries avec cover, alors on l'ignore
             if not cover_path and filter_coverless:

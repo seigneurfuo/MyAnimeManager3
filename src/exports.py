@@ -5,6 +5,7 @@ from datetime import datetime
 import os
 
 import database
+from utils import order_by
 
 
 def check_or_create_exports_folder(app_data_folder):
@@ -55,7 +56,7 @@ def export_series_list(app_data_folder):
     output_filepath = os.path.join(output_directory, f"series-list-{date}.md")
 
     with open(output_filepath, "w", encoding="utf-8") as output_file:
-        rows = database.Series.select().where(database.Series.is_deleted == 0).order_by(database.Series.sort_id)
+        rows = database.Series.select().where(database.Series.is_deleted == 0).order_by(order_by(database.Series))
         for row in rows:
             content = f"- {row.sort_id:03d} - {row.name}\n"
             output_file.write(content)

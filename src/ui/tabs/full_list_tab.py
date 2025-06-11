@@ -10,7 +10,7 @@ import os
 
 from core import SEASONS_STATES
 from common import display_view_history_dialog
-from utils import load_cover
+from utils import load_cover, order_by
 from database import Series, Seasons, SeasonsTypes, FriendsPlanning, Friends, Planning
 
 from ui.dialogs.serie import SerieDialog
@@ -74,7 +74,7 @@ class FullListTab(QWidget):
     def fill_series_combobox(self) -> None:
         self.comboBox.clear()
         completer_data = []
-        series = Series().select().where(Series.is_deleted == 0).order_by(Series.sort_id)
+        series = Series().select().where(Series.is_deleted == 0).order_by(order_by(self.parent.parent.settings, Series))
         for index, serie in enumerate(series):
             text = f"{serie.sort_id:03d} - {serie.name}"
             self.comboBox.addItem(text, userData=serie.id)
@@ -215,7 +215,7 @@ class FullListTab(QWidget):
             self.fill_season_list(serie)
 
     def when_view_deleted_elements_button_clicked(self) -> None:
-        deleted_series = Series().select().where(Series.is_deleted == 1).order_by(Series.sort_id)
+        deleted_series = Series().select().where(Series.is_deleted == 1).order_by(order_by(self.parent.parent.settings, Series))
         deleted_seasons = Seasons().select().where(Seasons.is_deleted == 1).join(Series).order_by(Seasons.sort_id)
         dialog = DeletedElementsDialog(self, deleted_series, deleted_seasons)
 

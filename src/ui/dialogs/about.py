@@ -20,9 +20,11 @@ class AboutDialog(QDialog):
 
         self.logo_clicks = 0
         self.icons_path = os.path.join(os.path.dirname(__file__), "../../resources/icons")
-        self.logo_data = [icon for icon in os.listdir(self.icons_path)
-                          if os.path.isfile(os.path.join(self.icons_path, icon))
-                          and icon.endswith(".png")]
+        self.logo_data = [
+            icon for icon in os.listdir(self.icons_path)
+            if os.path.isfile(os.path.join(self.icons_path, icon))
+            and icon.endswith(".png")
+        ]
 
         self.init_ui()
         self.init_events()
@@ -49,7 +51,8 @@ class AboutDialog(QDialog):
                   (self.qt_version, QT_VERSION_STR),
                   (self.pyqt_version, PYQT_VERSION_STR),
                   (self.peewee_version, peewee_version),
-                  (self.anime_offline_database_version, anime_offline_database_version)
+                  (self.anime_offline_database_version, anime_offline_database_version),
+                  (self.profile_path, self.parent.parent.profile.path)
               ]
 
         for field, value in fields:

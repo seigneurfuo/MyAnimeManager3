@@ -169,6 +169,9 @@ class SeasonDialog(QDialog):
                                                                     "Fichiers images (*.jpg *.jpeg *.png *.gif);;Tous les fichiers (*)")
 
     def delete_image(self) -> None:
+        if self.picture_filepath:
+            self.picture_filepath = ""
+
         filepath = load_cover(self.parent.parent.parent.profile.path, "season", self.season.id)
         if filepath:
             os.remove(filepath)

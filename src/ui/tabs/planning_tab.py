@@ -181,13 +181,13 @@ class PlanningTab(QWidget):
 
         states = [2] if self.checkBox_4.isChecked() else [1, 2]
         # https://docs.peewee-orm.com/en/latest/peewee/query_operators.html 1 or 2
-        episodes_to_watch = Seasons.select() \
-            .where(Seasons.state.in_(states), Seasons.watched_episodes < Seasons.episodes, Seasons.is_deleted == 0)
+        episodes_to_watch = Seasons.select().join(Series) \
+            .where(Seasons.state.in_(states), Seasons.watched_episodes < Seasons.episodes, Seasons.is_deleted == 0, Series.is_deleted == 0)
 
         if self.to_watch_table_text_filter:
             episodes_to_watch = episodes_to_watch.where(
                 Seasons.name.contains(self.to_watch_table_text_filter) | Series.name.contains(
-                    self.to_watch_table_text_filter)).join(Series)
+                    self.to_watch_table_text_filter))
 
         # Tri par la dernière saison vue
         if self.parent.parent.settings["planning_to_watched_alternative_order"]:

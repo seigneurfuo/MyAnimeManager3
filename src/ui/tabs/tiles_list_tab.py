@@ -73,7 +73,7 @@ class TilesListTab(QWidget):
         if current_type_index == 0:
             data = Seasons().select().where(Seasons.is_deleted == 0).join(Series).order_by(order_by(self.parent.parent.settings, Series), Seasons.sort_id)
         else:
-            data = Series().select().where(Series.is_deleted == 0).order_by(order_by(Series))
+            data = Series().select().where(Series.is_deleted == 0).order_by(order_by(self.parent.parent.settings, Series), Series.sort_id)
 
         for row in data:
             cover_path = load_cover(self.parent.parent.profile.path, current_type_name, row.id)

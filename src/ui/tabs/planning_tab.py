@@ -11,13 +11,11 @@ from PyQt6.uic import loadUi
 
 from ui.dialogs.edit_date import EditDateDialog
 from ui.widgets.custom_calendar import CustomCalendar
-from database import Planning, Seasons, Friends, FriendsPlanning
+from database import Planning, Series, Seasons, Friends, FriendsPlanning
 from core import SEASONS_STATES
 from common import display_view_history_dialog
 
 import peewee
-
-from database import Series
 
 
 class PlanningTab(QWidget):
@@ -116,8 +114,8 @@ class PlanningTab(QWidget):
         stop_date = first_mounth_date + delta
 
         # Coloration des jours sur le calendrier
-        dates = [record.date for record in Planning().select().where(Planning.date.between(start_date, stop_date)) \
-            .group_by(Planning.date).order_by(Planning.date)]
+        dates = [record.date for record in Planning().select().join(Series).where(Planning.date.between(start_date, stop_date)) \
+            .where(Series.is_deleted == 0).group_by(Planning.date).order_by(Planning.date)]
 
         self.planning_calendar.set_dates(dates)
 
@@ -138,7 +136,7 @@ class PlanningTab(QWidget):
 
         calendar_date = self.planning_calendar.selectedDate().toPyDate()
 
-        planning_data_list = Planning().select().where(Planning.date == calendar_date).order_by(Planning.id)
+        planning_data_list = Planning().select().join(Series).join(Seasons).where(Planning.date == calendar_date).where(Series.is_deleted == 0).order_by(Planning.id)
 
         self.tableWidget_7.clearContents()
 

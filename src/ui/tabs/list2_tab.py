@@ -74,7 +74,7 @@ class List2(QWidget):
             self.parent.full_list_tab.set_series_combobox_current_selection(season.serie.id)
 
     def get_request_with_filters(self):
-        request = Seasons().select().where(Seasons.is_deleted == 0)
+        request = Seasons().select().join(Series).where(Seasons.is_deleted == 0).where(Series.is_deleted == 0)
 
         start_year = self.start_year_spinbox.value()
         stop_year = self.stop_year_spinbox.value()
@@ -101,8 +101,7 @@ class List2(QWidget):
         if season_type:
             request = request.where(Seasons.type == season_type)
 
-        request = request.join(Series) \
-            .order_by(order_by(self.parent.parent.settings, Series), Seasons.sort_id)
+        request = request.order_by(order_by(self.parent.parent.settings, Series), Seasons.sort_id)
 
         return request
 

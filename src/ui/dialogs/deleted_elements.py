@@ -4,6 +4,8 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView, QCheckBox
 from PyQt6.uic import loadUi
 
+from database import Seasons, Series
+
 
 class DeletedElementsDialog(QDialog):
     def __init__(self, parent, deleted_series, deleted_seasons) -> None:
@@ -97,8 +99,23 @@ class DeletedElementsDialog(QDialog):
                 season_id = self.tableWidget_2.item(row_index, 1).data(Qt.ItemDataRole.UserRole)
                 self.seasons_to_restore.append(season_id)
 
+    def restore_elements(self):
+        # Séries
+        for serie_id in self.series_to_restore:
+            serie = Series.get(serie_id)
+            serie.is_deleted = 0
+            serie.save()
+
+        # Saisons
+        for season_id in self.seasons_to_restore:
+            season = Seasons.get(season_id)
+            season.is_deleted = 0
+            season.save()
+
     def accept(self) -> None:
         self.get_checked_for_restoration()
+        self.restore_elements()
+
         super().accept()
 
     def reject(self) -> None:

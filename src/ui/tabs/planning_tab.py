@@ -114,7 +114,8 @@ class PlanningTab(QWidget):
         stop_date = first_mounth_date + delta
 
         # Coloration des jours sur le calendrier
-        dates = [record.date for record in Planning().select().join(Series).where(Planning.date.between(start_date, stop_date)) \
+        dates = [record.date for record in Planning().select().join(Series, on=(Series.id == Planning.serie_id), join_type=peewee.JOIN.LEFT_OUTER) \
+            .where(Planning.date.between(start_date, stop_date)) \
             .where(Series.is_deleted == 0).group_by(Planning.date).order_by(Planning.date)]
 
         self.planning_calendar.set_dates(dates)
@@ -136,7 +137,11 @@ class PlanningTab(QWidget):
 
         calendar_date = self.planning_calendar.selectedDate().toPyDate()
 
-        planning_data_list = Planning().select().join(Series).join(Seasons).where(Planning.date == calendar_date).where(Series.is_deleted == 0).order_by(Planning.id)
+        planning_data_list = Planning.select() \
+             .join(Series, on=(Series.id == Planning.serie_id), join_type=peewee.JOIN.LEFT_OUTER) \
+             .join(Seasons, on=(Seasons.id == Planning.season_id), join_type=peewee.JOIN.LEFT_OUTER) \
+             .where((Planning.date == calendar_date) & (Series.is_deleted == 0)) \
+             .order_by(Planning.id)
 
         self.tableWidget_7.clearContents()
 

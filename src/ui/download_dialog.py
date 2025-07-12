@@ -25,8 +25,11 @@ class DownloadThread(QThread):
                 self.update_size.emit(downloaded_size)  # Emit the downloaded size
 
                 #time.sleep(0.001)
+        try:
+            urllib.request.urlretrieve(self.url, self.filepath, reporthook=report_progress)
+        except:
+            pass
 
-        urllib.request.urlretrieve(self.url, self.filepath, reporthook=report_progress)
         self.finished.emit()
 
 class DownloadDialog(QDialog):

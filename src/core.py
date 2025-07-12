@@ -7,9 +7,8 @@ app_name_and_version = f"{app_name} - {app_version}"
 release_url = "https://api.github.com/repos/seigneurfuo/MyAnimeManager3/releases/latest"
 bugtracker_url = "https://github.com/seigneurfuo/MyAnimeManager3/issues/new"
 
-anime_offline_database_release_url = "https://api.github.com/repos/manami-project/anime-offline-database/releases/latest"
-anime_offline_database_last_commit_url = "https://api.github.com/repos/manami-project/anime-offline-database/commits?path=anime-offline-database-minified.json&page=1&per_page=1"
-anime_offline_database_json_url = "https://raw.githubusercontent.com/manami-project/anime-offline-database/refs/heads/master/anime-offline-database-minified.json"
+anime_offline_database_releases_url = "https://api.github.com/repos/manami-project/anime-offline-database/releases/latest"
+anime_offline_database_json_url = "https://github.com/manami-project/anime-offline-database/releases/download/{version}/anime-offline-database-minified.json"
 
 APPLICATION_DATA_PATH, PROFILES_PATH = get_paths()
 

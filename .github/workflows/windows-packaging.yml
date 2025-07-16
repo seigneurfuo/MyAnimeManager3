@@ -45,7 +45,7 @@ jobs:
 
     - name: Creating zip for before upload to release
       run: | 
-        cd dist/windows
+        cd dist/windows/MyAnimeManager3
         sudo zip -9 -r "../myanimemanager-${LATEST_COMMIT_DATE}-windows.zip" *
 
     #- name: Upload artifact
@@ -59,7 +59,7 @@ jobs:
     - name: Creating portable zip for before upload to release
       run: | 
         cd dist/windows
-        touch dist/windows/MyAnimeManager3/_internal/.portable
+        touch _internal/.portable
         sudo zip -9 -r "../myanimemanager-${LATEST_COMMIT_DATE}-windows-portable.zip" *
     
     - name: Upload file to release

@@ -57,8 +57,7 @@ jobs:
     #    include-hidden-files: true
 
     - name: Creating portable zip for before upload to release
-      run: | 
-        cd dist/windows
+      run: |
         touch _internal/.portable
         sudo zip -9 -r "../myanimemanager-${LATEST_COMMIT_DATE}-windows-portable.zip" *
     

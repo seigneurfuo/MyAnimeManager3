@@ -65,5 +65,5 @@ jobs:
       if: github.ref_type == 'tag'
       with:
         files: |
-          myanimemanager-${{ github.ref_name }}-windows.zip
-          myanimemanager-${{ github.ref_name }}-windows-portable.zip
+          dist/myanimemanager-${{ github.ref_name }}-windows.zip
+          dist/myanimemanager-${{ github.ref_name }}-windows-portable.zip

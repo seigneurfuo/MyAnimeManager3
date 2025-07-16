@@ -1,0 +1,16 @@
+name: Create new release from tag
+
+on:
+  push:
+    branches: [ master, main ]
+    tags:        
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'

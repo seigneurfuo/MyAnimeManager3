@@ -35,17 +35,17 @@ jobs:
         requirements: requirements.txt
         spec: .pyinstaller.spec
 
-    - uses: actions/upload-artifact@v4
-      with:
-        name: ${{ github.event.repository.name }}-${{ env.LATEST_COMMIT_DATE }}-windows.zip
-        path: dist/windows
-        compression-level: 9
-        include-hidden-files: true
+    #- uses: actions/upload-artifact@v4
+    #  with:
+    #    name: ${{ github.event.repository.name }}-${{ env.LATEST_COMMIT_DATE }}-windows.zip
+    #    path: dist/windows
+    #    compression-level: 9
+    #    include-hidden-files: true
 
     - name: Creating zip for before upload to release
       run: | 
         cd dist/windows
-        zip -9 -r "../myanimemanager-${LATEST_COMMIT_DATE}-windows.zip" *
+        sudo zip -9 -r "../myanimemanager-${LATEST_COMMIT_DATE}-windows.zip" *
 
     #- name: Upload artifact
     #  uses: actions/upload-artifact@v4
@@ -58,7 +58,7 @@ jobs:
     - name: Creating portable zip for before upload to release
       run: | 
         touch dist/windows/MyAnimeManager3/_internal/.portable
-        zip -9 -r "../myanimemanager-${LATEST_COMMIT_DATE}-windows-portable.zip" *
+        sudo zip -9 -r "../myanimemanager-${LATEST_COMMIT_DATE}-windows-portable.zip" *
     
     - name: Upload file to release
       uses: softprops/action-gh-release@v2

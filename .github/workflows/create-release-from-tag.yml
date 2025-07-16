@@ -1,17 +1,17 @@
-name: Create new release from tag
+#name: Create new release from tag
 
-on:
-  push:
-    branches: [ master, main ]
-    tags:        
-      - '202*'
+#on:
+#  push:
+#    branches: [ master, main ]
+#    tags:        
+#      - '202*'
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
 
-    steps:
-      - uses: softprops/action-gh-release@v2
-        if: github.ref_type == 'tag'
-        with:
-          make_latest: true
+#    steps:
+#      - uses: softprops/action-gh-release@v2
+#        if: github.ref_type == 'tag'
+#        with:
+#          make_latest: true

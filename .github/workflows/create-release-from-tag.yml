@@ -4,13 +4,14 @@ on:
   push:
     branches: [ master, main ]
     tags:        
-      - '*'
+      - '202*'
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Release
-        uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v2
         if: github.ref_type == 'tag'
+        with:
+          make_latest: true

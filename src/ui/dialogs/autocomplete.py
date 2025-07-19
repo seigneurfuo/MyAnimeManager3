@@ -127,7 +127,7 @@ class AutocompleteDialog(QDialog):
         del self.animes_data
 
         self.anime_data["picture_tmp_filepath"] = self.picture_tmp_filepath
-        self.anime_data["picture_only"] = self.checkBox.isChecked()
+        self.anime_data["save_type"] = self.comboBox.currentIndex()
         
         super().accept()
 

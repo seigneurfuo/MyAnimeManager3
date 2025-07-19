@@ -162,10 +162,22 @@
       </spacer>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox">
-       <property name="text">
-        <string>Ne récupérer que l'image</string>
-       </property>
+      <widget class="QComboBox" name="comboBox">
+       <item>
+        <property name="text">
+         <string>Tout enregistrer</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Tout enregistrer sauf l'image</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Enregistrer seulement l'image</string>
+        </property>
+       </item>
       </widget>
      </item>
     </layout>

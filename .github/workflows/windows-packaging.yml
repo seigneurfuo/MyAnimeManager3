@@ -43,10 +43,10 @@ jobs:
     #    compression-level: 9
     #    include-hidden-files: true
 
-    #- name: Creating zip for before upload to release
-    #  run: | 
-    #    cd dist/windows/MyAnimeManager3
-    #    sudo zip -9 -r "../myanimemanager-${LATEST_COMMIT_DATE}-windows.zip" *
+    - name: Creating zip for before upload to release
+      run: | 
+        cd dist/windows/MyAnimeManager3
+        sudo zip -9 -r "../myanimemanager-${LATEST_COMMIT_DATE}-windows.zip" *
 
     - name: ls
       run: | 
@@ -65,8 +65,8 @@ jobs:
     #    touch _internal/.portable
     #    sudo zip -9 -r "../myanimemanager-${LATEST_COMMIT_DATE}-windows-portable.zip" *
     
-    #- name: Upload file to release
-    #  uses: softprops/action-gh-release@v2
-    #  with:
-    #    files: |
-    #      dist/myanimemanager-${{ github.ref_name }}-windows.zip
+    - name: Upload file to release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          dist/windows/myanimemanager-${{ github.ref_name }}-windows.zip

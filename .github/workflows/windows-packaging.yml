@@ -43,14 +43,10 @@ jobs:
     #    compression-level: 9
     #    include-hidden-files: true
 
-    - name: Creating zip for before upload to release
+    - name: Creating zip before upload the release
       run: | 
         cd dist/windows/MyAnimeManager3
         sudo zip -9 -r "../myanimemanager-${LATEST_COMMIT_DATE}-windows.zip" *
-
-    - name: ls
-      run: | 
-        ls dist
 
     #- name: Upload artifact
     #  uses: actions/upload-artifact@v4

@@ -48,6 +48,11 @@ jobs:
         cd dist/windows/MyAnimeManager3
         sudo zip -9 -r "../myanimemanager-${LATEST_COMMIT_DATE}-windows.zip" *
 
+    - name: ls
+      run: | 
+        ls ../
+        pwd
+
     #- name: Upload artifact
     #  uses: actions/upload-artifact@v4
     #  with:

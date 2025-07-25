@@ -52,11 +52,12 @@ def check_for_application_update() -> bool:
         zipball_url = json_data["zipball_url"]
 
         if app_version < remote_version:
-            choice = QMessageBox.information(None, "Nouvelle version disponible",
+            dialog = QMessageBox.information(None, "Nouvelle version disponible",
                                              f"Une nouvelle version est disponible: {remote_version}.\nSouhaitez-vous télécharger la mise à jour sur la page du projet ?",
                                              QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
-            if choice == QMessageBox.StandardButton.Yes:
+            choice = dialog is QMessageBox.StandardButton.Yes
+            if choice:
                 webbrowser.open(release_page_url, 2)
 
             return choice

@@ -33,6 +33,10 @@ cp %{src_root}/../../src/resources/icon.png %{buildroot}/opt/%{name}/resources/
 mkdir -p %{buildroot}/opt/%{name}/resources/icons
 cp %{src_root}/../../src/resources/icons/*.png %{buildroot}/opt/%{name}/resources/icons/
 
+# ./resources/frames/
+mkdir -p %{buildroot}/opt/%{name}/resources/frames
+cp %{src_root}/../../src/resources/frames/*.png %{buildroot}/opt/%{name}/resources/frames/
+
 # ./ui/
 mkdir -p %{buildroot}/opt/%{name}/ui/
 cp %{src_root}/../../src/ui/*.py %{buildroot}/opt/%{name}/ui/
@@ -67,6 +71,9 @@ cp %{src_root}/myanimemanager3.desktop %{buildroot}/usr/share/applications/myani
 
 # ./resources/icons/
 /opt/%{name}/resources/icons/*.png
+
+# ./resources/frames/
+/opt/%{name}/resources/frames/*.png
 
 # ./ui/
 /opt/%{name}/ui/*.py

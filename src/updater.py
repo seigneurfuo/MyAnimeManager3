@@ -1,3 +1,4 @@
+from ntpath import isfile
 import os
 import urllib.request
 import json
@@ -18,17 +19,6 @@ def _request_data(url):
         return None
 
     return req.read()
-def _download_file(url, filepath) -> bool:
-    data = _request_data(url)
-    if not data:
-        return None
-
-    if os.path.isfile(filepath):
-        os.remove(filepath)
-
-    with open(filepath, "wb") as json_file:
-        json_file.write(data)
-        return True
 
 def _request_json(url):
     data = _request_data(url)
@@ -39,7 +29,7 @@ def _request_json(url):
     return json_data
 
 def check_for_application_update() -> bool:
-    print("Recherche de mises à jour ...")
+    print("Recherche de mises à jour de l'application ...")
     try:
         json_data = _request_json(release_url)
         if not json_data:
@@ -99,3 +89,23 @@ def check_for_autocomplete_data_update() -> bool:
     except Exception as e:
         print(e)
         return False
+
+
+def already_checked() -> bool:
+    current_day_int = datetime.now().strftime("%Y%m%d")
+
+    last_update_date = None
+    last_update_filepath = os.path.join(APPLICATION_DATA_PATH, ".last-update-date")
+   
+    if os.path.isfile(last_update_filepath):
+        with open(last_update_filepath, "r") as last_update_file:
+            last_update_date = last_update_file.read().strip()
+
+    # Ecriture de la date du jour
+    with open(last_update_filepath, "w") as last_update_file:
+        last_update_file.write(current_day_int)
+
+    already_checked = last_update_date and last_update_date >= current_day_int
+    print("Besoin de rechercher des mises à jour:", not already_checked)
+
+    return already_checked

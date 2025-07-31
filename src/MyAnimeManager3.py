@@ -44,13 +44,16 @@ class Application(QApplication):
             self.setStyle("fusion")
         # set_theme(self, self.settings["application_stylesheet"])
 
+        # Recherche de mise à jour quotidiennes
+        update_already_checked = updater.already_checked()
+
         # Recherche de MAJ
-        if not args.offline and (core.app_version != "DEV" and self.settings["updates_check"]):
+        if not update_already_checked and not args.offline and (core.app_version != "DEV" and self.settings["updates_check"]):
             if updater.check_for_application_update():
                 self.exit()
 
         # Recherche de MAj pour l'autocomplete
-        if self.settings["anime_titles_autocomplete"] and not args.offline:
+        if self.settings["anime_titles_autocomplete"] and not update_already_checked and not args.offline :
             updater.check_for_autocomplete_data_update()
 
         self.profile = self.load_profile(args.profile_name)

@@ -33,17 +33,20 @@ class AboutDialog(QDialog):
         loadUi(os.path.join(os.path.dirname(__file__), "about.ui"), self)
         self.setWindowTitle(self.tr("A propos"))
 
+        self.tabWidget.setCurrentIndex(0)
+
         self.fill_data()
 
     def init_events(self) -> None:
         self.logo.mousePressEvent = self.when_logo_clicked
 
     def fill_data(self) -> None:
+        anime_offline_database_version = self.tr("Inutilisé")
+        
         if self.parent.parent.settings["anime_titles_autocomplete"]:
-            anime_offline_database_version = anime_json_data_version()
+            anime_offline_database_version = anime_json_data_version() if anime_json_data_version() else self.tr("Impossible de récupérer le numéro de version")
 
-        else:
-            anime_offline_database_version = self.tr("Inutilisé")
+        is_portable = self.tr("Oui") if IS_PORTABLE else self.tr("Non")
 
         fields = [(self.application_name, app_name),
                   (self.application_version, app_version),
@@ -52,7 +55,8 @@ class AboutDialog(QDialog):
                   (self.pyqt_version, PYQT_VERSION_STR),
                   (self.peewee_version, peewee_version),
                   (self.anime_offline_database_version, anime_offline_database_version),
-                  (self.profile_path, self.parent.parent.profile.path)
+                  (self.profile_path, self.parent.parent.profile.path),
+                  (self.portable, is_portable),
               ]
 
         for field, value in fields:

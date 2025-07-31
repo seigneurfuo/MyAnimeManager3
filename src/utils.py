@@ -18,7 +18,7 @@ from PyQt6.QtWidgets import QCompleter
 from PyQt6.QtCore import Qt
 
 # Pour Nyelson ^._.^
-def get_paths() -> tuple[str, str]:
+def get_paths() -> tuple[str, str, bool]:
     PORTABLE_PATH = os.path.join(os.path.dirname(__file__))
     is_portable = os.path.isfile(os.path.join(PORTABLE_PATH, ".portable"))
     if is_portable:
@@ -28,7 +28,7 @@ def get_paths() -> tuple[str, str]:
 
     profiles_path = os.path.join(application_data_path, "profiles")
 
-    return application_data_path, profiles_path
+    return application_data_path, profiles_path, is_portable
 
 
 def get_duration_list(episodes_count, duration, pause_every, pause_duration, start) -> list[str]:

@@ -19,12 +19,8 @@ class AboutDialog(QDialog):
         self.parent = parent
 
         self.logo_clicks = 0
-        self.icons_path = os.path.join(os.path.dirname(__file__), "../../resources/icons")
-        self.logo_data = [
-            icon for icon in os.listdir(self.icons_path)
-            if os.path.isfile(os.path.join(self.icons_path, icon))
-            and icon.endswith(".png")
-        ]
+        self.icons_path = os.path.join(os.path.dirname(__file__), "../../resources/frames")
+        self.logo_data = ["003.png", "002.png", "001.png", "002.png"]
 
         self.init_ui()
         self.init_events()
@@ -61,6 +57,9 @@ class AboutDialog(QDialog):
 
         for field, value in fields:
             field.setText(value)
+
+    def async_get_anime_offline_database_version(self):
+        pass
 
     def when_logo_clicked(self, event) -> None:
         pixmap = os.path.join(os.path.dirname(__file__), self.icons_path, self.logo_data[self.logo_clicks])

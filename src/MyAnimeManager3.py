@@ -3,6 +3,7 @@ import argparse
 import sys
 import os
 import platform
+import logging
 
 from PyQt6.QtCore import QLibraryInfo, QTranslator, QLocale
 from PyQt6.QtWidgets import QApplication
@@ -97,10 +98,18 @@ class Application(QApplication):
         return load_or_create_database(self.profile)
 
 
-if __name__ == "__main__":
+def main():
+    # Logging
+    APPLICATION_DATA_PATH, _, _ = core.get_paths()
+    log_filepath = os.path.join(APPLICATION_DATA_PATH, "log.txt")
+    logging.basicConfig(filename=log_filepath, level=logging.ERROR, format="%(asctime)s - %(levelname)s - %(message)s")
+
+    # Arguments
     argument_parser = argparse.ArgumentParser()
+    
     argument_parser.add_argument("--profile-name", required=False, help="Charger directement un profil via son nom")
     argument_parser.add_argument("--offline", required=False, action="store_true", help="Mode en hors ligne: désactive la recherche de mise à jour de l'application et des complétions automatiques")
+    
     args = argument_parser.parse_args()
 
     application = Application(sys.argv, args)
@@ -109,7 +118,16 @@ if __name__ == "__main__":
     # https://doc.qt.io/qtforpython-6/tutorials/basictutorial/translations.html
     path = QLibraryInfo.path(QLibraryInfo.LibraryPath.TranslationsPath)
     translator = QTranslator(application)
-    if translator.load(QLocale.system(), 'qtbase', '_', path):
+    if translator.load(QLocale.system(), "qtbase", "_", path):
         application.installTranslator(translator)
 
     sys.exit(application.exec())
+
+
+if __name__ == "__main__":
+    try:
+        main()
+
+    except Exception as e:
+        print(e)
+        logging.error("An error occurred during application execution: %s", e)

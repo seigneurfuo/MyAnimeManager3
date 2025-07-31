@@ -8,7 +8,7 @@ from PyQt6.uic import loadUi
 
 from peewee import __version__ as peewee_version
 
-from core import app_name, app_version
+from core import app_name, app_version, IS_PORTABLE
 from utils import anime_json_data_version
 
 

@@ -123,7 +123,9 @@
          <item row="2" column="1">
           <widget class="QLabel" name="qt_version">
            <property name="font">
-            <font/>
+            <font>
+             <italic>true</italic>
+            </font>
            </property>
            <property name="text">
             <string>qt_version</string>
@@ -297,7 +299,7 @@
             <x>0</x>
             <y>0</y>
             <width>1057</width>
-            <height>369</height>
+            <height>90</height>
            </rect>
           </property>
           <attribute name="icon">

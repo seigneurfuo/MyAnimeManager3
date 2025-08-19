@@ -255,7 +255,7 @@ def download_picture(url) -> str:
             tmp_file.write(http_response.read())
             return tmp_file.name
     except:
-        return None
+        return ""
 
 def order_by(settings, table):
     return peewee.fn.Lower(table.name) if settings["order_by_alternative_order"] else table.sort_id

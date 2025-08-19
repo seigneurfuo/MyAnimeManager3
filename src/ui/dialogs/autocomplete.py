@@ -111,15 +111,12 @@ class AutocompleteDialog(QDialog):
         pixmap_label = self.label_10
         picture_url = anime_data["picture"]
 
-        # TODO: Thread en arrièe plan pour gérer l'image (comme ça évite de tout bloquer si on n'a pas internet)
+        # TODO: Thread en arrière plan pour gérer l'image (comme ça évite de tout bloquer si on n'a pas internet)
+        pixmap = QPixmap()
         if picture_url:
             self.picture_tmp_filepath = download_picture(picture_url)
             if self.picture_tmp_filepath:  
                 pixmap = QPixmap.fromImage(QImage(self.picture_tmp_filepath)).scaled(pixmap_label.width(), pixmap_label.height(), Qt.AspectRatioMode.KeepAspectRatio)
-            else:
-                pixmap = QPixmap()
-        else:
-            pixmap = QPixmap()
 
         pixmap_label.setPixmap(pixmap)
 

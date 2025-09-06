@@ -12,6 +12,7 @@ URL:            https://seigneurfuo.com
 
 Requires:       python3-PyQt6
 Requires:       python3-peewee
+Requires:       python3-tkinter
 
 %description
 Un logiciel de gestion de séries et d'animés.

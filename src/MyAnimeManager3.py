@@ -101,6 +101,9 @@ class Application(QApplication):
 def main():
     # Logging
     APPLICATION_DATA_PATH, _, _ = core.get_paths()
+    if not os.path.isdir(APPLICATION_DATA_PATH):
+        os.makedirs(APPLICATION_DATA_PATH)
+        
     log_filepath = os.path.join(APPLICATION_DATA_PATH, "log.txt")
     logging.basicConfig(filename=log_filepath, level=logging.ERROR, format="%(asctime)s - %(levelname)s - %(message)s")
 

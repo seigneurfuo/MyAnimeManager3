@@ -111,14 +111,20 @@ class StatsTab(QWidget):
         elif query_index == 4:
             headers = ["Année", "Nombre"]
             query = Planning.select(Planning.date.year, peewee.fn.COUNT(Planning.id)) \
+                .join(Seasons)\
+                .where(Seasons.is_deleted == 0) \
                 .group_by(Planning.date.year).order_by(Planning.date.year)
 
+        # Journal de visionnage détaillé
         elif query_index == 5:
             headers = ["Date", "Ids", "Série", "Saison", "Episode"]
             query = Planning.select(Planning.date, Series.sort_id.concat(" - ").concat(Seasons.sort_id),
                                     Series.name.alias("serie_name"), Seasons.name, Planning.episode) \
-                .join(Series).switch(Planning).join(Seasons).order_by(Planning.date.desc(), Planning.id.desc())
+                .join(Series).switch(Planning).join(Seasons) \
+                .where(Series.is_deleted == 0).where(Seasons.is_deleted == 0) \
+                .order_by(Planning.date.desc(), Planning.id.desc())
 
+        # Liste des séries pour lequelles il reste des saisons à voir
         elif query_index == 6:
             headers = ["Ids", "Série", "Saison", "Episodes vus"]
             query = Seasons.select(Series.sort_id.concat(" - ").concat(Seasons.sort_id),
@@ -127,6 +133,7 @@ class StatsTab(QWidget):
                 .join(Series).where(Seasons.is_deleted == 0).where(Seasons.state.in_([0, 1, 2, 5])) \
                 .order_by(Series.name.asc(), Seasons.name.asc())
 
+        # Date du dernier épisode vu par séries
         elif query_index == 7:
             headers = ["Date", "Ids", "Série"]
             query = Planning.select(Planning.date, Series.sort_id.concat(" - ").concat(Seasons.sort_id), Series.name) \

@@ -123,9 +123,7 @@
          <item row="2" column="1">
           <widget class="QLabel" name="qt_version">
            <property name="font">
-            <font>
-             <italic>true</italic>
-            </font>
+            <font/>
            </property>
            <property name="text">
             <string>qt_version</string>
@@ -207,30 +205,41 @@
         </layout>
        </item>
        <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Développement: seigneurfuo &amp;lt;&lt;a href=&quot;https://github.com/seigneurfuo&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/seigneurfuo&lt;/span&gt;&lt;/a&gt;&amp;gt;&lt;br/&gt;Tests divers, idées supplémentaires: Lonnes&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-         <property name="openExternalLinks">
-          <bool>true</bool>
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="logo">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap>../../resources/icon.png</pixmap>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLabel" name="logo">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap>../../resources/icon.png</pixmap>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Développement: seigneurfuo &amp;lt;&lt;a href=&quot;https://github.com/seigneurfuo&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/seigneurfuo&lt;/span&gt;&lt;/a&gt;&amp;gt;&lt;br/&gt;Tests divers, idées supplémentaires: Lonnes&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <spacer name="verticalSpacer_2">
@@ -299,7 +308,7 @@
             <x>0</x>
             <y>0</y>
             <width>1057</width>
-            <height>90</height>
+            <height>369</height>
            </rect>
           </property>
           <attribute name="icon">

@@ -1,7 +1,7 @@
 import os
 from platform import python_version
 
-from PyQt6.QtCore import QT_VERSION_STR, PYQT_VERSION_STR
+from PyQt6.QtCore import QT_VERSION_STR, PYQT_VERSION_STR, pyqtSlot, QRunnable, QThreadPool
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import QDialog
 from PyQt6.uic import loadUi
@@ -37,10 +37,15 @@ class AboutDialog(QDialog):
         self.logo.mousePressEvent = self.when_logo_clicked
 
     def fill_data(self) -> None:
-        anime_offline_database_version = self.tr("Inutilisé")
-        
+        # Version de l'autocomplétion        
         if self.parent.parent.settings["anime_titles_autocomplete"]:
-            anime_offline_database_version = anime_json_data_version() if anime_json_data_version() else self.tr("Impossible de récupérer le numéro de version")
+            self.anime_offline_database_version.setText(self.tr("Chargement..."))
+
+            worker = Worker(self.async_fill_anime_offline_database_version)
+            self.threadpool = QThreadPool()
+            self.threadpool.start(worker)
+        else:
+            self.anime_offline_database_version.setText(self.tr("Inutilisé"))
 
         is_portable = self.tr("Oui") if IS_PORTABLE else self.tr("Non")
 
@@ -50,7 +55,6 @@ class AboutDialog(QDialog):
                   (self.qt_version, QT_VERSION_STR),
                   (self.pyqt_version, PYQT_VERSION_STR),
                   (self.peewee_version, peewee_version),
-                  (self.anime_offline_database_version, anime_offline_database_version),
                   (self.profile_path, self.parent.parent.profile.path),
                   (self.portable, is_portable),
               ]
@@ -58,8 +62,9 @@ class AboutDialog(QDialog):
         for field, value in fields:
             field.setText(value)
 
-    def async_get_anime_offline_database_version(self):
-        pass
+    def async_fill_anime_offline_database_version(self):
+        anime_offline_database_version = anime_json_data_version() if anime_json_data_version() else self.tr("Impossible de récupérer le numéro de version")
+        self.anime_offline_database_version.setText(anime_offline_database_version)
 
     def when_logo_clicked(self, event) -> None:
         pixmap = os.path.join(os.path.dirname(__file__), self.icons_path, self.logo_data[self.logo_clicks])
@@ -69,3 +74,16 @@ class AboutDialog(QDialog):
             self.logo_clicks = 0
         else:
             self.logo_clicks += 1
+
+class Worker(QRunnable):
+    """Worker thread."""
+
+    def __init__(self, fn, *args, **kwargs):
+        super().__init__()
+        self.fn = fn
+        self.args = args
+        self.kwargs = kwargs
+
+    @pyqtSlot()
+    def run(self):
+        self.fn(*self.args, **self.kwargs)

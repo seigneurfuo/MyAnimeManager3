@@ -123,8 +123,9 @@ class AutocompleteDialog(QDialog):
     def accept(self) -> None:
         del self.animes_data
 
-        self.anime_data["picture_tmp_filepath"] = self.picture_tmp_filepath
-        self.anime_data["save_type"] = self.comboBox.currentIndex()
+        if self.anime_data:
+            self.anime_data["picture_tmp_filepath"] = self.picture_tmp_filepath
+            self.anime_data["save_type"] = self.comboBox.currentIndex()
         
         super().accept()
 

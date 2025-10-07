@@ -194,7 +194,7 @@ class List2(QWidget):
                                                                  QHeaderView.ResizeMode.ResizeToContents)
 
     def when_export_button_clicked(self) -> None:
-        filepath = export_qtablewidget(self.tableWidget, self.parent.parent.profile.path, "liste")
+        filepath = export_qtablewidget(self.tableWidget, self.parent.parent.profile.path, "list")
         # Bouton pour ouvrir le dossier ?
         QMessageBox.information(self, self.tr("Export terminé"),
                                 self.tr("Le fichier a été généré ici:") + "\n    " + filepath,

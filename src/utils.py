@@ -40,7 +40,7 @@ def get_duration_list(episodes_count, duration, pause_every, pause_duration, sta
 
     for episode_num in range(episodes_count):
         end = start + timedelta(minutes=duration)
-        row = ["Visionnage #{}".format(episode_num + 1), f"{start.hour:02d}:{start.minute:02d}",
+        row = [f"Visionnage #{episode_num + 1}", f"{start.hour:02d}:{start.minute:02d}",
                f"{end.hour:02d}:{end.minute:02d}"]
 
         ret_list.append(row)
@@ -52,7 +52,7 @@ def get_duration_list(episodes_count, duration, pause_every, pause_duration, sta
         if is_pause and (episode_num + 1) % pause_every == 0:
             pause_count += 1
             end = start + timedelta(minutes=pause_duration)
-            row = ["Pause #{}".format(pause_count), f"{start.hour:02d}:{start.minute:02d}",
+            row = [f"Pause #{pause_count}", f"{start.hour:02d}:{start.minute:02d}",
                    f"{end.hour:02d}:{end.minute:02d}"]
             ret_list.append(row)
 

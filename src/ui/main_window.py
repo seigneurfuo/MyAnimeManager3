@@ -146,7 +146,7 @@ class MainWindow(QMainWindow):
                                 QMessageBox.StandardButton.Ok)
 
     def when_menu_action_series_list_export_clicked(self) -> None:
-        filepath = export_series_list(self.parent.profile.path)
+        filepath = export_series_list(self.parent.profile.path, self.parent)
 
         # Bouton pour ouvrir le dossier ?
         QMessageBox.information(self, self.tr("Export terminé"),

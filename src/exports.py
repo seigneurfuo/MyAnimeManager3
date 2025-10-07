@@ -4,7 +4,7 @@ import csv
 from datetime import datetime
 import os
 
-import database
+from database import Planning, Series
 from utils import order_by
 
 
@@ -32,7 +32,7 @@ def export_planning_to_csv(app_data_folder, friends_enabled) -> str:
 
         csv_writer.writerow(headers)
 
-        rows = database.Planning.select().order_by(database.Planning.date, database.Planning.id)
+        rows = Planning.select().order_by(Planning.date, Planning.id)
 
         # TODO: Export des amis dans la liste du planning si activé
 
@@ -49,14 +49,14 @@ def export_planning_to_csv(app_data_folder, friends_enabled) -> str:
 
     return output_filepath
 
-def export_series_list(app_data_folder):
+def export_series_list(app_data_folder, parent):
     output_directory = check_or_create_exports_folder(app_data_folder)
 
     date = datetime.now().strftime("%Y-%m-%d-%H%M%S")
     output_filepath = os.path.join(output_directory, f"series-list-{date}.md")
 
     with open(output_filepath, "w", encoding="utf-8") as output_file:
-        rows = database.Series.select().where(database.Series.is_deleted == 0).order_by(order_by(database.Series))
+        rows = Series.select().where(Series.is_deleted == 0).order_by(order_by(parent.settings, Series))
         for row in rows:
             content = f"- {row.sort_id:03d} - {row.name}\n"
             output_file.write(content)

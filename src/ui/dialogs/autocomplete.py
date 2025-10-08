@@ -98,8 +98,13 @@ class AutocompleteDialog(QDialog):
             self.fill_anime_data(anime_data)
 
     def fill_anime_data(self, anime_data):
+        synonyms_list = anime_data["synonyms"]
+        synonyms_index = min(len(synonyms_list), 6)
+        synonyms = ", \n".join(synonyms_list[:synonyms_index])
+
         fields = [
             (self.label_8, anime_data["title"]),
+            (self.label_11, synonyms),
             (self.label_5, str(anime_data["episodes"])),
             (self.label_7, str(anime_data["year"]))
         ]

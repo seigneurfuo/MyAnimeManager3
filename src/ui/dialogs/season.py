@@ -123,10 +123,10 @@ class SeasonDialog(QDialog):
             self.season.name = anime_data["title"]
             self.season.year = anime_data["year"]
             self.season.episodes = anime_data["episodes"]
-            self.season.airing = (anime_data["status"] == "ONGOING") 
+            self.season.airing = (anime_data["status"] in ("UPCOMING", "ONGOING"))
 
         # Images
-        if anime_data["save_type"] in(0, 2) and anime_data["picture_tmp_filepath"]:
+        if anime_data["save_type"] in (0, 2) and anime_data["picture_tmp_filepath"]:
             self.picture_filepath = anime_data["picture_tmp_filepath"]
 
 

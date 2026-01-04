@@ -25,14 +25,27 @@ class StatsTab(QWidget):
 
         # Remplissage la liste des extractions
         queries_list = [
-            self.tr("Nombre de saisons par année de sortie"), self.tr("Saisons les plus revisionnées"),
-            self.tr("Saisons avec le plus d'épisodes"), self.tr("Séries avec le plus d'épisodes"),
-            self.tr("Nombre d'épisodes vus par année"), self.tr("Journal de visionnage détaillé"),
-            self.tr("Liste des séries pour lequelles il reste des saisons à voir"),
-            self.tr("Date du dernier épisode vu par séries")
+            (0, self.tr("Nombre de saisons par année de sortie")),
+            (1, self.tr("Saisons les plus revisionnées")),
+            (2, self.tr("Saisons avec le plus d'épisodes")),
+            (3, self.tr("Séries avec le plus d'épisodes")),
+            (4, self.tr("Nombre d'épisodes vus par année")),
+            (5, self.tr("Journal de visionnage détaillé")),
+            (6, self.tr("Liste des séries pour lequelles il reste des saisons à voir")),
+            (7, self.tr("Date du dernier épisode vu par séries")),
+            (8, self.tr("Nombre de saisons par état")),
+            (9, self.tr("Nombre de saisons par type"))
         ]
 
-        for index, name in enumerate(queries_list):
+        # On désactive les tags au besoin
+        if self.parent.parent.settings["custom_data_enabled"]:
+            queries_list.append((10, self.tr("Nombre de champs supplémentaires identiques par séries")))
+            queries_list.append((11, self.tr("Valeurs des champs supplémentaire combinés")))
+
+
+        for element in queries_list:
+            index, name = element
+
             self.comboBox.addItem(name, userData=index)
 
     def init_events(self) -> None:
@@ -60,7 +73,8 @@ class StatsTab(QWidget):
         self.stats_table.setHorizontalHeaderLabels(headers)
 
         for row_index, row in enumerate(data):
-            for col_index, value in enumerate(row.values()):
+            values = row.values() if type(row) is dict else row
+            for col_index, value in enumerate(values):
                 item = QTableWidgetItem(str(value))
                 item.setToolTip(item.text())
                 self.stats_table.setItem(row_index, col_index, item)
@@ -70,7 +84,7 @@ class StatsTab(QWidget):
         #                                                          QHeaderView.ResizeMode.ResizeToContents)
 
     def when_export_button_clicked(self) -> None:
-        query_name = self.comboBox.currentText()
+        query_name = self.comboBox.currentText().replce(" ", "-")
 
         filepath = utils.export_qtablewidget(self.stats_table, self.parent.parent.profile.path, query_name)
         # TODO: Bouton pour ouvrir le dossier ?
@@ -84,33 +98,35 @@ class StatsTab(QWidget):
         # Nombre de saisons par année
         if query_index == 0:
             headers = ["Année", "Nombre"]
-            query = Seasons.select(Seasons.year, peewee.fn.COUNT(Seasons.id)).where(Seasons.is_deleted == 0) \
+            results = Seasons.select(Seasons.year, peewee.fn.COUNT(Seasons.id)).where(Seasons.is_deleted == 0) \
                 .group_by(Seasons.year).order_by(Seasons.year)
 
         # Saisons les plus revisionnées
         elif query_index == 1:
             headers = ["Série", "Saison", "Nombre"]
-            query = Seasons.select(Series.name.alias("serie_name"), Seasons.name, Seasons.view_count).join(Series) \
-                .where(Seasons.is_deleted == 0).order_by(Seasons.view_count.desc())
+            results = Seasons.select(Series.name.alias("serie_name"), Seasons.name, Seasons.view_count).join(Series) \
+                .where(Seasons.is_deleted == 0) \
+                .order_by(Seasons.view_count.desc())
 
         # Saison avec le plus d'épisodes
         elif query_index == 2:
             headers = ["Série", "Saison", "Nombre"]
-            query = Seasons.select(Series.name.alias("serie_name"), Seasons.name, Seasons.episodes).join(Series) \
-                .where(Seasons.is_deleted == 0).order_by(Seasons.episodes.desc())
+            results = Seasons.select(Series.name.alias("serie_name"), Seasons.name, Seasons.episodes).join(Series) \
+                .where(Seasons.is_deleted == 0) \
+                .order_by(Seasons.episodes.desc())
 
         # Séries avec le plus d'épisodes
         elif query_index == 3:
             headers = ["Série", "Nombre saisons", "Nombre épisodes"]
-            query = Seasons.select(Series.name.alias("serie_name"), peewee.fn.COUNT(Seasons.id),
+            results = Seasons.select(Series.name.alias("serie_name"), peewee.fn.COUNT(Seasons.id),
                                    peewee.fn.SUM(Seasons.episodes)).join(Series) \
-                .where(Seasons.is_deleted == 0).group_by(Series.id) \
-                .order_by(peewee.fn.SUM(Seasons.episodes).desc())
+                .where(Seasons.is_deleted == 0) \
+                .group_by(Series.id).order_by(peewee.fn.SUM(Seasons.episodes).desc())
 
         # Nombre d'épisodes vus par année
         elif query_index == 4:
             headers = ["Année", "Nombre"]
-            query = Planning.select(Planning.date.year, peewee.fn.COUNT(Planning.id)) \
+            results = Planning.select(Planning.date.year, peewee.fn.COUNT(Planning.id)) \
                 .join(Seasons)\
                 .where(Seasons.is_deleted == 0) \
                 .group_by(Planning.date.year).order_by(Planning.date.year)
@@ -118,7 +134,7 @@ class StatsTab(QWidget):
         # Journal de visionnage détaillé
         elif query_index == 5:
             headers = ["Date", "Ids", "Série", "Saison", "Episode"]
-            query = Planning.select(Planning.date, Series.sort_id.concat(" - ").concat(Seasons.sort_id),
+            results = Planning.select(Planning.date, Series.sort_id.concat(" - ").concat(Seasons.sort_id),
                                     Series.name.alias("serie_name"), Seasons.name, Planning.episode) \
                 .join(Series).switch(Planning).join(Seasons) \
                 .where(Series.is_deleted == 0).where(Seasons.is_deleted == 0) \
@@ -127,7 +143,7 @@ class StatsTab(QWidget):
         # Liste des séries pour lequelles il reste des saisons à voir
         elif query_index == 6:
             headers = ["Ids", "Série", "Saison", "Episodes vus"]
-            query = Seasons.select(Series.sort_id.concat(" - ").concat(Seasons.sort_id),
+            results = Seasons.select(Series.sort_id.concat(" - ").concat(Seasons.sort_id),
                                    Series.name.alias("serie_name"),
                                    Seasons.name, Seasons.watched_episodes.concat("/").concat(Seasons.episodes)) \
                 .join(Series).where(Seasons.is_deleted == 0).where(Seasons.state.in_([0, 1, 2, 5])) \
@@ -136,8 +152,68 @@ class StatsTab(QWidget):
         # Date du dernier épisode vu par séries
         elif query_index == 7:
             headers = ["Date", "Ids", "Série"]
-            query = Planning.select(Planning.date, Series.sort_id.concat(" - ").concat(Seasons.sort_id), Series.name) \
+            results = Planning.select(Planning.date, Series.sort_id.concat(" - ").concat(Seasons.sort_id), Series.name) \
                 .join(Series).switch(Planning).join(Seasons).group_by(Series.id) \
                 .order_by(peewee.fn.MAX(Planning.date).desc(), Planning.id.desc())
 
-        return headers, query.dicts()
+        elif query_index == 8:
+            headers = ["Etat", "Nombre"]
+            results = Seasons.select(Seasons.state,
+                peewee.fn.COUNT(Seasons.id)) \
+                .where(Seasons.is_deleted == 0) \
+                .group_by(Seasons.state).order_by(Seasons.state)
+
+        elif query_index == 9:
+            headers = ["Etat", "Type"]
+            results = Seasons.select(Seasons.type,
+                peewee.fn.COUNT(Seasons.id)) \
+                .where(Seasons.is_deleted == 0) \
+                .group_by(Seasons.type).order_by(Seasons.type)
+
+                # Nombre de champs supplémentaires identiques par séries
+        elif query_index == 10:
+            headers = ["Tag", "Nombre"]
+
+            tags = {}
+            seasons = Seasons.select().where(Seasons.is_deleted == 0)
+
+            for season in seasons:
+                custom_data = season.custom_data
+
+                if not custom_data or custom_data == '""':
+                    continue;
+
+                for key in custom_data.keys():
+                    if key in tags:
+                        tags[key] += 1
+                    else:
+                        tags[key] = 1
+
+            # Tri et passage en liste
+            results = sorted(tags.items())
+
+        # Valeurs de tags combinés
+        elif query_index == 11:
+            headers = ["Tag", "Valeur"]
+
+            tags = {}
+            seasons = Seasons.select().where(Seasons.is_deleted == 0)
+
+            for season in seasons:
+                custom_data = season.custom_data
+
+                if not custom_data or custom_data == '""':
+                    continue;
+
+                for key in custom_data.keys():
+                    value = f"{custom_data[key]}"
+
+                    if key in tags:
+                        tags[key] = f"{tags[key]}, {value}"
+                    else:
+                        tags[key] = value
+
+            # Tri et passage en liste
+            results = sorted(tags.items())
+
+        return headers, results.dicts() if type(results) is peewee.ModelSelect else results

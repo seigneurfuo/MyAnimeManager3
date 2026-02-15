@@ -9,6 +9,8 @@
 - ~~Correction du choix image pour une série pas encore crée~~
 - ~~Correction du choix de la selection du dossier pour une série pas encore crée~~
 - Tri des données personnalisées par ordre alphabétique
+- Passer les .format et fstring.
+- L'autocomplétion doit remplir le type de la saison (épisodes, OAV, ...)
 
 ### Bugs
 - Boutons supprimer et modifier d'une saison non grisés quand aucune n'est sélectionnée

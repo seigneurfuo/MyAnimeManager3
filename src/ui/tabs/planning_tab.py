@@ -66,7 +66,7 @@ class PlanningTab(QWidget):
 
         self.to_watch_table_show_view_history_button.clicked.connect(
             self.when_to_watch_table_show_view_history_button_clicked)
-        self.to_watch_table_go_to_serie_data_button.clicked.connect(self.when_go_to_serie_data_button_clicked)
+        self.to_watch_table_go_to_serie_data_button.clicked.connect(self.to_watch_table_go_to_serie_data_button_clicked)
 
         self.lineEdit.textChanged.connect(self.when_search_text_changed)
 
@@ -360,6 +360,7 @@ class PlanningTab(QWidget):
             self.open_folder_button.setEnabled(False)
 
     # TODO: Update watched table buttons
+    
 
     def when_open_folder_button_clicked(self) -> None:
         current_season_id = self.get_current_season_id()
@@ -376,16 +377,15 @@ class PlanningTab(QWidget):
     def when_watched_table_show_view_history_button_clicked(self) -> None:
         current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)
         planning_id = current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
-        planning = Planning.get(planning_id)
-        if planning:
+        if planning_id:
+            planning = Planning.get(planning_id)
             display_view_history_dialog(self, planning.season_id)
 
     def watched_table_go_to_serie_data_button_clicked(self) -> None:
         current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)
         planning_id = current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
-        planning = Planning.get(planning_id)
-
-        if planning:
+        if planning_id:
+            planning = Planning.get(planning_id)
             self.goto_to_serie_data(planning.serie_id, planning.season_id)
 
     def when_delete_button_clicked(self) -> None:
@@ -428,7 +428,7 @@ class PlanningTab(QWidget):
                 self.fill_calendar_dates()
                 self.fill_watched_table()
 
-    def when_go_to_serie_data_button_clicked(self) -> None:
+    def to_watch_table_go_to_serie_data_button_clicked(self) -> None:
         current_season_id = self.get_current_season_id()
         if current_season_id:
             season = Seasons().get(current_season_id)

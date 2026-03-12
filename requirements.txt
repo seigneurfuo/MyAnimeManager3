@@ -1,2 +1,3 @@
+setuptools
 peewee==3.*
 PyQt6==6.*

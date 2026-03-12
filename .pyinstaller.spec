@@ -9,7 +9,7 @@ a = Analysis(
         ('src/resources', 'resources'),
         ('src/ui', 'ui'),
     ],
-    hiddenimports=[],
+    hiddenimports=['PyQt6.sip'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],

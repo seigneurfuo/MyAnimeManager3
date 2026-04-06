@@ -40,12 +40,13 @@ RATING_LEVELS = [
     {"name": "J'aime pas", "value": -1, "icon": "thumb-down.png"}
 ]
 
-# Mapping des types entre les données du json et les données 
+# Mapping des types entre les données du json et les données
+# https://github.com/manami-project/anime-offline-database/blob/master/schemas/anime-offline-database.jsonl.schema.json#L38
 ANIMES_OFFLINE_DATABASE_TYPES_MAPPER = {
     "TV": 1,
     "MOVIE": 2,
     "OVA": 3,
     "ONA": 3,
     "SPECIAL": 4,
-    "UNKNOWN": 1,
+    "UNKNOWN": 1
 }

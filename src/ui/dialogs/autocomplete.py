@@ -75,7 +75,7 @@ class AutocompleteDialog(QDialog):
 
         for row_index, anime_data in enumerate(data):
             anime_data = self.get_anime_data(anime_data, None)
-            columns = [anime_data["title"], str(anime_data["year"]), str(anime_data["episodes"]), "", ""]
+            columns = [anime_data["title"], str(anime_data["year"]), anime_data["type"], str(anime_data["episodes"]), ]
 
             for col_index, value in enumerate(columns):
                 item = QTableWidgetItem(value)
@@ -106,7 +106,8 @@ class AutocompleteDialog(QDialog):
             (self.label_8, anime_data["title"]),
             (self.label_11, synonyms),
             (self.label_5, str(anime_data["episodes"])),
-            (self.label_7, str(anime_data["year"]))
+            (self.label_7, str(anime_data["year"])),
+            (self.label_14, anime_data["type"])
         ]
 
         for field, value in fields:

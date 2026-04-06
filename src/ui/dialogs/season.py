@@ -125,6 +125,10 @@ class SeasonDialog(QDialog):
             self.season.episodes = anime_data["episodes"]
             self.season.airing = (anime_data["status"] in ("UPCOMING", "ONGOING"))
 
+            anime_data_type = anime_data["type"]
+            if anime_data_type in core.ANIMES_OFFLINE_DATABASE_TYPES_MAPPER:
+                self.season.type = core.ANIMES_OFFLINE_DATABASE_TYPES_MAPPER[anime_data_type]
+
         # Images
         if anime_data["save_type"] in (0, 2) and anime_data["picture_tmp_filepath"]:
             self.picture_filepath = anime_data["picture_tmp_filepath"]

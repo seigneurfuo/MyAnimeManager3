@@ -156,7 +156,7 @@ class MainWindow(QMainWindow):
     def when_menu_action_check_collection_clicked(self) -> None:
         messages = utils.get_collection_problems(self)
         dialog = CollectionProblemsDialog(self, messages)
-        dialog.exec()
+        dialog.show()
 
     def when_menu_action_about_clicked(self) -> None:
         dialog = AboutDialog(self)

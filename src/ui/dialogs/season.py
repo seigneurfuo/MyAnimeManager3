@@ -5,7 +5,7 @@ from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView, QFileDialog
 from PyQt6.uic import loadUi
 
-import core
+from core import SEASONS_STATES, RATING_LEVELS, ANIMES_OFFLINE_DATABASE_TYPES_MAPPER
 from ui.dialogs.autocomplete import AutocompleteDialog
 from utils import save_cover, load_cover
 
@@ -33,7 +33,7 @@ class SeasonDialog(QDialog):
             self.spinBox_5.clear()
 
         # Remplissage de l'état des saisons
-        for index, season_state in enumerate(core.SEASONS_STATES):
+        for index, season_state in enumerate(SEASONS_STATES):
             state_icon = os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"])
             self.combobox_1.addItem(QIcon(state_icon), season_state["name"], userData=index)
 
@@ -42,7 +42,7 @@ class SeasonDialog(QDialog):
             self.comboBox_2.addItem(seasons_type.name, userData=seasons_type.id)
 
         # Remplissage de la note
-        for rating_level in core.RATING_LEVELS:
+        for rating_level in RATING_LEVELS:
             rating_icon = os.path.join(os.path.dirname(__file__), "../../resources/icons/", rating_level["icon"])
             self.comboBox.addItem(QIcon(rating_icon), rating_level["name"], userData=rating_level["value"])
 
@@ -105,7 +105,7 @@ class SeasonDialog(QDialog):
 
         if not anime_data:
             return
-   
+
         # Valeurs par défaut si nouvelle série
         if not self.season.id:
             self.season.name = ""
@@ -126,8 +126,8 @@ class SeasonDialog(QDialog):
             self.season.airing = (anime_data["status"] in ("UPCOMING", "ONGOING"))
 
             anime_data_type = anime_data["type"]
-            if anime_data_type in core.ANIMES_OFFLINE_DATABASE_TYPES_MAPPER:
-                self.season.type = core.ANIMES_OFFLINE_DATABASE_TYPES_MAPPER[anime_data_type]
+            if anime_data_type in ANIMES_OFFLINE_DATABASE_TYPES_MAPPER:
+                self.season.type = ANIMES_OFFLINE_DATABASE_TYPES_MAPPER[anime_data_type]
 
         # Images
         if anime_data["save_type"] in (0, 2) and anime_data["picture_tmp_filepath"]:

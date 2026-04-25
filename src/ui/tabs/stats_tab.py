@@ -9,6 +9,7 @@ import peewee
 from database import Series, Seasons, Planning
 
 import utils
+from core import SEASONS_STATES
 
 
 class StatsTab(QWidget):
@@ -158,19 +159,29 @@ class StatsTab(QWidget):
 
         elif query_index == 8:
             headers = ["Etat", "Nombre"]
-            results = Seasons.select(Seasons.state,
+            results = []
+            rows = Seasons.select(Seasons.state,
                 peewee.fn.COUNT(Seasons.id)) \
                 .where(Seasons.is_deleted == 0) \
                 .group_by(Seasons.state).order_by(Seasons.state)
 
+            for row in rows:
+                result = [SEASONS_STATES[row.state]["name"], row]
+                results.append(result)
+
         elif query_index == 9:
-            headers = ["Etat", "Type"]
-            results = Seasons.select(Seasons.type,
+            headers = ["Type", "Nombre"]
+            results = []
+            rows = Seasons.select(Seasons.type,
                 peewee.fn.COUNT(Seasons.id)) \
                 .where(Seasons.is_deleted == 0) \
                 .group_by(Seasons.type).order_by(Seasons.type)
 
-                # Nombre de champs supplémentaires identiques par séries
+            for row in rows:
+                result = [row.type.name, row]
+                results.append(result)
+
+        # Nombre de champs supplémentaires identiques par séries
         elif query_index == 10:
             headers = ["Tag", "Nombre"]
 

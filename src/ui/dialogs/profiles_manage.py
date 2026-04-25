@@ -1,13 +1,14 @@
 import os
+from functools import partial
 
 from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import QDialog, QToolButton, QMessageBox, QStyleOptionToolButton
+from PyQt6.QtWidgets import QDialog, QMessageBox
 from PyQt6.uic import loadUi
 
 from profiles import Profiles
 from ui.dialogs.profile_edit import ProfileEditDialog
-
+from ui.widgets.custom_icon_button import CustomIconButton
 
 class ProfilesManageDialog(QDialog):
     class roles:
@@ -74,13 +75,10 @@ class ProfilesManageDialog(QDialog):
             self.pushButton_3.setEnabled(False)
 
         for index, profile in enumerate(self.profiles_list):
-            btn = QToolButton()
-            btn.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-            btn.setText(profile.name)
-            btn.setFixedSize(128, 128)
-            btn.setIcon(QIcon(profile.get_picture()))
-            btn.setIconSize(QSize(int(btn.height() - 32), int(btn.width() - 32)))
-            btn.clicked.connect(lambda lamdba, profile=profile: self.set_profile(profile))
+            text = profile.name
+            icon = profile.get_picture()
+            btn = CustomIconButton(text, icon, 128)
+            btn.clicked.connect(partial(self.set_profile, profile))
 
             # Si le profil actuel correpond au bouton en cours
             if self.current_profile and profile.path == self.current_profile.path:

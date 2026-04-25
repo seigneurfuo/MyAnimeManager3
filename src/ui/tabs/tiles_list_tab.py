@@ -4,16 +4,14 @@ import os
 
 from utils import load_cover, order_by
 
-from database import Series, Seasons, Planning, SeasonsTypes
+from database import Series, Seasons, SeasonsTypes
+from ui.widgets.custom_icon_button import CustomIconButton
 
 from ui.dialogs.serie import SerieDialog
 from ui.dialogs.season import SeasonDialog
 
-from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtGui import QIcon, QPixmap, QImage
-from PyQt6.QtWidgets import QWidget, QToolButton
+from PyQt6.QtWidgets import QWidget
 from PyQt6.uic import loadUi
-
 
 class TilesListTab(QWidget):
     def __init__(self, parent) -> None:
@@ -84,24 +82,8 @@ class TilesListTab(QWidget):
 
             text = f"{row.sort_id:03d} - {row.name}"
 
-            btn = QToolButton()
-            btn.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-            btn.setText(text)
-            btn.setFixedSize(self.icon_size, self.icon_size)
-            btn.setToolTip(btn.text())
-
-            if current_type_index == 0:
-                btn.clicked.connect(lambda lamdba, row=row: self.open_season(row))
-            else:
-                btn.clicked.connect(lambda lamdba, row=row: self.open_serie(row))
-
-            if cover_path:
-                total_bytes += os.path.getsize(cover_path)
-                pixmap = QPixmap.fromImage(QImage(cover_path))
-                btn.setIcon(QIcon(pixmap))
-
-            btn.setIconSize(QSize(int(btn.height() - 32), int(btn.width() - 32)))
-            #btn.clicked.connect(lambda lamdba, profile=profile: self.set_profile(profile))
+            btn = CustomIconButton(text, cover_path, self.icon_size)
+            btn.clicked.connect(lambda: self.open_season(row) if current_type_index == 0 else self.open_serie(row))
 
             # Ligne suivante si maximal attends
             if col_index != 0 and col_index % self.max_btn_on_row == 0:

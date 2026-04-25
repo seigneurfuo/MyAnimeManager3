@@ -56,6 +56,7 @@ class FullListTab(QWidget):
 
         self.previous_serie_button.clicked.connect(self.when_previous_serie_button_clicked)
         self.next_serie_button.clicked.connect(self.when_next_serie_button_clicked)
+        self.search_button.clicked.connect(self.when_search_button_clicked)
         # endregion
 
     def when_visible(self) -> None:
@@ -337,3 +338,7 @@ class FullListTab(QWidget):
     def when_next_serie_button_clicked(self) -> None:
         if self.comboBox.currentIndex() < self.comboBox.count() - 1:
             self.comboBox.setCurrentIndex(self.comboBox.currentIndex() + 1)
+
+    def when_search_button_clicked(self) -> None:
+        self.comboBox.setCurrentText("")
+        self.comboBox.setFocus()

@@ -3,12 +3,12 @@ name: Package application with Pyinstaller
 on:
   push:
     branches: [ master, main ]
-    tags:        
+    tags:
       - '202*'
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: github.ref_type == 'tag'
 
     steps:
@@ -25,10 +25,10 @@ jobs:
       run: sed -i "s/\"DEV\"/\"$LATEST_COMMIT_DATE\"/g" "src/core.py"
 
     - name: Converting png icon to ico
-      run: | 
+      run: |
         sudo apt install imagemagick -y
         convert "src/resources/icon.png" -define icon:auto-resize="256,128,96,64,48,32,16" "src/resources/icon.ico"
-     
+
     - name: Packaging application
       uses: JackMcKew/pyinstaller-action-windows@main
       with:
@@ -44,7 +44,7 @@ jobs:
     #    include-hidden-files: true
 
     - name: Creating zip before upload release
-      run: | 
+      run: |
         cd dist/windows/MyAnimeManager3
         sudo zip -9 -r "../myanimemanager3-${LATEST_COMMIT_DATE}-windows.zip" *
 
@@ -61,7 +61,7 @@ jobs:
         cd dist/windows/MyAnimeManager3
         touch _internal/.portable
         sudo zip -9 -r "../myanimemanager3-${LATEST_COMMIT_DATE}-windows-portable.zip" *
-    
+
     - name: Upload file to release
       uses: softprops/action-gh-release@v2
       with:

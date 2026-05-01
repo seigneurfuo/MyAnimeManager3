@@ -45,7 +45,7 @@ def migrations() -> None:
 def populate_tables() -> None:
     populate_seasons_types()
 
-    database.database.commit()
+    #database.database.commit()
 
 
 # FIXME: Pas propre, trouver comment corrriger ça

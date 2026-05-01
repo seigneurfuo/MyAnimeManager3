@@ -87,10 +87,10 @@ class MainWindow(QMainWindow):
         # Menus
         self.open_profiles_action.triggered.connect(self.when_menu_action_open_profiles_clicked)
         self.open_application_config_action.triggered.connect(self.when_menu_action_open_application_config_action_clicked)
-        
+
         self.planning_export_action.triggered.connect(self.when_menu_action_planning_export_clicked)
         self.series_list_export_action.triggered.connect(self.when_menu_action_series_list_export_clicked)
-       
+
         self.about_action.triggered.connect(self.when_menu_action_about_clicked)
         self.bug_report_action.triggered.connect(self.when_menu_action_bug_report_clicked)
         self.check_problems_action.triggered.connect(self.when_menu_action_check_collection_clicked)
@@ -194,7 +194,7 @@ class MainWindow(QMainWindow):
         db_backups_manager.backup_current_database()
 
     def closeEvent(self, a0) -> None:
-        database.database.commit()
+        #database.database.commit()
         self.backup_database_before_quit()
 
         super().close()

@@ -1,6 +1,6 @@
 from playhouse.sqlite_ext import *
 
-database = SqliteExtDatabase(None)
+database = SqliteDatabase(None)
 
 
 class UnknownField(object):

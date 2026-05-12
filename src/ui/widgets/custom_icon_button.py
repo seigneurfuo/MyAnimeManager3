@@ -14,8 +14,8 @@ class CustomIconButton(QWidget):
         layout.setContentsMargins(5, 5, 5, 5)
         layout.setSpacing(5)
 
-        # Icon button
         self.btn = QToolButton()
+        self.btn.setToolTip(text)
         self.btn.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonIconOnly)
         self.btn.setFixedSize(icon_size - 20, icon_size - 20)
 
@@ -28,14 +28,17 @@ class CustomIconButton(QWidget):
 
         # Text label with word wrap
         self.label = QLabel(text)
+        self.label.setToolTip(text)
         self.label.setWordWrap(True)
         self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.label.setMaximumWidth(icon_size)
 
         layout.addWidget(self.btn, alignment=Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(self.label)
+        layout.addStretch()
 
         self.setMaximumWidth(icon_size)
+        self.layout = layout
 
     def setText(self, text):
         self.label.setText(text)

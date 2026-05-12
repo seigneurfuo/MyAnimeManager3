@@ -135,7 +135,7 @@ class FullListTab(QWidget):
         for field in fields:
             field.clear()
 
-        self.label_4.setPixmap(QPixmap())
+        self.set_cover_image(None)
 
         # On masque pour parcourir le dossier de la série
         self.open_folder_button.setEnabled(False)
@@ -195,9 +195,11 @@ class FullListTab(QWidget):
         self.edit_season()
 
     def set_cover_image(self, cover_path) -> None:
-        if cover_path:
-            pixmap = QPixmap(cover_path).scaled(self.label_4.maximumWidth(), self.label_4.maximumHeight(), Qt.AspectRatioMode.KeepAspectRatio)
-            self.label_4.setPixmap(pixmap)
+        if not cover_path:
+            cover_path = cover_path or os.path.join(os.path.dirname(__file__), "../../resources/icons/question.png")
+
+        pixmap = QPixmap(cover_path).scaled(self.label_4.maximumWidth(), self.label_4.maximumHeight(), Qt.AspectRatioMode.KeepAspectRatio)
+        self.label_4.setPixmap(pixmap)
 
     def when_season_double_clicked(self) -> None:
         self.edit_season()
@@ -298,17 +300,14 @@ class FullListTab(QWidget):
         self.show_view_history_button.setEnabled(True)
 
         cover_path = load_cover(self.parent.parent.profile.path, "season", season.id)
-        if cover_path:
-            self.set_cover_image(cover_path)
-        else:
-            self.label_4.setPixmap(QPixmap())
+        self.set_cover_image(cover_path)
 
     def clear_season_data(self) -> None:
         self.plainTextEdit.clear()
         self.show_view_history_button.setEnabled(False)
         self.plainTextEdit.clear()
 
-        self.label_4.setPixmap(QPixmap())
+        self.set_cover_image(None)
 
     def when_seasons_list_current_index_changed(self) -> None:
         current_season_id = self.get_current_season_id()

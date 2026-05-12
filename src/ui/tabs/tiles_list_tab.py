@@ -79,6 +79,8 @@ class TilesListTab(QWidget):
             # Si on n'a pas de cover et qu'on n'affiche que les séries avec cover, alors on l'ignore
             if not cover_path and filter_coverless:
                 continue
+            else:
+                total_bytes += os.path.getsize(cover_path)
 
             text = f"{row.sort_id:03d} - {row.name}"
 

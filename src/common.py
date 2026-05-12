@@ -69,3 +69,8 @@ def save_settings(data) -> None:
 
     with open(settings_filepath, "w") as settings_file:
         json.dump(data, settings_file)
+
+def goto_to_serie_data(parent, serie_id, season_id):
+    parent.tabWidget.setCurrentIndex(1)
+    parent.full_list_tab.set_series_combobox_current_selection(serie_id)
+    parent.full_list_tab.set_seasons_table_current_selection(season_id)

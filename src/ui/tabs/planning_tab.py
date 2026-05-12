@@ -13,7 +13,7 @@ from ui.dialogs.edit_date import EditDateDialog
 from ui.widgets.custom_calendar import CustomCalendar
 from database import Planning, Series, Seasons, Friends, FriendsPlanning
 from core import SEASONS_STATES
-from common import display_view_history_dialog
+from common import display_view_history_dialog, goto_to_serie_data
 
 import peewee
 
@@ -360,7 +360,7 @@ class PlanningTab(QWidget):
             self.open_folder_button.setEnabled(False)
 
     # TODO: Update watched table buttons
-    
+
 
     def when_open_folder_button_clicked(self) -> None:
         current_season_id = self.get_current_season_id()
@@ -386,7 +386,7 @@ class PlanningTab(QWidget):
         planning_id = current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
         if planning_id:
             planning = Planning.get(planning_id)
-            self.goto_to_serie_data(planning.serie_id, planning.season_id)
+            goto_to_serie_data(self.parent, planning.serie_id, planning.season_id)
 
     def when_delete_button_clicked(self) -> None:
         current_item = self.tableWidget_7.item(self.tableWidget_7.currentRow(), 0)
@@ -432,7 +432,7 @@ class PlanningTab(QWidget):
         current_season_id = self.get_current_season_id()
         if current_season_id:
             season = Seasons().get(current_season_id)
-            self.goto_to_serie_data(season.serie.id, season.id)
+            goto_to_serie_data(self.parent, season.serie.id, season.id)
 
     def when_search_text_changed(self) -> None:
         self.to_watch_table_text_filter = self.lineEdit.text()
@@ -440,8 +440,3 @@ class PlanningTab(QWidget):
 
     def when_planning_current_page_changed(self) -> None:
         self.fill_calendar_dates()
-
-    def goto_to_serie_data(self, serie_id, season_id):
-        self.parent.tabWidget.setCurrentIndex(1)
-        self.parent.full_list_tab.set_series_combobox_current_selection(serie_id)
-        self.parent.full_list_tab.set_seasons_table_current_selection(season_id)

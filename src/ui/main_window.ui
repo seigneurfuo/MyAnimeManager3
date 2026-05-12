@@ -231,7 +231,6 @@
    <addaction name="menuExports"/>
    <addaction name="about_menu"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="quit_action">
    <property name="icon">
     <iconset>

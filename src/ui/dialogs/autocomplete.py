@@ -46,7 +46,7 @@ class AutocompleteDialog(QDialog):
             return []
         
         def filter_anime(anime_data):
-            return anime_data["title"].lower().startswith(text)
+            return text in anime_data["title"].lower()
 
         return list(filter(filter_anime, self.animes_data["data"]))
 

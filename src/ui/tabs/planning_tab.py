@@ -38,12 +38,19 @@ class PlanningTab(QWidget):
         self.planning_calendar.set_cells_background_color(QColor(115, 210, 22, 50))
         self.verticalLayout.insertWidget(1, self.planning_calendar)
 
+        # Remplissage de la liste des états
+        for index, season_state in enumerate(SEASONS_STATES):
+            state_icon = os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"])
+            self.comboBox.addItem(QIcon(state_icon), season_state["name"], userData=index)
+
+        self.comboBox.setCurrentIndex(2)
+
     def init_events(self) -> None:
         # Commun
         self.today_button.clicked.connect(self.when_today_button_clicked)
         self.planning_calendar.selectionChanged.connect(self.when_planning_calender_date_changed)
         self.planning_calendar.currentPageChanged.connect(self.when_planning_current_page_changed)
-        self.checkBox_4.clicked.connect(self.when_checkBox_4_clicked)
+        self.comboBox.currentIndexChanged.connect(self.when_series_state_current_index_changed)
         self.date_edit.dateChanged.connect(self.when_date_edit_date_changed)
 
         # Tableau des épisodes vus
@@ -184,10 +191,11 @@ class PlanningTab(QWidget):
         :return:
         """
 
-        states = [2] if self.checkBox_4.isChecked() else [1, 2]
+        state = self.comboBox.currentIndex() 
+
         # https://docs.peewee-orm.com/en/latest/peewee/query_operators.html 1 or 2
         episodes_to_watch = Seasons.select().join(Series) \
-            .where(Seasons.state.in_(states), Seasons.watched_episodes < Seasons.episodes, Seasons.is_deleted == 0, Series.is_deleted == 0)
+            .where(Seasons.state == state, Seasons.watched_episodes < Seasons.episodes, Seasons.is_deleted == 0, Series.is_deleted == 0)
 
         if self.to_watch_table_text_filter:
             episodes_to_watch = episodes_to_watch.where(
@@ -328,7 +336,7 @@ class PlanningTab(QWidget):
 
         current_season.save()
 
-    def when_checkBox_4_clicked(self) -> None:
+    def when_series_state_current_index_changed(self) -> None:
         self.fill_to_watch_table()
 
     def when_to_watch_table_current_cell_changed(self) -> None:

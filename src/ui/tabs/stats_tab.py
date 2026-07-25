@@ -43,6 +43,8 @@ class StatsTab(QWidget):
             queries_list.append((10, self.tr("Nombre de champs supplémentaires identiques par séries")))
             queries_list.append((11, self.tr("Valeurs des champs supplémentaire combinés")))
 
+        # Tri des requetes par ordre alphabétique
+        queries_list.sort(key=lambda query: query[1])
 
         for element in queries_list:
             index, name = element
@@ -152,8 +154,9 @@ class StatsTab(QWidget):
 
         # Date du dernier épisode vu par séries
         elif query_index == 7:
-            headers = ["Date", "Ids", "Série"]
-            results = Planning.select(Planning.date, Series.sort_id.concat(" - ").concat(Seasons.sort_id), Series.name) \
+            headers = ["Date", "Ids", "Série", "Numéro épisode"]
+            ids = Series.sort_id.concat(" - ").concat(Seasons.sort_id)
+            results = Planning.select(Planning.date, ids, Series.name, Planning.episode) \
                 .join(Series).switch(Planning).join(Seasons).group_by(Series.id) \
                 .order_by(peewee.fn.MAX(Planning.date).desc(), Planning.id.desc())
 
@@ -227,4 +230,5 @@ class StatsTab(QWidget):
             # Tri et passage en liste
             results = sorted(tags.items())
 
-        return headers, results.dicts() if type(results) is peewee.ModelSelect else results
+
+        return headers, list(results.tuples()) if type(results) is peewee.ModelSelect else results

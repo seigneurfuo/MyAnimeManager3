@@ -14,7 +14,7 @@ import core
 from database import Seasons, Series
 
 import peewee
-from PyQt6.QtWidgets import QCompleter
+from PyQt6.QtWidgets import QCompleter, QHeaderView
 from PyQt6.QtCore import Qt
 
 # Pour Nyelson ^._.^
@@ -259,3 +259,15 @@ def download_picture(url) -> str:
 
 def order_by(settings, table):
     return peewee.fn.Lower(table.name) if settings["order_by_alternative_order"] else table.sort_id
+
+# Faire plutot un décorateur ?
+def post_update_qtablewidget(qtablewidget, excludes=[]):
+    if "clearSelection" not in excludes:
+        qtablewidget.clearSelection()
+
+    qtablewidget.resizeColumnsToContents()
+    
+    #if "horizontalHeaderResizeToContents" not in excludes:
+    qtablewidget.horizontalHeader().setSectionResizeMode(qtablewidget.columnCount() - 1, QHeaderView.ResizeMode.ResizeToContents)
+
+    qtablewidget.setSortingEnabled(True) 

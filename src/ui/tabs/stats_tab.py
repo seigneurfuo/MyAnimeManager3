@@ -82,9 +82,7 @@ class StatsTab(QWidget):
                 item.setToolTip(item.text())
                 self.stats_table.setItem(row_index, col_index, item)
 
-        self.stats_table.resizeColumnsToContents()
-        # self.stats_table.horizontalHeader().setSectionResizeMode(self.stats_table.columnCount() - 1,
-        #                                                          QHeaderView.ResizeMode.ResizeToContents)
+        utils.post_update_qtablewidget(self.stats_table)
 
     def when_export_button_clicked(self) -> None:
         query_name = self.comboBox.currentText().replce(" ", "-")

@@ -14,6 +14,7 @@ from ui.widgets.custom_calendar import CustomCalendar
 from database import Planning, Series, Seasons, Friends, FriendsPlanning
 from core import SEASONS_STATES
 from common import display_view_history_dialog, goto_to_serie_data
+from utils import post_update_qtablewidget
 
 import peewee
 
@@ -180,10 +181,7 @@ class PlanningTab(QWidget):
                 item.setData(Qt.ItemDataRole.UserRole, planning_data.id)
                 self.tableWidget_7.setItem(row_index, col_index, item)
 
-        self.tableWidget_7.clearSelection()
-        self.tableWidget_7.resizeColumnsToContents()
-        self.tableWidget_7.horizontalHeader().setSectionResizeMode(self.tableWidget_7.columnCount() - 1,
-                                                                   QHeaderView.ResizeMode.ResizeToContents)
+        post_update_qtablewidget(self.tableWidget_7)
 
     def fill_to_watch_table(self) -> None:
         """
@@ -277,9 +275,7 @@ class PlanningTab(QWidget):
             self.tableWidget_6.setCellWidget(col_index, 7, progress_bar)
 
         # self.tableWidget_6.clearSelection() # On ne le laisse pas car ça peut etre utile pour valider plusieurs fois des épisodes d'une même saison à la suite
-        self.tableWidget_6.resizeColumnsToContents()
-        self.tableWidget_6.horizontalHeader().setSectionResizeMode(self.tableWidget_6.columnCount() - 1,
-                                                                   QHeaderView.ResizeMode.ResizeToContents)
+        post_update_qtablewidget(self.tableWidget_6, ["clearSelection"])
 
     def when_today_button_clicked(self) -> None:
         """Fonction qui ramène le calendrier à la date actuelle"""

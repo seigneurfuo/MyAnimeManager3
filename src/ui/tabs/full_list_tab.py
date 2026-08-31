@@ -18,6 +18,7 @@ from ui.dialogs.season import SeasonDialog
 from ui.dialogs.deleted_elements import DeletedElementsDialog
 
 import core
+from utils import post_update_qtablewidget
 
 
 class FullListTab(QWidget):
@@ -290,10 +291,7 @@ class FullListTab(QWidget):
 
                 self.tableWidget.setItem(row_index, col_index, item)
 
-        self.tableWidget.clearSelection()
-        self.tableWidget.resizeColumnsToContents()
-        self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
-                                                                 QHeaderView.ResizeMode.ResizeToContents)
+        post_update_qtablewidget(self.tableWidget)
 
     def fill_season_data(self, season) -> None:
         self.plainTextEdit.setPlainText(season.description)

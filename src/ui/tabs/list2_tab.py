@@ -188,10 +188,7 @@ class List2(QWidget):
             else:
                 self.tableWidget.horizontalHeader().hideSection(len(columns) + 4)
 
-        self.tableWidget.clearSelection()
-        self.tableWidget.resizeColumnsToContents()
-        self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
-                                                                 QHeaderView.ResizeMode.ResizeToContents)
+        post_update_qtablewidget(self.tableWidget)
 
     def when_export_button_clicked(self) -> None:
         filepath = export_qtablewidget(self.tableWidget, self.parent.parent.profile.path, "list")

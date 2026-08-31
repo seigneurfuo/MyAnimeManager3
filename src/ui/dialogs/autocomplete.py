@@ -3,7 +3,7 @@ from typing import Any
 
 import os
 
-from utils import load_animes_json_data, save_cover, download_picture
+from utils import load_animes_json_data, save_cover, download_picture, post_update_qtablewidget
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap, QImage
@@ -83,9 +83,8 @@ class AutocompleteDialog(QDialog):
                 item.setData(Qt.ItemDataRole.UserRole, row_index)
                 self.tableWidget.setItem(row_index, col_index, item)
 
-        #self.tableWidget.resizeColumnsToContents()
-        #self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
-        #                                                            QHeaderView.ResizeMode.ResizeToContents)
+        post_update_qtablewidget(self.tableWidget)
+
 
     def when_current_index_changed(self):
         # TODO récupérer l'index

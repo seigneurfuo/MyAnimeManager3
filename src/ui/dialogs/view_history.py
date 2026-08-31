@@ -5,6 +5,7 @@ from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
 from PyQt6.uic import loadUi
 
 from database import Planning, Friends, Seasons, FriendsPlanning
+from utils import post_update_qtablewidget
 
 
 class ViewHistoryDialog(QDialog):
@@ -70,9 +71,7 @@ class ViewHistoryDialog(QDialog):
                              row.date)  # On ajoute la date en paramètre afin de pouvoir la récupérer sur la ligne
                 self.serie_table.setItem(row_index, col_index, item)
 
-        self.serie_table.resizeColumnsToContents()
-        self.serie_table.horizontalHeader().setSectionResizeMode(self.serie_table.columnCount() - 1,
-                                                                 QHeaderView.ResizeMode.ResizeToContents)
+        post_update_qtablewidget(self.serie_table)
 
     def fill_seasons_history(self) -> None:
         self.season_table.clearContents()
@@ -105,9 +104,7 @@ class ViewHistoryDialog(QDialog):
                 item.setData(Qt.ItemDataRole.UserRole, row.date)  # On ajoute la date en paramètre afin de pouvoir la récupérer sur la ligne
                 self.season_table.setItem(row_index, col_index, item)
 
-        self.season_table.resizeColumnsToContents()
-        self.season_table.horizontalHeader().setSectionResizeMode(self.season_table.columnCount() - 1,
-                                                                  QHeaderView.ResizeMode.ResizeToContents)
+        post_update_qtablewidget(self.season_table)
 
     def when_go_to_planning_date(self) -> None:
         # Série et saison

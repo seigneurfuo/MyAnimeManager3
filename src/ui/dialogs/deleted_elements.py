@@ -5,6 +5,7 @@ from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView, QCheckBox
 from PyQt6.uic import loadUi
 
 from database import Seasons, Series
+from utils import post_update_qtablewidget
 
 
 class DeletedElementsDialog(QDialog):
@@ -56,9 +57,7 @@ class DeletedElementsDialog(QDialog):
                 item.setData(Qt.ItemDataRole.UserRole, season.id)
                 self.tableWidget_2.setItem(row_index, col_index + 1, item)
 
-        self.tableWidget_2.resizeColumnsToContents()
-        self.tableWidget_2.horizontalHeader().setSectionResizeMode(self.tableWidget_2.columnCount() - 1,
-                                                                 QHeaderView.ResizeMode.ResizeToContents)
+        post_update_qtablewidge(self.tableWidget_2)
 
     def fill_series_table(self) -> None:
         self.tableWidget_1.clearContents()
@@ -81,10 +80,7 @@ class DeletedElementsDialog(QDialog):
                 item.setData(Qt.ItemDataRole.UserRole, serie.id)
                 self.tableWidget_1.setItem(row_index, col_index + 1, item)
 
-        self.tableWidget_1.resizeColumnsToContents()
-        self.tableWidget_1.horizontalHeader().setSectionResizeMode(self.tableWidget_1.columnCount() - 1,
-                                                                 QHeaderView.ResizeMode.ResizeToContents)
-
+        post_update_qtablewidget(self.tableWidget_1)
 
     def get_checked_for_restoration(self) -> None:
         # Séries

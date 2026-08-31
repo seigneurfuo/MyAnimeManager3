@@ -5,6 +5,7 @@ from PyQt6.QtWidgets import QDialog, QCalendarWidget, QTableWidgetItem, QHeaderV
 from PyQt6.uic import loadUi
 
 from database import Friends
+from utils import post_update_qtablewidget
 
 
 class FriendManageDialog(QDialog):
@@ -43,8 +44,7 @@ class FriendManageDialog(QDialog):
             item.setData(Qt.ItemDataRole.UserRole, friend.id)
             self.tableWidget.setItem(row_index, 0, item)
 
-        self.tableWidget.resizeColumnsToContents()
-        self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1, QHeaderView.ResizeMode.ResizeToContents)
+        post_update_qtablewidget(self.tableWidget)
 
     def reload_friends_list(self) -> None:
         self.friends_list = Friends.select()

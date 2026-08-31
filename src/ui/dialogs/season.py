@@ -7,7 +7,7 @@ from PyQt6.uic import loadUi
 
 from core import SEASONS_STATES, RATING_LEVELS, ANIMES_OFFLINE_DATABASE_TYPES_MAPPER
 from ui.dialogs.autocomplete import AutocompleteDialog
-from utils import save_cover, load_cover
+from utils import save_cover, load_cover, post_update_qtablewidget
 
 
 class SeasonDialog(QDialog):
@@ -153,9 +153,7 @@ class SeasonDialog(QDialog):
                 # item.setData(Qt.ItemDataRole.UserRole, )
                 self.tableWidget.setItem(row_index, col_index, item)
 
-        self.tableWidget.resizeColumnsToContents()
-        self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
-                                                                    QHeaderView.ResizeMode.ResizeToContents)
+        post_update_qtablewidget(self.tableWidget)
 
         # Onglet RAW
         pretty_json = json.dumps(self.season.custom_data, indent=4)

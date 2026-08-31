@@ -6,6 +6,7 @@ from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
 from PyQt6.uic import loadUi
 
 from db_backups_manager import DBBackupsManager
+from utils import post_update_qtablewidget
 
 
 class DatabaseHistoryDialog(QDialog):
@@ -95,9 +96,7 @@ class DatabaseHistoryDialog(QDialog):
             item.setToolTip(state)
             self.tableWidget.setItem(row_index, 1, item)
 
-        self.tableWidget.resizeColumnsToContents()
-        self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
-                                                                 QHeaderView.ResizeMode.ResizeToContents)
+        post_update_qtablewidget(self.tableWidget)
 
     def reject(self) -> None:
         super().reject()

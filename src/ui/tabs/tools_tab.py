@@ -8,7 +8,7 @@ from PyQt6.QtCore import QTime
 import os
 
 from database import Seasons
-from utils import get_duration_list
+from utils import get_duration_list, post_update_qtablewidget
 
 
 class ToolsTab(QWidget):
@@ -65,10 +65,7 @@ class ToolsTab(QWidget):
                 item.setToolTip(item.text())
                 self.tableWidget_2.setItem(row_index, col_index, item)
 
-        self.tableWidget_2.clearSelection()
-        self.tableWidget_2.resizeColumnsToContents()
-        self.tableWidget_2.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
-                                                                   QHeaderView.ResizeMode.ResizeToContents)
+        post_update_qtablewidget(self.tableWidget_2)
 
     # def when_spinboxes_values_changed(self):
     #     self.duration_calculation()
@@ -102,6 +99,4 @@ class ToolsTab(QWidget):
                 # item.setToolTip(item.text())
                 self.tableWidget.setItem(row_index, col_index, item)
 
-        self.tableWidget.resizeColumnsToContents()
-        self.tableWidget.horizontalHeader().setSectionResizeMode(self.tableWidget.columnCount() - 1,
-                                                                 QHeaderView.ResizeMode.ResizeToContents)
+        post_update_qtablewidget(self.tableWidget)

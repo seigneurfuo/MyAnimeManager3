@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
 from PyQt6.uic import loadUi
 
 from db_backups_manager import DBBackupsManager
-from utils import pre_update_qtablewidget, post_update_qtablewidget
+from utils import post_update_qtablewidget, pre_update_qtablewidget
 
 
 class DatabaseHistoryDialog(QDialog):

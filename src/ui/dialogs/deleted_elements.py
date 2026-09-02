@@ -55,7 +55,7 @@ class DeletedElementsDialog(QDialog):
                 item.setData(Qt.ItemDataRole.UserRole, season.id)
                 self.tableWidget_2.setItem(row_index, col_index + 1, item)
 
-        post_update_qtablewidge(self.tableWidget_2)
+        post_update_qtablewidget(self.tableWidget_2)
 
     def fill_series_table(self) -> None:
         row_count = len(self.deleted_series)
@@ -65,6 +65,7 @@ class DeletedElementsDialog(QDialog):
         for row_index, serie in enumerate(self.deleted_series):
             # Case à cocher
             restore_checkbox = QCheckBox()
+            restore_checkbox.setStyleSheet("margin-left: 50%; margin-right: 50%;")
             self.tableWidget_1.setCellWidget(row_index, 0, restore_checkbox)
 
             # TODO: Ajouter les colonnes supplémentaires

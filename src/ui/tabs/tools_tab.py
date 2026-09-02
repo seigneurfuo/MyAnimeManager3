@@ -53,10 +53,8 @@ class ToolsTab(QWidget):
 
         rows = get_duration_list(episodes_count, episodes_duration, pause_every, pause_duration, start_time_string)
 
-        self.tableWidget_2.clearContents()
-
         row_count = len(rows)
-        self.tableWidget_2.setRowCount(row_count)
+        pre_update_qtablewidget(self.tableWidget_2, row_count)
 
         # TODO: Tablewidget Type: Episode / Pause, Heure début, Heure fin
         for row_index, row in enumerate(rows):
@@ -85,10 +83,7 @@ class ToolsTab(QWidget):
 
         MAX_ELEMENTS = 10
         random_seasons_indexes = [random.randint(0, len(seasons) - 1) for _ in range(MAX_ELEMENTS)]
-
-        self.tableWidget_2.clearContents()
-
-        self.tableWidget.setRowCount(MAX_ELEMENTS)
+        pre_update_qtablewidget(self.tableWidget, MAX_ELEMENTS)
 
         for row_index, random_season_index in enumerate(random_seasons_indexes):
             random_season = seasons[random_season_index]

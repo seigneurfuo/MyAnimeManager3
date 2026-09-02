@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView, QCheckBox
 from PyQt6.uic import loadUi
 
 from database import Seasons, Series
-from utils import post_update_qtablewidget
+from utils import pre_update_qtablewidget, post_update_qtablewidget
 
 
 class DeletedElementsDialog(QDialog):
@@ -37,11 +37,9 @@ class DeletedElementsDialog(QDialog):
         self.fill_series_table()
 
     def fill_seasons_table(self) -> None:
-        self.tableWidget_2.clearContents()
-
         row_count = len(self.deleted_seasons)
         self.label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
-        self.tableWidget_2.setRowCount(row_count)
+        pre_update_qtablewidget(self.tableWidget_2, row_count)
 
         for row_index, season in enumerate(self.deleted_seasons):
             # Case à cocher
@@ -60,11 +58,9 @@ class DeletedElementsDialog(QDialog):
         post_update_qtablewidge(self.tableWidget_2)
 
     def fill_series_table(self) -> None:
-        self.tableWidget_1.clearContents()
-
         row_count = len(self.deleted_series)
         self.label_3.setText(self.tr("Nombre d'éléments: ") + str(row_count))
-        self.tableWidget_1.setRowCount(row_count)
+        pre_update_qtablewidget(self.tableWidget_1, row_count)
 
         for row_index, serie in enumerate(self.deleted_series):
             # Case à cocher

@@ -8,7 +8,7 @@ import os
 import peewee
 from database import Series, Seasons, Planning
 
-import utils
+from utils import export_qtablewidget, pre_update_qtablewidget, post_update_qtablewidget
 from core import SEASONS_STATES
 
 
@@ -68,8 +68,7 @@ class StatsTab(QWidget):
     def fill_stats_table(self, headers, data) -> None:
         row_count = len(data)
         self.label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
-        self.stats_table.clearContents()
-        self.stats_table.setRowCount(row_count)
+        pre_update_qtablewidget(self.stats_table, row_count)
         self.stats_table.setColumnCount(len(headers))
 
         # Headers
@@ -82,12 +81,12 @@ class StatsTab(QWidget):
                 item.setToolTip(item.text())
                 self.stats_table.setItem(row_index, col_index, item)
 
-        utils.post_update_qtablewidget(self.stats_table)
+        post_update_qtablewidget(self.stats_table)
 
     def when_export_button_clicked(self) -> None:
         query_name = self.comboBox.currentText().replce(" ", "-")
 
-        filepath = utils.export_qtablewidget(self.stats_table, self.parent.parent.profile.path, query_name)
+        filepath = export_qtablewidget(self.stats_table, self.parent.parent.profile.path, query_name)
         # TODO: Bouton pour ouvrir le dossier ?
         QMessageBox.information(self, self.tr("Export terminé"),
                                 self.tr("Le fichier a été généré ici:") + "\n    " + filepath,

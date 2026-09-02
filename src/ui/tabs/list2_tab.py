@@ -12,7 +12,7 @@ from PyQt6.uic import loadUi
 from core import SEASONS_STATES, RATING_LEVELS
 from common import display_view_history_dialog
 from database import Series, Seasons, Friends, Planning, FriendsPlanning, SeasonsTypes
-from utils import load_cover, get_season_age, export_qtablewidget, order_by
+from utils import load_cover, get_season_age, export_qtablewidget, order_by, pre_update_qtablewidget, post_update_qtablewidget
 
 
 class List2(QWidget):
@@ -106,13 +106,13 @@ class List2(QWidget):
         return request
 
     def fill_data(self) -> None:
-        self.tableWidget.clearContents()
-
         data = self.get_request_with_filters()
         row_count = len(data)
 
         self.label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
-        self.tableWidget.setRowCount(row_count)
+        
+
+        pre_update_qtablewidget(self.tableWidget, row_count)
 
         for row_index, season in enumerate(data):
             ids = f"{season.serie.sort_id:03d} - {season.sort_id}"

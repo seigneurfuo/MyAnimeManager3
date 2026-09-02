@@ -8,7 +8,7 @@ from PyQt6.QtCore import Qt, QUrl
 
 import os
 
-from core import SEASONS_STATES
+from core import SEASONS_STATES, RATING_LEVELS
 from common import display_view_history_dialog
 from utils import load_cover, order_by
 from database import Series, Seasons, SeasonsTypes, FriendsPlanning, Friends, Planning
@@ -17,8 +17,7 @@ from ui.dialogs.serie import SerieDialog
 from ui.dialogs.season import SeasonDialog
 from ui.dialogs.deleted_elements import DeletedElementsDialog
 
-import core
-from utils import post_update_qtablewidget
+from utils import pre_update_qtablewidget, post_update_qtablewidget
 
 
 class FullListTab(QWidget):
@@ -246,8 +245,6 @@ class FullListTab(QWidget):
             display_view_history_dialog(self, current_season_id)
 
     def fill_season_list(self, serie) -> None:
-        self.tableWidget.clearContents()
-
         # On masque la colonne si les amis sont désactivés
         if not self.parent.parent.settings["friends_enabled"]:
             self.tableWidget.hideColumn(self.tableWidget.columnCount() - 1)
@@ -255,7 +252,7 @@ class FullListTab(QWidget):
         seasons = serie.seasons.where(Seasons.is_deleted == 0).order_by(Seasons.sort_id)
         row_count = len(seasons)
         self.label_2.setText(str(row_count))
-        self.tableWidget.setRowCount(row_count)
+        pre_update_qtablewidget(self.tableWidget, row_count)
 
         for row_index, season in enumerate(seasons):
             columns = [season.sort_id, season.name, season.type.name,
@@ -279,7 +276,7 @@ class FullListTab(QWidget):
                     item.setToolTip(item.text())
 
                 elif col_index == 8:
-                    rating = next(rating for rating in core.RATING_LEVELS if rating["value"] == season.rating)
+                    rating = next(rating for rating in RATING_LEVELS if rating["value"] == season.rating)
                     icon_path = os.path.join(os.path.dirname(__file__), "../../resources/icons", rating["icon"])
                     item = QTableWidgetItem()
                     item.setIcon(QIcon(icon_path))

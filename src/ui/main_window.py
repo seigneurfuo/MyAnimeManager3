@@ -29,7 +29,7 @@ from db_backups_manager import DBBackupsManager
 from exports import export_planning_to_csv, export_series_list
 
 import core
-import utils
+from utils import get_collection_problems
 
 
 class MainWindow(QMainWindow):
@@ -154,7 +154,7 @@ class MainWindow(QMainWindow):
                                 QMessageBox.StandardButton.Ok)
 
     def when_menu_action_check_collection_clicked(self) -> None:
-        messages = utils.get_collection_problems(self)
+        messages = get_collection_problems(self)
         dialog = CollectionProblemsDialog(self, messages)
         dialog.show()
 

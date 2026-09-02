@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import QDialog, QCalendarWidget, QTableWidgetItem, QHeaderV
 from PyQt6.uic import loadUi
 
 from ui.dialogs.friends_manage import FriendManageDialog
-from utils import post_update_qtablewidget
+from utils import pre_update_qtablewidget, post_update_qtablewidget
 
 class EditDateDialog(QDialog):
     def __init__(self, parent, planning_data, full_friends_list) -> None:
@@ -84,11 +84,9 @@ class EditDateDialog(QDialog):
             self.update_friends_combobox()
 
     def fill_friends_table(self) -> None:
-        self.tableWidget.clearContents()
-
         row_count = len(self.friends)
-        # self.label_82.setText(str(row_count))
-        self.tableWidget.setRowCount(row_count)
+
+        pre_update_qtablewidget(self.tableWidget, row_count)
 
         for row_index, friend in enumerate(self.friends):
             item = QTableWidgetItem(friend.name)

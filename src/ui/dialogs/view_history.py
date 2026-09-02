@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
 from PyQt6.uic import loadUi
 
 from database import Planning, Friends, Seasons, FriendsPlanning
-from utils import post_update_qtablewidget
+from utils import pre_update_qtablewidget, post_update_qtablewidget
 
 
 class ViewHistoryDialog(QDialog):
@@ -41,15 +41,13 @@ class ViewHistoryDialog(QDialog):
         self.fill_series_history()
 
     def fill_series_history(self) -> None:
-        self.serie_table.clearContents()
-
         # On masque la colonne si les amis sont désactivés
         if not self.parent.parent.parent.settings["friends_enabled"]:
             self.serie_table.hideColumn(self.serie_table.columnCount() - 1)
 
         row_count = len(self.serie_episodes)
         self.serie_label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
-        self.serie_table.setRowCount(row_count)
+        pre_update_qtablewidget(self.serie_table, row_count)
 
         for row_index, row in enumerate(self.serie_episodes):
             columns = [row.date.strftime("%d/%m/%Y"), str(row.season.sort_id), row.season.name, row.season.type.name,
@@ -74,11 +72,9 @@ class ViewHistoryDialog(QDialog):
         post_update_qtablewidget(self.serie_table)
 
     def fill_seasons_history(self) -> None:
-        self.season_table.clearContents()
-
         row_count = len(self.season_episodes)
         self.season_label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
-        self.season_table.setRowCount(row_count)
+        pre_update_qtablewidget(self.season_table, row_count)
 
         for row_index, row in enumerate(self.season_episodes):
             columns = [row.date.strftime("%d/%m/%Y"), str(row.season.sort_id), row.season.name, row.season.type.name,

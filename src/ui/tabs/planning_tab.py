@@ -14,7 +14,7 @@ from ui.widgets.custom_calendar import CustomCalendar
 from database import Planning, Series, Seasons, Friends, FriendsPlanning
 from core import SEASONS_STATES
 from common import display_view_history_dialog, goto_to_serie_data
-from utils import post_update_qtablewidget
+from utils import pre_update_qtablewidget, post_update_qtablewidget
 
 import peewee
 
@@ -151,15 +151,13 @@ class PlanningTab(QWidget):
              .where((Planning.date == calendar_date) & (Series.is_deleted == 0)) \
              .order_by(Planning.id)
 
-        self.tableWidget_7.clearContents()
-
         # On masque la colonne si les amis sont désactivés
         if not self.parent.parent.settings["friends_enabled"]:
             self.tableWidget_7.hideColumn(self.tableWidget_7.columnCount() - 1)
 
         row_count = len(planning_data_list)
         self.label_82.setText(str(row_count))
-        self.tableWidget_7.setRowCount(row_count)
+        pre_update_qtablewidget(self.tableWidget_7, row_count)
 
         for row_index, planning_data in enumerate(planning_data_list):
             friends = [friend_planning.friend.name for friend_planning in planning_data.friends]
@@ -205,11 +203,9 @@ class PlanningTab(QWidget):
             episodes_to_watch = episodes_to_watch.join(Planning, on=(Planning.season == Seasons.id), join_type=peewee.JOIN.LEFT_OUTER) \
                 .group_by(Seasons.id).order_by(peewee.fn.MAX(Planning.date).desc(), peewee.fn.MAX(Planning.id).desc())
 
-        self.tableWidget_6.clearContents()
-
         # Nettoyage de la liste
         row_count = len(episodes_to_watch)
-        self.tableWidget_6.setRowCount(row_count)
+        pre_update_qtablewidget(self.tableWidget_6, row_count)
 
         for col_index, row_data in enumerate(episodes_to_watch):
             # Id

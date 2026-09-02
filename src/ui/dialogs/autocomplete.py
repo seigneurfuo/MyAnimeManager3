@@ -3,7 +3,7 @@ from typing import Any
 
 import os
 
-from utils import load_animes_json_data, save_cover, download_picture, post_update_qtablewidget
+from utils import load_animes_json_data, save_cover, download_picture, pre_update_qtablewidget, post_update_qtablewidget
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap, QImage
@@ -65,13 +65,11 @@ class AutocompleteDialog(QDialog):
         return anime_data
 
     def fill_table_data(self) -> None:
-        self.tableWidget.clearContents()
-
         data = self.filter_animes_data()
 
         row_count = len(data)
         self.label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
-        self.tableWidget.setRowCount(row_count)
+        pre_update_qtablewidget(self.tableWidget, row_count)
 
         for row_index, anime_data in enumerate(data):
             anime_data = self.get_anime_data(anime_data, None)

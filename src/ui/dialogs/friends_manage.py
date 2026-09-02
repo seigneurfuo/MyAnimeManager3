@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import QDialog, QCalendarWidget, QTableWidgetItem, QHeaderV
 from PyQt6.uic import loadUi
 
 from database import Friends
-from utils import post_update_qtablewidget
+from utils import pre_update_qtablewidget, post_update_qtablewidget
 
 
 class FriendManageDialog(QDialog):
@@ -32,11 +32,9 @@ class FriendManageDialog(QDialog):
         self.fill_friends_table()
 
     def fill_friends_table(self) -> None:
-        self.tableWidget.clearContents()
-
         row_count = len(self.friends_list)
         # self.label_82.setText(str(row_count))
-        self.tableWidget.setRowCount(row_count)
+        pre_update_qtablewidget(self.tableWidget, row_count)
 
         for row_index, friend in enumerate(self.friends_list):
             item = QTableWidgetItem(friend.name)

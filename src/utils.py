@@ -260,6 +260,11 @@ def download_picture(url) -> str:
 def order_by(settings, table):
     return peewee.fn.Lower(table.name) if settings["order_by_alternative_order"] else table.sort_id
 
+def pre_update_qtablewidget(qtablewidget, row_count):
+    qtablewidget.setSortingEnabled(False)
+    qtablewidget.clearContents()
+    qtablewidget.setRowCount(row_count)
+
 # Faire plutot un décorateur ?
 def post_update_qtablewidget(qtablewidget, excludes=[]):
     if "clearSelection" not in excludes:

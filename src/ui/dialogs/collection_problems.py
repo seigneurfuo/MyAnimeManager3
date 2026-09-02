@@ -2,6 +2,7 @@ import os
 
 from PyQt6.QtWidgets import QDialog, QTableWidgetItem
 from PyQt6.uic import loadUi
+from utils import pre_update_qtablewidget, post_update_qtablewidget
 
 
 class CollectionProblemsDialog(QDialog):
@@ -23,16 +24,16 @@ class CollectionProblemsDialog(QDialog):
         pass
 
     def fill_data(self) -> None:
-        self.tableWidget.clearContents()
-
         row_count = len(self.messages)
         self.label.setText(self.tr("Nombre d'éléments: ") + str(row_count))
-        self.tableWidget.setRowCount(row_count)
+        pre_update_qtablewidget(self.tableWidget, row_count)
 
         for row_index, message in enumerate(self.messages):
             item = QTableWidgetItem(message)
             item.setToolTip(item.text())
             self.tableWidget.setItem(row_index, 0, item)
+
+        post_update_qtablewidget(self.tableWidget)
 
     def accept(self) -> None:
         super().accept()

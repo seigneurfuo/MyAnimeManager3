@@ -7,7 +7,7 @@ from PyQt6.uic import loadUi
 
 from core import SEASONS_STATES, RATING_LEVELS, ANIMES_OFFLINE_DATABASE_TYPES_MAPPER
 from ui.dialogs.autocomplete import AutocompleteDialog
-from utils import save_cover, load_cover, post_update_qtablewidget
+from utils import save_cover, load_cover, pre_update_qtablewidget, post_update_qtablewidget
 
 
 class SeasonDialog(QDialog):
@@ -137,12 +137,10 @@ class SeasonDialog(QDialog):
         self.fill_data()
 
     def fill_custom_data(self) -> None:
-        self.tableWidget.clearContents()
-
         # Chargement des champs supplémentaires + Affichage dans le tableau
         custom_data = self.season.custom_data
         row_count = len(custom_data)
-        self.tableWidget.setRowCount(row_count + 1)
+        pre_update_qtablewidget(self.tableWidget, row_count + 1)
 
         for row_index, key in enumerate(custom_data):
 

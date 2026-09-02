@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
 from PyQt6.uic import loadUi
 
 from db_backups_manager import DBBackupsManager
-from utils import post_update_qtablewidget
+from utils import pre_update_qtablewidget, post_update_qtablewidget
 
 
 class DatabaseHistoryDialog(QDialog):
@@ -65,10 +65,8 @@ class DatabaseHistoryDialog(QDialog):
         db_backups_manager = DBBackupsManager(self.parent)
         db_backups = db_backups_manager.get_dbs_list()
 
-        self.tableWidget.clearContents()
-
         row_count = len(db_backups)
-        self.tableWidget.setRowCount(row_count)
+        pre_update_qtablewidget(self.tableWidget, row_count)
 
         for row_index, filepath in enumerate(db_backups):
 

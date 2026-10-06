@@ -315,10 +315,11 @@ class PlanningTab(QWidget):
         planning_entry.season = current_season.id
         planning_entry.date = calendar_date
         planning_entry.episode = new_watched_episodes_value
-        planning_entry.save()
 
         # Si on arrive au dernier épisode:
         if new_watched_episodes_value == current_season.episodes:
+            planning_entry.latest_episode_watched = calendar_date # On indique aussi la date du dernier épisode visionné au niveau du planning
+
             current_season.watched_episodes = 0  # RAZ du nombre d'épisodes à voir
             current_season.view_count += 1  # Incrémentation dyu nombre de visionnages
             current_season.state = 3  # Changement d'état de la saiso en terminé
@@ -326,6 +327,7 @@ class PlanningTab(QWidget):
         else:
             current_season.watched_episodes = new_watched_episodes_value
 
+        planning_entry.save()
         current_season.save()
 
     def when_series_state_current_index_changed(self) -> None:

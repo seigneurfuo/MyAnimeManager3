@@ -3,7 +3,7 @@ import os
 import database
 
 from playhouse.migrate import SqliteMigrator, migrate
-from playhouse.sqlite_ext import JSONField
+from playhouse.sqlite_ext import JSONField, DateField
 
 DATABASE_NAME = "database.sqlite3"
 
@@ -30,16 +30,27 @@ def load_or_create_database(profile) -> str:
 def migrations() -> None:
     # http://docs.peewee-orm.com/en/latest/peewee/playhouse.html#schema-migrations
 
+    print("Vérification des migrations du schéma de base...")
+
     migrator = SqliteMigrator(database.database)
     seasons_fields = [field.name for field in database.database.get_columns("Seasons")]
+    planning_fields = [field.name for field in database.database.get_columns("Planning")]
 
     # Migration 1
     if not "custom_data" in seasons_fields:
-        migrate(migrator.add_column("Seasons", "custom_data", JSONField(default="")))
+        migrate(migrator.add_column("Seasons", "custom_data", database.Seasons.custom_data))
 
     # Migration 2: Supression du champ picture pour les images des séries
     #cursor = database.database.execute_sql("ALTER TABLE Series DROP COLUMN picture;")
     #cursor.fetchone()
+
+    # Migration 3
+    if not "latest_episode_watched" in planning_fields:
+        migrate(migrator.add_column("Planning", "latest_episode_watched", database.Planning.latest_episode_watched))
+
+        # Création automatique des dates de dernier épisode visionné dans la table planning
+        query = "UPDATE Planning SET latest_episode_watched = 1 WHERE episode = (SELECT Seasons.episodes FROM Seasons WHERE Seasons.id = Planning.season)"
+        database.database.execute_sql(query)
 
 
 def populate_tables() -> None:

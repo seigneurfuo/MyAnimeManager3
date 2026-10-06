@@ -58,6 +58,7 @@ class Planning(BaseModel):
     season = ForeignKeyField(column_name='season', field='id', model=Seasons)
     date = DateField()
     episode = IntegerField()
+    latest_episode_watched = BooleanField(null=False, default=False)
 
     class Meta:
         table_name = 'Planning'

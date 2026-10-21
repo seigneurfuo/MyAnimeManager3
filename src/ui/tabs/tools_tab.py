@@ -8,7 +8,7 @@ from PyQt6.QtCore import QTime
 import os
 
 from database import Seasons
-from utils import get_duration_list, post_update_qtablewidget
+from utils import get_duration_list, post_update_qtablewidget, pre_update_qtablewidget
 
 
 class ToolsTab(QWidget):

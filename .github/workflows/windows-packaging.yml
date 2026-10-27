@@ -2,14 +2,14 @@ name: Package application with Pyinstaller
 
 on:
   push:
-    branches: [ master, main ]
     tags:
       - '202*'
 
 jobs:
   build:
     runs-on: ubuntu-24.04
-    if: github.ref_type == 'tag'
+    permissions:
+      contents: write
 
     steps:
     - uses: actions/checkout@v4
@@ -21,11 +21,12 @@ jobs:
         echo "LATEST_COMMIT_DATE=${LATEST_COMMIT_DATE}" >> $GITHUB_ENV
         echo "Latest commit date: ${LATEST_COMMIT_DATE}"
 
-    - name: Changing DEV version to current tag
-      run: sed -i "s/\"DEV\"/\"$LATEST_COMMIT_DATE\"/g" "src/core.py"
+    - name: Changing DEV version to latest commit date
+      run: sed -i "s/^app_version = \"DEV\"$/app_version = \"$LATEST_COMMIT_DATE\"/" "src/core.py"
 
     - name: Converting png icon to ico
       run: |
+        sudo apt update
         sudo apt install imagemagick -y
         convert "src/resources/icon.png" -define icon:auto-resize="256,128,96,64,48,32,16" "src/resources/icon.ico"
 
@@ -36,35 +37,21 @@ jobs:
         requirements: requirements.txt
         spec: .pyinstaller.spec
 
-    #- uses: actions/upload-artifact@v4
-    #  with:
-    #    name: ${{ github.event.repository.name }}-${{ env.LATEST_COMMIT_DATE }}-windows.zip
-    #    path: dist/windows
-    #    compression-level: 9
-    #    include-hidden-files: true
-
-    - name: Creating zip before upload release
+    - name: Creating zip before upload to release
       run: |
         cd dist/windows/MyAnimeManager3
         sudo zip -9 -r "../myanimemanager3-${LATEST_COMMIT_DATE}-windows.zip" *
 
-    #- name: Upload artifact
-    #  uses: actions/upload-artifact@v4
-    #  with:
-    #    name: ${{ github.event.repository.name }}-${{ env.LATEST_COMMIT_DATE }}-windows-portable.zip
-    #    path: dist/windows
-    #    compression-level: 9
-    #    include-hidden-files: true
-
-    - name: Creating portable zip for before upload to release
+    - name: Creating portable zip before upload to release
       run: |
         cd dist/windows/MyAnimeManager3
-        touch _internal/.portable
+        sudo touch _internal/.portable
         sudo zip -9 -r "../myanimemanager3-${LATEST_COMMIT_DATE}-windows-portable.zip" *
 
     - name: Upload file to release
       uses: softprops/action-gh-release@v2
       with:
+        fail_on_unmatched_files: true
         files: |
-          dist/windows/myanimemanager3-${{ github.ref_name }}-windows.zip
-          dist/windows/myanimemanager3-${{ github.ref_name }}-windows-portable.zip
+          dist/windows/myanimemanager3-${{ env.LATEST_COMMIT_DATE }}-windows.zip
+          dist/windows/myanimemanager3-${{ env.LATEST_COMMIT_DATE }}-windows-portable.zip

@@ -4,9 +4,10 @@ import sys
 import os
 import platform
 import logging
+import traceback
 
-from PyQt6.QtCore import QLibraryInfo, QTranslator, QLocale
-from PyQt6.QtWidgets import QApplication
+from PyQt6.QtCore import QLibraryInfo, QTranslator, QLocale, QThread
+from PyQt6.QtWidgets import QApplication, QMessageBox
 import core
 import updater
 from ui.dialogs.profiles_manage import ProfilesManageDialog
@@ -19,6 +20,34 @@ from common import load_settings
 
 
 # from ui.themes import set_theme
+
+LOG_FILEPATH = None
+
+
+def exception_hook(exc_type, exc_value, exc_tb) -> None:
+    """Journalise et affiche les exceptions non gérées (sans hook, PyQt6 ferme brutalement l'application)"""
+
+    if issubclass(exc_type, KeyboardInterrupt):
+        sys.__excepthook__(exc_type, exc_value, exc_tb)
+        return
+
+    logging.error("Exception non gérée", exc_info=(exc_type, exc_value, exc_tb))
+    sys.__excepthook__(exc_type, exc_value, exc_tb)
+
+    # On n'affiche la fenêtre que depuis le thread principal (les QThread passent aussi par ici)
+    application = QApplication.instance()
+    if not application or QThread.currentThread() != application.thread():
+        return
+
+    try:
+        message_box = QMessageBox()
+        message_box.setIcon(QMessageBox.Icon.Critical)
+        message_box.setWindowTitle("Erreur inattendue")
+        message_box.setText(f"Une erreur inattendue est survenue:\n{exc_value}\n\nDétails enregistrés dans:\n{LOG_FILEPATH}")
+        message_box.setDetailedText("".join(traceback.format_exception(exc_type, exc_value, exc_tb)))
+        message_box.exec()
+    except Exception:
+        pass
 
 
 class Application(QApplication):
@@ -99,13 +128,18 @@ class Application(QApplication):
 
 
 def main():
+    global LOG_FILEPATH
+
     # Logging
     APPLICATION_DATA_PATH, _, _ = core.get_paths()
     if not os.path.isdir(APPLICATION_DATA_PATH):
         os.makedirs(APPLICATION_DATA_PATH)
         
-    log_filepath = os.path.join(APPLICATION_DATA_PATH, "log.txt")
-    logging.basicConfig(filename=log_filepath, level=logging.ERROR, format="%(asctime)s - %(levelname)s - %(message)s")
+    LOG_FILEPATH = os.path.join(APPLICATION_DATA_PATH, "log.txt")
+    logging.basicConfig(filename=LOG_FILEPATH, encoding="utf-8", level=logging.ERROR, format="%(asctime)s - %(levelname)s - %(message)s")
+
+    # Gestion globale des exceptions
+    sys.excepthook = exception_hook
 
     # Arguments
     argument_parser = argparse.ArgumentParser()
@@ -128,9 +162,4 @@ def main():
 
 
 if __name__ == "__main__":
-    try:
-        main()
-
-    except Exception as e:
-        print(e)
-        logging.error("An error occurred during application execution: %s", e)
+    main()

@@ -222,20 +222,8 @@ class FullListTab(QWidget):
         deleted_seasons = Seasons().select().where(Seasons.is_deleted == 1).join(Series).order_by(Seasons.sort_id)
         dialog = DeletedElementsDialog(self, deleted_series, deleted_seasons)
 
-        # FIXME: Ne veut pas changer la valeur ...
+        # La restauration est faite dans DeletedElementsDialog.accept()
         if dialog.exec():
-            if dialog.series_to_restore:
-                for serie_id in dialog.series_to_restore:
-                    serie = Seasons.get(serie_id)
-                    serie.is_deleted = 0
-                    serie.save()
-
-            if dialog.seasons_to_restore:
-                for season_id in dialog.seasons_to_restore:
-                    season = Seasons.get(season_id)
-                    season.is_deleted = 0
-                    season.save()
-
             if dialog.series_to_restore or dialog.seasons_to_restore:
                 self.refresh_data()
 

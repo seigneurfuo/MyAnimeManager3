@@ -33,27 +33,28 @@ def load_settings() -> dict:
     if os.path.isfile(settings_filepath):
         with open(settings_filepath, "r") as settings_file:
             print("Chargement de la configuration depuis:", settings_filepath)
-            user_config = json.load(settings_file)
+            saved_config = json.load(settings_file)
 
-        # On vérifie que l'on est le même nombre de cléfs par rapport à la configuration par défaut.
-        # Si ce n'est pas le cas, alors on ajoute les cléfs manquantes sur le configuration de l'utilisateur en pernant les valeurs par défaut
-        default_config_keys = DEFAULT_CONFIG_DATA.keys()
-        user_config_keys = user_config.keys()
+        # Nouvelles cléfs (valeur par défaut) et anciennes cléfs (supprimées)
+        new_keys = DEFAULT_CONFIG_DATA.keys() - saved_config.keys()
+        old_keys = saved_config.keys() - DEFAULT_CONFIG_DATA.keys()
 
-        for default_config_key in default_config_keys:
-            if default_config_key not in user_config_keys:
-                msg = f"Ajout de la cléf manquante dans la configuration de l'utilisateur: {default_config_key}"
-                print(msg)
+        for key in new_keys:
+            print(f"Ajout de la cléf manquante dans la configuration de l'utilisateur: {key}")
 
-                # Application de la nouvelle valeur
-                user_config[default_config_key] = DEFAULT_CONFIG_DATA[default_config_key]
+        for key in old_keys:
+            print(f"Suppression de l'ancienne cléf de la configuration de l'utilisateur: {key}")
 
-        # Sauvegarde des paramètres
-        save_settings(user_config)
+        # On ne garde que les cléfs connues, en conservant les valeurs de l'utilisateur
+        user_config = {key: saved_config.get(key, default_value) for key, default_value in DEFAULT_CONFIG_DATA.items()}
+
+        # Sauvegarde des paramètres uniquement si la configuration a changé
+        if new_keys or old_keys:
+            save_settings(user_config)
 
     else:
         print("Chargement de la configuration par défaut")
-        user_config = DEFAULT_CONFIG_DATA
+        user_config = dict(DEFAULT_CONFIG_DATA)
 
         # Sauvegarde des paramètres
         save_settings(user_config)

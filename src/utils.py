@@ -3,7 +3,6 @@ import csv
 import json
 import os
 import shutil
-from tkinter import NO
 import urllib.request
 import tempfile
 

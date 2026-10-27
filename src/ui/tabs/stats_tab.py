@@ -84,7 +84,7 @@ class StatsTab(QWidget):
         post_update_qtablewidget(self.stats_table)
 
     def when_export_button_clicked(self) -> None:
-        query_name = self.comboBox.currentText().replce(" ", "-")
+        query_name = self.comboBox.currentText().replace(" ", "-")
 
         filepath = export_qtablewidget(self.stats_table, self.parent.parent.profile.path, query_name)
         # TODO: Bouton pour ouvrir le dossier ?

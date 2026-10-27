@@ -73,6 +73,8 @@ class FullListTab(QWidget):
         return current_item.data(Qt.ItemDataRole.UserRole) if current_item else None
 
     def fill_series_combobox(self) -> None:
+        # On bloque les signaux pendant le remplissage pour éviter de déclencher l'évenement à chaque ajout
+        self.comboBox.blockSignals(True)
         self.comboBox.clear()
         completer_data = []
         series = Series().select().where(Series.is_deleted == 0).order_by(order_by(self.parent.parent.settings, Series))
@@ -87,6 +89,10 @@ class FullListTab(QWidget):
         completer.setFilterMode(Qt.MatchFlag.MatchContains)
         completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
         self.comboBox.setCompleter(completer)
+        self.comboBox.blockSignals(False)
+
+        # Un seul chargement de la série sélectionnée une fois la liste remplie
+        self.when_series_list_current_index_changed()
 
     def set_series_combobox_current_selection(self, serie_id) -> None:
         index = self.comboBox.findData(serie_id)
@@ -216,6 +222,7 @@ class FullListTab(QWidget):
 
             self.fill_serie_data(serie)
             self.fill_season_list(serie)
+            self.clear_season_data()
 
     def when_view_deleted_elements_button_clicked(self) -> None:
         deleted_series = Series().select().where(Series.is_deleted == 1).order_by(order_by(self.parent.parent.settings, Series))

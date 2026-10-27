@@ -260,6 +260,9 @@ def order_by(settings, table):
     return peewee.fn.Lower(table.name) if settings["order_by_alternative_order"] else table.sort_id
 
 def pre_update_qtablewidget(qtablewidget, row_count):
+    # On bloque les signaux pendant le remplissage pour éviter de déclencher les évenements à chaque ajout
+    # Ils sont réactivés dans post_update_qtablewidget
+    qtablewidget.blockSignals(True)
     qtablewidget.setSortingEnabled(False)
     qtablewidget.clearContents()
     qtablewidget.setRowCount(row_count)
@@ -274,4 +277,5 @@ def post_update_qtablewidget(qtablewidget, excludes=[]):
     #if "horizontalHeaderResizeToContents" not in excludes:
     qtablewidget.horizontalHeader().setSectionResizeMode(qtablewidget.columnCount() - 1, QHeaderView.ResizeMode.ResizeToContents)
 
-    qtablewidget.setSortingEnabled(True) 
+    qtablewidget.setSortingEnabled(True)
+    qtablewidget.blockSignals(False)

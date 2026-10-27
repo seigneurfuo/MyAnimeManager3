@@ -6,7 +6,7 @@ from PyQt6.uic import loadUi
 import os
 
 import peewee
-from database import Series, Seasons, Planning
+from database import Series, Seasons, SeasonsTypes, Planning
 
 from utils import export_qtablewidget, pre_update_qtablewidget, post_update_qtablewidget
 from core import SEASONS_STATES
@@ -98,7 +98,7 @@ class StatsTab(QWidget):
         # Nombre de saisons par année
         if query_index == 0:
             headers = ["Année", "Nombre"]
-            results = Seasons.select(Seasons.year, peewee.fn.COUNT(Seasons.id)).where(Seasons.is_deleted == 0) \
+            results = Seasons.select(Seasons.year, peewee.fn.COUNT(peewee.SQL("*"))).where(Seasons.is_deleted == 0) \
                 .group_by(Seasons.year).order_by(Seasons.year)
 
         # Saisons les plus revisionnées
@@ -118,44 +118,53 @@ class StatsTab(QWidget):
         # Séries avec le plus d'épisodes
         elif query_index == 3:
             headers = ["Série", "Nombre saisons", "Nombre épisodes"]
-            results = Seasons.select(Series.name.alias("serie_name"), peewee.fn.COUNT(Seasons.id),
-                                   peewee.fn.SUM(Seasons.episodes)).join(Series) \
-                .where(Seasons.is_deleted == 0) \
-                .group_by(Series.id).order_by(peewee.fn.SUM(Seasons.episodes).desc())
+            episodes_sum = peewee.fn.SUM(Seasons.episodes).alias("episodes_sum")
+            results = Seasons.select(Series.name.alias("serie_name"), peewee.fn.COUNT(Seasons.id), episodes_sum) \
+                .join(Series) \
+                .where(Seasons.is_deleted == 0, Series.is_deleted == 0) \
+                .group_by(Series.id).order_by(peewee.SQL("episodes_sum").desc())
 
         # Nombre d'épisodes vus par année
         elif query_index == 4:
             headers = ["Année", "Nombre"]
-            results = Planning.select(Planning.date.year, peewee.fn.COUNT(Planning.id)) \
-                .join(Seasons)\
+            # Alias distinct de Seasons.year : SQLite résout le GROUP BY sur les colonnes avant les alias
+            year = peewee.fn.strftime("%Y", Planning.date).alias("watch_year")
+            results = Planning.select(year, peewee.fn.COUNT(Planning.id)) \
+                .join(Seasons, on=(Planning.season == Seasons.id)) \
                 .where(Seasons.is_deleted == 0) \
-                .group_by(Planning.date.year).order_by(Planning.date.year)
+                .group_by(peewee.SQL("watch_year")).order_by(peewee.SQL("watch_year"))
 
         # Journal de visionnage détaillé
         elif query_index == 5:
             headers = ["Date", "Ids", "Série", "Saison", "Episode"]
             results = Planning.select(Planning.date, Series.sort_id.concat(" - ").concat(Seasons.sort_id),
                                     Series.name.alias("serie_name"), Seasons.name, Planning.episode) \
-                .join(Series).switch(Planning).join(Seasons) \
-                .where(Series.is_deleted == 0).where(Seasons.is_deleted == 0) \
+                .join(Series, on=(Planning.serie == Series.id)).switch(Planning) \
+                .join(Seasons, on=(Planning.season == Seasons.id)) \
+                .where(Series.is_deleted == 0, Seasons.is_deleted == 0) \
                 .order_by(Planning.date.desc(), Planning.id.desc())
 
         # Liste des séries pour lequelles il reste des saisons à voir
         elif query_index == 6:
             headers = ["Ids", "Série", "Saison", "Episodes vus"]
+            unfinished_states = [0, 1, 2, 5]  # Indéfinie, A voir, En cours, En pause
             results = Seasons.select(Series.sort_id.concat(" - ").concat(Seasons.sort_id),
                                    Series.name.alias("serie_name"),
                                    Seasons.name, Seasons.watched_episodes.concat("/").concat(Seasons.episodes)) \
-                .join(Series).where(Seasons.is_deleted == 0).where(Seasons.state.in_([0, 1, 2, 5])) \
+                .join(Series) \
+                .where(Seasons.is_deleted == 0, Series.is_deleted == 0, Seasons.state.in_(unfinished_states)) \
                 .order_by(Series.name.asc(), Seasons.name.asc())
 
         # Date du dernier épisode vu par séries
         elif query_index == 7:
             headers = ["Date", "Ids", "Série", "Numéro épisode"]
             ids = Series.sort_id.concat(" - ").concat(Seasons.sort_id)
-            results = Planning.select(Planning.date, ids, Series.name, Planning.episode) \
-                .join(Series).switch(Planning).join(Seasons).group_by(Series.id) \
-                .order_by(peewee.fn.MAX(Planning.date).desc(), Planning.id.desc())
+            # MAX() dans le SELECT : SQLite prend les autres colonnes sur la ligne du maximum
+            last_date = peewee.fn.MAX(Planning.date).alias("last_date")
+            results = Planning.select(last_date, ids, Series.name, Planning.episode) \
+                .join(Series, on=(Planning.serie == Series.id)).switch(Planning) \
+                .join(Seasons, on=(Planning.season == Seasons.id)) \
+                .group_by(Series.id).order_by(peewee.SQL("last_date").desc())
 
         elif query_index == 8:
             headers = ["Etat", "Nombre"]
@@ -171,15 +180,10 @@ class StatsTab(QWidget):
 
         elif query_index == 9:
             headers = ["Type", "Nombre"]
-            results = []
-            rows = Seasons.select(Seasons.type,
-                peewee.fn.COUNT(Seasons.id)) \
+            results = Seasons.select(SeasonsTypes.name, peewee.fn.COUNT(Seasons.id)) \
+                .join(SeasonsTypes) \
                 .where(Seasons.is_deleted == 0) \
-                .group_by(Seasons.type).order_by(Seasons.type)
-
-            for row in rows:
-                result = [row.type.name, row]
-                results.append(result)
+                .group_by(Seasons.type).order_by(SeasonsTypes.sort_id)
 
         # Nombre de champs supplémentaires identiques par séries
         elif query_index == 10:

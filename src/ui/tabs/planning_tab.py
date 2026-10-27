@@ -396,6 +396,9 @@ class PlanningTab(QWidget):
 
         if planning_id:
             planning_data = Planning.get(planning_id)
+
+            # Supression des amis liés à cette entrée avant l'entrée elle-même
+            FriendsPlanning.delete().where(FriendsPlanning.planning == planning_data).execute()
             planning_data.delete_instance()
 
             self.fill_calendar_dates()

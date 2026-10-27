@@ -7,12 +7,19 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: windows-latest
     permissions:
       contents: write
+    defaults:
+      run:
+        shell: bash
 
     steps:
     - uses: actions/checkout@v4
+
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
 
     - name: Get latest commit date on branch
       run: |
@@ -24,29 +31,27 @@ jobs:
     - name: Changing DEV version to latest commit date
       run: sed -i "s/^app_version = \"DEV\"$/app_version = \"$LATEST_COMMIT_DATE\"/" "src/core.py"
 
-    - name: Converting png icon to ico
+    - name: Installing dependencies
       run: |
-        sudo apt update
-        sudo apt install imagemagick -y
-        convert "src/resources/icon.png" -define icon:auto-resize="256,128,96,64,48,32,16" "src/resources/icon.ico"
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt pyinstaller pillow
+
+    - name: Converting png icon to ico
+      run: python -c "from PIL import Image; Image.open('src/resources/icon.png').save('src/resources/icon.ico', sizes=[(s, s) for s in (256, 128, 96, 64, 48, 32, 16)])"
 
     - name: Packaging application
-      uses: JackMcKew/pyinstaller-action-windows@main
-      with:
-        path: .
-        requirements: requirements.txt
-        spec: .pyinstaller.spec
+      run: pyinstaller --noconfirm --distpath dist/windows .pyinstaller.spec
 
     - name: Creating zip before upload to release
       run: |
         cd dist/windows/MyAnimeManager3
-        sudo zip -9 -r "../myanimemanager3-${LATEST_COMMIT_DATE}-windows.zip" *
+        7z a -tzip -mx=9 "../myanimemanager3-${LATEST_COMMIT_DATE}-windows.zip" *
 
     - name: Creating portable zip before upload to release
       run: |
         cd dist/windows/MyAnimeManager3
-        sudo touch _internal/.portable
-        sudo zip -9 -r "../myanimemanager3-${LATEST_COMMIT_DATE}-windows-portable.zip" *
+        touch _internal/.portable
+        7z a -tzip -mx=9 "../myanimemanager3-${LATEST_COMMIT_DATE}-windows-portable.zip" *
 
     - name: Upload file to release
       uses: softprops/action-gh-release@v2

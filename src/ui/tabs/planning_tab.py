@@ -318,7 +318,7 @@ class PlanningTab(QWidget):
 
         # Si on arrive au dernier épisode:
         if new_watched_episodes_value == current_season.episodes:
-            planning_entry.latest_episode_watched = calendar_date # On indique aussi la date du dernier épisode visionné au niveau du planning
+            planning_entry.latest_episode_watched = True # On indique que cette date est celle ou le dernier épisode à été vu.
 
             current_season.watched_episodes = 0  # RAZ du nombre d'épisodes à voir
             current_season.view_count += 1  # Incrémentation dyu nombre de visionnages

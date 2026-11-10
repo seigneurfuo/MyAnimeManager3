@@ -80,7 +80,7 @@ class TilesListTab(QWidget):
             if not cover_path and filter_coverless:
                 continue
             else:
-                total_bytes += os.path.getsize(cover_path)
+                total_bytes += os.path.getsize(cover_path) if cover_path else 0
 
             text = f"{row.sort_id:03d} - {row.name}"
 

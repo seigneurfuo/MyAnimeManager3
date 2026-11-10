@@ -165,7 +165,7 @@
      <item>
       <widget class="QCheckBox" name="checkBox">
        <property name="text">
-        <string>Filtrer les éléments n'ayant pas d'image</string>
+        <string>Masquer les éléments n'ayant pas d'image</string>
        </property>
        <property name="checked">
         <bool>true</bool>

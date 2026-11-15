@@ -6,7 +6,7 @@ from PyQt6.uic import loadUi
 import os
 
 import peewee
-from database import Series, Seasons, Planning
+from database import Series, Seasons, Planning, Friends, FriendsPlanning
 
 from utils import export_qtablewidget, pre_update_qtablewidget, post_update_qtablewidget
 from core import SEASONS_STATES
@@ -32,10 +32,12 @@ class StatsTab(QWidget):
             (3, self.tr("Séries avec le plus d'épisodes")),
             (4, self.tr("Nombre d'épisodes vus par année")),
             (5, self.tr("Journal de visionnage détaillé")),
-            (6, self.tr("Liste des séries pour lequelles il reste des saisons à voir")),
+            (6, self.tr("Séries pour lequelles il reste des saisons à voir")),
             (7, self.tr("Date du dernier épisode vu par séries")),
             (8, self.tr("Nombre de saisons par état")),
-            (9, self.tr("Nombre de saisons par type"))
+            (9, self.tr("Nombre de saisons par type")),
+
+            (12, self.tr("Séries / saisons vues avec des amis")),
         ]
 
         # On désactive les tags au besoin
@@ -226,6 +228,18 @@ class StatsTab(QWidget):
 
             # Tri et passage en liste
             results = sorted(tags.items())
+
+        # Animés vus avec des amis (par ami et par saison)
+        elif query_index == 12:
+            headers = ["Ami", "Ids", "Série", "Saison", "Episodes vus ensemble", "Liste des épisodes", "Dernier visionnage"]
+            ids = Series.sort_id.concat(" - ").concat(Seasons.sort_id)
+            episodes_list = peewee.fn.GROUP_CONCAT(Planning.episode, ", ")
+            results = FriendsPlanning.select(Friends.name, ids, Series.name.alias("serie_name"), Seasons.name, peewee.fn.COUNT(Planning.id), episodes_list, peewee.fn.MAX(Planning.date)) \
+                .join(Friends).switch(FriendsPlanning).join(Planning) \
+                .join(Series).switch(Planning).join(Seasons) \
+                .where(Series.is_deleted == 0).where(Seasons.is_deleted == 0) \
+                .group_by(Friends.id, Seasons.id) \
+                .order_by(Friends.name.asc(), Series.sort_id.asc(), Seasons.sort_id.asc())
 
 
         return headers, list(results.tuples()) if type(results) is peewee.ModelSelect else results

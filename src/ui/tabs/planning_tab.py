@@ -145,7 +145,9 @@ class PlanningTab(QWidget):
 
         calendar_date = self.planning_calendar.selectedDate().toPyDate()
 
-        planning_data_list = Planning.select() \
+        # Sélection explicite des modèles joints : depuis peewee 4, une jointure sans colonnes
+        # sélectionnées renvoie None pour la relation (planning_data.serie) au lieu de la charger.
+        planning_data_list = Planning.select(Planning, Series, Seasons) \
              .join(Series, on=(Series.id == Planning.serie_id), join_type=peewee.JOIN.LEFT_OUTER) \
              .join(Seasons, on=(Seasons.id == Planning.season_id), join_type=peewee.JOIN.LEFT_OUTER) \
              .where((Planning.date == calendar_date) & (Series.is_deleted == 0)) \

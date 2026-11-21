@@ -116,7 +116,7 @@ class SeasonDialog(QDialog):
             self.season.view_count = 0
             self.season.state = 0
             self.season.type = 1
-            self.season.custom_data = []
+            self.season.custom_data = {}
 
         # Données
         if anime_data["save_type"] in (0, 1):
@@ -138,7 +138,7 @@ class SeasonDialog(QDialog):
 
     def fill_custom_data(self) -> None:
         # Chargement des champs supplémentaires + Affichage dans le tableau
-        custom_data = self.season.custom_data
+        custom_data = self.season.custom_data or {}
         row_count = len(custom_data)
         pre_update_qtablewidget(self.tableWidget, row_count + 1)
 

@@ -8,6 +8,7 @@ from PyQt6.QtGui import QIcon, QColor, QPixmap
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QWidget, QTableWidgetItem, QCheckBox, QHeaderView, QMessageBox, QLabel
 from PyQt6.uic import loadUi
+from peewee import JOIN
 
 from core import SEASONS_STATES, RATING_LEVELS
 from common import display_view_history_dialog
@@ -74,7 +75,11 @@ class List2(QWidget):
             self.parent.full_list_tab.set_series_combobox_current_selection(season.serie.id)
 
     def get_request_with_filters(self):
-        request = Seasons().select().join(Series).where(Seasons.is_deleted == 0).where(Series.is_deleted == 0)
+        # Sélection des séries et des types dans la même requête pour éviter une requête par ligne
+        request = (Seasons.select(Seasons, Series, SeasonsTypes)
+                   .join(Series).switch(Seasons)
+                   .join(SeasonsTypes, JOIN.LEFT_OUTER)
+                   .where(Seasons.is_deleted == 0).where(Series.is_deleted == 0))
 
         start_year = self.start_year_spinbox.value()
         stop_year = self.stop_year_spinbox.value()
@@ -114,24 +119,41 @@ class List2(QWidget):
 
         pre_update_qtablewidget(self.tableWidget, row_count)
 
+        # Chargement des icônes une seule fois
+        icons_dir = os.path.join(os.path.dirname(__file__), "../../resources/icons/")
+        state_icons = [QIcon(os.path.join(icons_dir, season_state["icon"])) for season_state in SEASONS_STATES]
+        rating_pixmaps = {rating["value"]: QPixmap(os.path.join(icons_dir, rating["icon"])) for rating in RATING_LEVELS}
+
+        # Amis: une seule requête pour toutes les saisons
+        friends_enabled = self.parent.parent.settings["friends_enabled"]
+        friends_by_season = {}
+        if friends_enabled:
+            friends_request = (Friends.select(Seasons.id, Friends.name).join(FriendsPlanning).join(Planning)
+                               .join(Seasons).group_by(Seasons.id, Friends.name).tuples())
+            for season_id, friend_name in friends_request:
+                friends_by_season.setdefault(season_id, []).append(friend_name)
+
+        profile_path = self.parent.parent.profile.path
+
         for row_index, season in enumerate(data):
-            ids = f"{season.serie.sort_id:03d} - {season.sort_id}"
+            serie = season.serie
+            ids = f"{serie.sort_id:03d} - {season.sort_id}"
             year = str(season.year) if season.year and str(season.year) != "None" else ""
 
             # Calcul de l'age
             age = get_season_age(season)
             # Etat de la saison
             season_state = SEASONS_STATES[season.state]
+            season_type = season.type.name if season.type else ""
 
-            columns = [ids, season.serie.name, season.type.name, season.name, str(season.episodes), year,
+            columns = [ids, serie.name, season_type, season.name, str(season.episodes), year,
                        age, season_state['name']]
+            columns_count = len(columns)
 
             for col_index, value in enumerate(columns):
                 if col_index == 7:
                     item = QTableWidgetItem(season_state["name"])
-                    icon = QIcon(
-                        os.path.join(os.path.dirname(__file__), "../../resources/icons/", season_state["icon"]))
-                    item.setIcon(icon)
+                    item.setIcon(state_icons[season.state])
 
                 else:
                     item = QTableWidgetItem(value)
@@ -140,7 +162,7 @@ class List2(QWidget):
                 item.setData(Qt.ItemDataRole.UserRole, season.id)
 
                 # Bandeau orangé pour les series avec un numéro temporaire
-                if col_index == 0 and season.serie.sort_id == 0:
+                if col_index == 0 and serie.sort_id == 0:
                     item.setBackground(QColor("#FCC981"))
 
                 self.tableWidget.setItem(row_index, col_index, item)
@@ -153,40 +175,34 @@ class List2(QWidget):
                 item.setForeground(QColor("#039d09"))
 
             item.setToolTip(item.text())
-            self.tableWidget.setItem(row_index, len(columns), item)
+            self.tableWidget.setItem(row_index, columns_count, item)
 
             # Nombre de visionnages
             item = QTableWidgetItem(str(season.view_count))
             item.setToolTip(item.text())
-            self.tableWidget.setItem(row_index, len(columns) + 1, item)
+            self.tableWidget.setItem(row_index, columns_count + 1, item)
 
             # Note
-            rating = next(rating for rating in RATING_LEVELS if rating["value"] == season.rating)
-            pixmap_path = os.path.join(os.path.dirname(__file__), "../../resources/icons", rating["icon"])
             # TODO: Ratio à conserver
             rating = QLabel()
-            rating.setPixmap(QPixmap(pixmap_path))
-            self.tableWidget.setCellWidget(row_index, len(columns) + 2, rating)
+            rating.setPixmap(rating_pixmaps[season.rating])
+            self.tableWidget.setCellWidget(row_index, columns_count + 2, rating)
 
             # Image présente ?
-            cover_path = load_cover(self.parent.parent.profile.path, "season", season.id)
-            picture_present_text = self.tr("Oui") if cover_path and os.path.isfile(cover_path) else self.tr("Non")
+            cover_path = load_cover(profile_path, "season", season.id)
+            picture_present_text = self.tr("Oui") if cover_path else self.tr("Non")
             picture_present = QTableWidgetItem(picture_present_text)
-            self.tableWidget.setItem(row_index, len(columns) + 3, picture_present)
+            self.tableWidget.setItem(row_index, columns_count + 3, picture_present)
 
             # Amis
-            if self.parent.parent.settings["friends_enabled"]:
-                friends = [friend.name for friend in
-                           Friends.select(Friends.name).where(Seasons.id == season.id).join(FriendsPlanning)
-                           .join(Planning).join(Seasons).group_by(Friends.name)]
-
-                item = QTableWidgetItem(", ".join(friends))
+            if friends_enabled:
+                item = QTableWidgetItem(", ".join(friends_by_season.get(season.id, [])))
                 item.setToolTip(item.text())
-                self.tableWidget.setItem(row_index, len(columns) + 4, item)
+                self.tableWidget.setItem(row_index, columns_count + 4, item)
 
-            # Sinon on masque la colonne:
-            else:
-                self.tableWidget.horizontalHeader().hideSection(len(columns) + 4)
+        # Colonne des amis masquée si désactivée
+        friends_column = self.tableWidget.columnCount() - 1
+        self.tableWidget.horizontalHeader().setSectionHidden(friends_column, not friends_enabled)
 
         post_update_qtablewidget(self.tableWidget)
 

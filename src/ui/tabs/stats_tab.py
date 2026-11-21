@@ -6,7 +6,7 @@ from PyQt6.uic import loadUi
 import os
 
 import peewee
-from database import Series, Seasons, Planning, Friends, FriendsPlanning
+from database import Series, Seasons, SeasonsTypes, Planning, Friends, FriendsPlanning
 
 from utils import export_qtablewidget, pre_update_qtablewidget, post_update_qtablewidget
 from core import SEASONS_STATES
